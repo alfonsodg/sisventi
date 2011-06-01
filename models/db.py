@@ -15,8 +15,10 @@ if request.env.web2py_runtime_gae:            # if running on Google App Engine
     # session.connect(request, response, db = MEMDB(Client()))
 else:                                         # else use a normal relational database
     db = DAL('sqlite://storage.sqlite')       # if not, use SQLite or other DB
-## if no need for session
-# session.forget()
+
+# by default give a view/generic.extension to all actions from localhost
+# none otherwise. a pattern can be 'controller/function.extension'
+response.generic_patterns = ['*'] if request.is_local else []
 
 #########################################################################
 ## Here is sample code if you need for
@@ -28,18 +30,18 @@ else:                                         # else use a normal relational dat
 ## (more options discussed in gluon/tools.py)
 #########################################################################
 
-from gluon.tools import *
+from gluon.tools import Mail, Auth, Crud, Service, PluginManager, prettydate
 mail = Mail()                                  # mailer
-auth = Auth(globals(),db)                      # authentication/authorization
-crud = Crud(globals(),db)                      # for CRUD helpers using auth
-service = Service(globals())                   # for json, xml, jsonrpc, xmlrpc, amfrpc
+auth = Auth(db)                                # authentication/authorization
+crud = Crud(db)                                # for CRUD helpers using auth
+service = Service()                            # for json, xml, jsonrpc, xmlrpc, amfrpc
 plugins = PluginManager()
 
 mail.settings.server = 'logging' or 'smtp.gmail.com:587'  # your SMTP server
 mail.settings.sender = 'you@gmail.com'         # your email
 mail.settings.login = 'username:password'      # your credentials or None
 
-auth.settings.hmac_key = 'sha512:e3fa91d6-9d88-428a-9f21-37f60795ef54'   # before define_tables()
+auth.settings.hmac_key = 'sha512:749faea6-d5c6-44ed-8311-40604608e4c1'   # before define_tables()
 auth.define_tables()                           # creates all needed tables
 auth.settings.mailer = mail                    # for user email verification
 auth.settings.registration_requires_verification = False
@@ -52,13 +54,14 @@ auth.messages.reset_password = 'Click on the link http://'+request.env.http_host
 ## If you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, uncomment and customize following
 # from gluon.contrib.login_methods.rpx_account import RPXAccount
-# auth.settings.actions_disabled=['register','change_password','request_reset_password']
+# auth.settings.actions_disabled = \
+#    ['register','change_password','request_reset_password']
 # auth.settings.login_form = RPXAccount(request, api_key='...',domain='...',
 #    url = "http://localhost:8000/%s/default/user/login" % request.application)
 ## other login methods are in gluon/contrib/login_methods
 #########################################################################
 
-crud.settings.auth = None                      # =auth to enforce authorization on crud
+crud.settings.auth = None        # =auth to enforce authorization on crud
 
 #########################################################################
 ## Define your tables below (or better in another model file) for example
