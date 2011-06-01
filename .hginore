@@ -1,0 +1,9 @@
+syntax: glob
+
+*.pyc
+*.log
+*.bak
+cache/
+errors/
+sessions/
+
