@@ -20,7 +20,7 @@ now = datetime.datetime.now()
 # Custom auth_user table
 db.define_table(
     auth.settings.table_user_name,
-    Field('usuario', length=128, default='', label=T('Usuario')),
+    Field('username', length=128, default='', label=T('Usuario')),
     Field('first_name', length=128, default='', label=T('Nombres')),
     Field('last_name', length=128, default='', label=T('Apellidos')),
     Field('email', length=128, default='', unique=True, label=T('Correo electónico')),
@@ -32,9 +32,9 @@ db.define_table(
 )
 
 custom_auth_table = db[auth.settings.table_user_name] # get the custom_auth_table
-custom_auth_table.usuario.requires = [
+custom_auth_table.username.requires = [
     IS_NOT_EMPTY(error_message='Campo obligatorio'),
-    IS_NOT_IN_DB(db, custom_auth_table.email, error_message=T('El nombre de usuario ya está registrado'))]
+    IS_NOT_IN_DB(db, custom_auth_table.username, error_message=T('El nombre de usuario ya está registrado'))]
 custom_auth_table.first_name.requires = [
     IS_NOT_EMPTY(error_message='Campo obligatorio')]
 custom_auth_table.last_name.requires = [
@@ -53,7 +53,7 @@ mail.settings.sender = 'you@gmail.com'         # your email
 mail.settings.login = 'username:password'      # your credentials or None
 
 auth.settings.hmac_key = 'sha512:a58dabf0-5503-4058-b583-f13a0b4add4f'   # before define_tables()
-auth.define_tables()                           # creates all needed tables
+auth.define_tables(username=True)                           # creates all needed tables
 auth.settings.mailer = mail                    # for user email verification
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
@@ -61,6 +61,7 @@ auth.messages.verify_email = 'Click on the link http://'+request.env.http_host+U
 auth.settings.reset_password_requires_verification = True
 auth.messages.reset_password = 'Click on the link http://'+request.env.http_host+URL('default','user',args=['reset_password'])+'/%(key)s to reset your password'
 crud.settings.auth = None        # =auth to enforce authorization on crud
+auth.settings.actions_disabled.append('register')
 T.force('es-es')
 
 

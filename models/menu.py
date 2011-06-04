@@ -4,7 +4,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.title = request.application
+response.title = 'SISVENTI'
 response.subtitle = T('customize me!')
 
 #http://dev.w3.org/html5/markup/meta.name.html
