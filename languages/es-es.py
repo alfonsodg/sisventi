@@ -235,6 +235,7 @@
 'cache, errors and sessions cleaned': 'cache, errores y sesiones eliminados',
 'cannot create file': 'no es posible crear archivo',
 'cannot upload file "%(filename)s"': 'no es posible subir archivo "%(filename)s"',
+'category:': 'category:',
 'change password': 'cambie contraseña',
 'check all': 'marcar todos',
 'clean': 'limpiar',

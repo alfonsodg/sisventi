@@ -22,17 +22,15 @@ usuarios = [
          [
                 ('Nuevo usuario', False, None,
                  [
-                        ('Administrador (Sistema)', False, URL('users', 'add_user', vars={'group':'root'})),
-                        ('Administrador (Punto de Venta)', False, URL('users', 'add_user', vars={'group':'administrador'})),
-                        ('Almacenes', False, URL('users', 'add_user', vars={'group':'almacenes'})),
-                        ('Compras', False, URL('users', 'add_user', vars={'group':'compras'})),
-                        ('Reportes', False, URL('users', 'add_user', vars={'group':'reportes'})),
-                        ('Ventas', False, URL('users', 'add_user', vars={'group':'ventas'})),
+                        ('Administrador (Sistema)', False, URL('users', 'add', vars={'group':'root'})),
+                        ('Administrador (Punto de Venta)', False, URL('users', 'add', vars={'group':'administrador'})),
+                        ('Almacenes', False, URL('users', 'add', vars={'group':'almacenes'})),
+                        ('Compras', False, URL('users', 'add', vars={'group':'compras'})),
+                        ('Reportes', False, URL('users', 'add', vars={'group':'reportes'})),
+                        ('Ventas', False, URL('users', 'add', vars={'group':'ventas'})),
                  ])
          ])
     ]
-
-
 
 
 if not auth.user:

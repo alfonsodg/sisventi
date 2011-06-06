@@ -20,7 +20,7 @@ now = datetime.datetime.now()
 # Custom auth_user table
 db.define_table(
     auth.settings.table_user_name,
-    Field('username', length=128, default='', label=T('Usuario')),
+    Field('username', length=128, default='', label=T('Usuario'), unique=True),
     Field('first_name', length=128, default='', label=T('Nombres')),
     Field('last_name', length=128, default='', label=T('Apellidos')),
     Field('email', length=128, default='', unique=True, label=T('Correo electrónico')),
@@ -40,6 +40,7 @@ custom_auth_table.first_name.requires = [
 custom_auth_table.last_name.requires = [
     IS_NOT_EMPTY(error_message='Campo obligatorio')]
 custom_auth_table.password.requires = [
+    IS_NOT_EMPTY(error_message='Campo obligatorio'),
     CRYPT()]
 custom_auth_table.email.requires = [
     IS_EMAIL(error_message=auth.messages.invalid_email),
