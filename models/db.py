@@ -23,7 +23,7 @@ db.define_table(
     Field('username', length=128, default='', label=T('Usuario')),
     Field('first_name', length=128, default='', label=T('Nombres')),
     Field('last_name', length=128, default='', label=T('Apellidos')),
-    Field('email', length=128, default='', unique=True, label=T('Correo electónico')),
+    Field('email', length=128, default='', unique=True, label=T('Correo electrónico')),
     Field('password', 'password', length=512, readable=False, label=T('Contraseña')),
     Field('registration_date', 'date', default=today, writable=False, readable=False, label=T('Fecha de registro')),
     Field('registration_key', length=512, writable=False, readable=False, default=''),
@@ -1479,3 +1479,7 @@ db.define_table('ventas_resumen',
     Field('condicion_comercial', 'integer', default=1, notnull=True), 
     migrate=False)
 
+
+# Representations
+db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
+db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role

@@ -1,0 +1,51 @@
+{{extend 'layout.html'}}
+
+<h1>Usuarios Registrados</h1>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Usuario</b></center>
+            </td>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Nombres</b></center>
+            </td>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Apellidos</b></center>
+            </td>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Correo</b></center>
+            </td>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Fecha de Registro</b></center>
+            </td>
+            <td style="vertical-align: top; border: 1px solid #999">
+                <center><b>Edición</b></center>
+            </td>
+        </tr>
+        {{for user in users:}}
+            <tr>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    {{=user.username}}
+                </td>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    {{=user.first_name}}
+                </td>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    {{=user.last_name}}
+                </td>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    {{=user.email}}
+                </td>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    {{=user.registration_date}}
+                </td>
+                <td style="vertical-align: top; border: 1px solid #999">
+                    <center><a href="{{=URL('appadmin', 'update/db/auth_user', args=user.id)}}">Actualizar</a></center>
+                </td>
+            </tr>
+        {{pass}}
+    </tbody>
+</table>

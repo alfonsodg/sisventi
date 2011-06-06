@@ -11,42 +11,74 @@ response.meta.generator = 'Web2py Enterprise Framework'
 response.meta.copyright = 'Copyright 2007-2010'
 
 
-response.menu = [
-    (T('Home'), False, URL('default','index'), [])
+# Custom menus
+inicio = [(T('Home'), False, URL('default','index'), [])]
+almacenes = [('Almacen', False, None, [])]
+compras = [('Compras', False, None, [])]
+ventas = [('Ventas', False, None, [])]
+reportes = [('Reportes', False, None, [])]
+usuarios = [
+        ('Usuarios', False, URL('users', 'index'),
+         [
+                ('Nuevo usuario', False, None,
+                 [
+                        ('Administrador (Sistema)', False, URL('users', 'add_user', vars={'group':'root'})),
+                        ('Administrador (Punto de Venta)', False, URL('users', 'add_user', vars={'group':'administrador'})),
+                        ('Almacenes', False, URL('users', 'add_user', vars={'group':'almacenes'})),
+                        ('Compras', False, URL('users', 'add_user', vars={'group':'compras'})),
+                        ('Reportes', False, URL('users', 'add_user', vars={'group':'reportes'})),
+                        ('Ventas', False, URL('users', 'add_user', vars={'group':'ventas'})),
+                 ])
+         ])
     ]
 
-response.menu+=[
-    (T('This App'), False, URL('admin', 'default', 'design/%s' % request.application),
-     [
-            (T('Controller'), False,
-             URL('admin', 'default', 'edit/%s/controllers/%s.py' \
-                     % (request.application,request.controller=='appadmin' and
-                        'default' or request.controller))),
-            (T('View'), False,
-             URL('admin', 'default', 'edit/%s/views/%s' \
-                     % (request.application,response.view))),
-            (T('Layout'), False,
-             URL('admin', 'default', 'edit/%s/views/layout.html' \
-                     % request.application)),
-            (T('Stylesheet'), False,
-             URL('admin', 'default', 'edit/%s/static/base.css' \
-                     % request.application)),
-            (T('DB Model'), False,
-             URL('admin', 'default', 'edit/%s/models/db.py' \
-                     % request.application)),
-            (T('Menu Model'), False,
-             URL('admin', 'default', 'edit/%s/models/menu.py' \
-                     % request.application)),
-            (T('Database'), False,
-             URL(request.application, 'appadmin', 'index')),
 
-            (T('Errors'), False,
-             URL('admin', 'default', 'errors/%s' \
-                     % request.application)),
 
-            (T('About'), False,
-             URL('admin', 'default', 'about/%s' \
-                     % request.application)),
 
-            ]
-   )]
+if not auth.user:
+    response.menu = inicio
+elif auth.has_membership(user_id=auth.user.id, role='root'):
+    response.menu = inicio
+    response.menu += almacenes
+    response.menu += compras
+    response.menu += reportes
+    response.menu += usuarios
+    response.menu += ventas
+
+        
+    """
+    response.menu+=[
+        (T('This App'), False, URL('admin', 'default', 'design/%s' % request.application),
+         [
+                (T('Controller'), False,
+                 URL('admin', 'default', 'edit/%s/controllers/%s.py' \
+                         % (request.application,request.controller=='appadmin' and
+                            'default' or request.controller))),
+                (T('View'), False,
+                 URL('admin', 'default', 'edit/%s/views/%s' \
+                         % (request.application,response.view))),
+                (T('Layout'), False,
+                 URL('admin', 'default', 'edit/%s/views/layout.html' \
+                         % request.application)),
+                (T('Stylesheet'), False,
+                 URL('admin', 'default', 'edit/%s/static/base.css' \
+                         % request.application)),
+                (T('DB Model'), False,
+                 URL('admin', 'default', 'edit/%s/models/db.py' \
+                         % request.application)),
+                (T('Menu Model'), False,
+                 URL('admin', 'default', 'edit/%s/models/menu.py' \
+                         % request.application)),
+                (T('Database'), False,
+                 URL(request.application, 'appadmin', 'index')),
+
+                (T('Errors'), False,
+                 URL('admin', 'default', 'errors/%s' \
+                         % request.application)),
+
+                (T('About'), False,
+                 URL('admin', 'default', 'about/%s' \
+                         % request.application)),
+
+                ]
+       )]"""
