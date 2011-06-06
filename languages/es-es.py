@@ -73,6 +73,7 @@
 'Forms and Validators': 'Forms and Validators',
 'Free Applications': 'Free Applications',
 'Functions with no doctests will result in [passed] tests.': 'Funciones sin doctests equivalen a pruebas [aceptadas].',
+'Group %(group_id)s created': 'Group %(group_id)s created',
 'Group ID': 'ID de Grupo',
 'Groups': 'Groups',
 'Hello World': 'Hola Mundo',
