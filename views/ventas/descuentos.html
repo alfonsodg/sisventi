@@ -1,0 +1,108 @@
+{{extend 'layout.html'}}
+
+<h1>Descuentos</h1>
+
+<p align="right">
+    <a href="{{=URL('ventas', 'descuentos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto de Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Tiempo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cód. de Barras</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Descuento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Monto Req.</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nivel Usuario</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha Inicio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Hora Inicio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha Fin</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Hora Fin</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Estado</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Usuario Ing.</b></center>
+            </td>
+        </tr>
+        {{if not descuentos:}}
+            <tr>
+                <td colspan="13" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for descuento in descuentos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.tiempo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.codbarras}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.descuento}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.monto_req}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.user_nivel}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.fecha_inicio}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.hora_inicio}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.fecha_fin}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.hora_fin}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.estado}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=descuento.user_ing}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>

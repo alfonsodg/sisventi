@@ -33,7 +33,8 @@ usuarios = [('Usuarios', False, URL('users', 'index'),
 ventas = [('Ventas', False, None,
            [
                 ('Delivery', False, URL('ventas', 'delivery'), []),
-                ('Dependencias de Productos', False, URL('ventas', 'dependencias_productos'), [])
+                ('Dependencias de Productos', False, URL('ventas', 'dependencias_productos'), []),
+                ('Descuentos', False, URL('ventas', 'descuentos'), [])
            ])]
 
 

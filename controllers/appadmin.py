@@ -11,6 +11,9 @@ import copy
 import gluon.contenttype
 import gluon.fileutils
 
+
+restricciones = auth.has_membership('root')
+
 # ## critical --- make a copy of the environment
 
 global_env = copy.copy(globals())
@@ -47,7 +50,7 @@ response.menu = [[T('design'), False, URL('admin', 'default', 'design',
 # ## auxiliary functions
 # ###########################################################
 
-
+@auth.requires(restricciones)
 def get_databases(request):
     dbs = {}
     for (key, value) in global_env.items():
@@ -64,11 +67,13 @@ def get_databases(request):
 databases = get_databases(None)
 
 
+@auth.requires(restricciones)
 def eval_in_global_env(text):
     exec ('_ret=%s' % text, {}, global_env)
     return global_env['_ret']
 
 
+@auth.requires(restricciones)
 def get_database(request):
     if request.args and request.args[0] in databases:
         return eval_in_global_env(request.args[0])
@@ -77,6 +82,7 @@ def get_database(request):
         redirect(URL('index'))
 
 
+@auth.requires(restricciones)
 def get_table(request):
     db = get_database(request)
     if len(request.args) > 1 and request.args[1] in db.tables:
@@ -86,6 +92,7 @@ def get_table(request):
         redirect(URL('index'))
 
 
+@auth.requires(restricciones)
 def get_query(request):
     try:
         return eval_in_global_env(request.vars.query)
@@ -93,6 +100,7 @@ def get_query(request):
         return None
 
 
+@auth.requires(restricciones)
 def query_by_table_type(tablename,db,request=request):
     keyed = hasattr(db[tablename],'_primarykey')
     if keyed:
@@ -112,6 +120,7 @@ def query_by_table_type(tablename,db,request=request):
 # ###########################################################
 
 
+@auth.requires(restricciones)
 def index():
     return dict(databases=databases)
 
@@ -121,6 +130,7 @@ def index():
 # ###########################################################
 
 
+@auth.requires(restricciones)
 def insert():
     (db, table) = get_table(request)
     form = SQLFORM(db[table], ignore_rw=ignore_rw)
@@ -134,11 +144,13 @@ def insert():
 # ###########################################################
 
 
+@auth.requires(restricciones)
 def download():
     import os
     db = get_database(request)
     return response.download(request,db)
 
+@auth.requires(restricciones)
 def csv():
     import gluon.contenttype
     response.headers['Content-Type'] = \
@@ -152,9 +164,11 @@ def csv():
     return str(db(query).select())
 
 
+@auth.requires(restricciones)
 def import_csv(table, file):
     table.import_from_csv_file(file)
 
+@auth.requires(restricciones)
 def select():
     import re
     db = get_database(request)
@@ -247,6 +261,7 @@ def select():
 # ###########################################################
 
 
+@auth.requires(restricciones)
 def update():
     (db, table) = get_table(request)
     keyed = hasattr(db[table],'_primarykey')
@@ -287,9 +302,12 @@ def update():
 # ###########################################################
 
 
+@auth.requires(restricciones)
 def state():
     return dict()
 
+    
+@auth.requires(restricciones)
 def ccache():
     form = FORM(
         P(TAG.BUTTON("Clear CACHE?", _type="submit", _name="yes", _value="yes")),

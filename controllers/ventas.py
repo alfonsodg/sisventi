@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 
+restricciones = auth.has_membership('root') or \
+                auth.has_membership('administrador') or \
+                auth.has_membership('ventas')
+
+
+@auth.requires(restricciones)
 def index():
     return dict()
 
 
+@auth.requires(restricciones)
 def delivery():
     """
     Muestra registros de ventas por delivery
@@ -12,6 +19,7 @@ def delivery():
     return dict(deliveries=deliveries)
 
 
+@auth.requires(restricciones)
 def delivery_agregar():
     """
     Agregar registro a 'delivery'
@@ -22,6 +30,7 @@ def delivery_agregar():
     return dict(form=form)
 
 
+@auth.requires(restricciones)
 def dependencias_productos():
     """
     Dependencias de los productos
@@ -30,9 +39,28 @@ def dependencias_productos():
     return dict(dependencias=dependencias)
 
 
+@auth.requires(restricciones)
 def dependencias_productos_agregar():
     """
     Agregar registro a 'maestro_dependencias'
     """
     form = SQLFORM(db.maestro_dependencias, submit_button='Aceptar')
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
+def descuentos():
+    """
+    Descuentos aplicados a las ventas 
+    """
+    descuentos = db(db.maestro_descuentos).select()
+    return dict(descuentos=descuentos)
+
+
+@auth.requires(restricciones)
+def descuentos_agregar():
+    """
+    Agregar registro a 'maestro_descuentos'
+    """
+    form = SQLFORM(db.maestro_descuentos, submit_button='Aceptar')
     return dict(form=form)
