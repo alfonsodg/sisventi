@@ -20,3 +20,19 @@ def delivery_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+def dependencias_productos():
+    """
+    Dependencias de los productos
+    """
+    dependencias = db(db.maestro_dependencias).select()
+    return dict(dependencias=dependencias)
+
+
+def dependencias_productos_agregar():
+    """
+    Agregar registro a 'maestro_dependencias'
+    """
+    form = SQLFORM(db.maestro_dependencias, submit_button='Aceptar')
+    return dict(form=form)

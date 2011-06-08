@@ -781,7 +781,7 @@ db.define_table('maestro_auxiliar',
 
 db.define_table('maestro_dependencias', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('pv', db.puntos_venta, label='Punto de Venta',
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un punto de venta')), 

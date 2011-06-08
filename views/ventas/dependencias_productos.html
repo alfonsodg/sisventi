@@ -1,9 +1,9 @@
 {{extend 'layout.html'}}
 
-<h1>Delivery</h1>
+<h1>Dependencias de Productos</h1>
 
 <p align="right">
-    <a href="{{=URL('ventas', 'delivery_agregar')}}">
+    <a href="{{=URL('ventas', 'dependencias_productos_agregar')}}">
         <input type="submit" value="Agregar" style="font-size:10pt" name="">
     </a>
 </p>
@@ -16,59 +16,47 @@
                 <center><b>Punto de Venta</b></center>
             </td>
             <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Tiempo</b></center>
+                <center><b>Modo</b></center>
             </td>
             <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Número</b></center>
+                <center><b>Cód. de Barras</b></center>
             </td>
             <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Cliente</b></center>
+                <center><b>Data</b></center>
             </td>
             <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Documento</b></center>
+                <center><b>Estado</b></center>
             </td>
             <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Caract. 1</b></center>
-            </td>
-            <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Caract. 2</b></center>
-            </td>
-            <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Caract. 3</b></center>
+                <center><b>Usuario Ing.</b></center>
             </td>
         </tr>
-        {{if not deliveries:}}
+        {{if not dependencias:}}
             <tr>
                 <td colspan="8" rowspan="1" style="vertical-align: top; border: 1px solid #999">
                     <center>No hay registros</center>
                 </td>
             </tr>
         {{else:}}
-            {{for delivery in deliveries:}}
+            {{for dependencia in dependencias:}}
                 <tr>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.pv}}
+                        {{=dependencia.pv}}
                     </td>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.tiempo}}
+                        {{=dependencia.modo}}
                     </td>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.numero}}
+                        {{=delivery.codbarras}}
                     </td>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.cliente}}
+                        {{=delivery.data}}
                     </td>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.docnum}}
+                        {{=delivery.estado}}
                     </td>
                     <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.carac1}}
-                    </td>
-                    <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.carac2}}
-                    </td>
-                    <td style="vertical-align: top; border: 1px solid #999">
-                        {{=delivery.carac3}}
+                        {{=delivery.user_ing}}
                     </td>
                 </tr>
             {{pass}}
