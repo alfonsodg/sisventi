@@ -267,7 +267,7 @@ CREATE TABLE `auth_event` (
   PRIMARY KEY (`id`),
   KEY `user_id__idx` (`user_id`),
   CONSTRAINT `auth_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,6 +276,7 @@ CREATE TABLE `auth_event` (
 
 LOCK TABLES `auth_event` WRITE;
 /*!40000 ALTER TABLE `auth_event` DISABLE KEYS */;
+INSERT INTO `auth_event` VALUES (1,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 1 created'),(2,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 2 created'),(3,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 3 created'),(4,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 4 created'),(5,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 5 created'),(6,'2011-06-06 10:51:50','127.0.0.1',NULL,'auth','Group 6 created'),(7,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 7 created'),(8,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 8 created'),(9,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 9 created'),(10,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 10 created'),(11,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 11 created'),(12,'2011-06-06 10:51:51','127.0.0.1',NULL,'auth','Group 12 created'),(13,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 13 created'),(14,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 14 created'),(15,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 15 created'),(16,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 16 created'),(17,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 17 created'),(18,'2011-06-06 10:55:08','127.0.0.1',NULL,'auth','Group 18 created'),(19,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 19 created'),(20,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 20 created'),(21,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 21 created'),(22,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 22 created'),(23,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 23 created'),(24,'2011-06-06 11:00:40','127.0.0.1',NULL,'auth','Group 24 created'),(25,'2011-06-06 11:18:54','127.0.0.1',1,'auth','Usuario 1 logueado'),(26,'2011-06-06 11:23:31','127.0.0.1',1,'auth','User 1 Logged-out'),(27,'2011-06-06 11:23:38','127.0.0.1',1,'auth','Usuario 1 logueado'),(28,'2011-06-06 11:51:59','127.0.0.1',1,'auth','User 1 Logged-out'),(29,'2011-06-06 11:52:11','127.0.0.1',1,'auth','Usuario 1 logueado'),(30,'2011-06-06 12:44:04','127.0.0.1',1,'auth','User 1 Logged-out'),(31,'2011-06-06 12:44:12','127.0.0.1',1,'auth','Usuario 1 logueado'),(32,'2011-06-06 15:52:03','127.0.0.1',1,'auth','Usuario 1 logueado'),(33,'2011-06-06 15:52:56','127.0.0.1',1,'auth','User 1 Logged-out'),(34,'2011-06-06 15:54:52','127.0.0.1',1,'auth','Usuario 1 logueado'),(35,'2011-06-06 18:00:58','127.0.0.1',1,'auth','Usuario 1 logueado'),(36,'2011-06-07 13:00:35','127.0.0.1',1,'auth','Usuario 1 logueado'),(37,'2011-06-07 16:05:20','127.0.0.1',1,'auth','Usuario 1 logueado'),(38,'2011-06-07 22:03:28','127.0.0.1',1,'auth','Usuario 1 logueado'),(39,'2011-06-08 10:54:04','127.0.0.1',1,'auth','Usuario 1 logueado');
 /*!40000 ALTER TABLE `auth_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +292,7 @@ CREATE TABLE `auth_group` (
   `role` varchar(255) DEFAULT NULL,
   `description` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,6 +301,7 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+INSERT INTO `auth_group` VALUES (19,'root','Administrador del  sistema'),(20,'administrador','Administrador de un punto de venta'),(21,'ventas','Encargado de ventas'),(22,'compras','Encargado de compras'),(23,'almacenes','Encargado de almacenes'),(24,'reportes','Encargado de reportes');
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +321,7 @@ CREATE TABLE `auth_membership` (
   KEY `group_id__idx` (`group_id`),
   CONSTRAINT `auth_membership_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `auth_membership_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,6 +330,7 @@ CREATE TABLE `auth_membership` (
 
 LOCK TABLES `auth_membership` WRITE;
 /*!40000 ALTER TABLE `auth_membership` DISABLE KEYS */;
+INSERT INTO `auth_membership` VALUES (1,1,19);
 /*!40000 ALTER TABLE `auth_membership` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,11 +378,12 @@ CREATE TABLE `auth_user` (
   `registration_key` varchar(255) DEFAULT NULL,
   `reset_password_key` varchar(255) DEFAULT NULL,
   `registration_id` varchar(255) DEFAULT NULL,
-  `username` varchar(128) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
+  `username` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,6 +392,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'César','Bustíos Benites','63a9f0ea7bb98050796b649e85481845','2011-06-06','','','','cesar.bustios@ictec.biz','root');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3051,4 +3056,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-04 14:03:16
+-- Dump completed on 2011-06-08 12:55:21
