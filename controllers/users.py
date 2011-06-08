@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-@auth.requires(auth.has_membership('root') or auth.has_membership('administrador'))
+@auth.requires_membership('root')
 def index():
     """
     Muestra usuarios registrados
@@ -9,6 +9,7 @@ def index():
     return dict(users=users)
 
 
+@auth.requires_membership('root')
 def add():
     """
     Agregar un usuario al sistema

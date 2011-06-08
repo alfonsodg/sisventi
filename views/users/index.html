@@ -43,7 +43,11 @@
                     {{=user.registration_date}}
                 </td>
                 <td style="vertical-align: top; border: 1px solid #999">
-                    <center><a href="{{=URL('appadmin', 'update/db/auth_user', args=user.id)}}">Actualizar</a></center>
+                    <center>
+                        <a href="{{=URL('appadmin', 'update/db/auth_user', args=user.id)}}" style="text-decoration:none">
+                            Actualizar
+                        </a>
+                    </center>
                 </td>
             </tr>
         {{pass}}

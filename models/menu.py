@@ -13,13 +13,12 @@ response.meta.copyright = 'Copyright 2007-2010'
 
 # Custom menus
 inicio = [(T('Home'), False, URL('default','index'), [])]
-almacenes = [('Almacen', False, None, [])]
-compras = [('Compras', False, None, [])]
-ventas = [('Ventas', False, None, [])]
+almacenes = [('Almacenes', False, None, [])]
+por_cobrar = [('Cuentas por Cobrar', False, None, [])]
+por_pagar = [('Cuentas por Pagar', False, None, [])]
 reportes = [('Reportes', False, None, [])]
-usuarios = [
-        ('Usuarios', False, URL('users', 'index'),
-         [
+usuarios = [('Usuarios', False, URL('users', 'index'),
+            [
                 ('Nuevo usuario', False, None,
                  [
                         ('Administrador (Sistema)', False, URL('users', 'add', vars={'group':'root'})),
@@ -29,8 +28,14 @@ usuarios = [
                         ('Reportes', False, URL('users', 'add', vars={'group':'reportes'})),
                         ('Ventas', False, URL('users', 'add', vars={'group':'ventas'})),
                  ])
-         ])
-    ]
+             ])
+        ]
+ventas = [('Ventas', False, None,
+           [
+                ('Delivery', False, URL('ventas', 'delivery'), []),
+                ('Dependencias de Productos', False, URL('ventas', 'delivery'), [])
+           ])]
+
 
 
 if not auth.user:
@@ -38,7 +43,8 @@ if not auth.user:
 elif auth.has_membership(user_id=auth.user.id, role='root'):
     response.menu = inicio
     response.menu += almacenes
-    response.menu += compras
+    response.menu += por_cobrar
+    response.menu += por_pagar
     response.menu += reportes
     response.menu += usuarios
     response.menu += ventas

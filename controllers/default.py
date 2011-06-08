@@ -7,6 +7,7 @@ def index():
     """
     return dict(message='Bienvenido')
 
+
 def user():
     """
     exposes:
