@@ -1,0 +1,126 @@
+{{extend 'layout.html'}}
+
+<h1>Promociones</h1>
+
+<p align="right">
+    <a href="{{=URL('ventas', 'promociones_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto de Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Código</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Porcentaje</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Valor</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cod. de Barras</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cantidad</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Límite</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Valor</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Fecha Inicio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Hora Inicio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Fecha Fin</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cond. Hora Fin</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Estado</b></center>
+            </td>
+        </tr>
+        {{if not promociones:}}
+            <tr>
+                <td colspan="16" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for promocion in promociones:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.codigo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.nombre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.porcentaje}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.valor}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.codbarras}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cantidad}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.limite}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_valor}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_fecha_inic}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_hora_inic}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_fecha_term}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.cond_hora_term}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=promocion.estado}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>

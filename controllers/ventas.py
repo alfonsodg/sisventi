@@ -45,6 +45,8 @@ def dependencias_productos_agregar():
     Agregar registro a 'maestro_dependencias'
     """
     form = SQLFORM(db.maestro_dependencias, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
     return dict(form=form)
 
 
@@ -63,4 +65,26 @@ def descuentos_agregar():
     Agregar registro a 'maestro_descuentos'
     """
     form = SQLFORM(db.maestro_descuentos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
+def promociones():
+    """
+    Promociones para las ventas
+    """
+    promociones = db(db.promociones).select()
+    return dict(promociones=promociones)
+
+
+@auth.requires(restricciones)
+def promociones_agregar():
+    """
+    Agregar registro a 'promociones'
+    """
+    form = SQLFORM(db.promociones, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
     return dict(form=form)

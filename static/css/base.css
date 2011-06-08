@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/* For page width search for /*********** page layout alignment, width and padding ***********/
+
 /* This file is contains the following sections:
 
 Update: Revision: 20101102 by Martin Mulone
@@ -347,7 +349,7 @@ h6 {font-size: 0.8em;}
 /*body {background-color: #000;}*/
 #container, #header, #page, #content, #statusbar,
 #footer, #wrapper { display:block; line-height: 170%; }
-#wrapper {width: 900px;}
+#wrapper {width: 90%;}
 #container {
     margin: 0 auto;
     padding: 0;
