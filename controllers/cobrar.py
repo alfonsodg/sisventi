@@ -52,7 +52,10 @@ def cuentas_agregar():
     """
     Agregar nuevo registro a 'cuentas_por_cobrar'
     """
-    return dict()
+    form = SQLFORM(db.cuentas_por_cobrar, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
 
 
 @auth.requires(restricciones)

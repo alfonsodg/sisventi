@@ -1488,9 +1488,38 @@ db.define_table('ventas_resumen',
 )
 
 
-"""db.define_table('cuentas_por_cobrar',
-    Field()
-    )"""
+db.define_table('cuentas_por_cobrar',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('fecha_doc', 'date', notnull=True, label='Fecha del Documento', default=datetime.date.today()),
+    Field('documento', 'string', notnull=True, label='Documento a Pagar'),
+    Field('cliente', 'string', notnull=True),
+    Field('accion', 'string', notnull=True, label='Acción'),
+    Field('neto_ingreso', 'double', notnull=True, label='Monto Neto de Ingreso', default=0.0),
+    Field('impuesto_ingreso', 'double', notnull=True, label='Impuesto del Ingreso', default=0.0),
+    Field('bruto_ingreso', 'double', notnull=True, label='Monto Bruto del Ingreso', default=0.0),
+    Field('neto_salida', 'double', notnull=True, label='Monto Neto de Salida', default=0.0),
+    Field('impuesto_salida', 'double', notnull=True, label='Impuesto de Salida', default=0.0),
+    Field('bruto_salida', 'double', notnull=True, label='Monto Bruto de Salida', default=0.0),
+    Field('fecha_venc', 'double', notnull=True, label='Fecha de Vencimiento'),
+)
+
+
+db.define_table('cuentas_por_pagar',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('fecha_doc', 'date', notnull=True, label='Fecha del Documento', default=datetime.date.today()),
+    Field('documento', 'string', notnull=True, label='Documento a Pagar'),
+    Field('proveedor', 'string', notnull=True),
+    Field('accion', 'string', notnull=True, label='Acción'),
+    Field('neto_ingreso', 'double', notnull=True, label='Monto Neto de Ingreso', default=0.0),
+    Field('impuesto_ingreso', 'double', notnull=True, label='Impuesto del Ingreso', default=0.0),
+    Field('bruto_ingreso', 'double', notnull=True, label='Monto Bruto del Ingreso', default=0.0),
+    Field('neto_salida', 'double', notnull=True, label='Monto Neto de Salida', default=0.0),
+    Field('impuesto_salida', 'double', notnull=True, label='Impuesto de Salida', default=0.0),
+    Field('bruto_salida', 'double', notnull=True, label='Monto Bruto de Salida', default=0.0),
+    Field('fecha_venc', 'double', notnull=True, label='Fecha de Vencimiento'),
+)
 
 
 # Representations
