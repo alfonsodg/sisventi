@@ -1,0 +1,81 @@
+(dp1
+S'grupo_distribucion'
+p2
+(dp3
+S'type'
+p4
+S'reference grupo_distribucion'
+p5
+sS'sortable'
+p6
+I3
+sS'sql'
+p7
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p8
+ssS'turno'
+p9
+(dp10
+g4
+S'reference turnos'
+p11
+sg6
+I4
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p12
+ssS'porcentaje'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I5
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'cp'
+p17
+(dp18
+g4
+S'string'
+p19
+sg6
+I2
+sg7
+S'VARCHAR(255) NOT NULL'
+p20
+ssS'codbarras'
+p21
+(dp22
+g4
+S'reference maestro'
+p23
+sg6
+I6
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p24
+ssS'id'
+p25
+(dp26
+g4
+g25
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p27
+ssS'modo'
+p28
+(dp29
+g4
+S'integer'
+p30
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p31
+ss.

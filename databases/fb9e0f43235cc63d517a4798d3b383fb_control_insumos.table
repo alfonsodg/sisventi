@@ -1,0 +1,98 @@
+(dp1
+S'adicional'
+p2
+(dp3
+S'type'
+p4
+S'double'
+p5
+sS'sortable'
+p6
+I5
+sS'sql'
+p7
+S'DOUBLE NOT NULL'
+p8
+ssS'gramos'
+p9
+(dp10
+g4
+g5
+sg6
+I4
+sg7
+S'DOUBLE NOT NULL'
+p11
+ssS'codbarras_hijo'
+p12
+(dp13
+g4
+S'string'
+p14
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p15
+ssS'codbarras_padre'
+p16
+(dp17
+g4
+g14
+sg6
+I2
+sg7
+S'VARCHAR(255) NOT NULL'
+p18
+ssS'truco'
+p19
+(dp20
+g4
+S'integer'
+p21
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p22
+ssS'orden'
+p23
+(dp24
+g4
+g21
+sg6
+I8
+sg7
+S'INT NOT NULL'
+p25
+ssS'estado'
+p26
+(dp27
+g4
+g21
+sg6
+I6
+sg7
+S'INT NOT NULL'
+p28
+ssS'id'
+p29
+(dp30
+g4
+g29
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p31
+ssS'modo'
+p32
+(dp33
+g4
+g21
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p34
+ss.

@@ -1,0 +1,169 @@
+(dp1
+S'doc_reg'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I5
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'pv'
+p13
+(dp14
+g4
+S'reference puntos_venta'
+p15
+sg6
+I7
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p16
+ssS'copia'
+p17
+(dp18
+g4
+S'integer'
+p19
+sg6
+I12
+sg7
+S'INT NOT NULL'
+p20
+ssS'impresion'
+p21
+(dp22
+g4
+g19
+sg6
+I15
+sg7
+S'INT NOT NULL'
+p23
+ssS'impuestos'
+p24
+(dp25
+g4
+g5
+sg6
+I16
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'limite'
+p27
+(dp28
+g4
+g19
+sg6
+I14
+sg7
+S'INT NOT NULL'
+p29
+ssS'caja'
+p30
+(dp31
+g4
+g19
+sg6
+I8
+sg7
+S'INT NOT NULL'
+p32
+ssS'correlativo'
+p33
+(dp34
+g4
+g19
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p35
+ssS'nombre'
+p36
+(dp37
+g4
+g5
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p38
+ssS'prefijo'
+p39
+(dp40
+g4
+g5
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p41
+ssS'modo'
+p42
+(dp43
+g4
+g19
+sg6
+I3
+sg7
+S'INT NOT NULL'
+p44
+ssS'sufijo'
+p45
+(dp46
+g4
+g5
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ssS'id'
+p48
+(dp49
+g4
+g48
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p50
+ssS'detalle'
+p51
+(dp52
+g4
+g19
+sg6
+I13
+sg7
+S'INT NOT NULL'
+p53
+ssS'documento'
+p54
+(dp55
+g4
+g19
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p56
+ss.

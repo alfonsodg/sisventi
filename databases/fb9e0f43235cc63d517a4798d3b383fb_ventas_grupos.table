@@ -1,0 +1,133 @@
+(dp1
+S'genero'
+p2
+(dp3
+S'type'
+p4
+S'reference generos'
+p5
+sS'sortable'
+p6
+I9
+sS'sql'
+p7
+S'INT, INDEX genero__idx (genero), FOREIGN KEY (genero) REFERENCES generos(id) ON DELETE CASCADE'
+p8
+ssS'categoria'
+p9
+(dp10
+g4
+S'reference categorias'
+p11
+sg6
+I11
+sg7
+S'INT, INDEX categoria__idx (categoria), FOREIGN KEY (categoria) REFERENCES categorias(id) ON DELETE CASCADE'
+p12
+ssS'registro'
+p13
+(dp14
+g4
+S'datetime'
+p15
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p16
+ssS'casa'
+p17
+(dp18
+g4
+S'reference casas'
+p19
+sg6
+I7
+sg7
+S'INT, INDEX casa__idx (casa), FOREIGN KEY (casa) REFERENCES casas(id) ON DELETE CASCADE'
+p20
+ssS'sello'
+p21
+(dp22
+g4
+S'reference sellos'
+p23
+sg6
+I8
+sg7
+S'INT, INDEX sello__idx (sello), FOREIGN KEY (sello) REFERENCES sellos(id) ON DELETE CASCADE'
+p24
+ssS'aux_data'
+p25
+(dp26
+g4
+S'integer'
+p27
+sg6
+I12
+sg7
+S'INT NOT NULL'
+p28
+ssS'subgenero'
+p29
+(dp30
+g4
+S'reference sub_generos'
+p31
+sg6
+I10
+sg7
+S'INT, INDEX subgenero__idx (subgenero), FOREIGN KEY (subgenero) REFERENCES sub_generos(id) ON DELETE CASCADE'
+p32
+ssS'articulo'
+p33
+(dp34
+g4
+S'string'
+p35
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p36
+ssS'atajo'
+p37
+(dp38
+g4
+g35
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p39
+ssS'nombre'
+p40
+(dp41
+g4
+g35
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p42
+ssS'codigo'
+p43
+(dp44
+g4
+g35
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p45
+ssS'id'
+p46
+(dp47
+g4
+g46
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p48
+ss.

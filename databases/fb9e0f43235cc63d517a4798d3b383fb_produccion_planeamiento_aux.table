@@ -1,0 +1,102 @@
+(dp1
+S'condicion_pedido'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I6
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'fecha'
+p13
+(dp14
+g4
+S'date'
+p15
+sg6
+I3
+sg7
+S'DATE NOT NULL'
+p16
+ssS'grupo_distribucion'
+p17
+(dp18
+g4
+S'reference grupo_distribucion'
+p19
+sg6
+I7
+sg7
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p20
+ssS'turno'
+p21
+(dp22
+g4
+S'reference turnos'
+p23
+sg6
+I9
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p24
+ssS'cp'
+p25
+(dp26
+g4
+g5
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p27
+ssS'codbarras'
+p28
+(dp29
+g4
+S'reference maestro'
+p30
+sg6
+I4
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p31
+ssS'id'
+p32
+(dp33
+g4
+g32
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p34
+ssS'cantidad_prod'
+p35
+(dp36
+g4
+S'double'
+p37
+sg6
+I5
+sg7
+S'DOUBLE NOT NULL'
+p38
+ss.

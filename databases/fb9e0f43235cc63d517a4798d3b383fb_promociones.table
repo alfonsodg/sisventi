@@ -1,0 +1,193 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'pv'
+p9
+(dp10
+g4
+S'reference puntos_venta'
+p11
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p12
+ssS'cond_hora_inic'
+p13
+(dp14
+g4
+S'time'
+p15
+sg6
+I15
+sg7
+S'TIME NOT NULL'
+p16
+ssS'cantidad'
+p17
+(dp18
+g4
+S'integer'
+p19
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p20
+ssS'cond_valor'
+p21
+(dp22
+g4
+g19
+sg6
+I13
+sg7
+S'INT NOT NULL'
+p23
+ssS'valor'
+p24
+(dp25
+g4
+S'double'
+p26
+sg6
+I7
+sg7
+S'DOUBLE NOT NULL'
+p27
+ssS'cond_modo'
+p28
+(dp29
+g4
+g19
+sg6
+I12
+sg7
+S'INT NOT NULL'
+p30
+ssS'limite'
+p31
+(dp32
+g4
+g19
+sg6
+I11
+sg7
+S'INT NOT NULL'
+p33
+ssS'cond_fecha_inic'
+p34
+(dp35
+g4
+S'date'
+p36
+sg6
+I14
+sg7
+S'DATE NOT NULL'
+p37
+ssS'estado'
+p38
+(dp39
+g4
+g19
+sg6
+I18
+sg7
+S'INT NOT NULL'
+p40
+ssS'porcentaje'
+p41
+(dp42
+g4
+g26
+sg6
+I6
+sg7
+S'DOUBLE NOT NULL'
+p43
+ssS'cond_fecha_term'
+p44
+(dp45
+g4
+g36
+sg6
+I16
+sg7
+S'DATE NOT NULL'
+p46
+ssS'nombre'
+p47
+(dp48
+g4
+S'string'
+p49
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p50
+ssS'cond_hora_term'
+p51
+(dp52
+g4
+g15
+sg6
+I17
+sg7
+S'TIME NOT NULL'
+p53
+ssS'codigo'
+p54
+(dp55
+g4
+g49
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p56
+ssS'codbarras'
+p57
+(dp58
+g4
+S'reference maestro'
+p59
+sg6
+I9
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p60
+ssS'id'
+p61
+(dp62
+g4
+g61
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p63
+ssS'modo'
+p64
+(dp65
+g4
+g19
+sg6
+I8
+sg7
+S'INT NOT NULL'
+p66
+ss.

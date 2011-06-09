@@ -12,7 +12,7 @@ import gluon.contenttype
 import gluon.fileutils
 
 
-restricciones = auth.has_membership('root')
+restricciones = True#auth.has_membership('root')
 
 # ## critical --- make a copy of the environment
 

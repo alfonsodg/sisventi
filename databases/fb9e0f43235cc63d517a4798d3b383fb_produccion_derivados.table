@@ -1,0 +1,223 @@
+(dp1
+S'sal_consumo_int'
+p2
+(dp3
+S'type'
+p4
+S'double'
+p5
+sS'sortable'
+p6
+I19
+sS'sql'
+p7
+S'DOUBLE NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'cp_base'
+p13
+(dp14
+g4
+S'string'
+p15
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p16
+ssS'tipo'
+p17
+(dp18
+g4
+S'integer'
+p19
+sg6
+I5
+sg7
+S'INT NOT NULL'
+p20
+ssS'ing_traslado'
+p21
+(dp22
+g4
+g5
+sg6
+I15
+sg7
+S'DOUBLE NOT NULL'
+p23
+ssS'n_doc_base'
+p24
+(dp25
+g4
+g15
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'fecha'
+p27
+(dp28
+g4
+S'date'
+p29
+sg6
+I9
+sg7
+S'DATE NOT NULL'
+p30
+ssS'ing_varios'
+p31
+(dp32
+g4
+g5
+sg6
+I16
+sg7
+S'DOUBLE NOT NULL'
+p33
+ssS'n_doc_prefijo'
+p34
+(dp35
+g4
+g15
+sg6
+I10
+sg7
+S'VARCHAR(255) NOT NULL'
+p36
+ssS'ing_produccion'
+p37
+(dp38
+g4
+g5
+sg6
+I14
+sg7
+S'DOUBLE NOT NULL'
+p39
+ssS'sal_ventas'
+p40
+(dp41
+g4
+g5
+sg6
+I17
+sg7
+S'DOUBLE NOT NULL'
+p42
+ssS'sal_varios'
+p43
+(dp44
+g4
+g5
+sg6
+I21
+sg7
+S'DOUBLE NOT NULL'
+p45
+ssS'user_ing'
+p46
+(dp47
+g4
+S'reference auth_user'
+p48
+sg6
+I8
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p49
+ssS'turno'
+p50
+(dp51
+g4
+S'reference turnos'
+p52
+sg6
+I4
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p53
+ssS'n_doc_sufijo'
+p54
+(dp55
+g4
+g15
+sg6
+I12
+sg7
+S'VARCHAR(255) NOT NULL'
+p56
+ssS'cp_aux'
+p57
+(dp58
+g4
+g15
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p59
+ssS'sal_merma'
+p60
+(dp61
+g4
+g5
+sg6
+I18
+sg7
+S'DOUBLE NOT NULL'
+p62
+ssS'sal_traslado'
+p63
+(dp64
+g4
+g5
+sg6
+I20
+sg7
+S'DOUBLE NOT NULL'
+p65
+ssS'codbarras'
+p66
+(dp67
+g4
+S'reference maestro'
+p68
+sg6
+I13
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p69
+ssS'id'
+p70
+(dp71
+g4
+g70
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p72
+ssS'modo'
+p73
+(dp74
+g4
+g19
+sg6
+I3
+sg7
+S'INT NOT NULL'
+p75
+ss.

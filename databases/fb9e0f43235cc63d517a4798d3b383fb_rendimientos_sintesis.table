@@ -1,0 +1,89 @@
+(dp1
+S'tipo'
+p2
+(dp3
+S'type'
+p4
+S'integer'
+p5
+sS'sortable'
+p6
+I4
+sS'sql'
+p7
+S'INT NOT NULL'
+p8
+ssS'cantidad'
+p9
+(dp10
+g4
+S'double'
+p11
+sg6
+I5
+sg7
+S'DOUBLE NOT NULL'
+p12
+ssS'fecha'
+p13
+(dp14
+g4
+S'date'
+p15
+sg6
+I2
+sg7
+S'DATE NOT NULL'
+p16
+ssS'peso'
+p17
+(dp18
+g4
+g11
+sg6
+I6
+sg7
+S'DOUBLE NOT NULL'
+p19
+ssS'rendimiento'
+p20
+(dp21
+g4
+g11
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p22
+ssS'turno'
+p23
+(dp24
+g4
+S'reference turnos'
+p25
+sg6
+I3
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p26
+ssS'merma'
+p27
+(dp28
+g4
+g11
+sg6
+I7
+sg7
+S'DOUBLE NOT NULL'
+p29
+ssS'id'
+p30
+(dp31
+g4
+g30
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p32
+ss.

@@ -1,0 +1,97 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I4
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'tipo'
+p9
+(dp10
+g4
+g5
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p11
+ssS'marca'
+p12
+(dp13
+g4
+g5
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p14
+ssS'modelo'
+p15
+(dp16
+g4
+g5
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p17
+ssS'caracteristicas'
+p18
+(dp19
+g4
+g5
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p20
+ssS'posicion'
+p21
+(dp22
+g4
+S'integer'
+p23
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p24
+ssS'codigo'
+p25
+(dp26
+g4
+g5
+sg6
+I2
+sg7
+S'VARCHAR(255) NOT NULL'
+p27
+ssS'doc_id'
+p28
+(dp29
+g4
+g5
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p30
+ssS'id'
+p31
+(dp32
+g4
+g31
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p33
+ss.

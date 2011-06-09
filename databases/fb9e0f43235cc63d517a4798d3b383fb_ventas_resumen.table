@@ -1,0 +1,120 @@
+(dp1
+S'total_igv'
+p2
+(dp3
+S'type'
+p4
+S'double'
+p5
+sS'sortable'
+p6
+I7
+sS'sql'
+p7
+S'DOUBLE NOT NULL'
+p8
+ssS'status'
+p9
+(dp10
+g4
+S'integer'
+p11
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p12
+ssS'registro'
+p13
+(dp14
+g4
+S'datetime'
+p15
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p16
+ssS'pv'
+p17
+(dp18
+g4
+S'reference puntos_venta'
+p19
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p20
+ssS'fecha'
+p21
+(dp22
+g4
+S'date'
+p23
+sg6
+I4
+sg7
+S'DATE NOT NULL'
+p24
+ssS'total_srv'
+p25
+(dp26
+g4
+g5
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p27
+ssS'condicion_comercial'
+p28
+(dp29
+g4
+g11
+sg6
+I11
+sg7
+S'INT NOT NULL'
+p30
+ssS'total_neto'
+p31
+(dp32
+g4
+g5
+sg6
+I6
+sg7
+S'DOUBLE NOT NULL'
+p33
+ssS'cnt_doc'
+p34
+(dp35
+g4
+g11
+sg6
+I5
+sg7
+S'INT NOT NULL'
+p36
+ssS'total_bruto'
+p37
+(dp38
+g4
+g5
+sg6
+I9
+sg7
+S'DOUBLE NOT NULL'
+p39
+ssS'id'
+p40
+(dp41
+g4
+g40
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p42
+ss.

@@ -1,0 +1,348 @@
+(dp1
+S'proveedor'
+p2
+(dp3
+S'type'
+p4
+S'reference directorio'
+p5
+sS'sortable'
+p6
+I20
+sS'sql'
+p7
+S'INT, INDEX proveedor__idx (proveedor), FOREIGN KEY (proveedor) REFERENCES directorio(id) ON DELETE CASCADE'
+p8
+ssS'cantidad'
+p9
+(dp10
+g4
+S'double'
+p11
+sg6
+I11
+sg7
+S'DOUBLE NOT NULL'
+p12
+ssS'user_anul'
+p13
+(dp14
+g4
+S'reference auth_user'
+p15
+sg6
+I31
+sg7
+S'INT, INDEX user_anul__idx (user_anul), FOREIGN KEY (user_anul) REFERENCES auth_user(id) ON DELETE CASCADE'
+p16
+ssS'user_req'
+p17
+(dp18
+g4
+S'string'
+p19
+sg6
+I27
+sg7
+S'VARCHAR(255) NOT NULL'
+p20
+ssS'sub_total_imp'
+p21
+(dp22
+g4
+g11
+sg6
+I18
+sg7
+S'DOUBLE NOT NULL'
+p23
+ssS'moneda'
+p24
+(dp25
+g4
+S'reference monedas'
+p26
+sg6
+I13
+sg7
+S'INT, INDEX moneda__idx (moneda), FOREIGN KEY (moneda) REFERENCES monedas(id) ON DELETE CASCADE'
+p27
+ssS'total_neto'
+p28
+(dp29
+g4
+g11
+sg6
+I21
+sg7
+S'DOUBLE NOT NULL'
+p30
+ssS'codbarras'
+p31
+(dp32
+g4
+S'reference maestro'
+p33
+sg6
+I10
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p34
+ssS'id'
+p35
+(dp36
+g4
+g35
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p37
+ssS'cantidad_proveedor'
+p38
+(dp39
+g4
+g11
+sg6
+I12
+sg7
+S'DOUBLE NOT NULL'
+p40
+ssS'area'
+p41
+(dp42
+g4
+S'reference areas'
+p43
+sg6
+I8
+sg7
+S'INT, INDEX area__idx (area), FOREIGN KEY (area) REFERENCES areas(id) ON DELETE CASCADE'
+p44
+ssS'n_doc_sufijo'
+p45
+(dp46
+g4
+g19
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ssS'tiempo_anul'
+p48
+(dp49
+g4
+S'datetime'
+p50
+sg6
+I32
+sg7
+S'DATETIME NOT NULL'
+p51
+ssS'precio_neto'
+p52
+(dp53
+g4
+g11
+sg6
+I14
+sg7
+S'DOUBLE NOT NULL'
+p54
+ssS'fecha_entrega'
+p55
+(dp56
+g4
+S'date'
+p57
+sg6
+I25
+sg7
+S'DATE NOT NULL'
+p58
+ssS'sub_total_bruto'
+p59
+(dp60
+g4
+g11
+sg6
+I19
+sg7
+S'DOUBLE NOT NULL'
+p61
+ssS'tiempo'
+p62
+(dp63
+g4
+g50
+sg6
+I3
+sg7
+S'DATETIME NOT NULL'
+p64
+ssS'registro'
+p65
+(dp66
+g4
+g50
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p67
+ssS'observaciones'
+p68
+(dp69
+g4
+g19
+sg6
+I33
+sg7
+S'VARCHAR(255) NOT NULL'
+p70
+ssS'total_texto'
+p71
+(dp72
+g4
+g19
+sg6
+I24
+sg7
+S'VARCHAR(255) NOT NULL'
+p73
+ssS'lugar_entrega'
+p74
+(dp75
+g4
+g19
+sg6
+I26
+sg7
+S'VARCHAR(255) NOT NULL'
+p76
+ssS'user_ing'
+p77
+(dp78
+g4
+S'reference auth_user'
+p79
+sg6
+I28
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p80
+ssS'user_aut2'
+p81
+(dp82
+g4
+S'reference auth_user'
+p83
+sg6
+I30
+sg7
+S'INT, INDEX user_aut2__idx (user_aut2), FOREIGN KEY (user_aut2) REFERENCES auth_user(id) ON DELETE CASCADE'
+p84
+ssS'user_aut1'
+p85
+(dp86
+g4
+S'reference auth_user'
+p87
+sg6
+I29
+sg7
+S'INT, INDEX user_aut1__idx (user_aut1), FOREIGN KEY (user_aut1) REFERENCES auth_user(id) ON DELETE CASCADE'
+p88
+ssS'estado'
+p89
+(dp90
+g4
+S'integer'
+p91
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p92
+ssS'total_bruto'
+p93
+(dp94
+g4
+g11
+sg6
+I23
+sg7
+S'DOUBLE NOT NULL'
+p95
+ssS'precio_imp'
+p96
+(dp97
+g4
+g11
+sg6
+I15
+sg7
+S'DOUBLE NOT NULL'
+p98
+ssS'total_imp'
+p99
+(dp100
+g4
+g11
+sg6
+I22
+sg7
+S'DOUBLE NOT NULL'
+p101
+ssS'n_doc_base'
+p102
+(dp103
+g4
+g91
+sg6
+I5
+sg7
+S'INT NOT NULL'
+p104
+ssS'n_doc_prefijo'
+p105
+(dp106
+g4
+g19
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p107
+ssS'precio_bruto'
+p108
+(dp109
+g4
+g11
+sg6
+I16
+sg7
+S'DOUBLE NOT NULL'
+p110
+ssS'forma_pago'
+p111
+(dp112
+g4
+g19
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p113
+ssS'sub_total_neto'
+p114
+(dp115
+g4
+g11
+sg6
+I17
+sg7
+S'DOUBLE NOT NULL'
+p116
+ss.

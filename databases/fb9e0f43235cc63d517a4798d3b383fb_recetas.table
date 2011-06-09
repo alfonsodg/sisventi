@@ -1,0 +1,90 @@
+(dp1
+S'orden'
+p2
+(dp3
+S'type'
+p4
+S'integer'
+p5
+sS'sortable'
+p6
+I8
+sS'sql'
+p7
+S'INT NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'cantidad'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I4
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'codbarras_hijo'
+p17
+(dp18
+g4
+S'reference maestro'
+p19
+sg6
+I5
+sg7
+S'INT, INDEX codbarras_hijo__idx (codbarras_hijo), FOREIGN KEY (codbarras_hijo) REFERENCES maestro(id) ON DELETE CASCADE'
+p20
+ssS'codbarras_padre'
+p21
+(dp22
+g4
+S'reference maestro'
+p23
+sg6
+I3
+sg7
+S'INT, INDEX codbarras_padre__idx (codbarras_padre), FOREIGN KEY (codbarras_padre) REFERENCES maestro(id) ON DELETE CASCADE'
+p24
+ssS'estado'
+p25
+(dp26
+g4
+g5
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p27
+ssS'id'
+p28
+(dp29
+g4
+g28
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p30
+ssS'modo'
+p31
+(dp32
+g4
+g5
+sg6
+I6
+sg7
+S'INT NOT NULL'
+p33
+ss.

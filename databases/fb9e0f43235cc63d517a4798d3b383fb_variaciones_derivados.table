@@ -1,0 +1,101 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'turno'
+p9
+(dp10
+g4
+S'reference turnos'
+p11
+sg6
+I8
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p12
+ssS'porcentaje'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I6
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'tiempo_fin'
+p17
+(dp18
+g4
+g5
+sg6
+I5
+sg7
+S'DATETIME NOT NULL'
+p19
+ssS'tiempo_ini'
+p20
+(dp21
+g4
+g5
+sg6
+I4
+sg7
+S'DATETIME NOT NULL'
+p22
+ssS'cp'
+p23
+(dp24
+g4
+S'string'
+p25
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'codbarras'
+p27
+(dp28
+g4
+S'reference maestro'
+p29
+sg6
+I3
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p30
+ssS'id'
+p31
+(dp32
+g4
+g31
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p33
+ssS'modo'
+p34
+(dp35
+g4
+S'integer'
+p36
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p37
+ss.

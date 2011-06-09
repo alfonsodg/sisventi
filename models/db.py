@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-db = DAL('mysql://root:root@localhost/sisventi_old')
+db = DAL('mysql://root:root@localhost/sisventi')
 
 # by default give a view/generic.extension to all actions from localhost
 # none otherwise. a pattern can be 'controller/function.extension'
@@ -75,18 +75,18 @@ T.force('es-es')
 # Tables
 db.define_table('monedas',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('codigo', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('simbolo', 'string', default='', notnull=True), 
-    Field('orden', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('orden', 'integer', default=0, notnull=True) 
+)
     
 
 db.define_table('puntos_venta',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codigo', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('distrito', 'string', default='', notnull=True), 
@@ -113,13 +113,13 @@ db.define_table('puntos_venta',
     Field('replic_passwd', 'string', default='', notnull=True), 
     Field('prodimp', 'string', default='', notnull=True), 
     Field('prodkey', 'string', default='', notnull=True), 
-    Field('facmerma', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('facmerma', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('almacenes_lista',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('almacen', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
     Field('area', 'string', default='', notnull=True), 
@@ -128,53 +128,55 @@ db.define_table('almacenes_lista',
     Field('ubigeo', 'string', default='', notnull=True), 
     Field('direccion', 'string', default='', notnull=True), 
     Field('tipo_doc', 'integer', default=0, notnull=True), 
-    Field('doc_id', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('doc_id', 'string', default='', notnull=True)
+)
 
 
 db.define_table('condiciones_comerciales',
     Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('condicion', 'string', default='', notnull=True), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
     Field('codigo', 'integer', default=0, notnull=True), 
     Field('dias', 'integer', default=0, notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
     
 
 db.define_table('directorio',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    Field('nombre_corto', 'string', default='', notnull=True), 
-    Field('razon_social', 'string', default='', notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
+    Field('modo', 'integer', default=0, notnull=True),
+    Field('razon_social', 'string', default='', notnull=True, label='Razón Social'),
+    Field('nombre_corto', 'string', default=''), 
     Field('rubro', 'integer', default=0, notnull=True), 
     Field('nombres', 'string', default='', notnull=True), 
     Field('apellidos', 'string', default='', notnull=True), 
-    Field('tipo_doc', 'string', default='', notnull=True), 
-    Field('doc_id', 'string', default='', notnull=True), 
-    Field('doc_id_aux', 'string', default='', notnull=True), 
-    Field('ubigeo', 'string', default='', notnull=True), 
-    Field('direccion', 'string', default='', notnull=True), 
-    Field('codigo_postal', 'string', default='', notnull=True), 
-    Field('pais', 'string', default='', notnull=True), 
-    Field('referencia', 'string', default='', notnull=True), 
-    Field('condicion', db.condiciones_comerciales,
+    Field('tipo_doc', 'string', default='', notnull=True, label='Tipo de Documento'), 
+    Field('doc_id', 'string', default='', notnull=True, label='ID del Documento'), 
+    Field('doc_id_aux', 'string', default='', label='ID Auxiliar del Documento'),
+    Field('pais', 'string', default='Perú', notnull=True, label='País'),
+    Field('ubigeo', 'string', default='', notnull=True, label='Departamento'), 
+    Field('direccion', 'string', default='', notnull=True, label='Dirección'), 
+    Field('codigo_postal', 'string', default='', label='Código Postal'), 
+    Field('referencia', 'string', default=''), 
+    Field('condicion', db.condiciones_comerciales, label='Condición',
           requires=IS_IN_DB(db, db.condiciones_comerciales, '%(condicion)s',
                             zero='[Seleccionar]',
                             error_message='Seleccione una condición')), 
-    Field('tiempo_cred', 'integer', default=0, notnull=True), 
-    Field('linea_credito', 'double', default=0.0, notnull=True), 
-    Field('representante_legal', 'string', default='', notnull=True), 
-    Field('cargo', 'string', default='', notnull=True), 
+    Field('tiempo_cred', 'integer', default=0, notnull=True, label='Días a Pagar'),
+    Field('intervalo', 'integer', default=0, notnull=True, label='Intervalo'),
+    Field('interes', 'double', default=0.0, notnull=True, label='Interés'), 
+    Field('linea_credito', 'double', default=0.0, notnull=True, label='Línea de Crédito'), 
+    Field('representante_legal', 'string', default=''), 
+    Field('cargo', 'string', default=''), 
     Field('fecha', 'date', notnull=True), 
     Field('sexo', 'string',
           requires=IS_IN_SET(['Masculino', 'Femenino'], zero='[Seleccionar]',
                              error_message='Seleccione el sexo')), 
-    Field('preferente', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('preferente', 'boolean', default=False)
+)
 
     
 db.define_table('transportistas',
@@ -186,99 +188,99 @@ db.define_table('transportistas',
     Field('apellidos', 'string', default='', notnull=True), 
     Field('ubigeo', 'string', default='', notnull=True), 
     Field('direccion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
     
 
 db.define_table('turnos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('turno', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
     Field('hora_inicio', 'time', default=datetime.time(0,0,0), notnull=True), 
-    Field('hora_fin', 'time', default=datetime.time(0,0,0), notnull=True), 
-    migrate=False)
+    Field('hora_fin', 'time', default=datetime.time(0,0,0), notnull=True)
+)
 
 
 db.define_table('articulos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('articulo', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('catmod',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('catmod', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('empaques',
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('empaque', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True),
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('sub_casas',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sub_casa', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('sellos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sello', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('casas',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('casa', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
     
 
 db.define_table('sub_sellos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sub_sello', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('status',
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('status', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('tipos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('tipo', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True),
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('unidades_medida',
@@ -288,43 +290,43 @@ db.define_table('unidades_medida',
     Field('modo', 'integer', default=0, notnull=True), 
     Field('abreviatura_origen', 'string', default='', notnull=True), 
     Field('abreviatura_destino', 'string', default='', notnull=True), 
-    Field('factor', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('factor', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('generos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('genero', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('sub_generos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('genero', db.generos,
           requires=IS_IN_DB(db, db.generos, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un género')),
     Field('sub_genero', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('categorias',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('categoria', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True),     
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('maestro',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('codbarras', 'string', default='', notnull=True), 
     Field('pv', db.puntos_venta, label='Punto de Venta',
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
@@ -390,8 +392,8 @@ db.define_table('maestro',
     Field('unidad_medida', db.unidades_medida,
           requires=IS_IN_DB(db, db.unidades_medida, '%(descripcion)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione una unidad de medida')), 
-    migrate=False)
+                            error_message='Seleccione una unidad de medida'))
+)
     
 
 db.define_table('operaciones_logisticas',
@@ -401,8 +403,8 @@ db.define_table('operaciones_logisticas',
     Field('modo', 'integer', default=0, notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
     Field('operacion_relac', 'string', default='', notnull=True), 
-    Field('almacen_relac', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('almacen_relac', 'string', default='', notnull=True)
+)
 
     
 db.define_table('almacenes',
@@ -457,40 +459,40 @@ db.define_table('almacenes',
     Field('n_serie', 'string', default='', notnull=True), 
     Field('n_prefijo_relacion', 'string', default='', notnull=True), 
     Field('n_doc_relacion', 'integer', default=0, notnull=True), 
-    Field('observaciones', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('observaciones', 'string', default='', notnull=True)
+)
 
 
 db.define_table('almacenes_ubicacion',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('almacen', 'string', default='', notnull=True), 
     Field('codbarras', 'string', default='', notnull=True), 
-    Field('ubicacion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('ubicacion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('areas',
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('area', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('backup',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('tiempo', 'datetime', notnull=True), 
-    Field('log', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('log', 'string', default='', notnull=True)
+)
 
 
 db.define_table('bancos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('pv', 'integer', default=0, notnull=True), 
     Field('fechav', 'date', notnull=True),
     Field('fechad', 'date', notnull=True), 
@@ -499,13 +501,13 @@ db.define_table('bancos',
     Field('cambio', 'double', default=0.0, notnull=True), 
     Field('glosa1', 'string', default='', notnull=True), 
     Field('glosa2', 'string', default='', notnull=True), 
-    Field('agencia', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('agencia', 'string', default='', notnull=True)
+)
 
 
 db.define_table('clientes_preferentes', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('doc_id', 'string', default='', notnull=True), 
     Field('tiempo', 'datetime', notnull=True), 
     Field('promocion', 'string', default='', notnull=True), 
@@ -513,13 +515,13 @@ db.define_table('clientes_preferentes',
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')), 
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('compras_ordenes', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('tiempo', 'datetime', notnull=True), 
     Field('n_doc_prefijo', 'string', default='', notnull=True), 
     Field('n_doc_base', 'integer', default=0, notnull=True), 
@@ -570,8 +572,8 @@ db.define_table('compras_ordenes',
                             zero='[Seleccionar]',
                             error_message='Seleccione un usuario')), 
     Field('tiempo_anul', 'datetime', notnull=True), 
-    Field('observaciones', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('observaciones', 'string', default='', notnull=True)
+)
 
 
 db.define_table('control_insumos', 
@@ -583,8 +585,8 @@ db.define_table('control_insumos',
     Field('estado', 'integer', default=0, notnull=True), 
     Field('truco', 'integer', default=0, notnull=True), 
     Field('orden', 'integer', default=0, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('control_produccion', 
@@ -592,8 +594,8 @@ db.define_table('control_produccion',
     Field('fecha', 'date', notnull=True), 
     Field('turno', 'string', default='', notnull=True), 
     Field('producto', 'string', default='', notnull=True), 
-    Field('producto_derivado', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('producto_derivado', 'string', default='', notnull=True)
+)
 
 
 db.define_table('criterio',
@@ -604,15 +606,15 @@ db.define_table('criterio',
     Field('porcentaje', 'double', default=100.0, notnull=True), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
-                            error_message='Seleccione un código de barras')), 
-    migrate=False)
+                            error_message='Seleccione un código de barras'))
+)
 
 
 db.define_table('criterio2',
     Field('id', 'integer'),
     Field('turno', 'string', default='', notnull=True), 
-    Field('cp', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('cp', 'string', default='', notnull=True)
+)
 
 
 db.define_table('delivery',
@@ -627,8 +629,8 @@ db.define_table('delivery',
     Field('docnum', 'integer', default=0, notnull=True, label='Documento'), 
     Field('carac1', 'string', default='', notnull=True, label='Característica 1'), 
     Field('carac2', 'string', default='', notnull=True, label='Característica 2'), 
-    Field('carac3', 'string', default='', notnull=True, label='Característica 3'), 
-    migrate=False)
+    Field('carac3', 'string', default='', notnull=True, label='Característica 3')
+)
 
 
 db.define_table('directorio_auxiliar', 
@@ -648,13 +650,13 @@ db.define_table('directorio_auxiliar',
     Field('telefono_c', 'string', default='', notnull=True), 
     Field('tec_prio', 'integer', default=0, notnull=True), 
     Field('email_c', 'string', default='', notnull=True), 
-    Field('emc_prio', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('emc_prio', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('documentos_comerciales', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('documento', 'integer', default=0, notnull=True), 
     Field('doc_reg', 'string', default='', notnull=True), 
@@ -671,20 +673,20 @@ db.define_table('documentos_comerciales',
     Field('detalle', 'integer', default=0, notnull=True), 
     Field('limite', 'integer', default=0, notnull=True), 
     Field('impresion', 'integer', default=0, notnull=True), 
-    Field('impuestos', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('impuestos', 'string', default='', notnull=True)
+)
 
 
 db.define_table('documentos_identidad', 
     Field('id', 'string'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
-    Field('nombre', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('nombre', 'string', default='', notnull=True)
+)
 
 
 db.define_table('docventa',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('pv', db.puntos_venta, label='Punto de Venta',
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s',
                             zero='[Seleccionar]',
@@ -720,8 +722,8 @@ db.define_table('docventa',
     Field('fecha_vto', 'date', notnull=True), 
     Field('condicion_comercial', db.condiciones_comerciales,
           requires=IS_IN_DB(db, db.condiciones_comerciales, zero='[Seleccionar]',
-                            error_message='Seleccione una condición')), 
-    migrate=False)
+                            error_message='Seleccione una condición'))
+)
 
 
 db.define_table('factores_merma', 
@@ -732,51 +734,51 @@ db.define_table('factores_merma',
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
     Field('valor', 'double', default=0.0, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('formas_pago',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('forma_pago', 'string', default='', notnull=True), 
-    Field('nombre', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('nombre', 'string', default='', notnull=True)
+)
 
 
 db.define_table('grupo_distribucion',
     Field('id', 'integer'), 
     Field('grupo_distribucion', 'string', default='', notnull=True), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
                             error_message='Seleccione un turno')), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('prioridad', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('prioridad', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('impuestos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('codigo', 'string', default='', notnull=True), 
     Field('abreviatura', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('valor', 'double', default=0.0, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('maestro_auxiliar', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('valor', 'string', default='', notnull=True), 
-    Field('prioridad', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('prioridad', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('maestro_dependencias', 
@@ -794,8 +796,8 @@ db.define_table('maestro_dependencias',
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')),
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('maestro_descuentos', 
@@ -820,24 +822,24 @@ db.define_table('maestro_descuentos',
     Field('user_ing', db.auth_user, label='Usuario Ing.',
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')), 
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('maestro_posiciones',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('maestro_proveedores', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
@@ -847,13 +849,13 @@ db.define_table('maestro_proveedores',
     Field('unidad_medida', db.unidades_medida,
           requires=IS_IN_DB(db, db.unidades_medida, '%(descripcion)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione una unidad de medida')), 
-    migrate=False)
+                            error_message='Seleccione una unidad de medida'))
+)
 
 
 db.define_table('maestro_valores', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('tiempo', 'datetime', notnull=True), 
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
@@ -865,16 +867,16 @@ db.define_table('maestro_valores',
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')), 
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('modos_logisticos', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo_logistico', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('descripcion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('modos_pvr', 
@@ -882,13 +884,13 @@ db.define_table('modos_pvr',
     Field('tabla', 'string', default='', notnull=True), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('modo_tabla', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo_tabla', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('pedidos', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('fecha', 'date', notnull=True), 
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
@@ -925,13 +927,13 @@ db.define_table('pedidos',
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')), 
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('pedidos_emergencia_produccion', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('fecha', 'date'), 
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
@@ -943,24 +945,24 @@ db.define_table('pedidos_emergencia_produccion',
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
     Field('cantidad', 'double', default=0.0, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('pesos_operaciones',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
     Field('peso_neto', 'double', default=0.0, notnull=True), 
-    Field('peso_tara', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('peso_tara', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('pos_administracion', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un punto de venta')),
@@ -974,8 +976,8 @@ db.define_table('pos_administracion',
                             zero='[Seleccionar]',
                             error_message='Seleccione un usuario')), 
     Field('apertura', 'datetime', notnull=True), 
-    Field('cierre', 'datetime', notnull=True), 
-    migrate=False)
+    Field('cierre', 'datetime', notnull=True)
+)
 
 
 db.define_table('produccion_datos', 
@@ -995,13 +997,13 @@ db.define_table('produccion_datos',
                             error_message='Seleccione un código de barras')), 
     Field('codbarras_hijo', 'string', default='', notnull=True), 
     Field('cantidad', 'double', default=0.0, notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('produccion_derivados', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
@@ -1027,8 +1029,8 @@ db.define_table('produccion_derivados',
     Field('sal_merma', 'double', default=0.0, notnull=True), 
     Field('sal_consumo_int', 'double', default=0.0, notnull=True), 
     Field('sal_traslado', 'double', default=0.0, notnull=True), 
-    Field('sal_varios', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('sal_varios', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('produccion_estadistica', 
@@ -1049,13 +1051,13 @@ db.define_table('produccion_estadistica',
     Field('cantidad_hijo', 'double', default=0.0, notnull=True), 
     Field('porcentaje_hijo', 'double', default=0.0, notnull=True), 
     Field('modo', 'integer', default=0, notnull=True), 
-    Field('porcentaje_general', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('porcentaje_general', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('produccion_pedidos', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('fecha', 'date', notnull=True), 
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
@@ -1067,13 +1069,13 @@ db.define_table('produccion_pedidos',
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
-    Field('cantidad', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('cantidad', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('produccion_planeamiento', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('fecha', 'date', notnull=True), 
     Field('codbarras_padre', 'string', default='', notnull=True), 
     Field('codbarras', db.maestro,
@@ -1088,13 +1090,13 @@ db.define_table('produccion_planeamiento',
     Field('cp', 'string', default='', notnull=True), 
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
-                            error_message='Seleccione un turno')),
-    migrate=False)
+                            error_message='Seleccione un turno'))
+)
 
 
 db.define_table('produccion_planeamiento_aux', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('fecha', 'date', notnull=True), 
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
@@ -1107,13 +1109,13 @@ db.define_table('produccion_planeamiento_aux',
     Field('cp', 'string', default='', notnull=True), 
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
-                            error_message='Seleccione un turno')),
-    migrate=False)
+                            error_message='Seleccione un turno'))
+)
 
 
 db.define_table('produccion_rendimiento', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('fecha', 'date', notnull=True), 
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
@@ -1128,8 +1130,8 @@ db.define_table('produccion_rendimiento',
     Field('peso', 'double', default=0.0, notnull=True), 
     Field('temperatura', 'double', default=0.0, notnull=True), 
     Field('hora_inicial', 'time', default=datetime.time(0,0,0), notnull=True), 
-    Field('hora_final', 'time', default=datetime.time(0,0,0), notnull=True), 
-    migrate=False)
+    Field('hora_final', 'time', default=datetime.time(0,0,0), notnull=True)
+)
 
 
 db.define_table('promociones', 
@@ -1154,8 +1156,8 @@ db.define_table('promociones',
     Field('cond_hora_inic', 'time', default=datetime.time(0,0,0), notnull=True, label='Cond. Hora de Inicio'), 
     Field('cond_fecha_term', 'date', notnull=True, label='Cond. Fecha de Fin'), 
     Field('cond_hora_term', 'time', default=datetime.time(0,0,0), notnull=True, label='Cond. Hora de Fin'), 
-    Field('estado', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('estado', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('puntos_venta_grupos', 
@@ -1171,31 +1173,31 @@ db.define_table('puntos_venta_grupos',
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('puntos_venta_relaciones', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('pv_padre', 'string', default='', notnull=True), 
     Field('pv_hijo', 'string', default='', notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('puntos_venta_satelites',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('pv_padre', 'string', default='', notnull=True), 
     Field('pv_hijo', 'string', default='', notnull=True), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('recetas', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codbarras_padre', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
@@ -1205,13 +1207,13 @@ db.define_table('recetas',
                             error_message='Seleccione un código de barras')), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('estado', 'integer', default=1, notnull=True), 
-    Field('orden', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('orden', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('relaciones', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codbarras_padre', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
@@ -1219,8 +1221,8 @@ db.define_table('relaciones',
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
     Field('modo', 'integer', default=0, notnull=True), 
-    Field('orden', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('orden', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('rendimientos_sintesis', 
@@ -1233,8 +1235,8 @@ db.define_table('rendimientos_sintesis',
     Field('cantidad', 'double', default=0.0, notnull=True), 
     Field('peso', 'double', default=0.0, notnull=True), 
     Field('merma', 'double', default=0.0, notnull=True), 
-    Field('rendimiento', 'double', default=0.0, notnull=True), 
-    migrate=False)
+    Field('rendimiento', 'double', default=0.0, notnull=True)
+)
 
 
 db.define_table('reportes_configuracion', 
@@ -1257,31 +1259,31 @@ db.define_table('reportes_configuracion',
     Field('codbarras_padre', 'string', default='', notnull=True), 
     Field('codbarras_hijo', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('rubros',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('rubro', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('tablas_modos', 
     Field('id', 'integer'), 
     Field('tabla', 'string', default='', notnull=True), 
     Field('modo', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('descripcion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('tipos_cambio', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('moneda', db.monedas,
           requires=IS_IN_DB(db, db.monedas, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione una moneda')), 
@@ -1295,8 +1297,8 @@ db.define_table('tipos_cambio',
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
-                            error_message='Seleccione un usuario')), 
-    migrate=False)
+                            error_message='Seleccione un usuario'))
+)
 
 
 db.define_table('transferencias_produccion', 
@@ -1311,23 +1313,23 @@ db.define_table('transferencias_produccion',
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
                             error_message='Seleccione un turno')), 
-    Field('fecha', 'date', notnull=True), 
-    migrate=False)
+    Field('fecha', 'date', notnull=True)
+)
 
 
 db.define_table('ubigeo_departamentos',
     Field('id', 'integer'),
     Field('departamento', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('descripcion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('ubigeo_provincias',
     Field('id', 'integer'),
     Field('departamento', 'string', default='', notnull=True), 
     Field('provincia', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('descripcion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('ubigeo_detalle',
@@ -1335,13 +1337,13 @@ db.define_table('ubigeo_detalle',
     Field('departamento', 'string', default='', notnull=True), 
     Field('provincia', 'string', default='', notnull=True), 
     Field('ubigeo', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('descripcion', 'string', default='', notnull=True)
+)
 
 
 db.define_table('variaciones_derivados', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
@@ -1352,8 +1354,8 @@ db.define_table('variaciones_derivados',
     Field('turno', db.turnos,
           requires=IS_IN_DB(db, db.turnos, '%(turno)s', zero='[Seleccionar]',
                             error_message='Seleccione un turno')), 
-    Field('modo', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('modo', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('vehiculos',
@@ -1365,24 +1367,24 @@ db.define_table('vehiculos',
     Field('modelo', 'string', default='', notnull=True), 
     Field('tipo', 'string', default='', notnull=True), 
     Field('caracteristicas', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('posicion', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('ventas_bancos_cuentas',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codigo', 'string', default='', notnull=True), 
     Field('entidad', 'string', default='', notnull=True), 
     Field('moneda', db.monedas,
           requires=IS_IN_DB(db, db.monedas, '%(nombre)s', zero='[Seleccionar]',
-                            error_message='Seleccione una moneda')), 
-    migrate=False)
+                            error_message='Seleccione una moneda'))
+)
 
 
 db.define_table('ventas_bancos_operaciones', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un punto de venta')), 
@@ -1393,13 +1395,13 @@ db.define_table('ventas_bancos_operaciones',
     Field('cambio', 'double', default=0.0, notnull=True), 
     Field('glosa1', 'string', default='', notnull=True), 
     Field('glosa2', 'string', default='', notnull=True), 
-    Field('agencia', 'string', default='', notnull=True), 
-    migrate=False)
+    Field('agencia', 'string', default='', notnull=True)
+)
 
 
 db.define_table('ventas_grupos',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('codigo', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('atajo', 'string', default='', notnull=True), 
@@ -1419,13 +1421,13 @@ db.define_table('ventas_grupos',
     Field('categoria', db.categorias,
           requires=IS_IN_DB(db, db.categorias, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione una categoría')), 
-    Field('aux_data', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('aux_data', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('ventas_operaciones', 
     Field('id', 'integer'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un punto de venta')), 
@@ -1460,13 +1462,13 @@ db.define_table('ventas_operaciones',
     Field('monto_dolar', 'double', default=0.0, notnull=True), 
     Field('data_1', 'string', default='', notnull=True), 
     Field('data_2', 'string', default='', notnull=True), 
-    Field('imod', 'integer', default=0, notnull=True), 
-    migrate=False)
+    Field('imod', 'integer', default=0, notnull=True)
+)
 
 
 db.define_table('ventas_resumen',
     Field('id', 'integer'),
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('pv', db.puntos_venta,
           requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un punto de venta')), 
@@ -1477,8 +1479,13 @@ db.define_table('ventas_resumen',
     Field('total_srv', 'double', default=0.0, notnull=True), 
     Field('total_bruto', 'double', default=0.0, notnull=True), 
     Field('status', 'integer', default=1, notnull=True), 
-    Field('condicion_comercial', 'integer', default=1, notnull=True), 
-    migrate=False)
+    Field('condicion_comercial', 'integer', default=1, notnull=True)
+)
+
+
+"""db.define_table('cuentas_por_cobrar',
+    Field()
+    )"""
 
 
 # Representations

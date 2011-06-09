@@ -1,0 +1,264 @@
+(dp1
+S'user_null'
+p2
+(dp3
+S'type'
+p4
+S'reference auth_user'
+p5
+sS'sortable'
+p6
+I13
+sS'sql'
+p7
+S'INT, INDEX user_null__idx (user_null), FOREIGN KEY (user_null) REFERENCES auth_user(id) ON DELETE CASCADE'
+p8
+ssS'cantidad'
+p9
+(dp10
+g4
+S'integer'
+p11
+sg6
+I19
+sg7
+S'INT NOT NULL'
+p12
+ssS'precio'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I18
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'monto_local'
+p17
+(dp18
+g4
+g15
+sg6
+I21
+sg7
+S'DOUBLE NOT NULL'
+p19
+ssS'total'
+p20
+(dp21
+g4
+g15
+sg6
+I20
+sg7
+S'DOUBLE NOT NULL'
+p22
+ssS'codbarras'
+p23
+(dp24
+g4
+S'reference maestro'
+p25
+sg6
+I17
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p26
+ssS'id'
+p27
+(dp28
+g4
+g27
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p29
+ssS'pv'
+p30
+(dp31
+g4
+S'reference puntos_venta'
+p32
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p33
+ssS'sello'
+p34
+(dp35
+g4
+S'reference sellos'
+p36
+sg6
+I16
+sg7
+S'INT, INDEX sello__idx (sello), FOREIGN KEY (sello) REFERENCES sellos(id) ON DELETE CASCADE'
+p37
+ssS'imod'
+p38
+(dp39
+g4
+g11
+sg6
+I25
+sg7
+S'INT NOT NULL'
+p40
+ssS'vales'
+p41
+(dp42
+g4
+S'string'
+p43
+sg6
+I15
+sg7
+S'VARCHAR(255) NOT NULL'
+p44
+ssS'n_doc_sufijo'
+p45
+(dp46
+g4
+g43
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ssS'caja'
+p48
+(dp49
+g4
+g11
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p50
+ssS'documento'
+p51
+(dp52
+g4
+g11
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p53
+ssS'tiempo'
+p54
+(dp55
+g4
+S'datetime'
+p56
+sg6
+I5
+sg7
+S'DATETIME NOT NULL'
+p57
+ssS'registro'
+p58
+(dp59
+g4
+g56
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p60
+ssS'user_ing'
+p61
+(dp62
+g4
+S'reference auth_user'
+p63
+sg6
+I12
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p64
+ssS'estado'
+p65
+(dp66
+g4
+g11
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p67
+ssS'n_doc_base'
+p68
+(dp69
+g4
+g43
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p70
+ssS'monto_dolar'
+p71
+(dp72
+g4
+g15
+sg6
+I22
+sg7
+S'DOUBLE NOT NULL'
+p73
+ssS'n_doc_prefijo'
+p74
+(dp75
+g4
+g43
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p76
+ssS'data_2'
+p77
+(dp78
+g4
+g43
+sg6
+I24
+sg7
+S'VARCHAR(255) NOT NULL'
+p79
+ssS'data_1'
+p80
+(dp81
+g4
+g43
+sg6
+I23
+sg7
+S'VARCHAR(255) NOT NULL'
+p82
+ssS'forma_pago'
+p83
+(dp84
+g4
+g43
+sg6
+I14
+sg7
+S'VARCHAR(255) NOT NULL'
+p85
+ssS'cliente'
+p86
+(dp87
+g4
+g43
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p88
+ss.

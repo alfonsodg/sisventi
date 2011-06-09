@@ -1,0 +1,143 @@
+(dp1
+S'temperatura'
+p2
+(dp3
+S'type'
+p4
+S'double'
+p5
+sS'sortable'
+p6
+I11
+sS'sql'
+p7
+S'DOUBLE NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'cantidad'
+p13
+(dp14
+g4
+g5
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p15
+ssS'tipo'
+p16
+(dp17
+g4
+S'integer'
+p18
+sg6
+I6
+sg7
+S'INT NOT NULL'
+p19
+ssS'hora_inicial'
+p20
+(dp21
+g4
+S'time'
+p22
+sg6
+I12
+sg7
+S'TIME NOT NULL'
+p23
+ssS'fecha'
+p24
+(dp25
+g4
+S'date'
+p26
+sg6
+I3
+sg7
+S'DATE NOT NULL'
+p27
+ssS'peso'
+p28
+(dp29
+g4
+g5
+sg6
+I10
+sg7
+S'DOUBLE NOT NULL'
+p30
+ssS'hora_final'
+p31
+(dp32
+g4
+g22
+sg6
+I13
+sg7
+S'TIME NOT NULL'
+p33
+ssS'turno'
+p34
+(dp35
+g4
+S'reference turnos'
+p36
+sg6
+I4
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p37
+ssS'masa'
+p38
+(dp39
+g4
+S'string'
+p40
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p41
+ssS'codbarras'
+p42
+(dp43
+g4
+S'reference maestro'
+p44
+sg6
+I7
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p45
+ssS'id'
+p46
+(dp47
+g4
+g46
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p48
+ssS'modo'
+p49
+(dp50
+g4
+g18
+sg6
+I5
+sg7
+S'INT NOT NULL'
+p51
+ss.

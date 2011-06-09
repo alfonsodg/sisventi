@@ -1,0 +1,80 @@
+(dp1
+S'tiempo'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I3
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+g5
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p11
+ssS'pv'
+p12
+(dp13
+g4
+S'reference puntos_venta'
+p14
+sg6
+I4
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p15
+ssS'precio'
+p16
+(dp17
+g4
+S'double'
+p18
+sg6
+I6
+sg7
+S'DOUBLE NOT NULL'
+p19
+ssS'user_ing'
+p20
+(dp21
+g4
+S'reference auth_user'
+p22
+sg6
+I7
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p23
+ssS'codbarras'
+p24
+(dp25
+g4
+S'reference maestro'
+p26
+sg6
+I5
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p27
+ssS'id'
+p28
+(dp29
+g4
+g28
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p30
+ss.

@@ -1,0 +1,103 @@
+(dp1
+S'codbarras_hijo'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I7
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'pv'
+p9
+(dp10
+g4
+S'reference puntos_venta'
+p11
+sg6
+I5
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p12
+ssS'cantidad'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'fecha'
+p17
+(dp18
+g4
+S'date'
+p19
+sg6
+I2
+sg7
+S'DATE NOT NULL'
+p20
+ssS'grupo_distribucion'
+p21
+(dp22
+g4
+S'reference grupo_distribucion'
+p23
+sg6
+I4
+sg7
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p24
+ssS'turno'
+p25
+(dp26
+g4
+S'reference turnos'
+p27
+sg6
+I3
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p28
+ssS'codbarras'
+p29
+(dp30
+g4
+S'reference maestro'
+p31
+sg6
+I6
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p32
+ssS'id'
+p33
+(dp34
+g4
+g33
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p35
+ssS'modo'
+p36
+(dp37
+g4
+S'integer'
+p38
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p39
+ss.

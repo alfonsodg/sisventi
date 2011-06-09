@@ -1,0 +1,70 @@
+(dp1
+S'fecha'
+p2
+(dp3
+S'type'
+p4
+S'date'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATE NOT NULL'
+p8
+ssS'valor'
+p9
+(dp10
+g4
+S'double'
+p11
+sg6
+I5
+sg7
+S'DOUBLE NOT NULL'
+p12
+ssS'cp'
+p13
+(dp14
+g4
+S'string'
+p15
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p16
+ssS'codbarras'
+p17
+(dp18
+g4
+S'reference maestro'
+p19
+sg6
+I4
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p20
+ssS'id'
+p21
+(dp22
+g4
+g21
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p23
+ssS'modo'
+p24
+(dp25
+g4
+S'integer'
+p26
+sg6
+I6
+sg7
+S'INT NOT NULL'
+p27
+ss.

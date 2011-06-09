@@ -1,0 +1,118 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'pv'
+p9
+(dp10
+g4
+S'string'
+p11
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p12
+ssS'almacen'
+p13
+(dp14
+g4
+g11
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p15
+ssS'area'
+p16
+(dp17
+g4
+g11
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p18
+ssS'usuario'
+p19
+(dp20
+g4
+g11
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p21
+ssS'tipo_doc'
+p22
+(dp23
+g4
+S'integer'
+p24
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p25
+ssS'direccion'
+p26
+(dp27
+g4
+g11
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p28
+ssS'descripcion'
+p29
+(dp30
+g4
+g11
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p31
+ssS'doc_id'
+p32
+(dp33
+g4
+g11
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p34
+ssS'id'
+p35
+(dp36
+g4
+g35
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p37
+ssS'ubigeo'
+p38
+(dp39
+g4
+g11
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p40
+ss.

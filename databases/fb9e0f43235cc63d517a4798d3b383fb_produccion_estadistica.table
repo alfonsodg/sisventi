@@ -1,0 +1,151 @@
+(dp1
+S'codbarras_hijo'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I7
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'porcentaje_hijo'
+p9
+(dp10
+g4
+S'double'
+p11
+sg6
+I12
+sg7
+S'DOUBLE NOT NULL'
+p12
+ssS'pv'
+p13
+(dp14
+g4
+S'reference puntos_venta'
+p15
+sg6
+I4
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p16
+ssS'porcentaje_padre'
+p17
+(dp18
+g4
+g11
+sg6
+I10
+sg7
+S'DOUBLE NOT NULL'
+p19
+ssS'fecha'
+p20
+(dp21
+g4
+S'date'
+p22
+sg6
+I2
+sg7
+S'DATE NOT NULL'
+p23
+ssS'cantidad_abuelo'
+p24
+(dp25
+g4
+g11
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p26
+ssS'codbarras_padre'
+p27
+(dp28
+g4
+g5
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p29
+ssS'cantidad_hijo'
+p30
+(dp31
+g4
+g11
+sg6
+I11
+sg7
+S'DOUBLE NOT NULL'
+p32
+ssS'porcentaje_general'
+p33
+(dp34
+g4
+g11
+sg6
+I14
+sg7
+S'DOUBLE NOT NULL'
+p35
+ssS'codbarras_abuelo'
+p36
+(dp37
+g4
+g5
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p38
+ssS'turno'
+p39
+(dp40
+g4
+S'reference turnos'
+p41
+sg6
+I3
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p42
+ssS'id'
+p43
+(dp44
+g4
+g43
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p45
+ssS'cantidad_padre'
+p46
+(dp47
+g4
+g11
+sg6
+I9
+sg7
+S'DOUBLE NOT NULL'
+p48
+ssS'modo'
+p49
+(dp50
+g4
+S'integer'
+p51
+sg6
+I13
+sg7
+S'INT NOT NULL'
+p52
+ss.

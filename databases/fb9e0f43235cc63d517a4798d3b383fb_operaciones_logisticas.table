@@ -1,0 +1,78 @@
+(dp1
+S'almacen_relac'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I7
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'operacion'
+p13
+(dp14
+g4
+g5
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p15
+ssS'operacion_relac'
+p16
+(dp17
+g4
+g5
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p18
+ssS'descripcion'
+p19
+(dp20
+g4
+g5
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p21
+ssS'id'
+p22
+(dp23
+g4
+g22
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p24
+ssS'modo'
+p25
+(dp26
+g4
+S'integer'
+p27
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p28
+ss.

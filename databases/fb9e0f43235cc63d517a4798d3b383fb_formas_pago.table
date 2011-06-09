@@ -1,0 +1,47 @@
+(dp1
+S'nombre'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I4
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'id'
+p13
+(dp14
+g4
+g13
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p15
+ssS'forma_pago'
+p16
+(dp17
+g4
+g5
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p18
+ss.

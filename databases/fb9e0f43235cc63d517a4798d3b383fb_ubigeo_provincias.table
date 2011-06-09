@@ -1,0 +1,46 @@
+(dp1
+S'descripcion'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I4
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'provincia'
+p9
+(dp10
+g4
+g5
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p11
+ssS'id'
+p12
+(dp13
+g4
+g12
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p14
+ssS'departamento'
+p15
+(dp16
+g4
+g5
+sg6
+I2
+sg7
+S'VARCHAR(255) NOT NULL'
+p17
+ss.

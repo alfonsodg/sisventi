@@ -1,0 +1,376 @@
+(dp1
+S'status'
+p2
+(dp3
+S'type'
+p4
+S'reference status'
+p5
+sS'sortable'
+p6
+I17
+sS'sql'
+p7
+S'INT, INDEX status__idx (status), FOREIGN KEY (status) REFERENCES status(id) ON DELETE CASCADE'
+p8
+ssS'proveedor'
+p9
+(dp10
+g4
+S'reference directorio'
+p11
+sg6
+I18
+sg7
+S'INT, INDEX proveedor__idx (proveedor), FOREIGN KEY (proveedor) REFERENCES directorio(id) ON DELETE CASCADE'
+p12
+ssS'sub_genero'
+p13
+(dp14
+g4
+S'reference sub_generos'
+p15
+sg6
+I10
+sg7
+S'INT, INDEX sub_genero__idx (sub_genero), FOREIGN KEY (sub_genero) REFERENCES sub_generos(id) ON DELETE CASCADE'
+p16
+ssS'sello'
+p17
+(dp18
+g4
+S'reference sellos'
+p19
+sg6
+I12
+sg7
+S'INT, INDEX sello__idx (sello), FOREIGN KEY (sello) REFERENCES sellos(id) ON DELETE CASCADE'
+p20
+ssS'articulo'
+p21
+(dp22
+g4
+S'reference articulos'
+p23
+sg6
+I6
+sg7
+S'INT, INDEX articulo__idx (articulo), FOREIGN KEY (articulo) REFERENCES articulos(id) ON DELETE CASCADE'
+p24
+ssS'moneda'
+p25
+(dp26
+g4
+S'reference monedas'
+p27
+sg6
+I19
+sg7
+S'INT, INDEX moneda__idx (moneda), FOREIGN KEY (moneda) REFERENCES monedas(id) ON DELETE CASCADE'
+p28
+ssS'descripcion'
+p29
+(dp30
+g4
+S'string'
+p31
+sg6
+I24
+sg7
+S'VARCHAR(255) NOT NULL'
+p32
+ssS'codbarras'
+p33
+(dp34
+g4
+g31
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p35
+ssS'id'
+p36
+(dp37
+g4
+g36
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p38
+ssS'catmod'
+p39
+(dp40
+g4
+S'reference catmod'
+p41
+sg6
+I15
+sg7
+S'INT, INDEX catmod__idx (catmod), FOREIGN KEY (catmod) REFERENCES catmod(id) ON DELETE CASCADE'
+p42
+ssS'pv'
+p43
+(dp44
+g4
+S'reference puntos_venta'
+p45
+sg6
+I4
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p46
+ssS'tipo'
+p47
+(dp48
+g4
+S'reference tipos'
+p49
+sg6
+I14
+sg7
+S'INT, INDEX tipo__idx (tipo), FOREIGN KEY (tipo) REFERENCES tipos(id) ON DELETE CASCADE'
+p50
+ssS'descuento'
+p51
+(dp52
+g4
+S'integer'
+p53
+sg6
+I26
+sg7
+S'INT NOT NULL'
+p54
+ssS'fecha'
+p55
+(dp56
+g4
+S'date'
+p57
+sg6
+I34
+sg7
+S'DATE NOT NULL'
+p58
+ssS'unidad_medida'
+p59
+(dp60
+g4
+S'reference unidades_medida'
+p61
+sg6
+I35
+sg7
+S'INT, INDEX unidad_medida__idx (unidad_medida), FOREIGN KEY (unidad_medida) REFERENCES unidades_medida(id) ON DELETE CASCADE'
+p62
+ssS'impuesto'
+p63
+(dp64
+g4
+g31
+sg6
+I22
+sg7
+S'VARCHAR(255) NOT NULL'
+p65
+ssS'empaque'
+p66
+(dp67
+g4
+S'reference empaques'
+p68
+sg6
+I11
+sg7
+S'INT, INDEX empaque__idx (empaque), FOREIGN KEY (empaque) REFERENCES empaques(id) ON DELETE CASCADE'
+p69
+ssS'nombre'
+p70
+(dp71
+g4
+g31
+sg6
+I23
+sg7
+S'VARCHAR(255) NOT NULL'
+p72
+ssS'categoria'
+p73
+(dp74
+g4
+S'reference categorias'
+p75
+sg6
+I16
+sg7
+S'INT, INDEX categoria__idx (categoria), FOREIGN KEY (categoria) REFERENCES categorias(id) ON DELETE CASCADE'
+p76
+ssS'aux_num_data'
+p77
+(dp78
+g4
+g53
+sg6
+I29
+sg7
+S'INT NOT NULL'
+p79
+ssS'registro'
+p80
+(dp81
+g4
+S'datetime'
+p82
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p83
+ssS'genero'
+p84
+(dp85
+g4
+S'reference generos'
+p86
+sg6
+I9
+sg7
+S'INT, INDEX genero__idx (genero), FOREIGN KEY (genero) REFERENCES generos(id) ON DELETE CASCADE'
+p87
+ssS'modo_impuesto'
+p88
+(dp89
+g4
+g53
+sg6
+I21
+sg7
+S'INT NOT NULL'
+p90
+ssS'sub_sello'
+p91
+(dp92
+g4
+S'reference sub_sellos'
+p93
+sg6
+I13
+sg7
+S'INT, INDEX sub_sello__idx (sub_sello), FOREIGN KEY (sub_sello) REFERENCES sub_sellos(id) ON DELETE CASCADE'
+p94
+ssS'sub_casa'
+p95
+(dp96
+g4
+S'reference sub_casas'
+p97
+sg6
+I8
+sg7
+S'INT, INDEX sub_casa__idx (sub_casa), FOREIGN KEY (sub_casa) REFERENCES sub_casas(id) ON DELETE CASCADE'
+p98
+ssS'grupo_venta'
+p99
+(dp100
+g4
+g31
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p101
+ssS'stock_max'
+p102
+(dp103
+g4
+S'double'
+p104
+sg6
+I31
+sg7
+S'DOUBLE NOT NULL'
+p105
+ssS'casa'
+p106
+(dp107
+g4
+S'reference casas'
+p108
+sg6
+I7
+sg7
+S'INT, INDEX casa__idx (casa), FOREIGN KEY (casa) REFERENCES casas(id) ON DELETE CASCADE'
+p109
+ssS'unidad_medida_valor'
+p110
+(dp111
+g4
+g104
+sg6
+I28
+sg7
+S'DOUBLE NOT NULL'
+p112
+ssS'dependencia'
+p113
+(dp114
+g4
+g53
+sg6
+I27
+sg7
+S'INT NOT NULL'
+p115
+ssS'precio'
+p116
+(dp117
+g4
+g104
+sg6
+I20
+sg7
+S'DOUBLE NOT NULL'
+p118
+ssS'reposicion'
+p119
+(dp120
+g4
+g53
+sg6
+I32
+sg7
+S'INT NOT NULL'
+p121
+ssS'alias'
+p122
+(dp123
+g4
+g31
+sg6
+I25
+sg7
+S'VARCHAR(255) NOT NULL'
+p124
+ssS'ventas_key'
+p125
+(dp126
+g4
+g53
+sg6
+I33
+sg7
+S'INT NOT NULL'
+p127
+ssS'stock_min'
+p128
+(dp129
+g4
+g104
+sg6
+I30
+sg7
+S'DOUBLE NOT NULL'
+p130
+ss.

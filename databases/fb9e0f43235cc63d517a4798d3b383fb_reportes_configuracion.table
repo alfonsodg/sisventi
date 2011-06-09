@@ -1,0 +1,150 @@
+(dp1
+S'pv'
+p2
+(dp3
+S'type'
+p4
+S'reference puntos_venta'
+p5
+sS'sortable'
+p6
+I5
+sS'sql'
+p7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p8
+ssS'codigo_dato'
+p9
+(dp10
+g4
+S'string'
+p11
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p12
+ssS'codigo_reporte'
+p13
+(dp14
+g4
+g11
+sg6
+I2
+sg7
+S'VARCHAR(255) NOT NULL'
+p15
+ssS'codbarras_hijo'
+p16
+(dp17
+g4
+g11
+sg6
+I12
+sg7
+S'VARCHAR(255) NOT NULL'
+p18
+ssS'grupo_distribucion'
+p19
+(dp20
+g4
+S'reference grupo_distribucion'
+p21
+sg6
+I6
+sg7
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p22
+ssS'posicion'
+p23
+(dp24
+g4
+S'integer'
+p25
+sg6
+I14
+sg7
+S'INT NOT NULL'
+p26
+ssS'codbarras_abuelo'
+p27
+(dp28
+g4
+g11
+sg6
+I10
+sg7
+S'VARCHAR(255) NOT NULL'
+p29
+ssS'turno'
+p30
+(dp31
+g4
+S'reference turnos'
+p32
+sg6
+I4
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p33
+ssS'descripcion'
+p34
+(dp35
+g4
+g11
+sg6
+I13
+sg7
+S'VARCHAR(255) NOT NULL'
+p36
+ssS'detalle_reporte'
+p37
+(dp38
+g4
+g11
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p39
+ssS'array'
+p40
+(dp41
+g4
+g11
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p42
+ssS'codbarras_padre'
+p43
+(dp44
+g4
+g11
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p45
+ssS'id'
+p46
+(dp47
+g4
+g46
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p48
+ssS'modo'
+p49
+(dp50
+g4
+g25
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p51
+ss.

@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+restricciones = auth.has_membership('root') or \
+                auth.has_membership('administrador')
+
+                
+@auth.requires(restricciones)
 def index():
     """
     Muestra los registros de cuentas por pagar
@@ -7,6 +12,7 @@ def index():
     return dict()
 
 
+@auth.requires(restricciones)
 def agregar():
     """
     Agregar nueva registro
@@ -17,6 +23,7 @@ def agregar():
     return dict(form=form)
 
 
+@auth.requires(restricciones)
 def reporte():
     """
     Muestra el reporte de las cuentas por pagar

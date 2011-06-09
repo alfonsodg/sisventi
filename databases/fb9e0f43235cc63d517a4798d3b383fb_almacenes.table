@@ -1,0 +1,541 @@
+(dp1
+S'proveedor_moneda_doc'
+p2
+(dp3
+S'type'
+p4
+S'integer'
+p5
+sS'sortable'
+p6
+I23
+sS'sql'
+p7
+S'INT NOT NULL'
+p8
+ssS'proveedor'
+p9
+(dp10
+g4
+S'reference directorio'
+p11
+sg6
+I19
+sg7
+S'INT, INDEX proveedor__idx (proveedor), FOREIGN KEY (proveedor) REFERENCES directorio(id) ON DELETE CASCADE'
+p12
+ssS'modo_doc'
+p13
+(dp14
+g4
+g5
+sg6
+I13
+sg7
+S'INT NOT NULL'
+p15
+ssS'precio'
+p16
+(dp17
+g4
+S'double'
+p18
+sg6
+I36
+sg7
+S'DOUBLE NOT NULL'
+p19
+ssS'n_serie'
+p20
+(dp21
+g4
+S'string'
+p22
+sg6
+I49
+sg7
+S'VARCHAR(255) NOT NULL'
+p23
+ssS'codbarras_padre'
+p24
+(dp25
+g4
+g22
+sg6
+I28
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'articulo'
+p27
+(dp28
+g4
+S'reference articulos'
+p29
+sg6
+I27
+sg7
+S'INT, INDEX articulo__idx (articulo), FOREIGN KEY (articulo) REFERENCES articulos(id) ON DELETE CASCADE'
+p30
+ssS'vehiculo'
+p31
+(dp32
+g4
+g22
+sg6
+I41
+sg7
+S'VARCHAR(255) NOT NULL'
+p33
+ssS'peso'
+p34
+(dp35
+g4
+g18
+sg6
+I46
+sg7
+S'DOUBLE NOT NULL'
+p36
+ssS'codbarras'
+p37
+(dp38
+g4
+S'reference maestro'
+p39
+sg6
+I29
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p40
+ssS'id'
+p41
+(dp42
+g4
+g41
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p43
+ssS'transportista'
+p44
+(dp45
+g4
+S'reference transportistas'
+p46
+sg6
+I40
+sg7
+S'INT, INDEX transportista__idx (transportista), FOREIGN KEY (transportista) REFERENCES transportistas(id) ON DELETE CASCADE'
+p47
+ssS'almacen_origen'
+p48
+(dp49
+g4
+S'reference almacenes_lista'
+p50
+sg6
+I25
+sg7
+S'INT, INDEX almacen_origen__idx (almacen_origen), FOREIGN KEY (almacen_origen) REFERENCES almacenes_lista(id) ON DELETE CASCADE'
+p51
+ssS'compra_n_doc_prefijo'
+p52
+(dp53
+g4
+g22
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p54
+ssS'pv'
+p55
+(dp56
+g4
+S'reference puntos_venta'
+p57
+sg6
+I4
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p58
+ssS'tipo'
+p59
+(dp60
+g4
+g22
+sg6
+I35
+sg7
+S'VARCHAR(255) NOT NULL'
+p61
+ssS'operacion_logistica'
+p62
+(dp63
+g4
+S'reference operaciones_logisticas'
+p64
+sg6
+I8
+sg7
+S'INT, INDEX operacion_logistica__idx (operacion_logistica), FOREIGN KEY (operacion_logistica) REFERENCES operaciones_logisticas(id) ON DELETE CASCADE'
+p65
+ssS'n_doc_sufijo'
+p66
+(dp67
+g4
+g22
+sg6
+I18
+sg7
+S'VARCHAR(255) NOT NULL'
+p68
+ssS'proveedor_n_doc'
+p69
+(dp70
+g4
+g22
+sg6
+I12
+sg7
+S'VARCHAR(255) NOT NULL'
+p71
+ssS'compra_n_doc_sufijo'
+p72
+(dp73
+g4
+g22
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p74
+ssS'n_doc_relacion'
+p75
+(dp76
+g4
+g5
+sg6
+I51
+sg7
+S'INT NOT NULL'
+p77
+ssS'fecha_prod'
+p78
+(dp79
+g4
+S'date'
+p80
+sg6
+I37
+sg7
+S'DATE NOT NULL'
+p81
+ssS'extra_data'
+p82
+(dp83
+g4
+g22
+sg6
+I39
+sg7
+S'VARCHAR(255) NOT NULL'
+p84
+ssS'hora_inicial'
+p85
+(dp86
+g4
+S'time'
+p87
+sg6
+I47
+sg7
+S'TIME NOT NULL'
+p88
+ssS'observaciones'
+p89
+(dp90
+g4
+g22
+sg6
+I52
+sg7
+S'VARCHAR(255) NOT NULL'
+p91
+ssS'cantidad_exp'
+p92
+(dp93
+g4
+g18
+sg6
+I31
+sg7
+S'DOUBLE NOT NULL'
+p94
+ssS'tiempo'
+p95
+(dp96
+g4
+S'datetime'
+p97
+sg6
+I5
+sg7
+S'DATETIME NOT NULL'
+p98
+ssS'registro'
+p99
+(dp100
+g4
+g97
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p101
+ssS'hora_final'
+p102
+(dp103
+g4
+g87
+sg6
+I48
+sg7
+S'TIME NOT NULL'
+p104
+ssS'proveedor_tipo_doc'
+p105
+(dp106
+g4
+g22
+sg6
+I20
+sg7
+S'VARCHAR(255) NOT NULL'
+p107
+ssS'temperatura'
+p108
+(dp109
+g4
+g18
+sg6
+I45
+sg7
+S'DOUBLE NOT NULL'
+p110
+ssS'peso_ing'
+p111
+(dp112
+g4
+g18
+sg6
+I34
+sg7
+S'DOUBLE NOT NULL'
+p113
+ssS'cantidad_ing'
+p114
+(dp115
+g4
+g18
+sg6
+I32
+sg7
+S'DOUBLE NOT NULL'
+p116
+ssS'user_ing'
+p117
+(dp118
+g4
+S'reference auth_user'
+p119
+sg6
+I7
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p120
+ssS'n_prefijo_relacion'
+p121
+(dp122
+g4
+g22
+sg6
+I50
+sg7
+S'VARCHAR(255) NOT NULL'
+p123
+ssS'compra_n_doc_base'
+p124
+(dp125
+g4
+g5
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p126
+ssS'grupo'
+p127
+(dp128
+g4
+g5
+sg6
+I42
+sg7
+S'INT NOT NULL'
+p129
+ssS'estado'
+p130
+(dp131
+g4
+g5
+sg6
+I6
+sg7
+S'INT NOT NULL'
+p132
+ssS'pedido'
+p133
+(dp134
+g4
+g5
+sg6
+I30
+sg7
+S'INT NOT NULL'
+p135
+ssS'fecha_doc'
+p136
+(dp137
+g4
+g80
+sg6
+I15
+sg7
+S'DATE NOT NULL'
+p138
+ssS'masa'
+p139
+(dp140
+g4
+g22
+sg6
+I44
+sg7
+S'VARCHAR(255) NOT NULL'
+p141
+ssS'n_doc_base'
+p142
+(dp143
+g4
+g5
+sg6
+I17
+sg7
+S'INT NOT NULL'
+p144
+ssS'fecha_venc'
+p145
+(dp146
+g4
+g80
+sg6
+I38
+sg7
+S'DATE NOT NULL'
+p147
+ssS'n_doc_prefijo'
+p148
+(dp149
+g4
+g22
+sg6
+I16
+sg7
+S'VARCHAR(255) NOT NULL'
+p150
+ssS'tipo_doc'
+p151
+(dp152
+g4
+g5
+sg6
+I14
+sg7
+S'INT NOT NULL'
+p153
+ssS'almacen_destino'
+p154
+(dp155
+g4
+S'reference almacenes_lista'
+p156
+sg6
+I26
+sg7
+S'INT, INDEX almacen_destino__idx (almacen_destino), FOREIGN KEY (almacen_destino) REFERENCES almacenes_lista(id) ON DELETE CASCADE'
+p157
+ssS'proveedor_fecha_doc'
+p158
+(dp159
+g4
+g80
+sg6
+I22
+sg7
+S'DATE NOT NULL'
+p160
+ssS'turno'
+p161
+(dp162
+g4
+S'reference turnos'
+p163
+sg6
+I43
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p164
+ssS'proveedor_condicion'
+p165
+(dp166
+g4
+g5
+sg6
+I21
+sg7
+S'INT NOT NULL'
+p167
+ssS'peso_exp'
+p168
+(dp169
+g4
+g18
+sg6
+I33
+sg7
+S'DOUBLE NOT NULL'
+p170
+ssS'proveedor_total_doc'
+p171
+(dp172
+g4
+g18
+sg6
+I24
+sg7
+S'DOUBLE NOT NULL'
+p173
+ssS'modo'
+p174
+(dp175
+g4
+g5
+sg6
+I3
+sg7
+S'INT NOT NULL'
+p176
+ss.

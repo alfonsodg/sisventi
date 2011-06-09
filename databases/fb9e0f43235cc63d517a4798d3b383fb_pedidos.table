@@ -1,0 +1,228 @@
+(dp1
+S'n_doc_sufijo'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I13
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'pv'
+p13
+(dp14
+g4
+S'reference puntos_venta'
+p15
+sg6
+I4
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p16
+ssS'cantidad'
+p17
+(dp18
+g4
+S'double'
+p19
+sg6
+I16
+sg7
+S'DOUBLE NOT NULL'
+p20
+ssS'tipo'
+p21
+(dp22
+g4
+S'integer'
+p23
+sg6
+I9
+sg7
+S'INT NOT NULL'
+p24
+ssS'area'
+p25
+(dp26
+g4
+S'reference areas'
+p27
+sg6
+I7
+sg7
+S'INT, INDEX area__idx (area), FOREIGN KEY (area) REFERENCES areas(id) ON DELETE CASCADE'
+p28
+ssS'n_doc_prefijo'
+p29
+(dp30
+g4
+g5
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p31
+ssS'fecha'
+p32
+(dp33
+g4
+S'date'
+p34
+sg6
+I3
+sg7
+S'DATE NOT NULL'
+p35
+ssS'user_req'
+p36
+(dp37
+g4
+S'reference auth_user'
+p38
+sg6
+I10
+sg7
+S'INT, INDEX user_req__idx (user_req), FOREIGN KEY (user_req) REFERENCES auth_user(id) ON DELETE CASCADE'
+p39
+ssS'grupo_distribucion'
+p40
+(dp41
+g4
+S'reference grupo_distribucion'
+p42
+sg6
+I6
+sg7
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p43
+ssS'peso'
+p44
+(dp45
+g4
+g19
+sg6
+I17
+sg7
+S'DOUBLE NOT NULL'
+p46
+ssS'estado'
+p47
+(dp48
+g4
+g23
+sg6
+I20
+sg7
+S'INT NOT NULL'
+p49
+ssS'user_ing'
+p50
+(dp51
+g4
+S'reference auth_user'
+p52
+sg6
+I21
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p53
+ssS'turno'
+p54
+(dp55
+g4
+S'reference turnos'
+p56
+sg6
+I5
+sg7
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+p57
+ssS'n_doc_base'
+p58
+(dp59
+g4
+g23
+sg6
+I12
+sg7
+S'INT NOT NULL'
+p60
+ssS'genero'
+p61
+(dp62
+g4
+S'reference generos'
+p63
+sg6
+I8
+sg7
+S'INT, INDEX genero__idx (genero), FOREIGN KEY (genero) REFERENCES generos(id) ON DELETE CASCADE'
+p64
+ssS'codbarras_padre'
+p65
+(dp66
+g4
+g5
+sg6
+I14
+sg7
+S'VARCHAR(255) NOT NULL'
+p67
+ssS'codbarras'
+p68
+(dp69
+g4
+S'reference maestro'
+p70
+sg6
+I15
+sg7
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p71
+ssS'id'
+p72
+(dp73
+g4
+g72
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p74
+ssS'detalle'
+p75
+(dp76
+g4
+g5
+sg6
+I18
+sg7
+S'VARCHAR(255) NOT NULL'
+p77
+ssS'modo'
+p78
+(dp79
+g4
+g23
+sg6
+I19
+sg7
+S'INT NOT NULL'
+p80
+ss.
