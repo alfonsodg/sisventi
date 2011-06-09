@@ -13,8 +13,20 @@ response.meta.copyright = 'Copyright 2007-2010'
 
 # Custom menus
 inicio = [(T('Home'), False, URL('default','index'), [])]
+configuracion = [
+            ('Configuración', False, URL('configuracion', 'index'),
+            [
+                ('General', False, None,
+                [
+                        ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio'))
+                ])
+            ])
+        ]
+        
 almacenes = [('Almacenes', False, None, [])]
-por_cobrar = [('Cuentas por Cobrar', False, URL('cobrar', 'index'),
+
+por_cobrar = [
+            ('Cuentas por Cobrar', False, URL('cobrar', 'index'),
             [
                 ('Clientes', False, URL('cobrar', 'clientes'),
                  [
@@ -28,7 +40,9 @@ por_cobrar = [('Cuentas por Cobrar', False, URL('cobrar', 'index'),
                  ]),
             ])
         ]
-por_pagar = [('Cuentas por Pagar', False, URL('pagar', 'index'),
+        
+por_pagar = [
+            ('Cuentas por Pagar', False, URL('pagar', 'index'),
             [
                 ('Proveedores', False, URL('pagar', 'proveedores'),
                  [
@@ -42,8 +56,11 @@ por_pagar = [('Cuentas por Pagar', False, URL('pagar', 'index'),
                  ]),
             ])
         ]
+        
 reportes = [('Reportes', False, None, [])]
-usuarios = [('Usuarios', False, URL('users', 'index'),
+
+usuarios = [
+            ('Usuarios', False, URL('users', 'index'),
             [
                 ('Nuevo usuario', False, None,
                  [
@@ -56,13 +73,16 @@ usuarios = [('Usuarios', False, URL('users', 'index'),
                  ])
              ])
         ]
-ventas = [('Ventas', False, None,
-           [
+        
+ventas = [
+            ('Ventas', False, None,
+            [
                 ('Delivery', False, URL('ventas', 'delivery'), []),
                 ('Dependencias de Productos', False, URL('ventas', 'dependencias_productos'), []),
                 ('Descuentos', False, URL('ventas', 'descuentos'), []),
                 ('Promociones', False, URL('ventas', 'promociones'), [])
-           ])]
+            ])
+        ]
 
 
 
@@ -76,6 +96,7 @@ elif auth.has_membership(user_id=auth.user.id, role='root'):
     response.menu += reportes
     response.menu += usuarios
     response.menu += ventas
+    response.menu += configuracion
 
         
     """

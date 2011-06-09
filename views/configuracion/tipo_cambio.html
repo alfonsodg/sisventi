@@ -1,0 +1,75 @@
+{{extend 'layout.html'}}
+
+<h1>Tipo de Cambio</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'tipo_cambio_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Área</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Moneda</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Hora</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Valor</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Usuario Ing.</b></center>
+            </td>
+        </tr>
+        {{if not tipos:}}
+            <tr>
+                <td colspan="7" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for tipo in tipos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.area}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.moneda}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.fecha}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.hora}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.valor}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=tipo.user_ing}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+
+
+

@@ -1,0 +1,139 @@
+(dp1
+S'fecha_doc'
+p2
+(dp3
+S'type'
+p4
+S'date'
+p5
+sS'sortable'
+p6
+I3
+sS'sql'
+p7
+S'DATE NOT NULL'
+p8
+ssS'registro'
+p9
+(dp10
+g4
+S'datetime'
+p11
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p12
+ssS'neto_ingreso'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I7
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'accion'
+p17
+(dp18
+g4
+S'string'
+p19
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p20
+ssS'fecha_venc'
+p21
+(dp22
+g4
+g15
+sg6
+I13
+sg7
+S'DOUBLE NOT NULL'
+p23
+ssS'bruto_salida'
+p24
+(dp25
+g4
+g15
+sg6
+I12
+sg7
+S'DOUBLE NOT NULL'
+p26
+ssS'id'
+p27
+(dp28
+g4
+g27
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p29
+ssS'impuesto_ingreso'
+p30
+(dp31
+g4
+g15
+sg6
+I8
+sg7
+S'DOUBLE NOT NULL'
+p32
+ssS'bruto_ingreso'
+p33
+(dp34
+g4
+g15
+sg6
+I9
+sg7
+S'DOUBLE NOT NULL'
+p35
+ssS'neto_salida'
+p36
+(dp37
+g4
+g15
+sg6
+I10
+sg7
+S'DOUBLE NOT NULL'
+p38
+ssS'impuesto_salida'
+p39
+(dp40
+g4
+g15
+sg6
+I11
+sg7
+S'DOUBLE NOT NULL'
+p41
+ssS'cliente'
+p42
+(dp43
+g4
+g19
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p44
+ssS'documento'
+p45
+(dp46
+g4
+g19
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ss.
