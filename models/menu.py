@@ -14,8 +14,18 @@ response.meta.copyright = 'Copyright 2007-2010'
 # Custom menus
 inicio = [(T('Home'), False, URL('default','index'), [])]
 almacenes = [('Almacenes', False, None, [])]
-por_cobrar = [('Cuentas por Cobrar', False, None, [])]
-por_pagar = [('Cuentas por Pagar', False, None, [])]
+por_cobrar = [('Cuentas por Cobrar', False, URL('cobrar', 'index'),
+            [
+                ('Agregar', False, URL('cobrar', 'agregar'), []),
+                ('Reporte', False, URL('cobrar', 'reporte'), []),
+            ])
+        ]
+por_pagar = [('Cuentas por Pagar', False, URL('pagar', 'index'),
+            [
+                ('Agregar', False, URL('pagar', 'agregar'), []),
+                ('Reporte', False, URL('pagar', 'reporte'), []),
+            ])
+        ]
 reportes = [('Reportes', False, None, [])]
 usuarios = [('Usuarios', False, URL('users', 'index'),
             [
