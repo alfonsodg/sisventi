@@ -16,14 +16,30 @@ inicio = [(T('Home'), False, URL('default','index'), [])]
 almacenes = [('Almacenes', False, None, [])]
 por_cobrar = [('Cuentas por Cobrar', False, URL('cobrar', 'index'),
             [
-                ('Agregar', False, URL('cobrar', 'agregar'), []),
-                ('Reporte', False, URL('cobrar', 'reporte'), []),
+                ('Clientes', False, URL('cobrar', 'clientes'),
+                 [
+                        ('Agregar', False, URL('cobrar', 'clientes_agregar'), []),
+                        ('Reporte', False, URL('cobrar', 'clientes_reporte'), [])
+                 ]),
+                ('Cuentas', False, URL('cobrar', 'cuentas'),
+                 [
+                        ('Agregar', False, URL('cobrar', 'cuentas_agregar'), []),
+                        ('Reporte', False, URL('cobrar', 'cuentas_reporte'), []),
+                 ]),
             ])
         ]
 por_pagar = [('Cuentas por Pagar', False, URL('pagar', 'index'),
             [
-                ('Agregar', False, URL('pagar', 'agregar'), []),
-                ('Reporte', False, URL('pagar', 'reporte'), []),
+                ('Proveedores', False, URL('pagar', 'proveedores'),
+                 [
+                        ('Agregar', False, URL('pagar', 'proveedores_agregar'), []),
+                        ('Reporte', False, URL('pagar', 'proveedores_reporte'), [])
+                 ]),
+                ('Cuentas', False, URL('pagar', 'cuentas'),
+                 [
+                        ('Agregar', False, URL('pagar', 'cuentas_agregar'), []),
+                        ('Reporte', False, URL('pagar', 'cuentas_reporte'), []),
+                 ]),
             ])
         ]
 reportes = [('Reportes', False, None, [])]

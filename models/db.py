@@ -142,18 +142,30 @@ db.define_table('condiciones_comerciales',
     Field('dias', 'integer', default=0, notnull=True), 
     Field('posicion', 'integer', default=0, notnull=True)
 )
-    
+
+
+db.define_table('documentos_identidad', 
+    Field('id', 'string'), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('nombre', 'string', default='', notnull=True)
+)
+
 
 db.define_table('directorio',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('modo', 'integer', default=0, notnull=True),
+    Field('modo', 'string',
+          requires=IS_IN_SET(['Cliente', 'Proveedor'], zero='[Seleccionar]',
+                             error_message='Seleccione el modo')),
     Field('razon_social', 'string', default='', notnull=True, label='Razón Social'),
     Field('nombre_corto', 'string', default=''), 
     Field('rubro', 'integer', default=0, notnull=True), 
     Field('nombres', 'string', default='', notnull=True), 
     Field('apellidos', 'string', default='', notnull=True), 
-    Field('tipo_doc', 'string', default='', notnull=True, label='Tipo de Documento'), 
+    Field('tipo_doc', db.documentos_identidad, label='Tipo de Documento',
+          requires=IS_IN_DB(db, db.documentos_identidad, '%(nombre)s',
+                            zero='[Seleccionar]',
+                            error_message='Seleccione una tipo de documento')), 
     Field('doc_id', 'string', default='', notnull=True, label='ID del Documento'), 
     Field('doc_id_aux', 'string', default='', label='ID Auxiliar del Documento'),
     Field('pais', 'string', default='Perú', notnull=True, label='País'),
@@ -171,7 +183,7 @@ db.define_table('directorio',
     Field('linea_credito', 'double', default=0.0, notnull=True, label='Línea de Crédito'), 
     Field('representante_legal', 'string', default=''), 
     Field('cargo', 'string', default=''), 
-    Field('fecha', 'date', notnull=True), 
+    Field('fecha', 'date', notnull=True, default=datetime.date.today()), 
     Field('sexo', 'string',
           requires=IS_IN_SET(['Masculino', 'Femenino'], zero='[Seleccionar]',
                              error_message='Seleccione el sexo')), 
@@ -674,13 +686,6 @@ db.define_table('documentos_comerciales',
     Field('limite', 'integer', default=0, notnull=True), 
     Field('impresion', 'integer', default=0, notnull=True), 
     Field('impuestos', 'string', default='', notnull=True)
-)
-
-
-db.define_table('documentos_identidad', 
-    Field('id', 'string'), 
-    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
-    Field('nombre', 'string', default='', notnull=True)
 )
 
 
