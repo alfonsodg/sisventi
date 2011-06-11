@@ -1,0 +1,97 @@
+{{extend 'layout.html'}}
+
+<h1>Directorio</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'directorio_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Razón Social</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Tipo Documento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>ID Documento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Dirección</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Días a Pagar</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Intervalo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Interés</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Línea Crédito</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Preferente</b></center>
+            </td>
+        </tr>
+        {{if not directorios:}}
+            <tr>
+                <td colspan="11" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for directorio in directorios:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.razon_social}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.tipo_doc}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.doc_id}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.direccion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.tiempo_cred}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.intervalo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.interes}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.linea_credito}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.fecha}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=directorio.preferente}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

@@ -13,12 +13,48 @@ response.meta.copyright = 'Copyright 2007-2010'
 
 # Custom menus
 inicio = [(T('Home'), False, URL('default','index'), [])]
+        
 configuracion = [
             ('Configuración', False, URL('configuracion', 'index'),
             [
                 ('General', False, None,
                 [
-                        ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio'))
+                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                    ('Directorio', False, URL('configuracion', 'directorio')),
+                    ('Usuarios', False, URL('users', 'index'),
+                    [
+                        ('Nuevo usuario', False, None,
+                         [
+                            ('Administrador (Sistema)', False, URL('users', 'add', vars={'group':'root'})),
+                            ('Administrador (Punto de Venta)', False, URL('users', 'add', vars={'group':'administrador'})),
+                            ('Almacenes', False, URL('users', 'add', vars={'group':'almacenes'})),
+                            ('Compras', False, URL('users', 'add', vars={'group':'compras'})),
+                            ('Reportes', False, URL('users', 'add', vars={'group':'reportes'})),
+                            ('Ventas', False, URL('users', 'add', vars={'group':'ventas'})),
+                         ])
+                     ])
+                ]),
+                ('Comercial', False, None,
+                [
+                    ('Comprobantes', False, URL('configuracion', 'comprobantes'))
+                ]),
+                ('Productos', False, None,
+                [
+                    ('Componentes', False, None,
+                    [
+                        ('Recetas', False, None,
+                        [
+                            ('Mantenimiento General', False, URL('configuracion', 'recetas'))
+                        ])
+                    ]),
+                    ('Gestión de Productos', False, URL('configuracion', 'productos'),
+                    [
+                        ('Administración POS', False, URL('configuracion', 'productos_pos'))
+                    ])
+                ]),
+                ('Ventas', False, None,
+                [
+                    ('Formas de Pago', False, URL('configuracion', 'formas_pago'))
                 ])
             ])
         ]
@@ -30,13 +66,13 @@ por_cobrar = [
             [
                 ('Clientes', False, URL('cobrar', 'clientes'),
                  [
-                        ('Agregar', False, URL('cobrar', 'clientes_agregar'), []),
-                        ('Reporte', False, URL('cobrar', 'clientes_reporte'), [])
+                    ('Agregar', False, URL('cobrar', 'clientes_agregar'), []),
+                    ('Reporte', False, URL('cobrar', 'clientes_reporte'), [])
                  ]),
                 ('Cuentas', False, URL('cobrar', 'cuentas'),
                  [
-                        ('Agregar', False, URL('cobrar', 'cuentas_agregar'), []),
-                        ('Reporte', False, URL('cobrar', 'cuentas_reporte'), []),
+                    ('Agregar', False, URL('cobrar', 'cuentas_agregar'), []),
+                    ('Reporte', False, URL('cobrar', 'cuentas_reporte'), []),
                  ]),
             ])
         ]
@@ -46,33 +82,18 @@ por_pagar = [
             [
                 ('Proveedores', False, URL('pagar', 'proveedores'),
                  [
-                        ('Agregar', False, URL('pagar', 'proveedores_agregar'), []),
-                        ('Reporte', False, URL('pagar', 'proveedores_reporte'), [])
+                    ('Agregar', False, URL('pagar', 'proveedores_agregar'), []),
+                    ('Reporte', False, URL('pagar', 'proveedores_reporte'), [])
                  ]),
                 ('Cuentas', False, URL('pagar', 'cuentas'),
                  [
-                        ('Agregar', False, URL('pagar', 'cuentas_agregar'), []),
-                        ('Reporte', False, URL('pagar', 'cuentas_reporte'), []),
+                    ('Agregar', False, URL('pagar', 'cuentas_agregar'), []),
+                    ('Reporte', False, URL('pagar', 'cuentas_reporte'), []),
                  ]),
             ])
         ]
         
 reportes = [('Reportes', False, None, [])]
-
-usuarios = [
-            ('Usuarios', False, URL('users', 'index'),
-            [
-                ('Nuevo usuario', False, None,
-                 [
-                        ('Administrador (Sistema)', False, URL('users', 'add', vars={'group':'root'})),
-                        ('Administrador (Punto de Venta)', False, URL('users', 'add', vars={'group':'administrador'})),
-                        ('Almacenes', False, URL('users', 'add', vars={'group':'almacenes'})),
-                        ('Compras', False, URL('users', 'add', vars={'group':'compras'})),
-                        ('Reportes', False, URL('users', 'add', vars={'group':'reportes'})),
-                        ('Ventas', False, URL('users', 'add', vars={'group':'ventas'})),
-                 ])
-             ])
-        ]
         
 ventas = [
             ('Ventas', False, None,
@@ -85,7 +106,7 @@ ventas = [
         ]
 
 
-
+# Add menus to type of user
 if not auth.user:
     response.menu = inicio
 elif auth.has_membership(user_id=auth.user.id, role='root'):
@@ -94,7 +115,6 @@ elif auth.has_membership(user_id=auth.user.id, role='root'):
     response.menu += por_cobrar
     response.menu += por_pagar
     response.menu += reportes
-    response.menu += usuarios
     response.menu += ventas
     response.menu += configuracion
 

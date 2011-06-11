@@ -1,0 +1,127 @@
+{{extend 'layout.html'}}
+
+<h1>Productos</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'productos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Código</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Grupo Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Moneda</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Precio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo Impuesto</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Impuesto</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Descripción</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Descuento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Dependencia</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Unidad Medida</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Valor Unidad Medida</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Aux. Num. Data</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Ventas Key</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha</b></center>
+            </td>
+        </tr>
+        {{if not productos:}}
+            <tr>
+                <td colspan="16" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for producto in productos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.codbarras}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.grupo_venta}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.moneda}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.precio}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.modo_impuesto}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.impuesto}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.nombre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.descripcion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.descuento}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.dependencia}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.unidad_medida}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.unidad_medida_valor}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.aux_num_data}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.ventas_key}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.fecha}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

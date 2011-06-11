@@ -1,0 +1,115 @@
+{{extend 'layout.html'}}
+
+<h1>Comprobantes</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'comprobantes_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Documento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Doc. Reg.</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Caja</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Prefijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Correlativo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Sufijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Copia</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Detalle</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Límite</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Impresíon</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Impuestos</b></center>
+            </td>
+        </tr>
+        {{if not comprobantes:}}
+            <tr>
+                <td colspan="14" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for comprobante in comprobantes:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.documento}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.doc_reg}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.nombre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.caja}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.prefijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.correlativo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.sufijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.copia}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.detalle}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.limite}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.impresion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=comprobante.impuestos}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+
