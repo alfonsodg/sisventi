@@ -275,7 +275,7 @@ db.define_table('sub_sellos',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sub_sello', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 
@@ -284,7 +284,7 @@ db.define_table('status',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('status', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

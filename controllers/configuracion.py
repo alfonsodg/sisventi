@@ -329,3 +329,23 @@ def sellos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def casas():
+    """
+    Muestra las configuraciones para las casas
+    """
+    casas = db(db.casas).select()
+    return dict(casas=casas)
+
+
+@auth.requires(restricciones)
+def casas_agregar():
+    """
+    Agregar nuevo registro a 'casas'
+    """
+    form = SQLFORM(db.casas, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
