@@ -131,48 +131,48 @@ I20
 sg7
 S'INT NOT NULL'
 p49
-ssS'turno'
+ssS'user_ing'
 p50
 (dp51
 g4
-S'reference turnos'
+S'reference auth_user'
 p52
+sg6
+I21
+sg7
+S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+p53
+ssS'turno'
+p54
+(dp55
+g4
+S'reference turnos'
+p56
 sg6
 I5
 sg7
 S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
-p53
+p57
 ssS'n_doc_base'
-p54
-(dp55
+p58
+(dp59
 g4
 g23
 sg6
 I12
 sg7
 S'INT NOT NULL'
-p56
+p60
 ssS'genero'
-p57
-(dp58
+p61
+(dp62
 g4
 S'reference generos'
-p59
+p63
 sg6
 I8
 sg7
 S'INT, INDEX genero__idx (genero), FOREIGN KEY (genero) REFERENCES generos(id) ON DELETE CASCADE'
-p60
-ssS'user_ing'
-p61
-(dp62
-g4
-S'reference auth_user'
-p63
-sg6
-I21
-sg7
-S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
 p64
 ssS'codbarras_padre'
 p65
