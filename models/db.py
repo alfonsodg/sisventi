@@ -1622,6 +1622,82 @@ db.define_table('personal',
     Field('salida', 'datetime', notnull=True)
 )
 
+
+db.define_table('pos_configuracion',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('codigo', 'string', notnull=True, label='Código', default=''),
+    Field('caja', 'integer', notnull=True, default=0),
+    Field('empresa', 'string', notnull=True, default=''),
+    Field('nombre', 'string', notnull=True, default=''),
+    Field('distrito', 'string', notnull=True, default=''),
+    Field('direccion', 'string', notnull=True, label='Dirección', default=''),
+    Field('alias', 'string', notnull=True, default=''),
+    Field('doc_cabecera', 'string', notnull=True, default=''),
+    Field('doc_pie', 'string', notnull=True, default=''),
+    Field('impuestos', 'string', notnull=True, default=''),
+    Field('modo_impuesto', 'integer', notnull=True, default=0),
+    Field('modo_moneda', 'integer', notnull=True, default=0),
+    Field('moneda', 'string', notnull=True, default=''),
+    Field('wincha', 'string', notnull=True, default=''),
+    Field('money_drawer', 'string', notnull=True, default=''),
+    Field('productos_resumen', 'string', notnull=True, default=''),
+    Field('productos_clave', 'string', notnull=True, default=''),
+    Field('tipo_servicio', 'integer', notnull=True, default=1),
+    Field('servidor_smtp', 'string', notnull=True, default=''),
+    Field('from_smtp', 'string', notnull=True, default=''),
+    Field('to_smtp', 'string', notnull=True, default=''),
+    Field('fondo_caja', 'double', notnull=True, default=0.0),
+    Field('consumo_alerta', 'integer', notnull=True, default=0),
+    Field('dia_alerta', 'string', notnull=True, label='Día de Alerta', default=''),
+    Field('hora_max', 'time', notnull=True),
+    Field('datos_modo', 'integer', notnull=True, default=0),
+    Field('stock_alerta', 'integer', notnull=True, default=0),
+    Field('pos_modo', 'integer', notnull=True, default=0),
+    Field('modo_decimal', 'integer', notnull=True, default=0),
+    Field('modo_control', 'integer', notnull=True, default=0),
+    Field('modo_almacen', 'integer', notnull=True, default=0),
+    Field('genero_producto', 'string', notnull=True, default=''),
+    Field('almacen_key', 'integer', notnull=True, default=0),
+    Field('almacen', db.almacenes_lista, label='Almacén',
+          requires=IS_IN_DB(db, db.almacenes_lista, '%(almacen)s', zero='[Seleccionar]',
+                            error_message='Seleccione un almacén'))
+)
+
+"""
+CREATE TABLE `pos_descuentos` (
+  `registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `pv` varchar(4) COLLATE latin1_bin NOT NULL DEFAULT '',
+  `caja` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `codbarras` varchar(16) COLLATE latin1_bin NOT NULL DEFAULT '',
+  `modo` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `descuento` double(12,4) unsigned NOT NULL DEFAULT '0.0000',
+  `limite` double(12,4) unsigned NOT NULL DEFAULT '0.0000',
+  `data` varchar(255) COLLATE latin1_bin NOT NULL DEFAULT '',
+  `estado` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `user_ing` smallint(4) unsigned NOT NULL DEFAULT '0',"""
+
+db.define_table('pos_descuentos',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('pv', db.puntos_venta, label='Punto de Venta',
+          requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un punto de venta')),
+    Field('caja', 'integer', notnull=True, default=0),
+    Field('codbarras', 'string', notnull=True, label='Código', default=''),
+    Field('modo', 'integer', notnull=True, default=0),
+    Field('descuento', 'double', notnull=True, default=0.0),
+    Field('limite', 'double', notnull=True, label='Límite', default=0.0),
+    Field('data', 'string', notnull=True, default=''),
+    Field('estado', 'integer', notnull=True, default=1),
+    Field('user_ing', db.auth_user,
+          requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
+                            zero='[Seleccionar]',
+                            error_message='Seleccione un usuario')),
+)
+
+
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
 db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role

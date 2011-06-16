@@ -150,6 +150,7 @@
 'Saved file hash:': 'Hash del archivo guardado:',
 'Seleccione el modo': 'Seleccione el modo',
 'Seleccione el sexo': 'Seleccione el sexo',
+'Seleccione un almacén': 'Seleccione un almacén',
 'Seleccione un artículo': 'Seleccione un artículo',
 'Seleccione un catmod': 'Seleccione un catmod',
 'Seleccione un código de barras': 'Seleccione un código de barras',

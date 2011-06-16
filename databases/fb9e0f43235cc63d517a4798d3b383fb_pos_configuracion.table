@@ -1,0 +1,371 @@
+(dp1
+S'empresa'
+p2
+(dp3
+S'type'
+p4
+S'string'
+p5
+sS'sortable'
+p6
+I5
+sS'sql'
+p7
+S'VARCHAR(255) NOT NULL'
+p8
+ssS'almacen'
+p9
+(dp10
+g4
+S'reference almacenes_lista'
+p11
+sg6
+I36
+sg7
+S'INT, INDEX almacen__idx (almacen), FOREIGN KEY (almacen) REFERENCES almacenes_lista(id) ON DELETE CASCADE'
+p12
+ssS'fondo_caja'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I24
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'pos_modo'
+p17
+(dp18
+g4
+S'integer'
+p19
+sg6
+I30
+sg7
+S'INT NOT NULL'
+p20
+ssS'datos_modo'
+p21
+(dp22
+g4
+g19
+sg6
+I28
+sg7
+S'INT NOT NULL'
+p23
+ssS'to_smtp'
+p24
+(dp25
+g4
+g5
+sg6
+I23
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'genero_producto'
+p27
+(dp28
+g4
+g5
+sg6
+I34
+sg7
+S'VARCHAR(255) NOT NULL'
+p29
+ssS'moneda'
+p30
+(dp31
+g4
+g5
+sg6
+I15
+sg7
+S'VARCHAR(255) NOT NULL'
+p32
+ssS'from_smtp'
+p33
+(dp34
+g4
+g5
+sg6
+I22
+sg7
+S'VARCHAR(255) NOT NULL'
+p35
+ssS'id'
+p36
+(dp37
+g4
+g36
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p38
+ssS'money_drawer'
+p39
+(dp40
+g4
+g5
+sg6
+I17
+sg7
+S'VARCHAR(255) NOT NULL'
+p41
+ssS'modo_decimal'
+p42
+(dp43
+g4
+g19
+sg6
+I31
+sg7
+S'INT NOT NULL'
+p44
+ssS'dia_alerta'
+p45
+(dp46
+g4
+g5
+sg6
+I26
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ssS'productos_clave'
+p48
+(dp49
+g4
+g5
+sg6
+I19
+sg7
+S'VARCHAR(255) NOT NULL'
+p50
+ssS'direccion'
+p51
+(dp52
+g4
+g5
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p53
+ssS'caja'
+p54
+(dp55
+g4
+g19
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p56
+ssS'nombre'
+p57
+(dp58
+g4
+g5
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p59
+ssS'wincha'
+p60
+(dp61
+g4
+g5
+sg6
+I16
+sg7
+S'VARCHAR(255) NOT NULL'
+p62
+ssS'distrito'
+p63
+(dp64
+g4
+g5
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p65
+ssS'tipo_servicio'
+p66
+(dp67
+g4
+g19
+sg6
+I20
+sg7
+S'INT NOT NULL'
+p68
+ssS'registro'
+p69
+(dp70
+g4
+S'datetime'
+p71
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p72
+ssS'modo_impuesto'
+p73
+(dp74
+g4
+g19
+sg6
+I13
+sg7
+S'INT NOT NULL'
+p75
+ssS'stock_alerta'
+p76
+(dp77
+g4
+g19
+sg6
+I29
+sg7
+S'INT NOT NULL'
+p78
+ssS'impuestos'
+p79
+(dp80
+g4
+g5
+sg6
+I12
+sg7
+S'VARCHAR(255) NOT NULL'
+p81
+ssS'productos_resumen'
+p82
+(dp83
+g4
+g5
+sg6
+I18
+sg7
+S'VARCHAR(255) NOT NULL'
+p84
+ssS'servidor_smtp'
+p85
+(dp86
+g4
+g5
+sg6
+I21
+sg7
+S'VARCHAR(255) NOT NULL'
+p87
+ssS'almacen_key'
+p88
+(dp89
+g4
+g19
+sg6
+I35
+sg7
+S'INT NOT NULL'
+p90
+ssS'hora_max'
+p91
+(dp92
+g4
+S'time'
+p93
+sg6
+I27
+sg7
+S'TIME NOT NULL'
+p94
+ssS'modo_moneda'
+p95
+(dp96
+g4
+g19
+sg6
+I14
+sg7
+S'INT NOT NULL'
+p97
+ssS'doc_pie'
+p98
+(dp99
+g4
+g5
+sg6
+I11
+sg7
+S'VARCHAR(255) NOT NULL'
+p100
+ssS'alias'
+p101
+(dp102
+g4
+g5
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p103
+ssS'consumo_alerta'
+p104
+(dp105
+g4
+g19
+sg6
+I25
+sg7
+S'INT NOT NULL'
+p106
+ssS'modo_control'
+p107
+(dp108
+g4
+g19
+sg6
+I32
+sg7
+S'INT NOT NULL'
+p109
+ssS'codigo'
+p110
+(dp111
+g4
+g5
+sg6
+I3
+sg7
+S'VARCHAR(255) NOT NULL'
+p112
+ssS'doc_cabecera'
+p113
+(dp114
+g4
+g5
+sg6
+I10
+sg7
+S'VARCHAR(255) NOT NULL'
+p115
+ssS'modo_almacen'
+p116
+(dp117
+g4
+g19
+sg6
+I33
+sg7
+S'INT NOT NULL'
+p118
+ss.
