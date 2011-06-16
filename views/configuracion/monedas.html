@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+
+<h1>Monedas</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'monedas_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Código</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Símbolo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Orden</b></center>
+            </td>
+        </tr>
+        {{if not monedas:}}
+            <tr>
+                <td colspan="5" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for moneda in monedas:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=moneda.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=moneda.codigo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=moneda.nombre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=moneda.simbolo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=moneda.orden}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

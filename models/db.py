@@ -78,9 +78,9 @@ db.define_table('monedas',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('modo', 'integer', default=0, notnull=True), 
-    Field('codigo', 'string', default='', notnull=True), 
+    Field('codigo', 'string', default='', label='Código', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('simbolo', 'string', default='', notnull=True), 
+    Field('simbolo', 'string', default='', label='Símbolo', notnull=True), 
     Field('orden', 'integer', default=0, notnull=True) 
 )
     

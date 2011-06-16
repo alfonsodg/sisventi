@@ -18,9 +18,10 @@ configuracion = [
             ('Configuración', False, URL('configuracion', 'index'),
             [
                 ('General', False, None,
-                [
-                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                [                    
                     ('Directorio', False, URL('configuracion', 'directorio')),
+                    ('Monedas', False, URL('configuracion', 'monedas')),
+                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Usuarios', False, URL('users', 'index'),
                     [
                         ('Nuevo usuario', False, None,
