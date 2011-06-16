@@ -1664,19 +1664,6 @@ db.define_table('pos_configuracion',
                             error_message='Seleccione un almacén'))
 )
 
-"""
-CREATE TABLE `pos_descuentos` (
-  `registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `pv` varchar(4) COLLATE latin1_bin NOT NULL DEFAULT '',
-  `caja` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `codbarras` varchar(16) COLLATE latin1_bin NOT NULL DEFAULT '',
-  `modo` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `descuento` double(12,4) unsigned NOT NULL DEFAULT '0.0000',
-  `limite` double(12,4) unsigned NOT NULL DEFAULT '0.0000',
-  `data` varchar(255) COLLATE latin1_bin NOT NULL DEFAULT '',
-  `estado` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `user_ing` smallint(4) unsigned NOT NULL DEFAULT '0',"""
 
 db.define_table('pos_descuentos',
     Field('id', 'integer'),
