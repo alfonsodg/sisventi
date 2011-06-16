@@ -20,6 +20,7 @@ configuracion = [
                 ('General', False, None,
                 [                    
                     ('Directorio', False, URL('configuracion', 'directorio')),
+                    ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Usuarios', False, URL('users', 'index'),

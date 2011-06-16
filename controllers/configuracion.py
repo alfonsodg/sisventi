@@ -209,3 +209,23 @@ def condiciones_comerciales_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def doc_identidad():
+    """
+    Muestra las configuraciones para los documentos de identidad
+    """
+    documentos = db(db.documentos_identidad).select()
+    return dict(documentos=documentos)
+
+
+@auth.requires(restricciones)
+def doc_identidad_agregar():
+    """
+    Agregar nuevo registro a 'documentos_identidad'
+    """
+    form = SQLFORM(db.documentos_identidad, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
