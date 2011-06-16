@@ -1524,6 +1524,35 @@ db.define_table('cuentas_por_pagar',
 )
 
 
+db.define_table('inventarios',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('fecha_doc', 'date', notnull=True, label='Fecha del Documento', default=datetime.date.today()),
+    Field('documento', 'string', notnull=True, label='Documento a Pagar'),
+    Field('modo', 'integer', default=0, notnull=True), 
+    Field('almacen', db.almacenes_lista, label='Almacén',
+          requires=IS_IN_DB(db, db.almacenes_lista, '%(almacen)s', zero='[Seleccionar]',
+                            error_message='Seleccione un almacén')),
+    Field('codbarras', 'string', notnull=True, label='Código', default=''),
+    Field('cantidad', 'double', notnull=True, default=0.0),
+    Field('unidades', 'double', notnull=True, default=0.0),
+    Field('cantidad_1', 'double', notnull=True, default=0.0),
+    Field('cantidad_2', 'double', notnull=True, default=0.0),
+    Field('cantidad_conv', 'double', notnull=True, default=0.0)
+)
+
+
+db.define_table('cuentas',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('codigo', 'string', notnull=True, label='Código', default=''),
+    Field('entidad', 'string', notnull=True, default=''),
+    Field('moneda', db.monedas,
+          requires=IS_IN_DB(db, db.monedas, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione una moneda')),
+)
+
+
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
 db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role
