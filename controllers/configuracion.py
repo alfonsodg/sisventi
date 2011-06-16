@@ -112,6 +112,26 @@ def productos_agregar():
 
 
 @auth.requires(restricciones)
+def productos_pos():
+    """
+    Muestra las configuraciones para productos pos
+    """
+    productos = db(db.maestro_pos).select()
+    return dict(productos=productos)
+
+
+@auth.requires(restricciones)
+def productos_pos_agregar():
+    """
+    Agregar nuevo registro a 'maestro_pos'
+    """
+    form = SQLFORM(db.maestro_pos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
 def recetas():
     """
     Muestra las configuraciones de las recetas

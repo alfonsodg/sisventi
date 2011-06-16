@@ -1,0 +1,115 @@
+{{extend 'layout.html'}}
+
+<h1>Productos POS</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'productos_pos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto Venta</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Caja</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Atajo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Denom. Padre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cod. Padre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Alias Padre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Posic. Padre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo Hijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nivel Hijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Denom. Hijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cod. Hijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Alias Hijo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Posic. Hijo</b></center>
+            </td>
+        </tr>
+        {{if not productos:}}
+            <tr>
+                <td colspan="14" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for producto in productos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.caja}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.atajo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.denominacion_padre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.codbarras_padre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.alias_padre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.posicion_padre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.modo_hijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.nivel_hijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.denominacion_hijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.codbarras_hijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.alias_hijo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.posicion_hijo}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+
