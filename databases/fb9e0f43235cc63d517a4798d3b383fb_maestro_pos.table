@@ -1,0 +1,169 @@
+(dp1
+S'modo_hijo'
+p2
+(dp3
+S'type'
+p4
+S'integer'
+p5
+sS'sortable'
+p6
+I11
+sS'sql'
+p7
+S'INT NOT NULL'
+p8
+ssS'posicion_hijo'
+p9
+(dp10
+g4
+g5
+sg6
+I16
+sg7
+S'INT NOT NULL'
+p11
+ssS'registro'
+p12
+(dp13
+g4
+S'datetime'
+p14
+sg6
+I2
+sg7
+S'DATETIME NOT NULL'
+p15
+ssS'pv'
+p16
+(dp17
+g4
+S'reference puntos_venta'
+p18
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p19
+ssS'nivel_hijo'
+p20
+(dp21
+g4
+g5
+sg6
+I12
+sg7
+S'INT NOT NULL'
+p22
+ssS'codbarras_hijo'
+p23
+(dp24
+g4
+S'string'
+p25
+sg6
+I14
+sg7
+S'VARCHAR(255) NOT NULL'
+p26
+ssS'posicion_padre'
+p27
+(dp28
+g4
+g5
+sg6
+I10
+sg7
+S'INT NOT NULL'
+p29
+ssS'codbarras_padre'
+p30
+(dp31
+g4
+g25
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p32
+ssS'denominacion_padre'
+p33
+(dp34
+g4
+g25
+sg6
+I7
+sg7
+S'VARCHAR(255) NOT NULL'
+p35
+ssS'caja'
+p36
+(dp37
+g4
+g5
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p38
+ssS'alias_hijo'
+p39
+(dp40
+g4
+g25
+sg6
+I15
+sg7
+S'VARCHAR(255) NOT NULL'
+p41
+ssS'atajo'
+p42
+(dp43
+g4
+g25
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p44
+ssS'denominacion_hijo'
+p45
+(dp46
+g4
+g25
+sg6
+I13
+sg7
+S'VARCHAR(255) NOT NULL'
+p47
+ssS'alias_padre'
+p48
+(dp49
+g4
+g25
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p50
+ssS'id'
+p51
+(dp52
+g4
+g51
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p53
+ssS'modo'
+p54
+(dp55
+g4
+g5
+sg6
+I5
+sg7
+S'INT NOT NULL'
+p56
+ss.

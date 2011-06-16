@@ -1553,6 +1553,46 @@ db.define_table('cuentas',
 )
 
 
+db.define_table('inventarios_control',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('codbarras', 'string', notnull=True, label='Código', default=''),
+    Field('factor', 'double', notnull=True, default=0.0),
+    Field('peso_total_1', 'double', notnull=True, default=0.0),
+    Field('peso_total_2', 'double', notnull=True, default=0.0),
+    Field('peso_tara_1', 'double', notnull=True, default=0.0),
+    Field('peso_tara_2', 'double', notnull=True, default=0.0),
+    Field('peso_unitario', 'double', notnull=True, default=0.0),
+    Field('peso_neto', 'double', notnull=True, default=0.0),
+    Field('factor_peso', 'double', notnull=True, default=0.0),
+    Field('formula', 'integer', notnull=True, default=1),
+)
+
+
+db.define_table('maestro_pos',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('pv', db.puntos_venta, label='Punto de Venta',
+          requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un punto de venta')),
+    Field('caja', 'integer', notnull=True, default=0),
+    Field('modo', 'integer', notnull=True, default=1),
+    Field('atajo', 'string', notnull=True, default=''),
+    Field('denominacion_padre', 'string', notnull=True, label='Denominación Padre', default=''),
+    Field('codbarras_padre', 'string', notnull=True, label='Código Padre', default=''),
+    Field('alias_padre', 'string', notnull=True, default=''),
+    Field('posicion_padre', 'integer', notnull=True, label='Posición Padre', default=255),
+    Field('modo_hijo', 'integer', notnull=True, default=0),
+    Field('nivel_hijo', 'integer', notnull=True, default=0),
+    Field('denominacion_hijo', 'string', notnull=True, label='Denominación Hijo', default=''),
+    Field('codbarras_hijo', 'string', notnull=True, label='Código Hijo', default=''),
+    Field('alias_hijo', 'string', notnull=True, default=''),
+    Field('posicion_hijo', 'integer', notnull=True, label='Posición Hijo', default=255),
+)
+
+
+
+
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
 db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role
