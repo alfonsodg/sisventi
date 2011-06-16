@@ -1,0 +1,73 @@
+{{extend 'layout.html'}}
+
+<h1>Transportistas</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'transportistas_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="width: 12%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Emp. Doc. ID</b></center>
+            </td>
+            <td style="width: 12%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Doc. ID</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombres</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Apellidos</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Ubigeo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Dirección</b></center>
+            </td>
+            <td style="width: 7%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Posición</b></center>
+            </td>
+        </tr>
+        {{if not transportistas:}}
+            <tr>
+                <td colspan="7" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for transportista in transportistas:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.emp_doc_id}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.doc_id}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.nombres}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.apellidos}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.ubigeo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.direccion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=transportista.posicion}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

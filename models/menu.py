@@ -23,6 +23,7 @@ configuracion = [
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                    ('Transportistas', False, URL('configuracion', 'transportistas')),
                     ('Usuarios', False, URL('users', 'index'),
                     [
                         ('Nuevo usuario', False, None,

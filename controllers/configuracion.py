@@ -229,3 +229,23 @@ def doc_identidad_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def transportistas():
+    """
+    Muestra las configuraciones para los transportistas
+    """
+    transportistas = db(db.transportistas).select()
+    return dict(transportistas=transportistas)
+
+
+@auth.requires(restricciones)
+def transportistas_agregar():
+    """
+    Agregar nuevo registro a 'transportistas'
+    """
+    form = SQLFORM(db.transportistas, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

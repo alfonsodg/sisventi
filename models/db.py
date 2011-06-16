@@ -194,14 +194,15 @@ db.define_table('directorio',
     
 db.define_table('transportistas',
     Field('id', 'integer'),
-    Field('codigo', 'string', default='', notnull=True), 
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
+    Field('codigo', 'string', default='', label='Código', notnull=True), 
     Field('emp_doc_id', 'string', default='', notnull=True), 
     Field('doc_id', 'string', default='', notnull=True), 
     Field('nombres', 'string', default='', notnull=True), 
     Field('apellidos', 'string', default='', notnull=True), 
     Field('ubigeo', 'string', default='', notnull=True), 
-    Field('direccion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('direccion', 'string', default='', label='Dirección', notnull=True), 
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
     
 
