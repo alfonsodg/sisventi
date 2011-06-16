@@ -136,12 +136,12 @@ db.define_table('almacenes_lista',
 db.define_table('condiciones_comerciales',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
-    Field('condicion', 'string', default='', notnull=True), 
+    Field('condicion', 'string', default='', label='Condición', notnull=True), 
     Field('modo', 'integer', default=0, notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    Field('codigo', 'integer', default=0, notnull=True), 
-    Field('dias', 'integer', default=0, notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('descripcion', 'string', default='', label='Descripción', notnull=True), 
+    Field('codigo', 'integer', default=0, label='Código', notnull=True), 
+    Field('dias', 'integer', default=0, label='Días', notnull=True), 
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

@@ -189,3 +189,23 @@ def puntos_venta_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def condiciones_comerciales():
+    """
+    Muestra las configuraciones para las condiciones comerciales
+    """
+    condiciones = db(db.condiciones_comerciales).select()
+    return dict(condiciones=condiciones)
+
+
+@auth.requires(restricciones)
+def condiciones_comerciales_agregar():
+    """
+    Agregar nuevo registro a 'condiciones_comerciales'
+    """
+    form = SQLFORM(db.condiciones_comerciales, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

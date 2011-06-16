@@ -37,7 +37,8 @@ configuracion = [
                 ]),
                 ('Comercial', False, None,
                 [
-                    ('Comprobantes', False, URL('configuracion', 'comprobantes'))
+                    ('Comprobantes', False, URL('configuracion', 'comprobantes')),
+                    ('Condiciones Comerciales', False, URL('configuracion', 'condiciones_comerciales'))
                 ]),
                 ('Productos', False, None,
                 [
