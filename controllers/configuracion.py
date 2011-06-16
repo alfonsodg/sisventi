@@ -269,3 +269,23 @@ def turnos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def articulos():
+    """
+    Muestra las configuraciones para los articulos
+    """
+    articulos = db(db.articulos).select()
+    return dict(articulos=articulos)
+
+
+@auth.requires(restricciones)
+def articulos_agregar():
+    """
+    Agregar nuevo registro a 'articulos'
+    """
+    form = SQLFORM(db.articulos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

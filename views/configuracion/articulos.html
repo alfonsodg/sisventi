@@ -1,0 +1,49 @@
+{{extend 'layout.html'}}
+
+<h1>Artículos</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'articulos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<center>
+    <table style="text-align: left; width: 80%;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+            <tr>
+                <td style="width: 25%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Artículo</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Nombre</b></center>
+                </td>
+                <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Posición</b></center>
+            </tr>
+            {{if not articulos:}}
+                <tr>
+                    <td colspan="16" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                        <center>No hay registros</center>
+                    </td>
+                </tr>
+            {{else:}}
+                {{for articulo in articulos:}}
+                    <tr>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=articulo.articulo}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=articulo.nombre}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=articulo.posicion}}
+                        </td>
+                    </tr>
+                {{pass}}
+            {{pass}}
+            
+        </tbody>
+    </table>
+</center>
