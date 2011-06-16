@@ -1528,7 +1528,7 @@ db.define_table('inventarios',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('fecha_doc', 'date', notnull=True, label='Fecha del Documento', default=datetime.date.today()),
-    Field('documento', 'string', notnull=True, label='Documento a Pagar'),
+    Field('documento', 'string', notnull=True, label='Documento'),
     Field('modo', 'integer', default=0, notnull=True), 
     Field('almacen', db.almacenes_lista, label='Almacén',
           requires=IS_IN_DB(db, db.almacenes_lista, '%(almacen)s', zero='[Seleccionar]',
@@ -1591,7 +1591,36 @@ db.define_table('maestro_pos',
 )
 
 
+db.define_table('operaciones_vta_aux',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('pv', db.puntos_venta, label='Punto de Venta',
+          requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un punto de venta')),
+    Field('caja', 'integer', notnull=True, default=0),
+    Field('fecha_venta', 'date', notnull=True, label='Fecha de Venta', default=datetime.date.today()),
+    Field('n_doc_prefijo', 'string', notnull=True, default=''),
+    Field('n_doc_base', 'integer', notnull=True, default=0),
+    Field('n_doc_sufijo', 'string', notnull=True, default=''),
+    Field('codbarras_padre', 'string', notnull=True, label='Código Padre', default=''),
+    Field('codbarras_auxiliar', 'string', notnull=True, label='Código Auxiliar', default=''),
+    Field('cantidad_auxiliar', 'double', notnull=True, default=0.0)
+)
 
+
+db.define_table('personal',
+    Field('id', 'integer'),
+    Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
+    Field('pv', db.puntos_venta, label='Punto de Venta',
+          requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un punto de venta')),
+    Field('usuario', db.auth_user,
+          requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
+                            zero='[Seleccionar]',
+                            error_message='Seleccione un usuario')),
+    Field('ingreso', 'datetime', notnull=True),
+    Field('salida', 'datetime', notnull=True)
+)
 
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name

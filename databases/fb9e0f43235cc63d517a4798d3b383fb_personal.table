@@ -1,0 +1,68 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'pv'
+p9
+(dp10
+g4
+S'reference puntos_venta'
+p11
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p12
+ssS'salida'
+p13
+(dp14
+g4
+g5
+sg6
+I6
+sg7
+S'DATETIME NOT NULL'
+p15
+ssS'usuario'
+p16
+(dp17
+g4
+S'reference auth_user'
+p18
+sg6
+I4
+sg7
+S'INT, INDEX usuario__idx (usuario), FOREIGN KEY (usuario) REFERENCES auth_user(id) ON DELETE CASCADE'
+p19
+ssS'id'
+p20
+(dp21
+g4
+g20
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p22
+ssS'ingreso'
+p23
+(dp24
+g4
+g5
+sg6
+I5
+sg7
+S'DATETIME NOT NULL'
+p25
+ss.

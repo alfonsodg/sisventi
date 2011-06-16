@@ -1,0 +1,121 @@
+(dp1
+S'registro'
+p2
+(dp3
+S'type'
+p4
+S'datetime'
+p5
+sS'sortable'
+p6
+I2
+sS'sql'
+p7
+S'DATETIME NOT NULL'
+p8
+ssS'pv'
+p9
+(dp10
+g4
+S'reference puntos_venta'
+p11
+sg6
+I3
+sg7
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
+p12
+ssS'cantidad_auxiliar'
+p13
+(dp14
+g4
+S'double'
+p15
+sg6
+I11
+sg7
+S'DOUBLE NOT NULL'
+p16
+ssS'n_doc_base'
+p17
+(dp18
+g4
+S'integer'
+p19
+sg6
+I7
+sg7
+S'INT NOT NULL'
+p20
+ssS'n_doc_sufijo'
+p21
+(dp22
+g4
+S'string'
+p23
+sg6
+I8
+sg7
+S'VARCHAR(255) NOT NULL'
+p24
+ssS'n_doc_prefijo'
+p25
+(dp26
+g4
+g23
+sg6
+I6
+sg7
+S'VARCHAR(255) NOT NULL'
+p27
+ssS'fecha_venta'
+p28
+(dp29
+g4
+S'date'
+p30
+sg6
+I5
+sg7
+S'DATE NOT NULL'
+p31
+ssS'caja'
+p32
+(dp33
+g4
+g19
+sg6
+I4
+sg7
+S'INT NOT NULL'
+p34
+ssS'codbarras_auxiliar'
+p35
+(dp36
+g4
+g23
+sg6
+I10
+sg7
+S'VARCHAR(255) NOT NULL'
+p37
+ssS'codbarras_padre'
+p38
+(dp39
+g4
+g23
+sg6
+I9
+sg7
+S'VARCHAR(255) NOT NULL'
+p40
+ssS'id'
+p41
+(dp42
+g4
+g41
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p43
+ss.
