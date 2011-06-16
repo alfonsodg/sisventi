@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 db = DAL('mysql://root:root@localhost/sisventi')
+#db = DAL('sqlite://sisventi.db')
 
 # by default give a view/generic.extension to all actions from localhost
 # none otherwise. a pattern can be 'controller/function.extension'
@@ -422,8 +423,7 @@ db.define_table('operaciones_logisticas',
 db.define_table('almacenes',
     Field('id', 'integer'),
     Field('registro', 'datetime', default=now, label='Fecha de Registro', notnull=True),
-    Field('modo', 'integer', default=0, notnull=True),
-    Field('pv', db.puntos_venta, label='Punto de Venta', default='', notnull=True),
+    Field('almacen', db.almacenes_lista, default='', notnull=True),
     Field('tiempo', 'datetime', notnull=True),  
     Field('estado', 'integer', default=1, notnull=True),
     Field('user_ing', db.auth_user, default='', notnull=True),  
@@ -450,14 +450,15 @@ db.define_table('almacenes',
     Field('codbarras_padre', 'string', default='', notnull=True), 
     Field('codbarras', db.maestro, default='', notnull=True), 
     Field('pedido', 'integer', default=1, notnull=True),
-    Field('cantidad_exp', 'double', default=0.0, notnull=True),
-    Field('cantidad_ing', 'double', default=0.0, notnull=True), 
-    Field('peso_exp', 'double', default=0.0, notnull=True), 
-    Field('peso_ing', 'double', default=0.0, notnull=True), 
+    Field('peso_expresado', 'double', default=0.0, notnull=True), 
+    Field('peso', 'double', default=0.0, notnull=True),
+    Field('cantidad_expresado', 'double', default=0.0, notnull=True),
+    Field('ingreso', 'double', default=0.0, notnull=True), 
+    Field('salida', 'double', default=0.0, notnull=True), 
     Field('tipo', 'string', default='', notnull=True), 
-    Field('precio', 'double', default=0.0, notnull=True), 
-    Field('fecha_prod', 'date', notnull=True), 
-    Field('fecha_venc', 'date', notnull=True), 
+    Field('valor', 'double', default=0.0, notnull=True), 
+    Field('fecha_produccion', 'date', notnull=True), 
+    Field('fecha_vencimiento', 'date', notnull=True), 
     Field('extra_data', 'string', default='', notnull=True), 
     Field('transportista', db.transportistas, default='', notnull=True), 
     Field('vehiculo', 'string', default='', notnull=True), 
@@ -471,6 +472,7 @@ db.define_table('almacenes',
     Field('n_serie', 'string', default='', notnull=True), 
     Field('n_prefijo_relacion', 'string', default='', notnull=True), 
     Field('n_doc_relacion', 'integer', default=0, notnull=True), 
+    Field('n_sufijo_relacion', 'string', default='', notnull=True), 
     Field('observaciones', 'string', default='', notnull=True)
 )
 

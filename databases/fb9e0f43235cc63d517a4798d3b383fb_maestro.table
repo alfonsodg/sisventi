@@ -150,7 +150,7 @@ g4
 S'date'
 p57
 sg6
-I34
+I35
 sg7
 S'DATE NOT NULL'
 p58
@@ -161,7 +161,7 @@ g4
 S'reference unidades_medida'
 p61
 sg6
-I35
+I31
 sg7
 S'INT, INDEX unidad_medida__idx (unidad_medida), FOREIGN KEY (unidad_medida) REFERENCES unidades_medida(id) ON DELETE CASCADE'
 p62
@@ -213,7 +213,7 @@ p77
 g4
 g53
 sg6
-I29
+I34
 sg7
 S'INT NOT NULL'
 p79
@@ -288,7 +288,7 @@ g4
 S'double'
 p104
 sg6
-I31
+I29
 sg7
 S'DOUBLE NOT NULL'
 p105
@@ -309,7 +309,7 @@ p110
 g4
 g104
 sg6
-I28
+I32
 sg7
 S'DOUBLE NOT NULL'
 p112
@@ -339,7 +339,7 @@ p119
 g4
 g53
 sg6
-I32
+I30
 sg7
 S'INT NOT NULL'
 p121
@@ -369,7 +369,7 @@ p128
 g4
 g104
 sg6
-I30
+I28
 sg7
 S'DOUBLE NOT NULL'
 p130

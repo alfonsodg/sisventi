@@ -146,6 +146,7 @@
 'Role': 'Rol',
 'Rows in table': 'Filas en la tabla',
 'Rows selected': 'Filas seleccionadas',
+'Save profile': 'Save profile',
 'Saved file hash:': 'Hash del archivo guardado:',
 'Seleccione el modo': 'Seleccione el modo',
 'Seleccione el sexo': 'Seleccione el sexo',

@@ -31,7 +31,7 @@ g4
 S'reference areas'
 p15
 sg6
-I4
+I3
 sg7
 S'INT, INDEX area__idx (area), FOREIGN KEY (area) REFERENCES areas(id) ON DELETE CASCADE'
 p16
@@ -53,7 +53,7 @@ g4
 S'reference monedas'
 p23
 sg6
-I3
+I4
 sg7
 S'INT, INDEX moneda__idx (moneda), FOREIGN KEY (moneda) REFERENCES monedas(id) ON DELETE CASCADE'
 p24
