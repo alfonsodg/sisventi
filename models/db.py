@@ -239,7 +239,7 @@ db.define_table('empaques',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('empaque', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

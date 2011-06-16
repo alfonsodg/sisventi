@@ -22,6 +22,7 @@ configuracion = [
                     ('Artículos', False, URL('configuracion', 'articulos')),
                     ('Directorio', False, URL('configuracion', 'directorio')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
+                    ('Empaques', False, URL('configuracion', 'empaques')),
                     ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Transportistas', False, URL('configuracion', 'transportistas')),

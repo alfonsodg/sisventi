@@ -289,3 +289,23 @@ def articulos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def empaques():
+    """
+    Muestra las configuraciones para los empaques
+    """
+    empaques = db(db.empaques).select()
+    return dict(empaques=empaques)
+
+
+@auth.requires(restricciones)
+def empaques_agregar():
+    """
+    Agregar nuevo registro a 'empaques'
+    """
+    form = SQLFORM(db.empaques, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
