@@ -249,3 +249,23 @@ def transportistas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def turnos():
+    """
+    Muestra las configuraciones para los turnos
+    """
+    turnos = db(db.turnos).select()
+    return dict(turnos=turnos)
+
+
+@auth.requires(restricciones)
+def turnos_agregar():
+    """
+    Agregar nuevo registro a 'turnos'
+    """
+    form = SQLFORM(db.turnos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

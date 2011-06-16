@@ -210,9 +210,9 @@ db.define_table('turnos',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('turno', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    Field('hora_inicio', 'time', default=datetime.time(0,0,0), notnull=True), 
-    Field('hora_fin', 'time', default=datetime.time(0,0,0), notnull=True)
+    Field('descripcion', 'string', default='', label='Descripción', notnull=True), 
+    Field('hora_inicio', 'time', default=datetime.time(0,0,0), label='Hora de Inicio', notnull=True), 
+    Field('hora_fin', 'time', default=datetime.time(0,0,0), label='Hora de Fin', notnull=True)
 )
 
 
@@ -1651,7 +1651,7 @@ db.define_table('pos_configuracion',
     Field('fondo_caja', 'double', notnull=True, default=0.0),
     Field('consumo_alerta', 'integer', notnull=True, default=0),
     Field('dia_alerta', 'string', notnull=True, label='Día de Alerta', default=''),
-    Field('hora_max', 'time', notnull=True),
+    Field('hora_max', 'time', default=datetime.time(0,0,0), notnull=True),
     Field('datos_modo', 'integer', notnull=True, default=0),
     Field('stock_alerta', 'integer', notnull=True, default=0),
     Field('pos_modo', 'integer', notnull=True, default=0),

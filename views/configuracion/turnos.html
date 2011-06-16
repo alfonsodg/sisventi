@@ -1,0 +1,55 @@
+{{extend 'layout.html'}}
+
+<h1>Turnos</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'turnos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Turno</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Descripción</b></center>
+            </td>
+            <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Hora de Inicio</b></center>
+            </td>
+            <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Hora de Fin</b></center>
+            </td>
+        </tr>
+        {{if not turnos:}}
+            <tr>
+                <td colspan="16" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for turno in turnos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=turno.turno}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=turno.descripcion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=turno.hora_inicio}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=turno.hora_fin}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

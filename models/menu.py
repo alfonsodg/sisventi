@@ -24,6 +24,7 @@ configuracion = [
                     ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Transportistas', False, URL('configuracion', 'transportistas')),
+                    ('Turnos', False, URL('configuracion', 'turnos')),
                     ('Usuarios', False, URL('users', 'index'),
                     [
                         ('Nuevo usuario', False, None,
