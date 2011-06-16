@@ -24,6 +24,7 @@ configuracion = [
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Empaques', False, URL('configuracion', 'empaques')),
                     ('Monedas', False, URL('configuracion', 'monedas')),
+                    ('Sellos', False, URL('configuracion', 'sellos')),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Transportistas', False, URL('configuracion', 'transportistas')),
                     ('Turnos', False, URL('configuracion', 'turnos')),

@@ -257,7 +257,7 @@ db.define_table('sellos',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sello', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 
@@ -266,7 +266,7 @@ db.define_table('casas',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('casa', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
     
 

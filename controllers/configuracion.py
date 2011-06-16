@@ -309,3 +309,23 @@ def empaques_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def sellos():
+    """
+    Muestra las configuraciones para los sellos
+    """
+    sellos = db(db.sellos).select()
+    return dict(sellos=sellos)
+
+
+@auth.requires(restricciones)
+def sellos_agregar():
+    """
+    Agregar nuevo registro a 'sellos'
+    """
+    form = SQLFORM(db.sellos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
