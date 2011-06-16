@@ -1,0 +1,109 @@
+{{extend 'layout.html'}}
+
+<h1>Puntos de Venta</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'puntos_venta_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Código</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Nombre</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Distrito</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Dirección</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Posición</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Alias</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Moneda</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Wincha</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Money Drawer</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Área</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>IP Servidor</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>IP Base Datos</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Factor Merma</b></center>
+            </td>
+        </tr>
+        {{if not puntos:}}
+            <tr>
+                <td colspan="13" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for punto in puntos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.codigo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.nombre}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.distrito}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.direccion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.posicion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.alias}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.moneda}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.wincha}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.money_drawer}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.area}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.replic_srv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.replic_db}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=producto.facmerma}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

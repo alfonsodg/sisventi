@@ -55,7 +55,8 @@ configuracion = [
                 ]),
                 ('Ventas', False, None,
                 [
-                    ('Formas de Pago', False, URL('configuracion', 'formas_pago'))
+                    ('Formas de Pago', False, URL('configuracion', 'formas_pago')),
+                    ('Puntos de Venta', False, URL('configuracion', 'puntos_venta'))
                 ])
             ])
         ]

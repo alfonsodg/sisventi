@@ -169,3 +169,23 @@ def monedas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def puntos_venta():
+    """
+    Muestra las configuraciones para los puntos de venta
+    """
+    puntos = db(db.puntos_venta).select()
+    return dict(puntos=puntos)
+
+
+@auth.requires(restricciones)
+def puntos_venta_agregar():
+    """
+    Agregar nuevo registro a 'puntos_venta'
+    """
+    form = SQLFORM(db.puntos_venta, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
