@@ -349,3 +349,23 @@ def casas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def sub_casas():
+    """
+    Muestra las configuraciones para las sub-casas
+    """
+    subcasas = db(db.sub_casas).select()
+    return dict(subcasas=subcasas)
+
+
+@auth.requires(restricciones)
+def sub_casas_agregar():
+    """
+    Agregar nuevo registro a 'sub_casas'
+    """
+    form = SQLFORM(db.sub_casas, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

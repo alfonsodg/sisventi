@@ -248,7 +248,7 @@ db.define_table('sub_casas',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('sub_casa', 'string', default='', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

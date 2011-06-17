@@ -20,7 +20,10 @@ configuracion = [
                 ('General', False, None,
                 [
                     ('Artículos', False, URL('configuracion', 'articulos')),
-                    ('Casas', False, URL('configuracion', 'casas')),
+                    ('Casas', False, URL('configuracion', 'casas'),
+                    [
+                        ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
+                    ]),
                     ('Directorio', False, URL('configuracion', 'directorio')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Empaques', False, URL('configuracion', 'empaques')),
