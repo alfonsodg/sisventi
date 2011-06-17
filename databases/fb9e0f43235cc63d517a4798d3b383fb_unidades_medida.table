@@ -1,56 +1,56 @@
 (dp1
-S'factor'
+S'codigo'
 p2
 (dp3
-S'type'
+S'sortable'
 p4
-S'double'
+I2
+sS'type'
 p5
-sS'sortable'
+S'string'
 p6
-I7
 sS'sql'
 p7
-S'DOUBLE NOT NULL'
+S'VARCHAR(255) NOT NULL'
 p8
 ssS'abreviatura_destino'
 p9
 (dp10
 g4
-S'string'
-p11
-sg6
 I6
+sg5
+g6
 sg7
 S'VARCHAR(255) NOT NULL'
+p11
+ssS'factor'
 p12
-ssS'abreviatura_origen'
-p13
-(dp14
+(dp13
 g4
-g11
-sg6
-I5
+I7
+sg5
+S'double'
+p14
 sg7
-S'VARCHAR(255) NOT NULL'
+S'DOUBLE NOT NULL'
 p15
 ssS'descripcion'
 p16
 (dp17
 g4
-g11
-sg6
 I3
+sg5
+g6
 sg7
 S'VARCHAR(255) NOT NULL'
 p18
-ssS'codigo'
+ssS'abreviatura_origen'
 p19
 (dp20
 g4
-g11
-sg6
-I2
+I5
+sg5
+g6
 sg7
 S'VARCHAR(255) NOT NULL'
 p21
@@ -58,21 +58,36 @@ ssS'id'
 p22
 (dp23
 g4
-g22
-sg6
 I1
+sg5
+S'id'
+p24
 sg7
 S'INT AUTO_INCREMENT NOT NULL'
-p24
-ssS'modo'
 p25
-(dp26
+ssS'registro'
+p26
+(dp27
+S'type'
+p28
+S'datetime'
+p29
+sS'sortable'
+p30
+I2
+sS'sql'
+p31
+S'DATETIME NOT NULL'
+p32
+ssS'modo'
+p33
+(dp34
 g4
-S'integer'
-p27
-sg6
 I4
+sg5
+S'integer'
+p35
 sg7
 S'INT NOT NULL'
-p28
+p36
 ss.

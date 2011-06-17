@@ -429,3 +429,23 @@ def tipos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def unidades_medida():
+    """
+    Muestra las configuraciones para las unidades de medida
+    """
+    unidades = db(db.unidades_medida).select()
+    return dict(unidades=unidades)
+
+
+@auth.requires(restricciones)
+def unidades_medida_agregar():
+    """
+    Agregar nuevo registro a 'unidades_medida'
+    """
+    form = SQLFORM(db.unidades_medida, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

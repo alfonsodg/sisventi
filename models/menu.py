@@ -37,6 +37,7 @@ configuracion = [
                     ('Tipos', False, URL('configuracion', 'tipos')),
                     ('Transportistas', False, URL('configuracion', 'transportistas')),
                     ('Turnos', False, URL('configuracion', 'turnos')),
+                    ('Unidades de Medida', False, URL('configuracion', 'unidades_medida')),
                     ('Usuarios', False, URL('users', 'index'),
                     [
                         ('Nuevo usuario', False, None,
