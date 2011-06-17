@@ -369,3 +369,23 @@ def sub_casas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def sub_sellos():
+    """
+    Muestra las configuraciones para los sub-sellos
+    """
+    subsellos = db(db.sub_sellos).select()
+    return dict(subsellos=subsellos)
+
+
+@auth.requires(restricciones)
+def sub_sellos_agregar():
+    """
+    Agregar nuevo registro a 'sub_sellos'
+    """
+    form = SQLFORM(db.sub_sellos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
