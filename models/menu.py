@@ -31,6 +31,7 @@ configuracion = [
                     [
                         ('Categoría Modo', False, URL('configuracion', 'catmod')),
                     ]),
+                    ('Clientes Preferentes', False, URL('configuracion', 'clientes_preferentes')),
                     ('Directorio', False, URL('configuracion', 'directorio')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Empaques', False, URL('configuracion', 'empaques')),

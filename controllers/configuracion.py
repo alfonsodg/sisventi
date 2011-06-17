@@ -610,3 +610,23 @@ def bancos_agregar():
         response.flash = 'Registro ingresado'
     return dict(form=form)
 
+
+@auth.requires(restricciones)
+def clientes_preferentes():
+    """
+    Muestra las configuraciones para los clientes preferentes
+    """
+    clientes = db(db.clientes_preferentes).select()
+    return dict(clientes=clientes)
+
+
+@auth.requires(restricciones)
+def clientes_preferentes_agregar():
+    """
+    Agregar nuevo registro a 'clientes_preferentes'
+    """
+    form = SQLFORM(db.clientes_preferentes, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
