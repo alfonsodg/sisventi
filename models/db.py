@@ -228,9 +228,9 @@ db.define_table('articulos',
 db.define_table('catmod',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('catmod', 'string', default='', notnull=True), 
+    Field('catmod', 'string', default='', label='Categoría Modo', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

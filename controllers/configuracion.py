@@ -529,3 +529,23 @@ def operaciones_logisticas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def catmod():
+    """
+    Muestra las configuraciones para categoria modo
+    """
+    categorias = db(db.catmod).select()
+    return dict(categorias=categorias)
+
+
+@auth.requires(restricciones)
+def catmod_agregar():
+    """
+    Agregar nuevo registro a 'catmod'
+    """
+    form = SQLFORM(db.catmod, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
