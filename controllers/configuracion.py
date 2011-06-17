@@ -570,3 +570,23 @@ def areas_agregar():
         response.flash = 'Registro ingresado'
     return dict(form=form)
 
+
+@auth.requires(restricciones)
+def backup():
+    """
+    Muestra las configuraciones para los backups
+    """
+    backups = db(db.backup).select()
+    return dict(backups=backups)
+
+
+@auth.requires(restricciones)
+def backup_agregar():
+    """
+    Agregar nuevo registro a 'backups'
+    """
+    form = SQLFORM(db.backup, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+

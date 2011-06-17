@@ -1,0 +1,44 @@
+{{extend 'layout.html'}}
+
+<h1>Backup</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'backup_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<center>
+    <table style="text-align: left; width: 50%;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+            <tr>
+                <td style="width: 30%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Tiempo</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Log</b></center>
+                </td>
+            </tr>
+            {{if not backups:}}
+                <tr>
+                    <td colspan="3" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                        <center>No hay registros</center>
+                    </td>
+                </tr>
+            {{else:}}
+                {{for backup in backups:}}
+                    <tr>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=backup.tiempo}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=backup.log}}
+                        </td>
+                    </tr>
+                {{pass}}
+            {{pass}}
+            
+        </tbody>
+    </table>
+</center>
