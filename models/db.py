@@ -282,7 +282,7 @@ db.define_table('sub_sellos',
 db.define_table('status',
     Field('id', 'integer'), 
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('status', 'string', default='', notnull=True), 
+    Field('status', 'string', default='', label='Estado', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
     Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )

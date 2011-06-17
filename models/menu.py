@@ -27,6 +27,7 @@ configuracion = [
                     ('Directorio', False, URL('configuracion', 'directorio')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Empaques', False, URL('configuracion', 'empaques')),
+                    ('Estados', False, URL('configuracion', 'estados')),
                     ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Sellos', False, URL('configuracion', 'sellos'),
                     [

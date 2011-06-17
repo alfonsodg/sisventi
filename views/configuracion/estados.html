@@ -1,0 +1,50 @@
+{{extend 'layout.html'}}
+
+<h1>Estados</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'estados_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<center>
+    <table style="text-align: left; width: 80%;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+            <tr>
+                <td style="width: 40%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Estado</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Nombre</b></center>
+                </td>
+                <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Posición</b></center>
+                </td>
+            </tr>
+            {{if not estados:}}
+                <tr>
+                    <td colspan="3" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                        <center>No hay registros</center>
+                    </td>
+                </tr>
+            {{else:}}
+                {{for estado in estados:}}
+                    <tr>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=estado.sello}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=estado.nombre}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=estado.posicion}}
+                        </td>
+                    </tr>
+                {{pass}}
+            {{pass}}
+            
+        </tbody>
+    </table>
+</center>

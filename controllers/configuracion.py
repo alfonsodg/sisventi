@@ -389,3 +389,23 @@ def sub_sellos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def estados():
+    """
+    Muestra las configuraciones para los estados
+    """
+    estados = db(db.status).select()
+    return dict(estados=estados)
+
+
+@auth.requires(restricciones)
+def estados_agregar():
+    """
+    Agregar nuevo registro a 'status'
+    """
+    form = SQLFORM(db.status, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
