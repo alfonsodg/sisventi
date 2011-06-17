@@ -449,3 +449,43 @@ def unidades_medida_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def generos():
+    """
+    Muestra las configuraciones para los generos
+    """
+    generos = db(db.generos).select()
+    return dict(generos=generos)
+
+
+@auth.requires(restricciones)
+def generos_agregar():
+    """
+    Agregar nuevo registro a 'generos'
+    """
+    form = SQLFORM(db.generos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
+def sub_generos():
+    """
+    Muestra las configuraciones para los sub-generos
+    """
+    subgeneros = db(db.sub_generos).select()
+    return dict(subgeneros=subgeneros)
+
+
+@auth.requires(restricciones)
+def sub_generos_agregar():
+    """
+    Agregar nuevo registro a 'sub_generos'
+    """
+    form = SQLFORM(db.sub_generos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

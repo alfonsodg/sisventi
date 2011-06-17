@@ -1,0 +1,56 @@
+{{extend 'layout.html'}}
+
+<h1>Sub-Géneros</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'sub_generos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<center>
+    <table style="text-align: left; width: 90%;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+            <tr>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Género</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Sub-Género</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Nombre</b></center>
+                </td>
+                <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Posición</b></center>
+                </td>
+            </tr>
+            {{if not subgeneros:}}
+                <tr>
+                    <td colspan="4" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                        <center>No hay registros</center>
+                    </td>
+                </tr>
+            {{else:}}
+                {{for subgenero in subgeneros:}}
+                    <tr>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=subgenero.genero}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=subgenero.sub_genero}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=subgenero.nombre}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=subgenero.posicion}}
+                        </td>
+                    </tr>
+                {{pass}}
+            {{pass}}
+            
+        </tbody>
+    </table>
+</center>

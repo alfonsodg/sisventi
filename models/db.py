@@ -312,30 +312,30 @@ db.define_table('unidades_medida',
 db.define_table('generos',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
-    Field('genero', 'string', default='', notnull=True), 
+    Field('genero', 'string', default='', label='Género', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 
 db.define_table('sub_generos',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
-    Field('genero', db.generos,
+    Field('genero', db.generos, label='Género',
           requires=IS_IN_DB(db, db.generos, '%(nombre)s', zero='[Seleccionar]',
                             error_message='Seleccione un género')),
-    Field('sub_genero', 'string', default='', notnull=True), 
+    Field('sub_genero', 'string', default='', label='Sub-Género', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 
 db.define_table('categorias',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('categoria', 'string', default='', notnull=True), 
+    Field('categoria', 'string', default='', label='Categoría', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 
