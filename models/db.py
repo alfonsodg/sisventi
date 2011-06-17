@@ -491,10 +491,10 @@ db.define_table('almacenes_ubicacion',
 db.define_table('areas',
     Field('id', 'integer'), 
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('area', 'string', default='', notnull=True), 
+    Field('area', 'string', default='', label='Área', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    Field('posicion', 'integer', default=0, notnull=True)
+    Field('descripcion', 'string', default='', label='Descripción', notnull=True), 
+    Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
 

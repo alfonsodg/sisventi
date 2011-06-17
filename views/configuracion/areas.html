@@ -1,0 +1,56 @@
+{{extend 'layout.html'}}
+
+<h1>Áreas</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'areas_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<center>
+    <table style="text-align: left; width: 90%;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+            <tr>
+                <td style="width: 20%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Área</b></center>
+                </td>
+                <td style="width: 20%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Nombre</b></center>
+                </td>
+                <td style="vertical-align: middle; border: 1px solid #999">
+                    <center><b>Descripción</b></center>
+                </td>
+                <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                    <center><b>Posición</b></center>
+                </td>
+            </tr>
+            {{if not areas:}}
+                <tr>
+                    <td colspan="4" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                        <center>No hay registros</center>
+                    </td>
+                </tr>
+            {{else:}}
+                {{for area in areas:}}
+                    <tr>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=area.sello}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=area.nombre}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=area.posicion}}
+                        </td>
+                        <td style="vertical-align: top; border: 1px solid #999">
+                            {{=area.posicion}}
+                        </td>
+                    </tr>
+                {{pass}}
+            {{pass}}
+            
+        </tbody>
+    </table>
+</center>

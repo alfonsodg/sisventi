@@ -19,6 +19,7 @@ configuracion = [
             [
                 ('General', False, None,
                 [
+                    ('Áreas', False, URL('configuracion', 'areas')),
                     ('Artículos', False, URL('configuracion', 'articulos')),
                     ('Casas', False, URL('configuracion', 'casas'),
                     [
