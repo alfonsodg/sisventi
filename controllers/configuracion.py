@@ -489,3 +489,23 @@ def sub_generos_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def categorias():
+    """
+    Muestra las configuraciones para las categorias
+    """
+    categorias = db(db.categorias).select()
+    return dict(categorias=categorias)
+
+
+@auth.requires(restricciones)
+def categorias_agregar():
+    """
+    Agregar nuevo registro a 'categorias'
+    """
+    form = SQLFORM(db.categorias, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

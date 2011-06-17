@@ -24,6 +24,7 @@ configuracion = [
                     [
                         ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
                     ]),
+                    ('Categorías', False, URL('configuracion', 'categorias')),
                     ('Directorio', False, URL('configuracion', 'directorio')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Empaques', False, URL('configuracion', 'empaques')),
