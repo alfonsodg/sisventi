@@ -590,3 +590,23 @@ def backup_agregar():
         response.flash = 'Registro ingresado'
     return dict(form=form)
 
+
+@auth.requires(restricciones)
+def bancos():
+    """
+    Muestra las configuraciones para los bancos
+    """
+    bancos = db(db.bancos).select()
+    return dict(bancos=bancos)
+
+
+@auth.requires(restricciones)
+def bancos_agregar():
+    """
+    Agregar nuevo registro a 'bancos'
+    """
+    form = SQLFORM(db.bancos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+

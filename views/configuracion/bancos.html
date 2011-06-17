@@ -1,0 +1,85 @@
+{{extend 'layout.html'}}
+
+<h1>Bancos</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'bancos_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Punto Venta</b></center>
+            </td>
+            <td style="width: 17%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Banco</b></center>
+            </td>
+            <td style="width: 15%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Agencia</b></center>
+            </td>
+            <td style="width: 10%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha Venta</b></center>
+            </td>
+            <td style="width: 10%; vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha Depósito</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Monto</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Cambio</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Comentario 1</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Comentario 2</b></center>
+            </td>
+        </tr>
+        {{if not bancos:}}
+            <tr>
+                <td colspan="9" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for banco in bancos:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.pv}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.banco}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.agencia}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.fechav}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.fechad}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.monto}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.cambio}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.glosa1}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=banco.glosa2}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

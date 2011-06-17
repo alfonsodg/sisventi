@@ -509,15 +509,17 @@ db.define_table('backup',
 db.define_table('bancos',
     Field('id', 'integer'),
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
-    Field('pv', 'integer', default=0, notnull=True), 
-    Field('fechav', 'date', notnull=True),
-    Field('fechad', 'date', notnull=True), 
-    Field('banco', 'string', default='', notnull=True), 
+    Field('pv', db.puntos_venta, label='Punto de Venta',
+          requires=IS_IN_DB(db, db.puntos_venta, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un punto de venta')),
+    Field('banco', 'string', default='', notnull=True),
+    Field('agencia', 'string', default='', notnull=True),
+    Field('fechav', 'date', label='Fecha de Venta', notnull=True),
+    Field('fechad', 'date', label='Fecha de Depósito', notnull=True), 
     Field('monto', 'double', default=0.0, notnull=True), 
     Field('cambio', 'double', default=0.0, notnull=True), 
-    Field('glosa1', 'string', default='', notnull=True), 
-    Field('glosa2', 'string', default='', notnull=True), 
-    Field('agencia', 'string', default='', notnull=True)
+    Field('glosa1', 'string', default='', label='Comentario 1'), 
+    Field('glosa2', 'string', default='', label='Comentario 2')
 )
 
 

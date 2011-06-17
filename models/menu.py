@@ -22,6 +22,7 @@ configuracion = [
                     ('Áreas', False, URL('configuracion', 'areas')),
                     ('Artículos', False, URL('configuracion', 'articulos')),
                     ('Backup', False, URL('configuracion', 'backup')),
+                    ('Bancos', False, URL('configuracion', 'bancos')),
                     ('Casas', False, URL('configuracion', 'casas'),
                     [
                         ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
