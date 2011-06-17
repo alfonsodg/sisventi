@@ -40,7 +40,6 @@ configuracion = [
                     ]),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Tipos', False, URL('configuracion', 'tipos')),
-                    ('Transportistas', False, URL('configuracion', 'transportistas')),
                     ('Turnos', False, URL('configuracion', 'turnos')),
                     ('Unidades de Medida', False, URL('configuracion', 'unidades_medida')),
                     ('Usuarios', False, URL('users', 'index'),
@@ -60,6 +59,11 @@ configuracion = [
                 [
                     ('Comprobantes', False, URL('configuracion', 'comprobantes')),
                     ('Condiciones Comerciales', False, URL('configuracion', 'condiciones_comerciales'))
+                ]),
+                ('Logística', False, None,
+                [
+                    ('Operaciones Logísticas', False, URL('configuracion', 'operaciones_logisticas')),
+                    ('Transportistas', False, URL('configuracion', 'transportistas'))
                 ]),
                 ('Productos', False, None,
                 [

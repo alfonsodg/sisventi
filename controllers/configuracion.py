@@ -509,3 +509,23 @@ def categorias_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def operaciones_logisticas():
+    """
+    Muestra las configuraciones para las operaciones logisticas
+    """
+    operaciones = db(db.operaciones_logisticas).select()
+    return dict(operaciones=operaciones)
+
+
+@auth.requires(restricciones)
+def operaciones_logisticas_agregar():
+    """
+    Agregar nuevo registro a 'operaciones_logisticas'
+    """
+    form = SQLFORM(db.operaciones_logisticas, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)

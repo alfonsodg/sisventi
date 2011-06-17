@@ -414,11 +414,11 @@ db.define_table('maestro',
 db.define_table('operaciones_logisticas',
     Field('id', 'integer'),
     Field('registro', 'datetime', default=now, label='Fecha de Registro', notnull=True),
-    Field('operacion', 'string', default='', notnull=True),
+    Field('operacion', 'string', default='', label='Operación', notnull=True),
     Field('modo', 'integer', default=0, notnull=True), 
-    Field('descripcion', 'string', default='', notnull=True), 
-    Field('operacion_relac', 'string', default='', notnull=True), 
-    Field('almacen_relac', 'string', default='', notnull=True)
+    Field('descripcion', 'string', default='', label='Descripción', notnull=True), 
+    Field('operacion_relac', 'string', default='', label='Operación Relación', notnull=True), 
+    Field('almacen_relac', 'string', default='', label='Almacén Relación', notnull=True)
 )
 
     

@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+
+<h1>Operaciones Logísticas</h1>
+
+<p align="right">
+    <a href="{{=URL('configuracion', 'operaciones_logisticas_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Operación</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Modo</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Descripción</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Operación Relación</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Almacén Relación</b></center>
+            </td>
+        </tr>
+        {{if not operaciones:}}
+            <tr>
+                <td colspan="5" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for operacion in operaciones:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=operacion.operacion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=operacion.modo}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=operacion.descripcion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=operacion.operacion_relac}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=operacion.almacen_relac}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+
