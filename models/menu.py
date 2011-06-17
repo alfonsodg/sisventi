@@ -34,6 +34,7 @@ configuracion = [
                         ('Sub-Sellos', False, URL('configuracion', 'sub_sellos')),
                     ]),
                     ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                    ('Tipos', False, URL('configuracion', 'tipos')),
                     ('Transportistas', False, URL('configuracion', 'transportistas')),
                     ('Turnos', False, URL('configuracion', 'turnos')),
                     ('Usuarios', False, URL('users', 'index'),

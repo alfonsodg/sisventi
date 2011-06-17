@@ -409,3 +409,23 @@ def estados_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
+
+@auth.requires(restricciones)
+def tipos():
+    """
+    Muestra las configuraciones para los tipos
+    """
+    tipos = db(db.tipos).select()
+    return dict(tipos=tipos)
+
+
+@auth.requires(restricciones)
+def tipos_agregar():
+    """
+    Agregar nuevo registro a 'tipos'
+    """
+    form = SQLFORM(db.tipos, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
