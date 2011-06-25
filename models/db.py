@@ -92,29 +92,11 @@ db.define_table('puntos_venta',
     Field('nombre', 'string', default='', notnull=True), 
     Field('distrito', 'string', default='', notnull=True), 
     Field('direccion', 'string', default='', label='Dirección', notnull=True), 
-    Field('posicion', 'integer', default=0, label='Posición', notnull=True), 
-    Field('posicion2', 'integer', default=0, label='Posición 2', notnull=True), 
+    Field('pos_1', 'integer', default=0, label='Posición 1', notnull=True), 
+    Field('pos_2', 'integer', default=0, label='Posición 2', notnull=True), 
     Field('alias', 'string', default='', notnull=True), 
-    Field('cab1', 'string', default='', notnull=True), 
-    Field('cab2', 'string', default='', notnull=True), 
-    Field('cab3', 'string', default='', notnull=True), 
-    Field('cab4', 'string', default='', notnull=True), 
-    Field('impt', 'string', default='', notnull=True), 
-    Field('modimp', 'integer', default=0, notnull=True), 
-    Field('modmon', 'integer', default=0, notnull=True), 
-    Field('moneda', db.monedas,
-          requires=IS_IN_DB(db, db.monedas, '%(nombre)s', zero='[Seleccionar]',
-                            error_message='Seleccione una moneda')), 
-    Field('wincha', 'string', default='', notnull=True), 
-    Field('money_drawer', 'string', default='', notnull=True), 
     Field('area', 'integer', default=0, notnull=True), 
-    Field('replic_srv', 'string', default='', label='IP Servidor', notnull=True), 
-    Field('replic_db', 'string', default='', label='IP Base de Datos', notnull=True), 
-    Field('replic_user', 'string', default='', notnull=True), 
-    Field('replic_passwd', 'string', default='', notnull=True), 
-    Field('prodimp', 'string', default='', notnull=True), 
-    Field('prodkey', 'string', default='', notnull=True), 
-    Field('facmerma', 'double', default=0.0, label='Factor Merma', notnull=True)
+    Field('factor_merma', 'double', default=0.0, label='Factor Merma', notnull=True)
 )
 
 
@@ -123,13 +105,11 @@ db.define_table('almacenes_lista',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False),
     Field('almacen', 'string', default='', notnull=True), 
     Field('descripcion', 'string', default='', notnull=True), 
-    Field('area', 'string', default='', notnull=True), 
-    Field('pv', 'string', default='', notnull=True), 
-    Field('usuario', 'string', default='', notnull=True), 
-    Field('ubigeo', 'string', default='', notnull=True), 
-    Field('direccion', 'string', default='', notnull=True), 
+    Field('area', 'string', default='', notnull=False), 
+    Field('ubigeo', 'string', default='', notnull=False), 
+    Field('direccion', 'string', default='', notnull=False), 
     Field('tipo_doc', 'integer', default=0, notnull=True), 
-    Field('doc_id', 'string', default='', notnull=True)
+    Field('doc_id', 'string', default='', notnull=False)
 )
 
 
@@ -493,7 +473,7 @@ db.define_table('areas',
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=True, writable=False), 
     Field('area', 'string', default='', label='Área', notnull=True), 
     Field('nombre', 'string', default='', notnull=True), 
-    Field('descripcion', 'string', default='', label='Descripción', notnull=True), 
+    Field('descripcion', 'string', default='', label='Descripción', notnull=False), 
     Field('posicion', 'integer', default=0, label='Posición', notnull=True)
 )
 
@@ -691,7 +671,9 @@ db.define_table('documentos_comerciales',
     Field('detalle', 'integer', default=0, notnull=True), 
     Field('limite', 'integer', default=0, notnull=True, label='Límite'), 
     Field('impresion', 'integer', default=0, notnull=True, label='Impresión'), 
-    Field('impuestos', 'string', default='', notnull=True)
+    Field('impuestos', 'string', default='', notnull=True),
+    Field('port', 'string', default='', notnull=True),
+    Field('layout', 'string', default='', notnull=True)
 )
 
 
@@ -987,7 +969,8 @@ db.define_table('pos_administracion',
                             zero='[Seleccionar]',
                             error_message='Seleccione un usuario')), 
     Field('apertura', 'datetime', notnull=True), 
-    Field('cierre', 'datetime', notnull=True)
+    Field('cierre', 'datetime', notnull=True),
+    Field('estado', 'integer', default=0, notnull=True)
 )
 
 
@@ -1303,12 +1286,9 @@ db.define_table('tipos_cambio',
                             error_message='Seleccione una moneda')), 
     Field('modo', 'integer', default=0, notnull=True), 
     Field('fecha', 'date', notnull=True), 
-    Field('hora', 'time', default=datetime.time(0,0,0), notnull=True), 
+    Field('hora', 'time', default=datetime.time(0,0,0), notnull=False), 
     Field('valor', 'double', default=0.0, notnull=True), 
-    Field('user_ing', db.auth_user,
-          requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
-                            zero='[Seleccionar]',
-                            error_message='Seleccione un usuario'))
+    Field('user_ing', 'string', default='', notnull=True)
 )
 
 
@@ -1637,23 +1617,23 @@ db.define_table('pos_configuracion',
     Field('distrito', 'string', notnull=True, default=''),
     Field('direccion', 'string', notnull=True, label='Dirección', default=''),
     Field('alias', 'string', notnull=True, default=''),
-    Field('doc_cabecera', 'string', notnull=True, default=''),
-    Field('doc_pie', 'string', notnull=True, default=''),
+    Field('doc_cabecera', 'string', notnull=False, default=''),
+    Field('doc_pie', 'string', notnull=False, default=''),
     Field('impuestos', 'string', notnull=True, default=''),
     Field('modo_impuesto', 'integer', notnull=True, default=0),
     Field('modo_moneda', 'integer', notnull=True, default=0),
     Field('moneda', 'string', notnull=True, default=''),
-    Field('wincha', 'string', notnull=True, default=''),
-    Field('money_drawer', 'string', notnull=True, default=''),
-    Field('productos_resumen', 'string', notnull=True, default=''),
-    Field('productos_clave', 'string', notnull=True, default=''),
+    Field('wincha', 'string', notnull=False, default=''),
+    Field('money_drawer', 'string', notnull=False, default=''),
+    Field('productos_resumen', 'string', notnull=False, default=''),
+    Field('productos_clave', 'string', notnull=False, default=''),
     Field('tipo_servicio', 'integer', notnull=True, default=1),
-    Field('servidor_smtp', 'string', notnull=True, default=''),
-    Field('from_smtp', 'string', notnull=True, default=''),
-    Field('to_smtp', 'string', notnull=True, default=''),
+    Field('servidor_smtp', 'string', notnull=False, default=''),
+    Field('from_smtp', 'string', notnull=False, default=''),
+    Field('to_smtp', 'string', notnull=False, default=''),
     Field('fondo_caja', 'double', notnull=True, default=0.0),
     Field('consumo_alerta', 'integer', notnull=True, default=0),
-    Field('dia_alerta', 'string', notnull=True, label='Día de Alerta', default=''),
+    Field('dia_alerta', 'string', notnull=False, label='Día de Alerta', default=''),
     Field('hora_max', 'time', default=datetime.time(0,0,0), notnull=True),
     Field('datos_modo', 'integer', notnull=True, default=0),
     Field('stock_alerta', 'integer', notnull=True, default=0),
@@ -1661,11 +1641,12 @@ db.define_table('pos_configuracion',
     Field('modo_decimal', 'integer', notnull=True, default=0),
     Field('modo_control', 'integer', notnull=True, default=0),
     Field('modo_almacen', 'integer', notnull=True, default=0),
-    Field('genero_producto', 'string', notnull=True, default=''),
+    Field('genero_producto', 'string', notnull=False, default=''),
     Field('almacen_key', 'integer', notnull=True, default=0),
-    Field('almacen', db.almacenes_lista, label='Almacén',
+    Field('almacen', db.almacenes_lista, notnull=False, label='Almacén',
           requires=IS_IN_DB(db, db.almacenes_lista, '%(almacen)s', zero='[Seleccionar]',
-                            error_message='Seleccione un almacén'))
+                            error_message='Seleccione un almacén')),
+    Field('moneda_aux', 'string', notnull=False, default='')
 )
 
 

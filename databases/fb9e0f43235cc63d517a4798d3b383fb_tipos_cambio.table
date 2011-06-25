@@ -11,7 +11,7 @@ p6
 I7
 sS'sql'
 p7
-S'TIME NOT NULL'
+S'TIME'
 p8
 ssS'registro'
 p9
@@ -72,12 +72,12 @@ ssS'user_ing'
 p29
 (dp30
 g4
-S'reference auth_user'
+S'string'
 p31
 sg6
 I9
 sg7
-S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
+S'VARCHAR(255) NOT NULL'
 p32
 ssS'id'
 p33

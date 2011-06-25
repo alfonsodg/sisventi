@@ -1,280 +1,119 @@
 (dp1
-S'replic_srv'
+S'registro'
 p2
 (dp3
 S'type'
 p4
-S'string'
+S'datetime'
 p5
 sS'sortable'
 p6
-I21
+I2
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'DATETIME NOT NULL'
 p8
-ssS'posicion2'
+ssS'area'
 p9
 (dp10
 g4
 S'integer'
 p11
 sg6
-I8
+I10
 sg7
 S'INT NOT NULL'
 p12
-ssS'moneda'
+ssS'pos_2'
 p13
 (dp14
 g4
-S'reference monedas'
-p15
+g11
 sg6
-I17
+I8
 sg7
-S'INT, INDEX moneda__idx (moneda), FOREIGN KEY (moneda) REFERENCES monedas(id) ON DELETE CASCADE'
+S'INT NOT NULL'
+p15
+ssS'pos_1'
 p16
-ssS'posicion'
-p17
-(dp18
+(dp17
 g4
 g11
 sg6
 I7
 sg7
 S'INT NOT NULL'
-p19
-ssS'id'
-p20
-(dp21
-g4
-g20
-sg6
-I1
-sg7
-S'INT AUTO_INCREMENT NOT NULL'
-p22
-ssS'money_drawer'
-p23
-(dp24
-g4
-g5
-sg6
-I19
-sg7
-S'VARCHAR(255) NOT NULL'
-p25
-ssS'modmon'
-p26
-(dp27
-g4
-g11
-sg6
-I16
-sg7
-S'INT NOT NULL'
-p28
-ssS'replic_db'
-p29
-(dp30
-g4
-g5
-sg6
-I22
-sg7
-S'VARCHAR(255) NOT NULL'
-p31
-ssS'area'
-p32
-(dp33
-g4
-g11
-sg6
-I20
-sg7
-S'INT NOT NULL'
-p34
+p18
 ssS'direccion'
-p35
-(dp36
+p19
+(dp20
 g4
-g5
+S'string'
+p21
 sg6
 I6
 sg7
 S'VARCHAR(255) NOT NULL'
-p37
-ssS'nombre'
-p38
-(dp39
-g4
-g5
-sg6
-I4
-sg7
-S'VARCHAR(255) NOT NULL'
-p40
-ssS'wincha'
-p41
-(dp42
-g4
-g5
-sg6
-I18
-sg7
-S'VARCHAR(255) NOT NULL'
-p43
-ssS'distrito'
-p44
-(dp45
-g4
-g5
-sg6
-I5
-sg7
-S'VARCHAR(255) NOT NULL'
-p46
-ssS'replic_user'
-p47
-(dp48
-g4
-g5
-sg6
-I23
-sg7
-S'VARCHAR(255) NOT NULL'
-p49
-ssS'replic_passwd'
-p50
-(dp51
-g4
-g5
-sg6
-I24
-sg7
-S'VARCHAR(255) NOT NULL'
-p52
-ssS'registro'
-p53
-(dp54
-g4
-S'datetime'
-p55
-sg6
-I2
-sg7
-S'DATETIME NOT NULL'
-p56
-ssS'prodimp'
-p57
-(dp58
-g4
-g5
-sg6
-I25
-sg7
-S'VARCHAR(255) NOT NULL'
-p59
-ssS'prodkey'
-p60
-(dp61
-g4
-g5
-sg6
-I26
-sg7
-S'VARCHAR(255) NOT NULL'
-p62
-ssS'cab2'
-p63
-(dp64
-g4
-g5
-sg6
-I11
-sg7
-S'VARCHAR(255) NOT NULL'
-p65
-ssS'cab3'
-p66
-(dp67
-g4
-g5
-sg6
-I12
-sg7
-S'VARCHAR(255) NOT NULL'
-p68
-ssS'cab1'
-p69
-(dp70
-g4
-g5
-sg6
-I10
-sg7
-S'VARCHAR(255) NOT NULL'
-p71
-ssS'cab4'
-p72
-(dp73
-g4
-g5
-sg6
-I13
-sg7
-S'VARCHAR(255) NOT NULL'
-p74
-ssS'facmerma'
-p75
-(dp76
-g4
-S'double'
-p77
-sg6
-I27
-sg7
-S'DOUBLE NOT NULL'
-p78
-ssS'impt'
-p79
-(dp80
-g4
-g5
-sg6
-I14
-sg7
-S'VARCHAR(255) NOT NULL'
-p81
+p22
 ssS'alias'
-p82
-(dp83
+p23
+(dp24
 g4
-g5
+g21
 sg6
 I9
 sg7
 S'VARCHAR(255) NOT NULL'
-p84
-ssS'modimp'
-p85
-(dp86
+p25
+ssS'factor_merma'
+p26
+(dp27
 g4
-g11
+S'double'
+p28
 sg6
-I15
+I11
 sg7
-S'INT NOT NULL'
-p87
-ssS'codigo'
-p88
-(dp89
+S'DOUBLE NOT NULL'
+p29
+ssS'nombre'
+p30
+(dp31
 g4
-g5
+g21
+sg6
+I4
+sg7
+S'VARCHAR(255) NOT NULL'
+p32
+ssS'codigo'
+p33
+(dp34
+g4
+g21
 sg6
 I3
 sg7
 S'VARCHAR(255) NOT NULL'
-p90
+p35
+ssS'distrito'
+p36
+(dp37
+g4
+g21
+sg6
+I5
+sg7
+S'VARCHAR(255) NOT NULL'
+p38
+ssS'id'
+p39
+(dp40
+g4
+g39
+sg6
+I1
+sg7
+S'INT AUTO_INCREMENT NOT NULL'
+p41
 ss.

@@ -1,0 +1,31 @@
+NUTRA SA-DUNKIN DONUTS-RUC20144215649 
+Aeropuerto Internacional Jorge Chavez 
+  Av.E.Faucett s/n Tda PP 21-Callao   
+Of.Prin.Jr.Bernardo Alcedo #662 Lince 
+                                      
+Tda:[*ST*]  Caja:[*PB*]  No:[*DI*]&&&&
+Usr:[*UN*]&&&&&&&&&&&&&&&&&  Fp:[*PI*]
+--------------------------------------
+
+[*PQ*] [*PN*]&&&&&&&&&&&&&&&  [*PA*]&&
+
+Sub Total:                    [*ST*]&&
+[*T#IGV*]                    [*T=IGV*]
+[*T#SRV*]                    [*T=SRV*]
+Total [*MO*]                  [*FT*]&&
+Recibido [*MO*]              [*M1R*]&&
+--------------------------------------
+  Serie de Equipo: [*SN*]&&&&&&&&     
+                                      
+            [*DT*]&&&&&&&&&&&         
+         [*PM*]&&&&&&&&&&&&&&&&&&&    
+
+
+
+
+
+
+
+
+
+
