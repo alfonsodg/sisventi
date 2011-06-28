@@ -11,7 +11,7 @@ p6
 I5
 sS'sql'
 p7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'codbarras'
 p13
@@ -53,6 +53,6 @@ g5
 sg6
 I4
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p22
 ss.

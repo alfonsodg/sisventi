@@ -11,7 +11,7 @@ p6
 I4
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'registro'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p11
 ssS'pv'
 p12
@@ -43,7 +43,7 @@ p18
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p19
 ssS'numero'
 p20
@@ -54,7 +54,7 @@ p22
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p23
 ssS'cliente'
 p24
@@ -64,7 +64,7 @@ g18
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p26
 ssS'carac2'
 p27
@@ -74,7 +74,7 @@ g18
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p29
 ssS'docnum'
 p30
@@ -84,7 +84,7 @@ g22
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p32
 ssS'carac3'
 p33
@@ -94,7 +94,7 @@ g18
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p35
 ssS'id'
 p36

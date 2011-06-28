@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -32,7 +32,7 @@ g5
 sg6
 I6
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p15
 ssS'usuario'
 p16
@@ -63,6 +63,6 @@ g5
 sg6
 I5
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p25
 ss.

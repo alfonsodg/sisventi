@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'fecha'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I3
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p20
 ssS'turno'
 p21
@@ -87,6 +87,6 @@ p34
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p35
 ss.

@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p16
 ssS'user_ing'
 p17
@@ -55,7 +55,7 @@ p23
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p24
 ssS'codbarras'
 p25

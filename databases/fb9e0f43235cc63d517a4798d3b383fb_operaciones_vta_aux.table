@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I11
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'n_doc_base'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p20
 ssS'n_doc_sufijo'
 p21
@@ -55,7 +55,7 @@ p23
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p24
 ssS'n_doc_prefijo'
 p25
@@ -65,7 +65,7 @@ g23
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p27
 ssS'fecha_venta'
 p28
@@ -76,7 +76,7 @@ p30
 sg6
 I5
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p31
 ssS'caja'
 p32
@@ -86,7 +86,7 @@ g19
 sg6
 I4
 sg7
-S'INT NOT NULL'
+S'INT'
 p34
 ssS'codbarras_auxiliar'
 p35
@@ -96,7 +96,7 @@ g23
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p37
 ssS'codbarras_padre'
 p38
@@ -106,7 +106,7 @@ g23
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p40
 ssS'id'
 p41

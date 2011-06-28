@@ -22,7 +22,7 @@ p11
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p12
 ssS'codigo_reporte'
 p13
@@ -32,7 +32,7 @@ g11
 sg6
 I2
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p15
 ssS'codbarras_hijo'
 p16
@@ -42,7 +42,7 @@ g11
 sg6
 I12
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p18
 ssS'grupo_distribucion'
 p19
@@ -64,7 +64,7 @@ p25
 sg6
 I14
 sg7
-S'INT NOT NULL'
+S'INT'
 p26
 ssS'codbarras_abuelo'
 p27
@@ -74,7 +74,7 @@ g11
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p29
 ssS'turno'
 p30
@@ -95,7 +95,7 @@ g11
 sg6
 I13
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p36
 ssS'detalle_reporte'
 p37
@@ -105,7 +105,7 @@ g11
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p39
 ssS'array'
 p40
@@ -115,7 +115,7 @@ g11
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p42
 ssS'codbarras_padre'
 p43
@@ -125,7 +125,7 @@ g11
 sg6
 I11
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p45
 ssS'id'
 p46
@@ -145,6 +145,6 @@ g25
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p51
 ss.

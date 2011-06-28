@@ -22,7 +22,7 @@ p11
 sg6
 I11
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p12
 ssS'user_anul'
 p13
@@ -44,7 +44,7 @@ p19
 sg6
 I27
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p20
 ssS'sub_total_imp'
 p21
@@ -54,7 +54,7 @@ g11
 sg6
 I18
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p23
 ssS'moneda'
 p24
@@ -75,7 +75,7 @@ g11
 sg6
 I21
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p30
 ssS'codbarras'
 p31
@@ -106,7 +106,7 @@ g11
 sg6
 I12
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p40
 ssS'area'
 p41
@@ -127,7 +127,7 @@ g19
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p47
 ssS'tiempo_anul'
 p48
@@ -138,7 +138,7 @@ p50
 sg6
 I32
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p51
 ssS'precio_neto'
 p52
@@ -148,7 +148,7 @@ g11
 sg6
 I14
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p54
 ssS'fecha_entrega'
 p55
@@ -159,7 +159,7 @@ p57
 sg6
 I25
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p58
 ssS'sub_total_bruto'
 p59
@@ -169,7 +169,7 @@ g11
 sg6
 I19
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p61
 ssS'tiempo'
 p62
@@ -179,7 +179,7 @@ g50
 sg6
 I3
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p64
 ssS'registro'
 p65
@@ -189,7 +189,7 @@ g50
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p67
 ssS'observaciones'
 p68
@@ -199,7 +199,7 @@ g19
 sg6
 I33
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p70
 ssS'total_texto'
 p71
@@ -209,7 +209,7 @@ g19
 sg6
 I24
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p73
 ssS'lugar_entrega'
 p74
@@ -219,7 +219,7 @@ g19
 sg6
 I26
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p76
 ssS'user_ing'
 p77
@@ -263,7 +263,7 @@ p91
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p92
 ssS'total_bruto'
 p93
@@ -273,7 +273,7 @@ g11
 sg6
 I23
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p95
 ssS'precio_imp'
 p96
@@ -283,7 +283,7 @@ g11
 sg6
 I15
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p98
 ssS'total_imp'
 p99
@@ -293,7 +293,7 @@ g11
 sg6
 I22
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p101
 ssS'n_doc_base'
 p102
@@ -303,7 +303,7 @@ g91
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p104
 ssS'n_doc_prefijo'
 p105
@@ -313,7 +313,7 @@ g19
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p107
 ssS'precio_bruto'
 p108
@@ -323,7 +323,7 @@ g11
 sg6
 I16
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p110
 ssS'forma_pago'
 p111
@@ -333,7 +333,7 @@ g19
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p113
 ssS'sub_total_neto'
 p114
@@ -343,6 +343,6 @@ g11
 sg6
 I17
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p116
 ss.

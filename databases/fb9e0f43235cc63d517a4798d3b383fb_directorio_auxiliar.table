@@ -11,7 +11,7 @@ p6
 I14
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'web'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p11
 ssS'fax'
 p12
@@ -31,7 +31,7 @@ g5
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p14
 ssS'registro'
 p15
@@ -53,7 +53,7 @@ p21
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p22
 ssS'web_prio'
 p23
@@ -63,7 +63,7 @@ g21
 sg6
 I11
 sg7
-S'INT NOT NULL'
+S'INT'
 p25
 ssS'tec_prio'
 p26
@@ -73,7 +73,7 @@ g21
 sg6
 I15
 sg7
-S'INT NOT NULL'
+S'INT'
 p28
 ssS'doc_id'
 p29
@@ -83,7 +83,7 @@ g5
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p31
 ssS'email_c'
 p32
@@ -93,7 +93,7 @@ g5
 sg6
 I16
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p34
 ssS'email'
 p35
@@ -103,7 +103,7 @@ g5
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p37
 ssS'con_prio'
 p38
@@ -113,7 +113,7 @@ g21
 sg6
 I13
 sg7
-S'INT NOT NULL'
+S'INT'
 p40
 ssS'ema_prio'
 p41
@@ -123,7 +123,7 @@ g21
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p43
 ssS'emc_prio'
 p44
@@ -133,7 +133,7 @@ g21
 sg6
 I17
 sg7
-S'INT NOT NULL'
+S'INT'
 p46
 ssS'contacto'
 p47
@@ -143,7 +143,7 @@ g5
 sg6
 I12
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p49
 ssS'telefono'
 p50
@@ -153,7 +153,7 @@ g5
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p52
 ssS'id'
 p53
@@ -173,6 +173,6 @@ g21
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p58
 ss.

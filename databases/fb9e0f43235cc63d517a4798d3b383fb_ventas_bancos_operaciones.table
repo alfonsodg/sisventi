@@ -11,7 +11,7 @@ p6
 I10
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'fechav'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I4
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p12
 ssS'registro'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p16
 ssS'pv'
 p17
@@ -55,7 +55,7 @@ p23
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p24
 ssS'fechad'
 p25
@@ -65,7 +65,7 @@ g11
 sg6
 I5
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p27
 ssS'agencia'
 p28
@@ -75,7 +75,7 @@ g5
 sg6
 I11
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p30
 ssS'cambio'
 p31
@@ -85,7 +85,7 @@ g23
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p33
 ssS'glosa1'
 p34
@@ -95,7 +95,7 @@ g5
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p36
 ssS'banco'
 p37
@@ -105,7 +105,7 @@ g5
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p39
 ssS'id'
 p40

@@ -22,7 +22,7 @@ p11
 sg6
 I19
 sg7
-S'INT NOT NULL'
+S'INT'
 p12
 ssS'precio'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I18
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'monto_local'
 p17
@@ -43,7 +43,7 @@ g15
 sg6
 I21
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'total'
 p20
@@ -53,7 +53,7 @@ g15
 sg6
 I20
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p22
 ssS'codbarras'
 p23
@@ -106,7 +106,7 @@ g11
 sg6
 I25
 sg7
-S'INT NOT NULL'
+S'INT'
 p40
 ssS'vales'
 p41
@@ -117,7 +117,7 @@ p43
 sg6
 I15
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p44
 ssS'n_doc_sufijo'
 p45
@@ -127,7 +127,7 @@ g43
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p47
 ssS'caja'
 p48
@@ -137,7 +137,7 @@ g11
 sg6
 I4
 sg7
-S'INT NOT NULL'
+S'INT'
 p50
 ssS'documento'
 p51
@@ -147,7 +147,7 @@ g11
 sg6
 I10
 sg7
-S'INT NOT NULL'
+S'INT'
 p53
 ssS'tiempo'
 p54
@@ -158,7 +158,7 @@ p56
 sg6
 I5
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p57
 ssS'registro'
 p58
@@ -168,7 +168,7 @@ g56
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p60
 ssS'user_ing'
 p61
@@ -189,7 +189,7 @@ g11
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p67
 ssS'n_doc_base'
 p68
@@ -199,7 +199,7 @@ g43
 sg6
 I7
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p70
 ssS'monto_dolar'
 p71
@@ -209,7 +209,7 @@ g15
 sg6
 I22
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p73
 ssS'n_doc_prefijo'
 p74
@@ -219,7 +219,7 @@ g43
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p76
 ssS'data_2'
 p77
@@ -229,7 +229,7 @@ g43
 sg6
 I24
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p79
 ssS'data_1'
 p80
@@ -239,7 +239,7 @@ g43
 sg6
 I23
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p82
 ssS'forma_pago'
 p83
@@ -249,7 +249,7 @@ g43
 sg6
 I14
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p85
 ssS'cliente'
 p86
@@ -259,6 +259,6 @@ g43
 sg6
 I11
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p88
 ss.

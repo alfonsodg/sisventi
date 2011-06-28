@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'abreviatura'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p12
 ssS'valor'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I6
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'nombre'
 p17
@@ -43,7 +43,7 @@ g11
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p19
 ssS'codigo'
 p20
@@ -53,7 +53,7 @@ g11
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p22
 ssS'id'
 p23
@@ -74,6 +74,6 @@ p28
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p29
 ss.

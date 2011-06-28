@@ -11,7 +11,7 @@ p6
 I5
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'codbarras'
 p13
@@ -32,7 +32,7 @@ g5
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p15
 ssS'id'
 p16
@@ -48,10 +48,11 @@ ssS'almacen'
 p19
 (dp20
 g4
-g5
+S'reference almacenes_lista'
+p21
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
-p21
+S'INT, INDEX almacen__idx (almacen), FOREIGN KEY (almacen) REFERENCES almacenes_lista(id) ON DELETE CASCADE'
+p22
 ss.

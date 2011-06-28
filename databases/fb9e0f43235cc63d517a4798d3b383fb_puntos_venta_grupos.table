@@ -33,7 +33,7 @@ p15
 sg6
 I5
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'cp'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I2
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p20
 ssS'codbarras'
 p21
@@ -76,6 +76,6 @@ p30
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p31
 ss.

@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATE NOT NULL'
+S'DATE'
 p8
 ssS'valor'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I5
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p12
 ssS'cp'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p16
 ssS'codbarras'
 p17
@@ -65,6 +65,6 @@ p26
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p27
 ss.

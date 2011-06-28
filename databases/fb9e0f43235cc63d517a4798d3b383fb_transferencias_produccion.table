@@ -11,7 +11,7 @@ p6
 I5
 sS'sql'
 p7
-S'INT NOT NULL'
+S'INT'
 p8
 ssS'fecha'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I8
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p12
 ssS'produccion'
 p13
@@ -32,7 +32,7 @@ g5
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p15
 ssS'turno'
 p16
@@ -54,7 +54,7 @@ p22
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p23
 ssS'total'
 p24
@@ -64,7 +64,7 @@ g5
 sg6
 I4
 sg7
-S'INT NOT NULL'
+S'INT'
 p26
 ssS'codbarras'
 p27

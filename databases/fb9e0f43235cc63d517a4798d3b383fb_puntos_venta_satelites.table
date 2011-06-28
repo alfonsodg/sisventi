@@ -4,55 +4,56 @@ p2
 (dp3
 S'type'
 p4
-S'string'
+S'reference puntos_venta'
 p5
 sS'sortable'
 p6
 I3
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'INT, INDEX pv_padre__idx (pv_padre), FOREIGN KEY (pv_padre) REFERENCES puntos_venta(id) ON DELETE CASCADE'
 p8
 ssS'pv_hijo'
 p9
 (dp10
 g4
-g5
+S'reference puntos_venta'
+p11
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
-p11
-ssS'registro'
+S'INT, INDEX pv_hijo__idx (pv_hijo), FOREIGN KEY (pv_hijo) REFERENCES puntos_venta(id) ON DELETE CASCADE'
 p12
-(dp13
+ssS'registro'
+p13
+(dp14
 g4
 S'datetime'
-p14
+p15
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
-p15
-ssS'id'
+S'DATETIME'
 p16
-(dp17
+ssS'id'
+p17
+(dp18
 g4
-g16
+g17
 sg6
 I1
 sg7
 S'INT AUTO_INCREMENT NOT NULL'
-p18
-ssS'modo'
 p19
-(dp20
+ssS'modo'
+p20
+(dp21
 g4
 S'integer'
-p21
+p22
 sg6
 I5
 sg7
-S'INT NOT NULL'
-p22
+S'INT'
+p23
 ss.

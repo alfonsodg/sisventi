@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: sisventi
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.10
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,90 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `almacenes`
---
-
-DROP TABLE IF EXISTS `almacenes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `almacenes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `pv` int(11) DEFAULT NULL,
-  `tiempo` datetime NOT NULL,
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `user_ing` int(11) DEFAULT NULL,
-  `operacion_logistica` int(11) DEFAULT NULL,
-  `compra_n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `compra_n_doc_base` int(11) NOT NULL DEFAULT '0',
-  `compra_n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `proveedor_n_doc` varchar(255) NOT NULL DEFAULT '',
-  `modo_doc` int(11) NOT NULL DEFAULT '0',
-  `tipo_doc` int(11) NOT NULL DEFAULT '0',
-  `fecha_doc` date NOT NULL,
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_base` int(11) NOT NULL DEFAULT '0',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `proveedor` int(11) DEFAULT NULL,
-  `proveedor_tipo_doc` varchar(255) NOT NULL DEFAULT '',
-  `proveedor_condicion` int(11) NOT NULL DEFAULT '0',
-  `proveedor_fecha_doc` date NOT NULL,
-  `proveedor_moneda_doc` int(11) NOT NULL DEFAULT '0',
-  `proveedor_total_doc` double NOT NULL DEFAULT '0',
-  `almacen_origen` int(11) DEFAULT NULL,
-  `almacen_destino` int(11) DEFAULT NULL,
-  `articulo` int(11) DEFAULT NULL,
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `pedido` int(11) NOT NULL DEFAULT '1',
-  `cantidad_exp` double NOT NULL DEFAULT '0',
-  `cantidad_ing` double NOT NULL DEFAULT '0',
-  `peso_exp` double NOT NULL DEFAULT '0',
-  `peso_ing` double NOT NULL DEFAULT '0',
-  `tipo` varchar(255) NOT NULL DEFAULT '',
-  `precio` double NOT NULL DEFAULT '0',
-  `fecha_prod` date NOT NULL,
-  `fecha_venc` date NOT NULL,
-  `extra_data` varchar(255) NOT NULL DEFAULT '',
-  `transportista` int(11) DEFAULT NULL,
-  `vehiculo` varchar(255) NOT NULL DEFAULT '',
-  `grupo` int(11) NOT NULL DEFAULT '0',
-  `turno` int(11) DEFAULT NULL,
-  `masa` varchar(255) NOT NULL DEFAULT '',
-  `temperatura` double NOT NULL DEFAULT '0',
-  `peso` double NOT NULL DEFAULT '0',
-  `hora_inicial` time NOT NULL,
-  `hora_final` time NOT NULL,
-  `n_serie` varchar(255) NOT NULL DEFAULT '',
-  `n_prefijo_relacion` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_relacion` int(11) NOT NULL DEFAULT '0',
-  `observaciones` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `user_ing__idx` (`user_ing`),
-  KEY `operacion_logistica__idx` (`operacion_logistica`),
-  KEY `proveedor__idx` (`proveedor`),
-  KEY `almacen_origen__idx` (`almacen_origen`),
-  KEY `almacen_destino__idx` (`almacen_destino`),
-  KEY `articulo__idx` (`articulo`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `transportista__idx` (`transportista`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `almacenes_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_10` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_2` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_3` FOREIGN KEY (`operacion_logistica`) REFERENCES `operaciones_logisticas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_4` FOREIGN KEY (`proveedor`) REFERENCES `directorio` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_5` FOREIGN KEY (`almacen_origen`) REFERENCES `almacenes_lista` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_6` FOREIGN KEY (`almacen_destino`) REFERENCES `almacenes_lista` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_7` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_8` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `almacenes_ibfk_9` FOREIGN KEY (`transportista`) REFERENCES `transportistas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `almacenes`
 --
 
@@ -107,29 +23,6 @@ LOCK TABLES `almacenes` WRITE;
 /*!40000 ALTER TABLE `almacenes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `almacenes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `almacenes_lista`
---
-
-DROP TABLE IF EXISTS `almacenes_lista`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `almacenes_lista` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `almacen` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `area` varchar(255) NOT NULL DEFAULT '',
-  `pv` varchar(255) NOT NULL DEFAULT '',
-  `usuario` varchar(255) NOT NULL DEFAULT '',
-  `ubigeo` varchar(255) NOT NULL DEFAULT '',
-  `direccion` varchar(255) NOT NULL DEFAULT '',
-  `tipo_doc` int(11) NOT NULL DEFAULT '0',
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `almacenes_lista`
@@ -141,23 +34,6 @@ LOCK TABLES `almacenes_lista` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `almacenes_ubicacion`
---
-
-DROP TABLE IF EXISTS `almacenes_ubicacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `almacenes_ubicacion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `almacen` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` varchar(255) NOT NULL DEFAULT '',
-  `ubicacion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `almacenes_ubicacion`
 --
 
@@ -165,24 +41,6 @@ LOCK TABLES `almacenes_ubicacion` WRITE;
 /*!40000 ALTER TABLE `almacenes_ubicacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `almacenes_ubicacion` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `areas`
---
-
-DROP TABLE IF EXISTS `areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `areas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `area` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `areas`
@@ -194,49 +52,14 @@ LOCK TABLES `areas` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `articulos`
---
-
-DROP TABLE IF EXISTS `articulos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `articulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `articulo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `articulos`
 --
 
 LOCK TABLES `articulos` WRITE;
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
+INSERT INTO `articulos` (`id`, `registro`, `articulo`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:24:30','ND','ND',0);
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `auth_cas`
---
-
-DROP TABLE IF EXISTS `auth_cas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_cas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `created_on` datetime DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `uuid` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id__idx` (`user_id`),
-  CONSTRAINT `auth_cas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `auth_cas`
@@ -248,49 +71,14 @@ LOCK TABLES `auth_cas` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `auth_event`
---
-
-DROP TABLE IF EXISTS `auth_event`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_event` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time_stamp` datetime DEFAULT NULL,
-  `client_ip` varchar(255) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `origin` varchar(255) DEFAULT NULL,
-  `description` longtext,
-  PRIMARY KEY (`id`),
-  KEY `user_id__idx` (`user_id`),
-  CONSTRAINT `auth_event_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `auth_event`
 --
 
 LOCK TABLES `auth_event` WRITE;
 /*!40000 ALTER TABLE `auth_event` DISABLE KEYS */;
-INSERT INTO `auth_event` VALUES (2,'2011-06-08 23:27:50','127.0.0.1',1,'auth','Usuario \'root\' cerró sesión'),(3,'2011-06-08 23:28:04','127.0.0.1',1,'auth','Usuario \'root\' inició sesión'),(4,'2011-06-09 10:57:42','127.0.0.1',1,'auth','Usuario \'root\' inició sesión'),(5,'2011-06-15 10:05:05','127.0.0.1',1,'auth','Usuario \'root\' cerró sesión'),(6,'2011-06-15 10:05:22','127.0.0.1',1,'auth','Usuario \'root\' inició sesión');
+INSERT INTO `auth_event` (`id`, `time_stamp`, `client_ip`, `user_id`, `origin`, `description`) VALUES (2,'2011-06-08 23:27:50','127.0.0.1',1,'auth','Usuario \'root\' cerró sesión'),(3,'2011-06-08 23:28:04','127.0.0.1',1,'auth','Usuario \'root\' inició sesión'),(4,'2011-06-09 10:57:42','127.0.0.1',1,'auth','Usuario \'root\' inició sesión'),(5,'2011-06-15 10:05:05','127.0.0.1',1,'auth','Usuario \'root\' cerró sesión'),(6,'2011-06-15 10:05:22','127.0.0.1',1,'auth','Usuario \'root\' inició sesión'),(7,'2011-06-15 11:47:24','127.0.0.1',NULL,'auth','Usuario \'root\' inició sesión'),(8,'2011-06-27 09:20:28','127.0.0.1',1,'auth','Usuario \'root\' cerró sesión'),(9,'2011-06-27 09:20:36','127.0.0.1',NULL,'auth','Usuario \'root\' inició sesión');
 /*!40000 ALTER TABLE `auth_event` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `auth_group`
---
-
-DROP TABLE IF EXISTS `auth_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(255) DEFAULT NULL,
-  `description` longtext,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `auth_group`
@@ -298,28 +86,9 @@ CREATE TABLE `auth_group` (
 
 LOCK TABLES `auth_group` WRITE;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-INSERT INTO `auth_group` VALUES (1,'root','Administrador del sistema'),(2,'administrador','Administrador de punto de venta'),(3,'ventas','Encargado de ventas'),(4,'compras','Encargado de compras'),(5,'almacenes','Encargado de almacenes'),(6,'reportes','Encargado de Reportes');
+INSERT INTO `auth_group` (`id`, `role`, `description`) VALUES (1,'root','Administrador del sistema'),(2,'administrador','Administrador de punto de venta'),(3,'ventas','Encargado de ventas'),(4,'compras','Encargado de compras'),(5,'almacenes','Encargado de almacenes'),(6,'reportes','Encargado de Reportes');
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `auth_membership`
---
-
-DROP TABLE IF EXISTS `auth_membership`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_membership` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id__idx` (`user_id`),
-  KEY `group_id__idx` (`group_id`),
-  CONSTRAINT `auth_membership_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `auth_membership_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `auth_membership`
@@ -327,28 +96,9 @@ CREATE TABLE `auth_membership` (
 
 LOCK TABLES `auth_membership` WRITE;
 /*!40000 ALTER TABLE `auth_membership` DISABLE KEYS */;
-INSERT INTO `auth_membership` VALUES (1,1,1);
+INSERT INTO `auth_membership` (`id`, `user_id`, `group_id`) VALUES (1,1,1);
 /*!40000 ALTER TABLE `auth_membership` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `auth_permission`
---
-
-DROP TABLE IF EXISTS `auth_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `table_name` varchar(255) DEFAULT NULL,
-  `record_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `group_id__idx` (`group_id`),
-  CONSTRAINT `auth_permission_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `auth_permission`
@@ -360,54 +110,14 @@ LOCK TABLES `auth_permission` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `auth_user`
---
-
-DROP TABLE IF EXISTS `auth_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(128) DEFAULT NULL,
-  `first_name` varchar(128) DEFAULT NULL,
-  `last_name` varchar(128) DEFAULT NULL,
-  `email` varchar(128) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `registration_date` date DEFAULT NULL,
-  `registration_key` varchar(255) DEFAULT NULL,
-  `reset_password_key` varchar(255) DEFAULT NULL,
-  `registration_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `auth_user`
 --
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'root','César','Bustíos Benites','cesar.bustios@ictec.biz','63a9f0ea7bb98050796b649e85481845','2011-06-08','','','');
+INSERT INTO `auth_user` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `registration_date`, `registration_key`, `reset_password_key`, `registration_id`) VALUES (1,'root','César','Bustíos Benites','cesar.bustios@ictec.biz','63a9f0ea7bb98050796b649e85481845','2011-06-08','','','');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `backup`
---
-
-DROP TABLE IF EXISTS `backup`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `backup` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `tiempo` datetime NOT NULL,
-  `log` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `backup`
@@ -419,29 +129,6 @@ LOCK TABLES `backup` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `bancos`
---
-
-DROP TABLE IF EXISTS `bancos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bancos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) NOT NULL DEFAULT '0',
-  `fechav` date NOT NULL,
-  `fechad` date NOT NULL,
-  `banco` varchar(255) NOT NULL DEFAULT '',
-  `monto` double NOT NULL DEFAULT '0',
-  `cambio` double NOT NULL DEFAULT '0',
-  `glosa1` varchar(255) NOT NULL DEFAULT '',
-  `glosa2` varchar(255) NOT NULL DEFAULT '',
-  `agencia` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `bancos`
 --
 
@@ -451,47 +138,14 @@ LOCK TABLES `bancos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `casas`
---
-
-DROP TABLE IF EXISTS `casas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `casas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `casa` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `casas`
 --
 
 LOCK TABLES `casas` WRITE;
 /*!40000 ALTER TABLE `casas` DISABLE KEYS */;
+INSERT INTO `casas` (`id`, `registro`, `casa`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:25:52','ND','ND',0);
 /*!40000 ALTER TABLE `casas` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `categorias`
---
-
-DROP TABLE IF EXISTS `categorias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `categoria` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `categorias`
@@ -499,25 +153,9 @@ CREATE TABLE `categorias` (
 
 LOCK TABLES `categorias` WRITE;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` (`id`, `registro`, `categoria`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:28:58','ND','ND',0);
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `catmod`
---
-
-DROP TABLE IF EXISTS `catmod`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `catmod` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `catmod` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `catmod`
@@ -525,29 +163,9 @@ CREATE TABLE `catmod` (
 
 LOCK TABLES `catmod` WRITE;
 /*!40000 ALTER TABLE `catmod` DISABLE KEYS */;
+INSERT INTO `catmod` (`id`, `registro`, `catmod`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:22:34','1001','ACEITES',1),(2,'2011-06-27 09:22:34','1002','ARROZ',2),(3,'2011-06-27 09:22:34','1003','ATUNES',3),(4,'2011-06-27 09:22:34','1004','AVENAS Y CEREALES',4),(5,'2011-06-27 09:22:34','1005','AZUCAR',5),(6,'2011-06-27 09:22:34','1006','BETUN',6),(7,'2011-06-27 09:22:34','1007','CAFE',7),(8,'2011-06-27 09:22:34','1008','CARAMELOS',8),(9,'2011-06-27 09:22:34','1009','CIGARROS',9),(10,'2011-06-27 09:22:34','1010','COCOA',10),(11,'2011-06-27 09:22:34','1011','CONDIMENTOS',11),(12,'2011-06-27 09:22:34','1012','CHICLES',12),(13,'2011-06-27 09:22:34','1013','CHOCOLATES',13),(14,'2011-06-27 09:22:34','1014','DETERGENTES',14),(15,'2011-06-27 09:22:34','1015','FIDEOS',15),(16,'2011-06-27 09:22:34','1016','GAELLETAS',16),(17,'2011-06-27 09:22:34','1017','GASEOSAS',17),(18,'2011-06-27 09:22:34','1018','GELATINA Y MAZAMORRA',18),(19,'2011-06-27 09:22:34','1019','HARINAS',19),(20,'2011-06-27 09:22:34','1020','INSECTICIDAS',20),(21,'2011-06-27 09:22:34','1021','JABONES',21),(22,'2011-06-27 09:22:34','1022','LAVAR',22),(23,'2011-06-27 09:22:34','1023','LAVAVAJILLAS',23),(24,'2011-06-27 09:22:34','1024','LECHE',24),(25,'2011-06-27 09:22:34','1025','LEJIAS',25),(26,'2011-06-27 09:22:34','1026','MANTEQUILLAS y MERMELADAS',26),(27,'2011-06-27 09:22:34','1027','MAYONESA',27),(28,'2011-06-27 09:22:34','1028','MEDICINAS',28),(29,'2011-06-27 09:22:34','1029','MENESTRAS',29),(30,'2011-06-27 09:22:34','1030','NECTARES',30),(31,'2011-06-27 09:22:34','1031','PAPEL Y SERVILLETA',31),(32,'2011-06-27 09:22:34','1032','PASTA DENTAL y CEPILLOS',32),(33,'2011-06-27 09:22:34','1033','PAÃ‘ALES y TOALLAS',33),(34,'2011-06-27 09:22:34','1034','PILAS',34),(35,'2011-06-27 09:22:34','1035','REFRESCOS',35),(36,'2011-06-27 09:22:34','1036','SAL',36),(37,'2011-06-27 09:22:34','1037','SHAMPUS',37),(38,'2011-06-27 09:22:34','1038','TE',38),(39,'2011-06-27 09:22:34','1039','YOGURT',39);
 /*!40000 ALTER TABLE `catmod` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `clientes_preferentes`
---
-
-DROP TABLE IF EXISTS `clientes_preferentes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `clientes_preferentes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  `tiempo` datetime NOT NULL,
-  `promocion` varchar(255) NOT NULL DEFAULT '',
-  `tarjeta` varchar(255) NOT NULL DEFAULT '',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `clientes_preferentes_ibfk_1` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `clientes_preferentes`
@@ -559,67 +177,6 @@ LOCK TABLES `clientes_preferentes` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `compras_ordenes`
---
-
-DROP TABLE IF EXISTS `compras_ordenes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `compras_ordenes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `tiempo` datetime NOT NULL,
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_base` int(11) NOT NULL DEFAULT '0',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `area` int(11) DEFAULT NULL,
-  `forma_pago` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  `cantidad_proveedor` double NOT NULL DEFAULT '0',
-  `moneda` int(11) DEFAULT NULL,
-  `precio_neto` double NOT NULL DEFAULT '0',
-  `precio_imp` double NOT NULL DEFAULT '0',
-  `precio_bruto` double NOT NULL DEFAULT '0',
-  `sub_total_neto` double NOT NULL DEFAULT '0',
-  `sub_total_imp` double NOT NULL DEFAULT '0',
-  `sub_total_bruto` double NOT NULL DEFAULT '0',
-  `proveedor` int(11) DEFAULT NULL,
-  `total_neto` double NOT NULL DEFAULT '0',
-  `total_imp` double NOT NULL DEFAULT '0',
-  `total_bruto` double NOT NULL DEFAULT '0',
-  `total_texto` varchar(255) NOT NULL DEFAULT '',
-  `fecha_entrega` date NOT NULL,
-  `lugar_entrega` varchar(255) NOT NULL DEFAULT '',
-  `user_req` varchar(255) NOT NULL DEFAULT '',
-  `user_ing` int(11) DEFAULT NULL,
-  `user_aut1` int(11) DEFAULT NULL,
-  `user_aut2` int(11) DEFAULT NULL,
-  `user_anul` int(11) DEFAULT NULL,
-  `tiempo_anul` datetime NOT NULL,
-  `observaciones` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `area__idx` (`area`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `moneda__idx` (`moneda`),
-  KEY `proveedor__idx` (`proveedor`),
-  KEY `user_ing__idx` (`user_ing`),
-  KEY `user_aut1__idx` (`user_aut1`),
-  KEY `user_aut2__idx` (`user_aut2`),
-  KEY `user_anul__idx` (`user_anul`),
-  CONSTRAINT `compras_ordenes_ibfk_1` FOREIGN KEY (`area`) REFERENCES `areas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_3` FOREIGN KEY (`moneda`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_4` FOREIGN KEY (`proveedor`) REFERENCES `directorio` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_5` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_6` FOREIGN KEY (`user_aut1`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_7` FOREIGN KEY (`user_aut2`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `compras_ordenes_ibfk_8` FOREIGN KEY (`user_anul`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `compras_ordenes`
 --
 
@@ -627,26 +184,6 @@ LOCK TABLES `compras_ordenes` WRITE;
 /*!40000 ALTER TABLE `compras_ordenes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `compras_ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `condiciones_comerciales`
---
-
-DROP TABLE IF EXISTS `condiciones_comerciales`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `condiciones_comerciales` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `condicion` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `codigo` int(11) NOT NULL DEFAULT '0',
-  `dias` int(11) NOT NULL DEFAULT '0',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `condiciones_comerciales`
@@ -658,27 +195,6 @@ LOCK TABLES `condiciones_comerciales` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `control_insumos`
---
-
-DROP TABLE IF EXISTS `control_insumos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `control_insumos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_hijo` varchar(255) NOT NULL DEFAULT '',
-  `gramos` double NOT NULL DEFAULT '0',
-  `adicional` double NOT NULL DEFAULT '0',
-  `estado` int(11) NOT NULL DEFAULT '0',
-  `truco` int(11) NOT NULL DEFAULT '0',
-  `orden` int(11) NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `control_insumos`
 --
 
@@ -686,23 +202,6 @@ LOCK TABLES `control_insumos` WRITE;
 /*!40000 ALTER TABLE `control_insumos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `control_insumos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `control_produccion`
---
-
-DROP TABLE IF EXISTS `control_produccion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `control_produccion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `turno` varchar(255) NOT NULL DEFAULT '',
-  `producto` varchar(255) NOT NULL DEFAULT '',
-  `producto_derivado` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `control_produccion`
@@ -714,26 +213,6 @@ LOCK TABLES `control_produccion` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `criterio`
---
-
-DROP TABLE IF EXISTS `criterio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `criterio` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `grupo_distribucion` varchar(255) NOT NULL DEFAULT '',
-  `turno` varchar(255) NOT NULL DEFAULT '',
-  `porcentaje` double NOT NULL DEFAULT '100',
-  `codbarras` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `criterio_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `criterio`
 --
 
@@ -741,21 +220,6 @@ LOCK TABLES `criterio` WRITE;
 /*!40000 ALTER TABLE `criterio` DISABLE KEYS */;
 /*!40000 ALTER TABLE `criterio` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `criterio2`
---
-
-DROP TABLE IF EXISTS `criterio2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `criterio2` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `turno` varchar(255) NOT NULL DEFAULT '',
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `criterio2`
@@ -767,29 +231,13 @@ LOCK TABLES `criterio2` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cuentas_por_cobrar`
+-- Dumping data for table `cuentas`
 --
 
-DROP TABLE IF EXISTS `cuentas_por_cobrar`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cuentas_por_cobrar` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha_doc` date NOT NULL,
-  `documento` varchar(255) NOT NULL,
-  `cliente` varchar(255) NOT NULL,
-  `accion` varchar(255) NOT NULL,
-  `neto_ingreso` double NOT NULL DEFAULT '0',
-  `impuesto_ingreso` double NOT NULL DEFAULT '0',
-  `bruto_ingreso` double NOT NULL DEFAULT '0',
-  `neto_salida` double NOT NULL DEFAULT '0',
-  `impuesto_salida` double NOT NULL DEFAULT '0',
-  `bruto_salida` double NOT NULL DEFAULT '0',
-  `fecha_venc` double NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `cuentas` WRITE;
+/*!40000 ALTER TABLE `cuentas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cuentas` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `cuentas_por_cobrar`
@@ -801,31 +249,6 @@ LOCK TABLES `cuentas_por_cobrar` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cuentas_por_pagar`
---
-
-DROP TABLE IF EXISTS `cuentas_por_pagar`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cuentas_por_pagar` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha_doc` date NOT NULL,
-  `documento` varchar(255) NOT NULL,
-  `proveedor` varchar(255) NOT NULL,
-  `accion` varchar(255) NOT NULL,
-  `neto_ingreso` double NOT NULL DEFAULT '0',
-  `impuesto_ingreso` double NOT NULL DEFAULT '0',
-  `bruto_ingreso` double NOT NULL DEFAULT '0',
-  `neto_salida` double NOT NULL DEFAULT '0',
-  `impuesto_salida` double NOT NULL DEFAULT '0',
-  `bruto_salida` double NOT NULL DEFAULT '0',
-  `fecha_venc` double NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `cuentas_por_pagar`
 --
 
@@ -833,30 +256,6 @@ LOCK TABLES `cuentas_por_pagar` WRITE;
 /*!40000 ALTER TABLE `cuentas_por_pagar` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cuentas_por_pagar` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `delivery`
---
-
-DROP TABLE IF EXISTS `delivery`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `delivery` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `tiempo` datetime NOT NULL,
-  `numero` int(11) NOT NULL DEFAULT '0',
-  `cliente` varchar(255) NOT NULL DEFAULT '',
-  `docnum` int(11) NOT NULL DEFAULT '0',
-  `carac1` varchar(255) NOT NULL DEFAULT '',
-  `carac2` varchar(255) NOT NULL DEFAULT '',
-  `carac3` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  CONSTRAINT `delivery_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `delivery`
@@ -868,48 +267,6 @@ LOCK TABLES `delivery` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `directorio`
---
-
-DROP TABLE IF EXISTS `directorio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `directorio` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `razon_social` varchar(255) NOT NULL DEFAULT '',
-  `nombre_corto` varchar(255) DEFAULT NULL,
-  `rubro` int(11) NOT NULL DEFAULT '0',
-  `nombres` varchar(255) NOT NULL DEFAULT '',
-  `apellidos` varchar(255) NOT NULL DEFAULT '',
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  `doc_id_aux` varchar(255) DEFAULT NULL,
-  `pais` varchar(255) NOT NULL DEFAULT 'Perú',
-  `ubigeo` varchar(255) NOT NULL DEFAULT '',
-  `direccion` varchar(255) NOT NULL DEFAULT '',
-  `codigo_postal` varchar(255) DEFAULT NULL,
-  `referencia` varchar(255) DEFAULT NULL,
-  `condicion` int(11) DEFAULT NULL,
-  `tiempo_cred` int(11) NOT NULL DEFAULT '0',
-  `intervalo` int(11) NOT NULL DEFAULT '0',
-  `interes` double NOT NULL DEFAULT '0',
-  `linea_credito` double NOT NULL DEFAULT '0',
-  `representante_legal` varchar(255) DEFAULT NULL,
-  `cargo` varchar(255) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `sexo` varchar(255) DEFAULT NULL,
-  `preferente` char(1) DEFAULT NULL,
-  `modo` varchar(255) DEFAULT NULL,
-  `tipo_doc` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `condicion__idx` (`condicion`),
-  KEY `tipo_doc__idx` (`tipo_doc`),
-  CONSTRAINT `directorio_ibfk_1` FOREIGN KEY (`condicion`) REFERENCES `condiciones_comerciales` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `directorio_ibfk_2` FOREIGN KEY (`tipo_doc`) REFERENCES `documentos_identidad` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `directorio`
 --
 
@@ -917,35 +274,6 @@ LOCK TABLES `directorio` WRITE;
 /*!40000 ALTER TABLE `directorio` DISABLE KEYS */;
 /*!40000 ALTER TABLE `directorio` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `directorio_auxiliar`
---
-
-DROP TABLE IF EXISTS `directorio_auxiliar`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `directorio_auxiliar` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime DEFAULT NULL,
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  `telefono` varchar(255) NOT NULL DEFAULT '',
-  `tel_prio` int(11) NOT NULL DEFAULT '0',
-  `fax` varchar(255) NOT NULL DEFAULT '',
-  `fax_prio` int(11) NOT NULL DEFAULT '0',
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `ema_prio` int(11) NOT NULL DEFAULT '0',
-  `web` varchar(255) NOT NULL DEFAULT '',
-  `web_prio` int(11) NOT NULL DEFAULT '0',
-  `contacto` varchar(255) NOT NULL DEFAULT '',
-  `con_prio` int(11) NOT NULL DEFAULT '0',
-  `telefono_c` varchar(255) NOT NULL DEFAULT '',
-  `tec_prio` int(11) NOT NULL DEFAULT '0',
-  `email_c` varchar(255) NOT NULL DEFAULT '',
-  `emc_prio` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `directorio_auxiliar`
@@ -957,36 +285,6 @@ LOCK TABLES `directorio_auxiliar` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `documentos_comerciales`
---
-
-DROP TABLE IF EXISTS `documentos_comerciales`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `documentos_comerciales` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `documento` int(11) NOT NULL DEFAULT '0',
-  `doc_reg` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `pv` int(11) DEFAULT NULL,
-  `caja` int(11) NOT NULL DEFAULT '0',
-  `prefijo` varchar(255) NOT NULL DEFAULT '',
-  `correlativo` int(11) NOT NULL DEFAULT '0',
-  `sufijo` varchar(255) NOT NULL DEFAULT '',
-  `copia` int(11) NOT NULL DEFAULT '0',
-  `detalle` int(11) NOT NULL DEFAULT '0',
-  `limite` int(11) NOT NULL DEFAULT '0',
-  `impresion` int(11) NOT NULL DEFAULT '0',
-  `impuestos` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  CONSTRAINT `documentos_comerciales_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `documentos_comerciales`
 --
 
@@ -996,78 +294,13 @@ LOCK TABLES `documentos_comerciales` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `documentos_identidad`
---
-
-DROP TABLE IF EXISTS `documentos_identidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `documentos_identidad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `documentos_identidad`
 --
 
 LOCK TABLES `documentos_identidad` WRITE;
 /*!40000 ALTER TABLE `documentos_identidad` DISABLE KEYS */;
-INSERT INTO `documentos_identidad` VALUES (1,'2011-06-09 12:11:14','D.N.I.'),(2,'2011-06-09 12:11:21','R.U.C.');
 /*!40000 ALTER TABLE `documentos_identidad` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `docventa`
---
-
-DROP TABLE IF EXISTS `docventa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `docventa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `caja` int(11) NOT NULL DEFAULT '0',
-  `fecha_vta` date NOT NULL,
-  `tiempo` datetime NOT NULL,
-  `n_doc_base` int(11) NOT NULL DEFAULT '0',
-  `estado` varchar(255) NOT NULL DEFAULT '',
-  `comprobante` int(11) NOT NULL DEFAULT '0',
-  `cliente` varchar(255) NOT NULL DEFAULT '',
-  `cv_ing` int(11) NOT NULL DEFAULT '0',
-  `fp` int(11) NOT NULL DEFAULT '0',
-  `vales` varchar(255) NOT NULL DEFAULT '',
-  `sello` varchar(255) NOT NULL DEFAULT '',
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `detalle` varchar(255) NOT NULL DEFAULT '',
-  `precio` double NOT NULL DEFAULT '0',
-  `cantidad` int(11) NOT NULL DEFAULT '0',
-  `sub_total_bruto` double NOT NULL DEFAULT '0',
-  `sub_total_impto` varchar(255) NOT NULL DEFAULT '',
-  `sub_total_neto` double NOT NULL DEFAULT '0',
-  `total` double NOT NULL DEFAULT '0',
-  `detalle_impto` varchar(255) NOT NULL DEFAULT '',
-  `total_neto` double NOT NULL DEFAULT '0',
-  `mntsol` double NOT NULL DEFAULT '0',
-  `mntdol` double NOT NULL DEFAULT '0',
-  `cv_anul` int(11) NOT NULL DEFAULT '0',
-  `imod` int(11) NOT NULL DEFAULT '0',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `data_1` varchar(255) NOT NULL DEFAULT '',
-  `fecha_vto` date NOT NULL,
-  `condicion_comercial` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `condicion_comercial__idx` (`condicion_comercial`),
-  CONSTRAINT `docventa_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `docventa_ibfk_2` FOREIGN KEY (`condicion_comercial`) REFERENCES `condiciones_comerciales` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `docventa`
@@ -1079,50 +312,14 @@ LOCK TABLES `docventa` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `empaques`
---
-
-DROP TABLE IF EXISTS `empaques`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `empaques` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `empaque` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `empaques`
 --
 
 LOCK TABLES `empaques` WRITE;
 /*!40000 ALTER TABLE `empaques` DISABLE KEYS */;
+INSERT INTO `empaques` (`id`, `registro`, `empaque`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:27:36','ND','ND',0);
 /*!40000 ALTER TABLE `empaques` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `factores_merma`
---
-
-DROP TABLE IF EXISTS `factores_merma`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `factores_merma` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `valor` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `factores_merma_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `factores_merma`
@@ -1134,22 +331,6 @@ LOCK TABLES `factores_merma` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `formas_pago`
---
-
-DROP TABLE IF EXISTS `formas_pago`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `formas_pago` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `forma_pago` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `formas_pago`
 --
 
@@ -1159,50 +340,14 @@ LOCK TABLES `formas_pago` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `generos`
---
-
-DROP TABLE IF EXISTS `generos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `generos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `genero` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `generos`
 --
 
 LOCK TABLES `generos` WRITE;
 /*!40000 ALTER TABLE `generos` DISABLE KEYS */;
+INSERT INTO `generos` (`id`, `registro`, `genero`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:26:06','0001','Almacen',0),(2,'2011-06-27 09:26:14','0003','Venta',0);
 /*!40000 ALTER TABLE `generos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `grupo_distribucion`
---
-
-DROP TABLE IF EXISTS `grupo_distribucion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `grupo_distribucion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `grupo_distribucion` varchar(255) NOT NULL DEFAULT '',
-  `registro` datetime NOT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `prioridad` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `grupo_distribucion_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `grupo_distribucion`
@@ -1214,25 +359,6 @@ LOCK TABLES `grupo_distribucion` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `impuestos`
---
-
-DROP TABLE IF EXISTS `impuestos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `impuestos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `abreviatura` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `valor` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `impuestos`
 --
 
@@ -1242,83 +368,22 @@ LOCK TABLES `impuestos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `maestro`
+-- Dumping data for table `inventarios`
 --
 
-DROP TABLE IF EXISTS `maestro`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras` varchar(255) NOT NULL DEFAULT '',
-  `pv` int(11) DEFAULT NULL,
-  `grupo_venta` varchar(255) NOT NULL DEFAULT '',
-  `articulo` int(11) DEFAULT NULL,
-  `casa` int(11) DEFAULT NULL,
-  `sub_casa` int(11) DEFAULT NULL,
-  `genero` int(11) DEFAULT NULL,
-  `sub_genero` int(11) DEFAULT NULL,
-  `empaque` int(11) DEFAULT NULL,
-  `sello` int(11) DEFAULT NULL,
-  `sub_sello` int(11) DEFAULT NULL,
-  `tipo` int(11) DEFAULT NULL,
-  `catmod` int(11) DEFAULT NULL,
-  `categoria` int(11) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `proveedor` int(11) DEFAULT NULL,
-  `moneda` int(11) DEFAULT NULL,
-  `precio` double NOT NULL DEFAULT '0',
-  `modo_impuesto` int(11) NOT NULL DEFAULT '0',
-  `impuesto` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `descuento` int(11) NOT NULL DEFAULT '0',
-  `dependencia` int(11) NOT NULL DEFAULT '0',
-  `unidad_medida_valor` double NOT NULL DEFAULT '0',
-  `aux_num_data` int(11) NOT NULL DEFAULT '0',
-  `stock_min` double NOT NULL DEFAULT '0',
-  `stock_max` double NOT NULL DEFAULT '0',
-  `reposicion` int(11) NOT NULL DEFAULT '0',
-  `ventas_key` int(11) NOT NULL DEFAULT '0',
-  `fecha` date NOT NULL,
-  `unidad_medida` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `articulo__idx` (`articulo`),
-  KEY `casa__idx` (`casa`),
-  KEY `sub_casa__idx` (`sub_casa`),
-  KEY `genero__idx` (`genero`),
-  KEY `sub_genero__idx` (`sub_genero`),
-  KEY `empaque__idx` (`empaque`),
-  KEY `sello__idx` (`sello`),
-  KEY `sub_sello__idx` (`sub_sello`),
-  KEY `tipo__idx` (`tipo`),
-  KEY `catmod__idx` (`catmod`),
-  KEY `categoria__idx` (`categoria`),
-  KEY `status__idx` (`status`),
-  KEY `proveedor__idx` (`proveedor`),
-  KEY `moneda__idx` (`moneda`),
-  KEY `unidad_medida__idx` (`unidad_medida`),
-  CONSTRAINT `maestro_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_10` FOREIGN KEY (`tipo`) REFERENCES `tipos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_11` FOREIGN KEY (`catmod`) REFERENCES `catmod` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_12` FOREIGN KEY (`categoria`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_13` FOREIGN KEY (`status`) REFERENCES `status` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_14` FOREIGN KEY (`proveedor`) REFERENCES `directorio` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_15` FOREIGN KEY (`moneda`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_16` FOREIGN KEY (`unidad_medida`) REFERENCES `unidades_medida` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_2` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_3` FOREIGN KEY (`casa`) REFERENCES `casas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_4` FOREIGN KEY (`sub_casa`) REFERENCES `sub_casas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_5` FOREIGN KEY (`genero`) REFERENCES `generos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_6` FOREIGN KEY (`sub_genero`) REFERENCES `sub_generos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_7` FOREIGN KEY (`empaque`) REFERENCES `empaques` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_8` FOREIGN KEY (`sello`) REFERENCES `sellos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_ibfk_9` FOREIGN KEY (`sub_sello`) REFERENCES `sub_sellos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `inventarios` WRITE;
+/*!40000 ALTER TABLE `inventarios` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `inventarios_control`
+--
+
+LOCK TABLES `inventarios_control` WRITE;
+/*!40000 ALTER TABLE `inventarios_control` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventarios_control` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `maestro`
@@ -1326,28 +391,9 @@ CREATE TABLE `maestro` (
 
 LOCK TABLES `maestro` WRITE;
 /*!40000 ALTER TABLE `maestro` DISABLE KEYS */;
+INSERT INTO `maestro` (`id`, `registro`, `codbarras`, `pv`, `grupo_venta`, `articulo`, `casa`, `sub_casa`, `genero`, `sub_genero`, `empaque`, `sello`, `sub_sello`, `tipo`, `catmod`, `categoria`, `status`, `moneda`, `precio`, `modo_impuesto`, `impuesto`, `nombre`, `descripcion`, `alias`, `descuento`, `dependencia`, `stock_min`, `stock_max`, `reposicion`, `unidad_medida`, `unidad_medida_valor`, `ventas_key`, `aux_num_data`, `fecha`) VALUES (221,NULL,'20100001',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (PQT)','BOTELLA DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(222,NULL,'20100002',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(223,NULL,'20100003',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BOTELLA DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(224,NULL,'20100004',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BIDON DE 2 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(225,NULL,'20100005',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(226,NULL,'20100006',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (LATA)','LATA DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(227,NULL,'20100007',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (BALDE)','BALDE DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(228,NULL,'20100008',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','BOTELLA DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(229,NULL,'20100009',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','BOTELLA DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(230,NULL,'20100010',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(231,NULL,'20100011',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(232,NULL,'20100012',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(233,NULL,'20100013',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(234,NULL,'20100014',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (LATA)','LATA DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(235,NULL,'20100015',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (BALDE)','BALDE DE 20 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(236,NULL,'20100016',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR CLASICO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(237,NULL,'20100017',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR (CAJ)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(238,NULL,'20100018',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR PREMIUM (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(239,NULL,'20100019',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(240,NULL,'20100020',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (BIDON)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(241,NULL,'20100021',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (BIDON)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(242,NULL,'20100022',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','BOTELLA DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(243,NULL,'20100023',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','BOTELLA DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(244,NULL,'20100100',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA AMARILLA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(245,NULL,'20100101',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA LILA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(246,NULL,'20100102',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA NARANJA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(247,NULL,'20100103',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA VERDE (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(248,NULL,'20100104',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(249,NULL,'20100105',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO NEGRO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(250,NULL,'20100106',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(251,NULL,'20100107',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ZUZUKI AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(252,NULL,'20100108',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ZUZUKI VERDE (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(253,NULL,'20100109',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON EXTRA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(254,NULL,'20100110',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON SUPERIOR (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(255,NULL,'20100111',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON DESCARTE (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(256,NULL,'20100112',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ SAMAN (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(257,NULL,'20100113',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ GOLDEN AZUL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(258,NULL,'20100114',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ GOLDEN ROJO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(259,NULL,'20100115',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ COSTEÃ‘O (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(260,NULL,'20100116',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DON ELADIO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(261,NULL,'20100117',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PACASMAYO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(262,NULL,'20100118',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CHOLO SWING (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(263,NULL,'20100119',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CHACRITA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(264,NULL,'20100120',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ JAIRITO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(265,NULL,'20100121',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ OLIMPICO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(266,NULL,'20100122',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ARROSAL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(267,NULL,'20100123',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ TRIPLE B (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(268,NULL,'20100124',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ OSITO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(269,NULL,'20100125',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ BUEN SABOR (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(270,NULL,'20100126',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ VERDI (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(271,NULL,'20100127',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ SUREÃ‘O (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(272,NULL,'20100128',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROCILLO CREMOSITO x 3/4 (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(273,NULL,'20100129',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROCILLO BLANCO x 3/4 (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(274,NULL,'20100200',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR FILETE (CAJA)','LATA DE 184 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(275,NULL,'20100201',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(276,NULL,'20100202',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,50,NULL,NULL,NULL),(277,NULL,'20100203',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED FAMILIAR (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(278,NULL,'20100204',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER GRATED (CAJA)','LATA DE 150 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(279,NULL,'20100205',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN FLORIDA FILETE EN TROZO (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(280,NULL,'20100206',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN LENNYSOL FILETE (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(281,NULL,'20100207',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI FILETE PREMIUM (CAJA)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(282,NULL,'20100208',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(283,NULL,'20100209',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,50,NULL,NULL,NULL),(284,NULL,'20100210',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI SALMÃ“N (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(285,NULL,'20100211',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI CHATA PORTOLA (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(286,NULL,'20100212',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC FILETE (CAJA)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(287,NULL,'20100213',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(288,NULL,'20100214',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,50,NULL,NULL,NULL),(289,NULL,'20100215',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED FAMILIAR (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(290,NULL,'20100216',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC SALMÃ“N  TOL (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(291,NULL,'20100217',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN ROSAIMAR GRATED (CAJA)','LATA DE 145 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(292,NULL,'20100218',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN CHINBOTANA GRATED (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(293,NULL,'20100219',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RICOFRES GRATED (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(294,NULL,'20100220',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN MONTEALTO FILETE (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(295,NULL,'20100221',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN COMPASS FILETE (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(296,NULL,'20100222',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER FILETE (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(297,NULL,'20100300',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.1.00 (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(298,NULL,'20100301',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.0.50 (BOL)','SOBRE DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(299,NULL,'20100302',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS SUELTO (BOL)','BOLSA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(300,NULL,'20100303',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MACAVENA  TRES OSITOS (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(301,NULL,'20100304',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','QUINUAVENA TRES OSITOS (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(302,NULL,'20100305',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','HOJUELAS  DE MAIZ (BOL)','BOLSA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(303,NULL,'20100306',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','COPIX FRESA CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(304,NULL,'20100307',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','CHOCK CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(305,NULL,'20100308',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRUTT CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(306,NULL,'20100309',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MEL CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(307,NULL,'20100310',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MAX CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(308,NULL,'20100311',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','REJIX CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(309,NULL,'20100312',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','ZUCK CEREAL ANGEL (CAJ)','BOLSA DE 150 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(310,NULL,'20100313',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRESIA ALMOHADA CEREAL ANGEL (CAJ)','BOLSA DE 110 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(311,NULL,'20100400',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,1,0,NULL,'IGV','AZUCAR RUBIA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(312,NULL,'20100401',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,1,0,NULL,'IGV','AZUCAR BLANCA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(313,NULL,'20100500',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI GRANDE NEGRO (CAJ)','LATA DE 88 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(314,NULL,'20100501',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI CHICO NEGRO (CAJ)','LATA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(315,NULL,'20100502',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI GRANDE MARRON (CAJ)','LATA DE 88 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(316,NULL,'20100503',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI CHICO MARRON (CAJ)','LATA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(317,NULL,'20100504',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO GRANDE NEGRO (CAJ)','LATA DE 100 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(318,NULL,'20100505',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO CHICO NEGRO (CAJ)','LATA DE 50 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(319,NULL,'20100600',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (PQT)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,400,NULL,NULL,NULL),(320,NULL,'20100601',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','JARRA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(321,NULL,'20100602',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','OLLITA DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(322,NULL,'20100603',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO CHICO (CAJ)','LATA DE 58 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,58,NULL,NULL,NULL),(323,NULL,'20100604',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO GRANDE (CAJ)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(324,NULL,'20100605',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONACO (PQT)','SOBRE DE 8 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,400,NULL,NULL,NULL),(325,NULL,'20100606',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,200,NULL,NULL,NULL),(326,NULL,'20100607',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(327,NULL,'20100608',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (PQT)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,400,NULL,NULL,NULL),(328,NULL,'20100609',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE TIRA (CAJ)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,160,NULL,NULL,NULL),(329,NULL,'20100610',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(330,NULL,'20100611',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (PQT)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,400,NULL,NULL,NULL),(331,NULL,'20100612',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(332,NULL,'20100700',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO YOGURT (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2000,NULL,NULL,NULL),(333,NULL,'20100701',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GAJO LIMON CARAMELO (CAJ)','BOLSA DE 150 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(334,NULL,'20100702',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','BAMBI CARAMELO (CAJ)','BOLSA DE 120 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(335,NULL,'20100703',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO CHICHA (CAJ)','BOLSA DE 115 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2300,NULL,NULL,NULL),(336,NULL,'20100704',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP FRESA (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,672,NULL,NULL,NULL),(337,NULL,'20100705',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP YOGURT (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,672,NULL,NULL,NULL),(338,NULL,'20100706',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP SURTIDO (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,672,NULL,NULL,NULL),(339,NULL,'20100707',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TURROMELO (CAJ)','BOLSA DE 75 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1500,NULL,NULL,NULL),(340,NULL,'20100708',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','SUAK LOCURA (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1600,NULL,NULL,NULL),(341,NULL,'20100709',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO RELLENO DE FRUTA (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(342,NULL,'20100710',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','PERITA CARAMELO (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2000,NULL,NULL,NULL),(343,NULL,'20100711',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TOFFE SURTIDOS (CAJ)','BOLSA DE 70 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1400,NULL,NULL,NULL),(344,NULL,'20100712',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO FRUTAS ARCOR (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2000,NULL,NULL,NULL),(345,NULL,'20100713',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS AZUL MENTHOL (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,3000,NULL,NULL,NULL),(346,NULL,'20100714',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS ROJO CHERRY (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,3000,NULL,NULL,NULL),(347,NULL,'20100715',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS NEGRO STRONG (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,3000,NULL,NULL,NULL),(348,NULL,'20100716',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO LICOR (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,960,NULL,NULL,NULL),(349,NULL,'20100717',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHIQUILINES (CAJ)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(350,NULL,'20100718',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHUPETAZO (CAJ)','POTE DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,360,NULL,NULL,NULL),(351,NULL,'20100800',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS INCA C/FILTRO (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,500,NULL,NULL,NULL),(352,NULL,'20100801',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR AZUL (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,500,NULL,NULL,NULL),(353,NULL,'20100802',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON  CH AZUL (CAJ)','CAJETILLA DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1000,NULL,NULL,NULL),(354,NULL,'20100803',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR MENTHOL (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,500,NULL,NULL,NULL),(355,NULL,'20100804',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON CH MENTHOL (CAJ)','CAJETILLA DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1000,NULL,NULL,NULL),(356,NULL,'20100900',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','ABUELITA COCOA (CAJ)','SOBRE DE 11 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(357,NULL,'20100901',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','NIETA COCOA (CAJ)','SOBRE DE 12 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(358,NULL,'20100902',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (CAJ)','SOBRE DE 11 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(359,NULL,'20100903',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (PQT)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(360,NULL,'20100904',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS (PQT)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(361,NULL,'20100905',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (CAJ)','SOBRE DE 12 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(362,NULL,'20100906',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH(BOL)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(363,NULL,'20100907',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (BOL)','SOBRE DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(364,NULL,'20100908',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT (CAJ)','LATA DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(365,NULL,'20100909',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT TIRA (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,180,NULL,NULL,NULL),(366,NULL,'20100910',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO TIRA (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(367,NULL,'20100911',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA SOL DEL CUZCO  (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,360,NULL,NULL,NULL),(368,NULL,'20100912',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA WINTERS FRASCO (CAJ)','POMO DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(369,NULL,'20100913',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO  (CAJ)','LATA DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(370,NULL,'20101000',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 1.8 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,7200,NULL,NULL,NULL),(371,NULL,'20101001',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3456,NULL,NULL,NULL),(372,NULL,'20101002',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,1440,NULL,NULL,NULL),(373,NULL,'20101003',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO NARANJA (SACO)','SOBRE DE 14 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,972,NULL,NULL,NULL),(374,NULL,'20101004',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 32 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,400,NULL,NULL,NULL),(375,NULL,'20101005',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 70 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,200,NULL,NULL,NULL),(376,NULL,'20101006',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,160,NULL,NULL,NULL),(377,NULL,'20101007',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(378,NULL,'20101008',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(379,NULL,'20101009',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,18,NULL,NULL,NULL),(380,NULL,'20101010',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(381,NULL,'20101011',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(382,NULL,'20101012',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CARNE (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(383,NULL,'20101013',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO CON VERDURA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(384,NULL,'20101014',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA CRIOLLA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(385,NULL,'20101015',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CAMARON (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(386,NULL,'20101016',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA CARNE (CAJ)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(387,NULL,'20101017',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA GALLINA (CAJ)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(388,NULL,'20101018',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE(PQT)','CAJA DE 2 UNID (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(389,NULL,'20101019',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA (PQT)','CAJA DE 2 UNID (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(390,NULL,'20101020',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE TAPER (CAJ)','CUBITOS DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,2160,NULL,NULL,NULL),(391,NULL,'20101021',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA TAPER (CAJ)','CUBITOS DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,2190,NULL,NULL,NULL),(392,NULL,'20101022',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA MEDIANO (CAJ)','BOTELLA DE 30 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(393,NULL,'20101023',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA CHICO (CAJ)','BOTELLA DE 90 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(394,NULL,'20101024',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MOSTAZA ALPESA (PQT)','BALDE DE 4 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(395,NULL,'20101025',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','KEPCHU ALPESA (PQT)','BALDE DE 4 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(396,NULL,'20101026',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','POMAROLA (CAJ)','SACHET DE 160 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(397,NULL,'20101027',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ROJITA (CAJ)','SACHET DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,120,NULL,NULL,NULL),(398,NULL,'20101028',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','COMINO MERY (PQT)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,900,NULL,NULL,NULL),(399,NULL,'20101029',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','TUCO MERY (PQT)','SOBRE DE 7.76 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,900,NULL,NULL,NULL),(400,NULL,'20101030',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZONADOR MERY (PQT)','SOBRE DE 10.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(401,NULL,'20101031',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PANQUITA TIRA (PQT)','SOBRE DE 26 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(402,NULL,'20101032',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PALILLO MERY (PQT)','SOBRE DE 9 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(403,NULL,'20101033',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VERDECITO MERY (PQT)','SOBRE DE 6.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(404,NULL,'20101034',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PIMIENTA COMINO (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3300,NULL,NULL,NULL),(405,NULL,'20101035',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PANCA SIN PICANTE (CAJ)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3300,NULL,NULL,NULL),(406,NULL,'20101036',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA TUCO (CAJ)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3300,NULL,NULL,NULL),(407,NULL,'20101037',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PALILLO (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3300,NULL,NULL,NULL),(408,NULL,'20101038',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA OREGANO (CAJ)','SOBRE DE 3.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,3300,NULL,NULL,NULL),(409,NULL,'20101039',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO CORRIENTE (CAJ)','FRASCO DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(410,NULL,'20101040',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO HON KONG (CAJ)','FRASCO DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(411,NULL,'20101041',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO (CAJ)','FRASCO DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(412,NULL,'20101042',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  MEDIANO (CAJ)','BOTELLA DE 60 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(413,NULL,'20101043',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  CHICO (CAJ)','BOTELLA DE 85 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(414,NULL,'20101044',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE TINTO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(415,NULL,'20101045',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE BLANCO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(416,NULL,'20101046',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE VENTURO (PQT)','BOTELLA DE 225 CC',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(417,NULL,'20101047',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAIZENA DURYEA (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(418,NULL,'20101100',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE CHICHA SAYON (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2000,NULL,NULL,NULL),(419,NULL,'20101101',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','K-CHI PUM CHICLE (CAJ)','BOLSA DE 120 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,3600,NULL,NULL,NULL),(420,NULL,'20101102',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BOLICINCO (FARDO)','BOLSA DE 30 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,600,NULL,NULL,NULL),(421,NULL,'20101103',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(422,NULL,'20101104',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE FRESA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(423,NULL,'20101105',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,5400,NULL,NULL,NULL),(424,NULL,'20101106',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE CANELA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,5400,NULL,NULL,NULL),(425,NULL,'20101107',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME C/ENV  (FARDO)','BOLSA DE 55 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1155,NULL,NULL,NULL),(426,NULL,'20101108',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME CHICLE S/ENV (FARDO)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1000,NULL,NULL,NULL),(427,NULL,'20101109',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BUBALOO CHICLE (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1920,NULL,NULL,NULL),(428,NULL,'20101110',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHI CHISTES CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(429,NULL,'20101111',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE GROSSO (CAJ)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(430,NULL,'20101112',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(431,NULL,'20101113',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY FRESA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(432,NULL,'20101114',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ADAMS CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,5400,NULL,NULL,NULL),(433,NULL,'20101115',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME TAPER CHICLE (CAJ)','POTE DE 300 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,3600,NULL,NULL,NULL),(434,NULL,'20101116',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','MINI FRUTTY GELS (CAJ)','POTE DE 88 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,528,NULL,NULL,NULL),(435,NULL,'20101117',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','MASHMELO (CAJ)','',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(436,NULL,'20101200',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE PARA TAZA SAYON (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(437,NULL,'20101201',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','BARRA DE 16 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,840,NULL,NULL,NULL),(438,NULL,'20101202',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','BARRA DE 32 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,648,NULL,NULL,NULL),(439,NULL,'20101203',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE MINI CHIN CHIN (CAJ)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,540,NULL,NULL,NULL),(440,NULL,'20101204',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE CHIN CHIN (CAJ)','SOBRE DE 20 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(441,NULL,'20101205',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS CANDY (CAJ)','POTE DE 180 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2160,NULL,NULL,NULL),(442,NULL,'20101206',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOPILAS (PQT)','DISPLAY DE 60 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,1,360,NULL,NULL,NULL),(443,NULL,'20101207',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHICLE COMBOY (CAJ)','DISPLAY DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(444,NULL,'20101208',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','GOLPE (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(445,NULL,'20101209',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS (CAJ)','BARRA DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(446,NULL,'20101210',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO DISPLAY (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,160,NULL,NULL,NULL),(447,NULL,'20101211',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO PACK (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,120,NULL,NULL,NULL),(448,NULL,'20101300',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(449,NULL,'20101301',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(450,NULL,'20101302',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(451,NULL,'20101303',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,7,NULL,NULL,NULL),(452,NULL,'20101304',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(453,NULL,'20101305',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(454,NULL,'20101306',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(455,NULL,'20101307',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(456,NULL,'20101308',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(457,NULL,'20101309',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(458,NULL,'20101310',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(459,NULL,'20101311',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(460,NULL,'20101312',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,7,NULL,NULL,NULL),(461,NULL,'20101313',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(462,NULL,'20101314',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(463,NULL,'20101315',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 850 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(464,NULL,'20101316',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,7,NULL,NULL,NULL),(465,NULL,'20101317',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(466,NULL,'20101318',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO BEBE (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(467,NULL,'20101319',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(468,NULL,'20101320',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 720 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(469,NULL,'20101321',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO SUELTO (BOL)','BOLSA DE 15 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(470,NULL,'20101322',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,60,NULL,NULL,NULL),(471,NULL,'20101323',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,30,NULL,NULL,NULL),(472,NULL,'20101400',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ANITA SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(473,NULL,'20101401',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(474,NULL,'20101402',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO RAYADO ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(475,NULL,'20101403',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO RAYADO ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(476,NULL,'20101404',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(477,NULL,'20101405',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(478,NULL,'20101406',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','GRANO DE ORO SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(479,NULL,'20101407',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MONTESOL SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(480,NULL,'20101408',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(481,NULL,'20101409',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON TALLARIN (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(482,NULL,'20101410',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DON VICTORIO SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(483,NULL,'20101411',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(484,NULL,'20101412',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TORNILLO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(485,NULL,'20101413',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(486,NULL,'20101414',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(487,NULL,'20101415',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(488,NULL,'20101416',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO MEDIANO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(489,NULL,'20101417',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(490,NULL,'20101418',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MUNICION SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(491,NULL,'20101419',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PEPA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(492,NULL,'20101420',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ARO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(493,NULL,'20101421',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(494,NULL,'20101422',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO EXTRAGRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(495,NULL,'20101423',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CAPULLO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(496,NULL,'20101424',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(497,NULL,'20101425',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(498,NULL,'20101426',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CABELLO DE ANGEL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(499,NULL,'20101427',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MINICODO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(500,NULL,'20101428',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(501,NULL,'20101429',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL EXTRA GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(502,NULL,'20101430',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CRESTA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(503,NULL,'20101431',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','COLA DE CHANCHO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(504,NULL,'20101432',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DEDAL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(505,NULL,'20101433',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','RIGATONI SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(506,NULL,'20101434',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TRIPA DELGADA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(507,NULL,'20101500',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CRACKNEL (CAJ)','',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(508,NULL,'20101501',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLATE (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(509,NULL,'20101502',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(510,NULL,'20101503',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO MENTA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(511,NULL,'20101504',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO COCO (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(512,NULL,'20101505',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO ALFAFOR (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(513,NULL,'20101506',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO VAINILLA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(514,NULL,'20101507',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO LUCUMA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(515,NULL,'20101508',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESAVAINILLA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(516,NULL,'20101509',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLUCUMA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(517,NULL,'20101510',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP CHOCOLATE (CAJ)','GALLETA DE 42 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(518,NULL,'20101511',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP NARANJA (CAJ)','GALLETA DE 42 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(519,NULL,'20101512',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TARZAN (CAJ)','GALLETA DE 60 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,80,NULL,NULL,NULL),(520,NULL,'20101513',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION CHOCOLATE (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(521,NULL,'20101514',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION NARANJA (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(522,NULL,'20101515',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION VAINILLA (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(523,NULL,'20101516',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION COCO (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(524,NULL,'20101517',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS MORA (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(525,NULL,'20101518',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCOLATE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(526,NULL,'20101519',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCONIEVE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(527,NULL,'20101520',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS DOBLE CHOCOLATE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(528,NULL,'20101521',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS TOFFE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(529,NULL,'20101522',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS FRESA (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(530,NULL,'20101523',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS BLACKISH (CAJ)','GALLETA DE 38 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(531,NULL,'20101524',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA FAMILIAR (CAJ)','PAQUETE DE 138 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(532,NULL,'20101525',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA (CAJ)','GALLETA DE 28 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(533,NULL,'20101526',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS MARGARITA (CAJ)','GALLETA DE 55 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,36,NULL,NULL,NULL),(534,NULL,'20101527',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS LLANTITAS (CAJ)','GALLETA DE 44 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(535,NULL,'20101528',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA FAMILIAR (CAJ)','PAQUETE DE 115 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(536,NULL,'20101529',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','GALLETA DE 27 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(537,NULL,'20101530',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(538,NULL,'20101531',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(539,NULL,'20101532',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS FLORECITAS (CAJ)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,90,NULL,NULL,NULL),(540,NULL,'20101533',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(541,NULL,'20101534',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESAVAINILLA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(542,NULL,'20101535',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. VAINILLA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(543,NULL,'20101536',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. CHOCOLATE (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(544,NULL,'20101537',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA ROYAL (CAJ)','WAFFER DE 30 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(545,NULL,'20101538',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS DIVAS (CAJ)','WAFFER DE 34 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(546,NULL,'20101539',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOCOBUN (CAJ)','WAFFER DE 33.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(547,NULL,'20101540',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','BISCOCHO CHOCMAN (CAJ)','WAFFER DE 30 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,84,NULL,NULL,NULL),(548,NULL,'20101541',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NIK GR (CAJ)','WAFFER DE 77 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,36,NULL,NULL,NULL),(549,NULL,'20101542',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','CAÃ‘ONAZO (CAJ)','BARRA DE 25 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,192,NULL,NULL,NULL),(550,NULL,'20101600',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 525 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(551,NULL,'20101601',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 1.3 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(552,NULL,'20101602',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 2.02 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(553,NULL,'20101603',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 330 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(554,NULL,'20101604',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA VILLA KOLA (PQT)','BOTELLA DE 420 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(555,NULL,'20101605',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','SPORADE (PQT)','BOTELLA DE 475 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(556,NULL,'20101606',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','PAWORADE (PQT)','BOTELLA DE 473 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(557,NULL,'20101607',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL CIELO (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(558,NULL,'20101608',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL GAVIOTA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(559,NULL,'20101609',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 410 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(560,NULL,'20101610',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(561,NULL,'20101611',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 2.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(562,NULL,'20101612',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(563,NULL,'20101613',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 410 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(564,NULL,'20101614',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(565,NULL,'20101615',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 2.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(566,NULL,'20101616',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(567,NULL,'20101617',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(568,NULL,'20101618',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(569,NULL,'20101619',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(570,NULL,'20101620',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(571,NULL,'20101621',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GUARANA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(572,NULL,'20101622',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(573,NULL,'20101623',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(574,NULL,'20101700',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','GELATINA EMBASADA (BOL)','BOLSA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(575,NULL,'20101701',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','GELATINA SUELTA (BOL)','BOLSA DE 5 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(576,NULL,'20101702',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','FLAN EMBASADO (BOL)','BOLSA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(577,NULL,'20101703',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA DURAZNO (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(578,NULL,'20101704',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA PIÃ‘A (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(579,NULL,'20101705',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA MORADA (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(580,NULL,'20101800',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','HARINA PREPARADA BLANCA FLOR (PQT)','BOLSA DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(581,NULL,'20101801',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','BLANCA NIEVE ESPECIAL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(582,NULL,'20101802',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','FAVORITA HARINA (PQT)','BOLSA DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(583,NULL,'20101900',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA AZUL SAPOLIO (CAJ)','FRASCO DE 360 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(584,NULL,'20101901',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA ROJO SAPOLIO (CAJ)','FRASCO DE 360 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(585,NULL,'20102000',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONTESOL (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(586,NULL,'20102001',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA LIMÃ“N (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(587,NULL,'20102002',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA CLÃSICO (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(588,NULL,'20102003',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA BEBE (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(589,NULL,'20102004',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO LIMON (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(590,NULL,'20102005',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO BLANCO (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(591,NULL,'20102006',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLIVAR BLANCO (CAJ)','BARRA DE 260 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(592,NULL,'20102007',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLÃVAR LIMÃ“N (CAJ)','BARRA DE 260 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(593,NULL,'20102008',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON POPEYE (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(594,NULL,'20102009',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SPA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(595,NULL,'20102010',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON CAMAY (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(596,NULL,'20102011',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA CH (CAJ)','BARRA DE 85 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,36,NULL,NULL,NULL),(597,NULL,'20102012',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA GR (CAJ)','BARRA DE 175 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,36,NULL,NULL,NULL),(598,NULL,'20102013',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON JOHNSONS (CAJ)','BARRA DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(599,NULL,'20102014',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON LUX (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(600,NULL,'20102015',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONCLERS (CAJ)','BARRA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(601,NULL,'20102016',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NEKO (CAJ)','BARRA DE 75 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(602,NULL,'20102017',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NIVEA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(603,NULL,'20102018',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PALMOLIVE (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(604,NULL,'20102019',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PROTEX (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(605,NULL,'20102020',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON REXONA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,40,NULL,NULL,NULL),(606,NULL,'20102021',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SURTIDO (PQT)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(607,NULL,'20102100',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MUÃ‘EQUITA AZUL (CAJ)','DISPLAY DE 72 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,1728,NULL,NULL,NULL),(608,NULL,'20102101',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','ESPONJA VERDE (CAJ)','DISPLAY DE 15 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,180,NULL,NULL,NULL),(609,NULL,'20102102',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MAQUINITA ESPONJA (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(610,NULL,'20102103',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY FRASCO (CAJ)','FRASCO DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(611,NULL,'20102104',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY TIRA (CAJ)','SACHET DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(612,NULL,'20102105',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','SUAVITEL TIRA (CAJ)','SACHET DE 80 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(613,NULL,'20102200',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN CHICO (CAJ)','TAPER DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(614,NULL,'20102201',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(615,NULL,'20102202',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 330 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(616,NULL,'20102203',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 600 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(617,NULL,'20102204',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(618,NULL,'20102205',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS LAVA  (CAJ)','TAPER DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(619,NULL,'20102206',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO MELLIZO (CAJ)','TAPER DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(620,NULL,'20102207',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','TAPER DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(621,NULL,'20102208',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','TAPER DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(622,NULL,'20102300',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TARRO DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(623,NULL,'20102301',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(624,NULL,'20102302',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR POLVO (CAJ)','SOBRE DE 120 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(625,NULL,'20102303',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR LATA (CAJ)','LATA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(626,NULL,'20102304',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA POLVO (CAJ)','SOBRE DE 120 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(627,NULL,'20102305',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(628,NULL,'20102306',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(629,NULL,'20102307',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(630,NULL,'20102308',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(631,NULL,'20102309',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(632,NULL,'20102310',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(633,NULL,'20102311',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA DESLACTOSADA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(634,NULL,'20102312',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE SOY VIDA (TABL)','TARRO DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(635,NULL,'20102313',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT ROJO LIGHT (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(636,NULL,'20102314',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AMARILLO NIÃ‘OS (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(637,NULL,'20102315',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AZUL (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(638,NULL,'20102316',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CELESTE DESLACTOSADA (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(639,NULL,'20102317',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CHOCOLATADA (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(640,NULL,'20102318',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT VERDE CALCIO (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(641,NULL,'20102319',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','TARRO DE 397 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(642,NULL,'20102320',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','TARRO DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(643,NULL,'20102400',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','BOTELLA DE 287.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(644,NULL,'20102401',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','BOTELLA DE 572 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(645,NULL,'20102402',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX ROPA COLOR (PQT)','BOTELLA DE 230 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(646,NULL,'20102403',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA (PQT)','BOTELLA DE 270 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(647,NULL,'20102404',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA ROPA COLOR (PQT)','BOTELLA DE 230 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(648,NULL,'20102500',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','BARRA DE 45 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(649,NULL,'20102501',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(650,NULL,'20102502',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','BARRA DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(651,NULL,'20102503',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','POTE DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(652,NULL,'20102504',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMELADA GLORIA (CAJ)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,120,NULL,NULL,NULL),(653,NULL,'20102505',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMALA FANNY (CAJ)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(654,NULL,'20102506',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTECA FAMOSA (CAJ)','CAJA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,10,NULL,NULL,NULL),(655,NULL,'20102507',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','LEVADURA FLESHMAN','PAQUETE DE 125 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(656,NULL,'20102600',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','SACHET DE 10 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,240,NULL,NULL,NULL),(657,NULL,'20102601',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(658,NULL,'20102602',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(659,NULL,'20102603',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','SACHET DE 8 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,240,NULL,NULL,NULL),(660,NULL,'20102604',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','HUANCAINA ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(661,NULL,'20102605',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MACBEL BALDE MAYONESA (BALDE)','BALDE DE 4 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(662,NULL,'20102700',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','SAL DE ANDREWS (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,2400,NULL,NULL,NULL),(663,NULL,'20102701',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','MEJORAL (TABL)','TABLETA DE 530 MG',NULL,NULL,NULL,NULL,NULL,NULL,1,200,NULL,NULL,NULL),(664,NULL,'20102800',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','LENTEJA BB (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(665,NULL,'20102801',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PAPA SECA (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(666,NULL,'20102802',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','SOYA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(667,NULL,'20102803',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CASTILLA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(668,NULL,'20102804',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','GARBANZO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(669,NULL,'20102805',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','60 DIAS (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(670,NULL,'20102806',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PALLAR GRANDE (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(671,NULL,'20102807',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PALLAR CHICO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(672,NULL,'20102808',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','FREJOL CABALLERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(673,NULL,'20102809',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MANI (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(674,NULL,'20102810',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','POP CORN (BOL)','BOLSA DE 22.68 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(675,NULL,'20102811',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA VERDE (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(676,NULL,'20102812',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','LENTEJON (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(677,NULL,'20102813',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','SEMOLA (SACO)','SACO DE 25 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(678,NULL,'20102814',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CHUÃ‘O (SACO)','SACO DE 25 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(679,NULL,'20102815',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA AMARILLA (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(680,NULL,'20102816',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON ENTERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(681,NULL,'20102817',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','HABAS PARTIDA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(682,NULL,'20102818',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CANARIO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(683,NULL,'20102819',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON PARTIDO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(684,NULL,'20102820',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CEBADA SIN TOSTAR (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(685,NULL,'20102821',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA ENTERA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(686,NULL,'20102822',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MACHICA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(687,NULL,'20102823',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PANAMITO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(688,NULL,'20102824',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CREMA DE ALVERJA (BOL)','BOLSA DE 5 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(689,NULL,'20102825',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CEBADA TOSTADA (SACO)','SACO DE 30 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(690,NULL,'20102826',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON ENTERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(691,NULL,'20102827',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ CANCHA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(692,NULL,'20102828',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','TRIGO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(693,NULL,'20102829',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ PELADO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(694,NULL,'20102830',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','HABAS ENTERA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(695,NULL,'20102831',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','QUINUA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(696,NULL,'20102832',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ ENTERO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(697,NULL,'20102833',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ PARTIDO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(698,NULL,'20102834',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ MOLIDO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(699,NULL,'20102900',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (PQT)','SACHET DE 150 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(700,NULL,'20102901',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZON (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(701,NULL,'20102902',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA PIÃ‘A (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(702,NULL,'20102903',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA MANGO (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(703,NULL,'20102904',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZNO (CAJ)','TETRAPACK DE 145 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(704,NULL,'20102905',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PURA VIDA DURAZNO (CAJ)','TETRAPACK DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(705,NULL,'20102906',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(706,NULL,'20102907',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','TETRAPACK DE 330 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(707,NULL,'20102908',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULPIN (CAJ)','TETRAPACK DE 145 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(708,NULL,'20102909',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (CAJ)','TETRAPACK DE 180 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(709,NULL,'20103000',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE NARANJA (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(710,NULL,'20103001',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE VERDE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(711,NULL,'20103002',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO NARANJA PAPEL DOBLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(712,NULL,'20103003',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO ROJO PAPEL SIMPLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(713,NULL,'20103004',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SERVILLETA PRESTIGIO (BOL)','',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(714,NULL,'20103005',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PARACAS PAPEL DOBLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(715,NULL,'20103100',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE TIRA (CAJ)','TIRA DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(716,NULL,'20103101',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE (CAJ)','DISPLAY DE 14 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,84,NULL,NULL,NULL),(717,NULL,'20103102',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO KOLINOS (CAJ)','DISPLAY DE 14 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,84,NULL,NULL,NULL),(718,NULL,'20103103',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO CORRIENTE (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(719,NULL,'20103104',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE TRIPLE ACCIÃ“N (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(720,NULL,'20103105',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(721,NULL,'20103106',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(722,NULL,'20103107',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE HERBAL (CAJ)','CAJA DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(723,NULL,'20103108',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(724,NULL,'20103109',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(725,NULL,'20103110',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTITO TUTTI FRUTTI (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(726,NULL,'20103111',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(727,NULL,'20103112',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(728,NULL,'20103113',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(729,NULL,'20103114',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(730,NULL,'20103115',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS HERBAL (CAJ)','CAJA DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(731,NULL,'20103116',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(732,NULL,'20103117',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS FRESH (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,72,NULL,NULL,NULL),(733,NULL,'20103118',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,144,NULL,NULL,NULL),(734,NULL,'20103200',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P MEGA (POLI)','PAQUETE DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(735,NULL,'20103201',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M MEGA (POLI)','PAQUETE DE 72 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(736,NULL,'20103202',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G MEGA (POLI)','PAQUETE DE 64 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(737,NULL,'20103203',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG MEGA (POLI)','PAQUETE DE 52 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(738,NULL,'20103204',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XXG MEGA (POLI)','PAQUETE DE 48 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,2,NULL,NULL,NULL),(739,NULL,'20103205',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P JUMBO (POLI)','PAQUETE DE 28 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(740,NULL,'20103206',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M JUMBO (POLI)','PAQUETE DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(741,NULL,'20103207',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(742,NULL,'20103208',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG JUMBO (POLI)','PAQUETE DE 16 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(743,NULL,'20103209',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P MEGA (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,28,NULL,NULL,NULL),(744,NULL,'20103210',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(745,NULL,'20103211',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(746,NULL,'20103212',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(747,NULL,'20103213',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XXG MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(748,NULL,'20103214',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P JUMBO (POLI)','PAQUETE DE 28 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(749,NULL,'20103215',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M JUMBO (POLI)','PAQUETE DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(750,NULL,'20103216',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(751,NULL,'20103217',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG JUMBO (POLI)','PAQUETE DE 16 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(752,NULL,'20103218',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPER  RN  JUMBO (CAJ)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(753,NULL,'20103219',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES RN JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,10,NULL,NULL,NULL),(754,NULL,'20103220',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','CELEX (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(755,NULL,'20103221',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(756,NULL,'20103222',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX DISPENSADOR (PQT)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(757,NULL,'20103223',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(758,NULL,'20103224',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS DISPENSADOR (PQT)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(759,NULL,'20103225',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS (CAJ)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(760,NULL,'20103226',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS DISPENSADOR (CAJ)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(761,NULL,'20103300',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS VARTA  2A (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(762,NULL,'20103301',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC VERDE (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(763,NULL,'20103302',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC NEGRO (CAJ)','DISPLAY DE 6 PARES',NULL,NULL,NULL,NULL,NULL,NULL,1,20,NULL,NULL,NULL),(764,NULL,'20103303',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC 2A (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(765,NULL,'20103304',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC  3A (CAJ)','DISPLAY DE 20 PARES',NULL,NULL,NULL,NULL,NULL,NULL,1,10,NULL,NULL,NULL),(766,NULL,'20103400',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MORADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(767,NULL,'20103401',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MARACUYA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(768,NULL,'20103402',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO NARANJA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(769,NULL,'20103403',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO DURAZNO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(770,NULL,'20103404',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO PIÃ‘A (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(771,NULL,'20103405',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO LIMONADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(772,NULL,'20103406',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO FRESA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,96,NULL,NULL,NULL),(773,NULL,'20103407',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MORADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(774,NULL,'20103408',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL DURAZNO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(775,NULL,'20103409',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MARACUYA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(776,NULL,'20103410',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL FRESA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(777,NULL,'20103411',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL NARANJA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(778,NULL,'20103412',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL PIÃ‘A (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(779,NULL,'20103413',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL SURTIDO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,4,NULL,NULL,NULL),(780,NULL,'20103414',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MORADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(781,NULL,'20103415',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO FRESA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(782,NULL,'20103416',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MARACUYA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(783,NULL,'20103417',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO NARANJA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(784,NULL,'20103418',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO DURAZNO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(785,NULL,'20103419',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO PIÃ‘A (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,216,NULL,NULL,NULL),(786,NULL,'20103500',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(787,NULL,'20103501',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,50,NULL,NULL,NULL),(788,NULL,'20103502',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL MESA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(789,NULL,'20103503',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(790,NULL,'20103504',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,50,NULL,NULL,NULL),(791,NULL,'20103505',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL MESA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(792,NULL,'20103506',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORTEÃ‘ITA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(793,NULL,'20103600',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','ANUA (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(794,NULL,'20103601',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BALLERINA C/OFERTA (CAJ)','SACHET DE 60 ML x 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,48,NULL,NULL,NULL),(795,NULL,'20103602',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BELLA FRASCO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(796,NULL,'20103603',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL REACONDICIONADOR (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,960,NULL,NULL,NULL),(797,NULL,'20103604',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL SHAMPOO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(798,NULL,'20103605',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS AZUL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(799,NULL,'20103606',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ROSADO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(800,NULL,'20103607',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MARRON (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(801,NULL,'20103608',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ALOE (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(802,NULL,'20103609',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MENTHOL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(803,NULL,'20103610',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS RELAX (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(804,NULL,'20103611',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON ROSADO (CAJ)','SACHET DE 18 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,300,NULL,NULL,NULL),(805,NULL,'20103612',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON AZUL (CAJ)','SACHET DE 18 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,300,NULL,NULL,NULL),(806,NULL,'20103613',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH AZUL (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(807,NULL,'20103614',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ROSADO (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(808,NULL,'20103615',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MARRON (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(809,NULL,'20103616',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MENTHOL (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(810,NULL,'20103617',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ALOE (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(811,NULL,'20103618',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH LIMON (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(812,NULL,'20103619',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH FOR MEN (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(813,NULL,'20103620',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR AZUL (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(814,NULL,'20103621',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ROSADO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(815,NULL,'20103622',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MARRON (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(816,NULL,'20103623',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MENTHOL (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(817,NULL,'20103624',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ALOE (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(818,NULL,'20103625',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR LIMON (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(819,NULL,'20103626',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR FOR MEN (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(820,NULL,'20103627',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR LISO Y SEDOSO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(821,NULL,'20103628',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CONTROL CAIDA (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(822,NULL,'20103629',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CUIDIDO CLASICO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(823,NULL,'20103630',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR RIZOS DEFINIDOS (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(824,NULL,'20103631',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR BRILLO EXTREMO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(825,NULL,'20103632',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CONTROL CAIDA (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(826,NULL,'20103633',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE RIZOS DEFINIDOS (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(827,NULL,'20103634',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE LISO Y SEDOSO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(828,NULL,'20103635',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FUSION NATURALESA (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(829,NULL,'20103636',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CREMA PARA PEINAR (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(830,NULL,'20103637',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CUIDADO CLASICO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(831,NULL,'20103638',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS TIRA MENTHOL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,576,NULL,NULL,NULL),(832,NULL,'20103639',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS FRASCO GR (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(833,NULL,'20103640',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(834,NULL,'20103641',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(835,NULL,'20103642',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,480,NULL,NULL,NULL),(836,NULL,'20103643',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO TIRA (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(837,NULL,'20103644',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS TIRA (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,288,NULL,NULL,NULL),(838,NULL,'20103645',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(839,NULL,'20103646',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(840,NULL,'20103647',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(841,NULL,'20103648',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGO FRASCO BLACK (CAJ)','FRASCO DE 250 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(842,NULL,'20103649',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGGO TIRA (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,360,NULL,NULL,NULL),(843,NULL,'20103700',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(844,NULL,'20103701',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(845,NULL,'20103702',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(846,NULL,'20103703',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,1200,NULL,NULL,NULL),(847,NULL,'20103704',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(848,NULL,'20103705',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(849,NULL,'20103706',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(850,NULL,'20103707',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,800,NULL,NULL,NULL),(851,NULL,'20103800',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,6,NULL,NULL,NULL),(852,NULL,'20103801',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,7,NULL,NULL,NULL),(853,NULL,'20103802',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCMA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,8,NULL,NULL,NULL),(854,NULL,'20103803',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,9,NULL,NULL,NULL),(855,NULL,'20103804',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA PIÃ‘A (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,10,NULL,NULL,NULL),(856,NULL,'20103805',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA SAUCO (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,11,NULL,NULL,NULL),(857,NULL,'20103806',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,12,NULL,NULL,NULL),(858,NULL,'20103807',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA MANZANA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,13,NULL,NULL,NULL),(859,NULL,'20103808',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA TUTTI FRUTTI (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,1,14,NULL,NULL,NULL),(860,NULL,'20103809',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,15,NULL,NULL,NULL),(861,NULL,'20103810',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,16,NULL,NULL,NULL),(862,NULL,'20103811',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCUMA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,17,NULL,NULL,NULL),(863,NULL,'20103812',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,18,NULL,NULL,NULL),(864,NULL,'20103813',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,19,NULL,NULL,NULL),(865,NULL,'20103814',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET GLORIA (PQT)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,25,NULL,NULL,NULL),(866,NULL,'20103815',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT  GLORIA BEBE (PQT)','POMO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(867,NULL,'20103816',NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET PURA VIDA (PQT)','SACHET DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,1,24,NULL,NULL,NULL),(868,NULL,'10000',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (PQT)','PAQUETE DE 24 BOTELLAS (200 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(869,NULL,'10001',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (PQT)','BOTELLA DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(870,NULL,'10002',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','CAJA DE 24 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(871,NULL,'10003',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(872,NULL,'10004',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','CAJA DE 12 BOTELLAS (900 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(873,NULL,'10005',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BOTELLAS DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(874,NULL,'10006',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','CAJA DE 6 BIDONES (2 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(875,NULL,'10007',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BIDONES DE 2 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(876,NULL,'10008',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','CAJA DE 4 BIDONES (5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(877,NULL,'10009',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (CAJ)','BIDONES DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(878,NULL,'10010',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (LATA)','LATA DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(879,NULL,'10011',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE MONTESOL (BALDE)','BALDE DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(880,NULL,'10012',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','PAQUETE DE 12 BOTELLAS (450)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(881,NULL,'10013',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','BOTELLA DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(882,NULL,'10014',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','PAQUETE DE 12 BOTELLAS (900)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(883,NULL,'10015',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PAMEROLA (PQT)','BOTELLAS DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(884,NULL,'10016',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(885,NULL,'10017',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (CAJ)','BOTELLAS DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(886,NULL,'10018',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','CAJA DE 24 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(887,NULL,'10019',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(888,NULL,'10020',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(889,NULL,'10021',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(890,NULL,'10022',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (CAJ)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(891,NULL,'10023',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (LATA)','LATA DE 18 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(892,NULL,'10024',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CIL (BALDE)','BALDE DE 20 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(893,NULL,'10025',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR CLASICO (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(894,NULL,'10026',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR CLASICO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(895,NULL,'10027',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR (CAJ)','CAJA DE 4 BIDONES (5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(896,NULL,'10028',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR (CAJ)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(897,NULL,'10029',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR PREMIUM (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(898,NULL,'10030',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE PRIMOR PREMIUM (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(899,NULL,'10031',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(900,NULL,'10032',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(901,NULL,'10033',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (BIDON)','CAJA DE 4 BIDONES (5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(902,NULL,'10034',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE CAPRI (BIDON)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(903,NULL,'10035',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (BIDON)','CAJA DE 4 BIDONES (5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(904,NULL,'10036',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE COCINERO (BIDON)','BIDON DE 5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(905,NULL,'10037',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','PAQUETE DE 24 BOTELLAS (450 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(906,NULL,'10038',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','BOTELLA DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(907,NULL,'10039',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','PAQUETE DE 12 BOTELLAS (900 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(908,NULL,'10040',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,1,0,NULL,'IGV','ACEITE TONDERO (PQT)','BOTELLA DE 900 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(909,NULL,'10041',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA AMARILLA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(910,NULL,'10042',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA LILA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(911,NULL,'10043',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA NARANJA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(912,NULL,'10044',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CASERITA VERDE (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(913,NULL,'10045',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(914,NULL,'10046',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO NEGRO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(915,NULL,'10047',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PEDRITO AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(916,NULL,'10048',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ZUZUKI AZUL (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(917,NULL,'10049',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ZUZUKI VERDE (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(918,NULL,'10050',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON EXTRA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(919,NULL,'10051',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON SUPERIOR (SACO)','SACO DE 49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(920,NULL,'10052',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DRAGON DESCARTE (SACO)','SACO DE 49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(921,NULL,'10053',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ SAMAN (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(922,NULL,'10054',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ GOLDEN AZUL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(923,NULL,'10055',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ GOLDEN ROJO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(924,NULL,'10056',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ COSTEÃ‘O (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(925,NULL,'10057',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ DON ELADIO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(926,NULL,'10058',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ PACASMAYO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(927,NULL,'10059',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CHOLO SWING (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(928,NULL,'10060',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ CHACRITA (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(929,NULL,'10061',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ JAIRITO (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(930,NULL,'10062',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ OLIMPICO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(931,NULL,'10063',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ ARROSAL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(932,NULL,'10064',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ TRIPLE B (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(933,NULL,'10065',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ OSITO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(934,NULL,'10066',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ BUEN SABOR (SACO)','SACO DE 49 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(935,NULL,'10067',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ VERDI (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(936,NULL,'10068',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,1,0,NULL,'IGV','ARROZ SUREÃ‘O (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(937,NULL,'10069',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ARROCILLO CREMOSITO X 3/4 (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(938,NULL,'10070',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ARROCILLO BLANCO X 3/4 (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(939,NULL,'10071',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR FILETE (CAJA)','CAJA DE 48 LATAS (184 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(940,NULL,'10072',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR FILETE (CAJA)','LATA DE 184 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(941,NULL,'10073',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(942,NULL,'10074',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(943,NULL,'10075',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR PORTOLITA (CAJA)','CAJA DE 50 LATAS (155 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(944,NULL,'10076',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(945,NULL,'10077',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED FAMILIAR (CAJA)','CAJA DE 24 LATAS (425 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(946,NULL,'10078',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DISAMAR GRATED FAMILIAR (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(947,NULL,'10079',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER GRATED (CAJA)','CAJA DE 48 LATAS (150 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(948,NULL,'10080',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER GRATED (CAJA)','LATA DE 150 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(949,NULL,'10081',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN FLORIDA FILETE EN TROZO (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(950,NULL,'10082',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN FLORIDA FILETE EN TROZO (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(951,NULL,'10083',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN LENNYSOL FILETE (CAJA)','CAJA DE 48 LATAS (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(952,NULL,'10084',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN LENNYSOL FILETE (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(953,NULL,'10085',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI FILETE PREMIUM (CAJA)','CAJA DE 48 LATAS (198 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(954,NULL,'10086',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI FILETE PREMIUM (CAJA)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(955,NULL,'10087',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI GRATED (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(956,NULL,'10088',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(957,NULL,'10089',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI PORTOLITA (CAJA)','CAJA DE 50 LATAS (155 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(958,NULL,'10090',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(959,NULL,'10091',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI SALMÃ“N (CAJA)','CAJA DE 24 LATAS (425 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(960,NULL,'10092',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI SALMÃ“N (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(961,NULL,'10093',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI CHATA PORTOLA (CAJA)','CAJA DE 24 LATAS (425 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(962,NULL,'10094',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN PEPACHI CHATA PORTOLA (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(963,NULL,'10095',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC FILETE (CAJA)','CAJA DE 48 LATAS (198 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(964,NULL,'10096',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC FILETE (CAJA)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(965,NULL,'10097',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(966,NULL,'10098',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(967,NULL,'10099',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC PORTOLITA (CAJA)','CAJA DE 50 LATAS (155 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(968,NULL,'10100',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC PORTOLITA (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(969,NULL,'10101',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED FAMILIAR (CAJA)','CAJA DE 24 LATAS (425 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(970,NULL,'10102',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC GRATED FAMILIAR (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(971,NULL,'10103',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC SALMÃ“N  TOL (CAJA)','CAJA DE 24 LATAS (425 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(972,NULL,'10104',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RC SALMÃ“N  TOL (CAJA)','LATA DE 425 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(973,NULL,'10105',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN ROSAIMAR GRATED (CAJA)','CAJA DE 48 LATAS (145 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(974,NULL,'10106',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN ROSAIMAR GRATED (CAJA)','LATA DE 145 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(975,NULL,'10107',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN CHINBOTANA GRATED (CAJA)','CAJA DE 48 LATAS (155 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(976,NULL,'10108',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN CHINBOTANA GRATED (CAJA)','LATA DE 155 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(977,NULL,'10109',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RICOFRES GRATED (CAJA)','CAJA DE 48 LATAS (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(978,NULL,'10110',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN RICOFRES GRATED (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(979,NULL,'10111',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN MONTEALTO FILETE (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(980,NULL,'10112',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN MONTEALTO FILETE (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(981,NULL,'10113',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN COMPASS FILETE (CAJA)','CAJA DE 48 LATAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(982,NULL,'10114',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN COMPASS FILETE (CAJA)','LATA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(983,NULL,'10115',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER FILETE (CAJA)','CAJA DE 48 LATAS (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(984,NULL,'10116',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,1,0,NULL,'IGV','ATUN DOÃ‘A ESTHER FILETE (CAJA)','LATA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(985,NULL,'10117',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.1.00 (BOL)','BOLSA DE 24 SOBRES (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(986,NULL,'10118',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.1.00 (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(987,NULL,'10119',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.0.50 (BOL)','BOLSA DE 48 SOBRES (80 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(988,NULL,'10120',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS DE S/.0.50 (BOL)','SOBRE DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(989,NULL,'10121',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','AVENA OSITOS SUELTO (BOL)','BOLSA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(990,NULL,'10122',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MACAVENA  TRES OSITOS (BOL)','BOLSA DE 12 SOBRES (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(991,NULL,'10123',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MACAVENA  TRES OSITOS (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(992,NULL,'10124',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','QUINUAVENA TRES OSITOS (BOL)','BOLSA DE 12 SOBRES (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(993,NULL,'10125',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','QUINUAVENA TRES OSITOS (BOL)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(994,NULL,'10126',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','HOJUELAS  DE MAIZ (BOL)','BOLSA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(995,NULL,'10127',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','COPIX FRESA CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(996,NULL,'10128',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','COPIX FRESA CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (130 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(997,NULL,'10129',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','CHOCK CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(998,NULL,'10130',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','CHOCK CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (140 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(999,NULL,'10131',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRUTT CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1000,NULL,'10132',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRUTT CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (140 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1001,NULL,'10133',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MEL CEREAL ANGEL (CAJ)','BOLSA DE 140 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1002,NULL,'10134',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MEL CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (140 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1003,NULL,'10135',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MAX CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1004,NULL,'10136',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','MAX CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (130 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1005,NULL,'10137',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','REJIX CEREAL ANGEL (CAJ)','BOLSA DE 130 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1006,NULL,'10138',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','REJIX CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (130 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1007,NULL,'10139',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','ZUCK CEREAL ANGEL (CAJ)','BOLSA DE 150 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1008,NULL,'10140',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','ZUCK CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (150 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1009,NULL,'10141',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRESIA ALMOHADA CEREAL ANGEL (CAJ)','BOLSA DE 110 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1010,NULL,'10142',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,1,0,NULL,'IGV','FRESIA ALMOHADA CEREAL ANGEL (CAJ)','CAJA DE 30 BOLSA (110 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1011,NULL,'10143',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,1,0,NULL,'IGV','AZUCAR RUBIA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1012,NULL,'10144',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,1,0,NULL,'IGV','AZUCAR BLANCA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1013,NULL,'10145',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI GRANDE NEGRO (CAJ)','CAJA DE 12 DISPLAY (88 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1014,NULL,'10146',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI GRANDE NEGRO (CAJ)','DISPLAY DE 12 LATAS (88 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1015,NULL,'10147',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI GRANDE NEGRO (CAJ)','LATA DE 88 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1016,NULL,'10148',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI CHICO NEGRO (CAJ)','CAJA DE 24 DISPLAY (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1017,NULL,'10149',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI CHICO NEGRO (CAJ)','DISPLAY DE 24 LATAS (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1018,NULL,'10150',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN KIWI CHICO NEGRO (CAJ)','LATA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1019,NULL,'10151',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI GRANDE MARRON (CAJ)','CAJA DE 12 DISPLAY (88 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1020,NULL,'10152',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI GRANDE MARRON (CAJ)','DISPLAY DE 12 LATAS (88 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1021,NULL,'10153',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI GRANDE MARRON (CAJ)','LATA DE 88 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1022,NULL,'10154',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI CHICO MARRON (CAJ)','CAJA DE 24 DISPLAY (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1023,NULL,'10155',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI CHICO MARRON (CAJ)','DISPLAY DE 24 LATAS (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1024,NULL,'10156',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETÃšN KIWI CHICO MARRON (CAJ)','LATA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1025,NULL,'10157',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO GRANDE NEGRO (CAJ)','CAJA DE 12 DISPLAY (100 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1026,NULL,'10158',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO GRANDE NEGRO (CAJ)','DISPLAY DE 12 POMOS (100 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1027,NULL,'10159',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO GRANDE NEGRO (CAJ)','LATA DE 100 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1028,NULL,'10160',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO CHICO NEGRO (CAJ)','CAJA DE 24 DISPLAY (50 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1029,NULL,'10161',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO CHICO NEGRO (CAJ)','DISPLAY DE 24 POMOS (50 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1030,NULL,'10162',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,1,0,NULL,'IGV','BETUN SANTIAGO CHICO NEGRO (CAJ)','LATA DE 50 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1031,NULL,'10163',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (PQT)','PAQUETE DE 8 DISPLAY (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1032,NULL,'10164',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (PQT)','DISPLAY DE 50 SOBRES (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1033,NULL,'10165',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (PQT)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1034,NULL,'10166',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','CAJA DE 12 JARRAS (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1035,NULL,'10167',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','JARRA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1036,NULL,'10168',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','CAJA DE 48 OLLITAS (50 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1037,NULL,'10169',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ALTOMAYO (CAJ)','OLLITA DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1038,NULL,'10170',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO CHICO (CAJ)','CAJA DE 48 LATAS (58 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1039,NULL,'10171',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO CHICO (CAJ)','LATA DE 58 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1040,NULL,'10172',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO GRANDE (CAJ)','CAJA DE 24 LATAS (198 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1041,NULL,'10173',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE ECCO GRANDE (CAJ)','LATA DE 198 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1042,NULL,'10174',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONACO (PQT)','PAQUETE DE 8 DISPLAY (8 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1043,NULL,'10175',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONACO (PQT)','DISPLAY DE 50 SOBRES  (8 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1044,NULL,'10176',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONACO (PQT)','SOBRE DE 8 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1045,NULL,'10177',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','CAJA DE 4 DISPLAY (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1046,NULL,'10178',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','DISPLAY DE 50 SOBRES  (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1047,NULL,'10179',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1048,NULL,'10180',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','CAJA DE 12 LATAS (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1049,NULL,'10181',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE MONTERREY (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1050,NULL,'10182',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (PQT)','PAQUETE DE 8 DISPLAY (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1051,NULL,'10183',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (PQT)','DISPLAY DE 50 SOBRES  (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1052,NULL,'10184',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (PQT)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1053,NULL,'10185',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE TIRA (CAJ)','CAJA DE 10 TIRAS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1054,NULL,'10186',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE TIRA (CAJ)','TIRA DE 16 SOBRES (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1055,NULL,'10187',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE TIRA (CAJ)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1056,NULL,'10188',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (CAJ)','CAJA DE 12 LATAS (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1057,NULL,'10189',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE NESCAFE (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1058,NULL,'10190',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (PQT)','PAQUETE DE 8 DISPLAY (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1059,NULL,'10191',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (PQT)','DISPLAY DE 50 SOBRES (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1060,NULL,'10192',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (PQT)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1061,NULL,'10193',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (CAJ)','CAJA DE 12 LATAS (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1062,NULL,'10194',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,1,0,NULL,'IGV','CAFE KIRMA (CAJ)','LATA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1063,NULL,'10195',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO YOGURT (CAJ)','CAJA DE 20 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1064,NULL,'10196',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO YOGURT (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1065,NULL,'10197',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GAJO LIMON CARAMELO (CAJ)','CAJA DE 16 BOLSAS (150 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1066,NULL,'10198',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GAJO LIMON CARAMELO (CAJ)','BOLSA DE 150 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1067,NULL,'10199',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','BAMBI CARAMELO (CAJ)','CAJA DE 20 BOLSAS (120 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1068,NULL,'10200',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','BAMBI CARAMELO (CAJ)','BOLSA DE 120 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1069,NULL,'10201',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO CHICHA (CAJ)','CAJA DE 20 BOLSAS (115 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1070,NULL,'10202',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO CHICHA (CAJ)','BOLSA DE 115 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1071,NULL,'10203',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP FRESA (CAJ)','CAJA DE 28 BOLSAS (24 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1072,NULL,'10204',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP FRESA (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1073,NULL,'10205',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP YOGURT (CAJ)','CAJA DE 28 BOLSAS (24 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1074,NULL,'10206',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP YOGURT (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1075,NULL,'10207',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP SURTIDO (CAJ)','CAJA DE 28 BOLSAS (24 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1076,NULL,'10208',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','GLOBO POP SURTIDO (CAJ)','BOLSA DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1077,NULL,'10209',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TURROMELO (CAJ)','CAJA DE 20 BOLSAS (75 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1078,NULL,'10210',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TURROMELO (CAJ)','BOLSA DE 75 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1079,NULL,'10211',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','SUAK LOCURA (CAJ)','CAJA DE 16 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1080,NULL,'10212',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','SUAK LOCURA (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1081,NULL,'10213',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO RELLENO DE FRUTA (CAJ)','CAJA DE 20 BOLSAS (60 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1082,NULL,'10214',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO RELLENO DE FRUTA (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1083,NULL,'10215',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','PERITA CARAMELO (CAJ)','CAJA DE 20 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1084,NULL,'10216',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','PERITA CARAMELO (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1085,NULL,'10217',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TOFFE SURTIDOS (CAJ)','CAJA DE 20 BOLSAS (70 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1086,NULL,'10218',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','TOFFE SURTIDOS (CAJ)','BOLSA DE 70 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1087,NULL,'10219',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO FRUTAS ARCOR (CAJ)','CAJA DE 20 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1088,NULL,'10220',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO FRUTAS ARCOR (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1089,NULL,'10221',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS AZUL MENTHOL (CAJ)','CAJA DE 30 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1090,NULL,'10222',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS AZUL MENTHOL (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1091,NULL,'10223',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS ROJO CHERRY (CAJ)','CAJA DE 30 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1092,NULL,'10224',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS ROJO CHERRY (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1093,NULL,'10225',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS NEGRO STRONG (CAJ)','CAJA DE 30 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1094,NULL,'10226',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','HALLS NEGRO STRONG (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1095,NULL,'10227',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO LICOR (CAJ)','CAJA DE 16 BOLSAS (60 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1096,NULL,'10228',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CARAMELO LICOR (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1097,NULL,'10229',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHIQUILINES (CAJ)','CAJA DE 12 BOLSAS (50 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1098,NULL,'10230',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHIQUILINES (CAJ)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1099,NULL,'10231',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHUPETAZO (CAJ)','CAJA DE 6 POTES (60 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1100,NULL,'10232',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,1,0,NULL,'IGV','CHUPETAZO (CAJ)','POTE DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1101,NULL,'10233',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS INCA C/FILTRO (CAJ)','CAJA DE 50 DISPLAY (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1102,NULL,'10234',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS INCA C/FILTRO (CAJ)','DISPLAY DE 10 CAJETILLAS (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1103,NULL,'10235',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS INCA C/FILTRO (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1104,NULL,'10236',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR AZUL (CAJ)','CAJA DE 50 DISPLAY (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1105,NULL,'10237',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR AZUL (CAJ)','DISPLAY DE 10 CAJETILLAS (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1106,NULL,'10238',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR AZUL (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1107,NULL,'10239',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON  CH AZUL (CAJ)','CAJA DE 50 DISPLAY (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1108,NULL,'10240',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON  CH AZUL (CAJ)','DISPLAY DE 20 CAJETILLAS (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1109,NULL,'10241',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON  CH AZUL (CAJ)','CAJETILLA DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1110,NULL,'10242',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR MENTHOL (CAJ)','CAJA DE 50 DISPLAY (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1111,NULL,'10243',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR MENTHOL (CAJ)','DISPLAY DE 10 CAJETILLAS (20 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1112,NULL,'10244',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON GR MENTHOL (CAJ)','CAJETILLA DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1113,NULL,'10245',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON CH MENTHOL (CAJ)','CAJA DE 50 DISPLAY (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1114,NULL,'10246',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON CH MENTHOL (CAJ)','DISPLAY DE 20 CAJETILLAS (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1115,NULL,'10247',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,1,0,NULL,'IGV','CIGARROS HAMILTON CH MENTHOL (CAJ)','CAJETILLA DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1116,NULL,'10248',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','ABUELITA COCOA (CAJ)','CAJA DE 12 DISPLAY (11 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1117,NULL,'10249',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','ABUELITA COCOA (CAJ)','DISPLAY DE 50 SOBRES (11 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1118,NULL,'10250',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','ABUELITA COCOA (CAJ)','SOBRE DE 11 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1119,NULL,'10251',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','NIETA COCOA (CAJ)','CAJA DE 12 DISPLAY (12 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1120,NULL,'10252',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','NIETA COCOA (CAJ)','DISPLAY DE 50 SOBRES (12 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1121,NULL,'10253',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','NIETA COCOA (CAJ)','SOBRE DE 12 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1122,NULL,'10254',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (CAJ)','CAJA DE 12 DISPLAY (11 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1123,NULL,'10255',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (CAJ)','DISPLAY DE 50 SOBRES (11 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1124,NULL,'10256',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (CAJ)','SOBRE DE 11 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1125,NULL,'10257',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (PQT)','PAQUETON DE 5 PAQUETE (50 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1126,NULL,'10258',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (PQT)','PAQUETE DE 12 SOBRES (50 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1127,NULL,'10259',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS COCOA (PQT)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1128,NULL,'10260',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS (PQT)','PAQUETON DE 5 PAQUETE (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1129,NULL,'10261',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS (PQT)','PAQUETE DE 6 SOBRES (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1130,NULL,'10262',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','WINTERS (PQT)','SOBRE DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1131,NULL,'10263',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (CAJ)','CAJA DE 12 DISPLAY (12 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1132,NULL,'10264',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (CAJ)','DISPLAY DE 50 SOBRES (12 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1133,NULL,'10265',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (CAJ)','SOBRE DE 12 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1134,NULL,'10266',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH(BOL)','BOLSA DE 20 SOBRES (50 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1135,NULL,'10267',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH(BOL)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1136,NULL,'10268',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (BOL)','BOLSA DE 30 SOBRES (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1137,NULL,'10269',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA KOTOSH (BOL)','SOBRE DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1138,NULL,'10270',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT (CAJ)','CAJA DE 12 LATAS (400 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1139,NULL,'10271',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT (CAJ)','LATA DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1140,NULL,'10272',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT TIRA (CAJ)','CAJA DE 12 TIRAS (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1141,NULL,'10273',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT TIRA (CAJ)','TIRA DE 15 SOBRES (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1142,NULL,'10274',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA NESQUIT TIRA (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1143,NULL,'10275',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO TIRA (CAJ)','CAJA DE 12 TIRAS (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1144,NULL,'10276',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO TIRA (CAJ)','TIRA DE 12 SOBRES (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1145,NULL,'10277',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO TIRA (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1146,NULL,'10278',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA SOL DEL CUZCO  (CAJ)','CAJA DE 12 DISPLAY (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1147,NULL,'10279',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA SOL DEL CUZCO  (CAJ)','DISPLAY DE 30 SOBRES (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1148,NULL,'10280',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA SOL DEL CUZCO  (CAJ)','SOBRE DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1149,NULL,'10281',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA WINTERS FRASCO (CAJ)','CAJA DE 24 POMOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1150,NULL,'10282',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA WINTERS FRASCO (CAJ)','POMO DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1151,NULL,'10283',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO  (CAJ)','CAJA DE 12 LATAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1152,NULL,'10284',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,1,0,NULL,'IGV','COCOA MILO  (CAJ)','LATA DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1153,NULL,'10285',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 24 PAQUETES (1.8 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1154,NULL,'10286',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 300 SOBRES (1.8 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1155,NULL,'10287',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 1.8 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1156,NULL,'10288',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 24 PAQUETES (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1157,NULL,'10289',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 144 SOBRES (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1158,NULL,'10290',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1159,NULL,'10291',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 24 PAQUETES (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1160,NULL,'10292',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 60 SOBRES (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1161,NULL,'10293',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1162,NULL,'10294',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO NARANJA (SACO)','SACO DE 18 PAQUETES  (14 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1163,NULL,'10295',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO NARANJA (SACO)','PAQUETE DE 54 SOBRES (14 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1164,NULL,'10296',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO NARANJA (SACO)','SOBRE DE 14 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1165,NULL,'10297',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 20 PAQUETES (32 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1166,NULL,'10298',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 20 SOBRES (32 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1167,NULL,'10299',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 32 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1168,NULL,'10300',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 10 PAQUETES (70 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1169,NULL,'10301',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 20 SOBRES (70 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1170,NULL,'10302',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 70 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1171,NULL,'10303',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 8 PAQUETES (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1172,NULL,'10304',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 20 SOBRES (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1173,NULL,'10305',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1174,NULL,'10306',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 12 PAQUETES (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1175,NULL,'10307',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 5 SOBRES (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1176,NULL,'10308',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SOBRE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1177,NULL,'10309',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 30 PAQUETES (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1178,NULL,'10310',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1179,NULL,'10311',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','SACO DE 18 PAQUETES (1 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1180,NULL,'10312',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINO MOTO (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1181,NULL,'10313',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1182,NULL,'10314',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1183,NULL,'10315',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1184,NULL,'10316',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1185,NULL,'10317',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CARNE (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1186,NULL,'10318',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CARNE (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1187,NULL,'10319',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO CON VERDURA (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1188,NULL,'10320',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN POLLO CON VERDURA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1189,NULL,'10321',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA CRIOLLA (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1190,NULL,'10322',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN GALLINA CRIOLLA (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1191,NULL,'10323',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CAMARON (PQT)','PAQUETE DE 24 SOBRES (86 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1192,NULL,'10324',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','AJINOMEN CAMARON (PQT)','SOBRE DE 86 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1193,NULL,'10325',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA CARNE (CAJ)','CAJA DE 10 TIRAS (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1194,NULL,'10326',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA CARNE (CAJ)','TIRA DE 80 SOBRES (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1195,NULL,'10327',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA CARNE (CAJ)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1196,NULL,'10328',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA GALLINA (CAJ)','CAJA DE 10 TIRAS (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1197,NULL,'10329',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA GALLINA (CAJ)','TIRA DE 80 SOBRES (7 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1198,NULL,'10330',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','DOÃ‘A GUSTA GALLINA (CAJ)','SOBRE DE 7 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1199,NULL,'10331',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE(PQT)','PAQUETE DE 24 DISPLAYS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1200,NULL,'10332',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE(PQT)','DISPLAY DE 24 CAJITAS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1201,NULL,'10333',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE(PQT)','CAJA DE 2 UNID (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1202,NULL,'10334',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA (PQT)','PAQUETE DE 24 DISPLAYS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1203,NULL,'10335',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA (PQT)','DISPLAY DE 24 CAJITAS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1204,NULL,'10336',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA (PQT)','CAJA DE 2 UNID (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1205,NULL,'10337',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE TAPER (CAJ)','CAJA DE 24 TAPERS (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1206,NULL,'10338',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE TAPER (CAJ)','TAPER DE 90 CUBITOS (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1207,NULL,'10339',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI CARNE TAPER (CAJ)','CUBITOS DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1208,NULL,'10340',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA TAPER (CAJ)','CAJA DE 24 TAPERS (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1209,NULL,'10341',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA TAPER (CAJ)','TAPER DE 90 CUBITOS (4 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1210,NULL,'10342',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAGGI GALLINA TAPER (CAJ)','CUBITOS DE 4 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1211,NULL,'10343',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA MEDIANO (CAJ)','CAJA DE 12 DOC (30 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1212,NULL,'10344',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA MEDIANO (CAJ)','BOTELLA DE 30 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1213,NULL,'10345',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA CHICO (CAJ)','CAJA DE 24 DOC (90CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1214,NULL,'10346',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ESENCIA DE VAINILLA CHICO (CAJ)','BOTELLA DE 90 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1215,NULL,'10347',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MOSTAZA ALPESA (PQT)','PAQUETE DE 4 BALDES(4 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1216,NULL,'10348',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MOSTAZA ALPESA (PQT)','BALDE DE 4 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1217,NULL,'10349',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','KEPCHU ALPESA (PQT)','PAQUETE DE 4 BALDES(4 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1218,NULL,'10350',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','KEPCHU ALPESA (PQT)','BALDE DE 4 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1219,NULL,'10351',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','POMAROLA (CAJ)','CAJA DE 24 SACHETS (160 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1220,NULL,'10352',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','POMAROLA (CAJ)','SACHET DE 160 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1221,NULL,'10353',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ROJITA (CAJ)','CAJA DE 10 TIRAS (80 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1222,NULL,'10354',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ROJITA (CAJ)','TIRA DE 12 SACHETS (80 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1223,NULL,'10355',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','ROJITA (CAJ)','SACHET DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1224,NULL,'10356',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','COMINO MERY (PQT)','PAQUETE DE 12 DISPLAYS (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1225,NULL,'10357',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','COMINO MERY (PQT)','DISPLAY DE 75 SOBRES (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1226,NULL,'10358',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','COMINO MERY (PQT)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1227,NULL,'10359',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','TUCO MERY (PQT)','PAQUETE DE 12 DISPLAYS (7.76 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1228,NULL,'10360',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','TUCO MERY (PQT)','DISPLAY DE 75 SOBRES (7.76 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1229,NULL,'10361',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','TUCO MERY (PQT)','SOBRE DE 7.76 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1230,NULL,'10362',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZONADOR MERY (PQT)','PAQUETE DE 12 DISPLAYS (10.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1231,NULL,'10363',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZONADOR MERY (PQT)','DISPLAY DE 84 SOBRES (10.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1232,NULL,'10364',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZONADOR MERY (PQT)','SOBRE DE 10.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1233,NULL,'10365',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PANQUITA TIRA (PQT)','PAQUETE DE 6 DISPLAY (26 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1234,NULL,'10366',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PANQUITA TIRA (PQT)','DISPLAY DE 48 SOBRES (26 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1235,NULL,'10367',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PANQUITA TIRA (PQT)','SOBRE DE 26 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1236,NULL,'10368',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PALILLO MERY (PQT)','PAQUETE DE 12 DISPLAYS (9 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1237,NULL,'10369',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PALILLO MERY (PQT)','DISPLAY DE 84 SOBRES (9 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1238,NULL,'10370',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','PALILLO MERY (PQT)','SOBRE DE 9 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1239,NULL,'10371',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VERDECITO MERY (PQT)','PAQUETE DE 12 DISPLAYS (6.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1240,NULL,'10372',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VERDECITO MERY (PQT)','DISPLAY DE 50 SOBRES (6.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1241,NULL,'10373',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VERDECITO MERY (PQT)','SOBRE DE 6.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1242,NULL,'10374',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PIMIENTA COMINO (CAJ)','CAJA DE 50 DISPLAYS (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1243,NULL,'10375',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PIMIENTA COMINO (CAJ)','DISPLAY DE 66 SOBRES (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1244,NULL,'10376',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PIMIENTA COMINO (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1245,NULL,'10377',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PANCA SIN PICANTE (CAJ)','CAJA DE 50 DISPLAYS (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1246,NULL,'10378',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PANCA SIN PICANTE (CAJ)','DISPLAY DE 66 SOBRES (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1247,NULL,'10379',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PANCA SIN PICANTE (CAJ)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1248,NULL,'10380',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA TUCO (CAJ)','CAJA DE 50 DISPLAYS (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1249,NULL,'10381',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA TUCO (CAJ)','DISPLAY DE 66 SOBRES (6 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1250,NULL,'10382',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA TUCO (CAJ)','SOBRE DE 6 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1251,NULL,'10383',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PALILLO (CAJ)','CAJA DE 50 DISPLAYS (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1252,NULL,'10384',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PALILLO (CAJ)','DISPLAY DE 66 SOBRES (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1253,NULL,'10385',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA PALILLO (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1254,NULL,'10386',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA OREGANO (CAJ)','CAJA DE 50 DISPLAYS (3.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1255,NULL,'10387',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA OREGANO (CAJ)','DISPLAY DE 66 SOBRES (3.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1256,NULL,'10388',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SAZON LOPESA OREGANO (CAJ)','SOBRE DE 3.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1257,NULL,'10389',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO CORRIENTE (CAJ)','CAJA DE 12FRASCOS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1258,NULL,'10390',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO CORRIENTE (CAJ)','FRASCO DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1259,NULL,'10391',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO HON KONG (CAJ)','CAJA DE 12 FRASCOS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1260,NULL,'10392',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO HON KONG (CAJ)','FRASCO DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1261,NULL,'10393',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO (CAJ)','CAJA DE 30 FRASCOS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1262,NULL,'10394',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO (CAJ)','FRASCO DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1263,NULL,'10395',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  MEDIANO (CAJ)','CAJA DE 8 DOCENAS (60 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1264,NULL,'10396',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  MEDIANO (CAJ)','BOTELLA DE 60 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1265,NULL,'10397',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  CHICO (CAJ)','CAJA DE 12 DOCENAS (85 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1266,NULL,'10398',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','SILLAO KIKO  CHICO (CAJ)','BOTELLA DE 85 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1267,NULL,'10399',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE TINTO (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1268,NULL,'10400',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE TINTO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1269,NULL,'10401',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE BLANCO (CAJ)','CAJA DE 12 BOTELLAS (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1270,NULL,'10402',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE CORRIENTE BLANCO (CAJ)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1271,NULL,'10403',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE VENTURO (PQT)','PAQUETE DE 4 DISPLAYS (225 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1272,NULL,'10404',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE VENTURO (PQT)','DISPLAY DE 12 BOTELLA (225 CC)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1273,NULL,'10405',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','VINAGRE VENTURO (PQT)','BOTELLA DE 225 CC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1274,NULL,'10406',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAIZENA DURYEA (CAJ)','CAJA DE 8 DISPLAYS (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1275,NULL,'10407',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,1,0,NULL,'IGV','MAIZENA DURYEA (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1276,NULL,'10408',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE CHICHA SAYON (CAJ)','CAJA DE 20 BOLSAS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1277,NULL,'10409',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE CHICHA SAYON (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1278,NULL,'10410',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','K-CHI PUM CHICLE (CAJ)','CAJA DE 30 BOLSAS (120 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1279,NULL,'10411',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','K-CHI PUM CHICLE (CAJ)','BOLSA DE 120 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1280,NULL,'10412',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BOLICINCO (FARDO)','FARDO DE 20 BOLSAS (30 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1281,NULL,'10413',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BOLICINCO (FARDO)','BOLSA DE 30 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1282,NULL,'10414',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE MENTA CHICLE (CAJ)','CAJA DE 24 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1283,NULL,'10415',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1284,NULL,'10416',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE FRESA CHICLE (CAJ)','CAJA DE 24 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1285,NULL,'10417',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','QUIQUE FRESA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1286,NULL,'10418',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE MENTA CHICLE (CAJ)','CAJA DE 54 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1287,NULL,'10419',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1288,NULL,'10420',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE CANELA CHICLE (CAJ)','CAJA DE 54 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1289,NULL,'10421',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ICE CANELA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1290,NULL,'10422',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME C/ENV  (FARDO)','FARDO DE 21 BOLSAS (55 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1291,NULL,'10423',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME C/ENV  (FARDO)','BOLSA DE 55 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1292,NULL,'10424',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME CHICLE S/ENV (FARDO)','FARDO DE 20 BOLSAS (50 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1293,NULL,'10425',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME CHICLE S/ENV (FARDO)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1294,NULL,'10426',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BUBALOO CHICLE (CAJ)','CAJA DE 32 DISPLAYS (60 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1295,NULL,'10427',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','BUBALOO CHICLE (CAJ)','BOLSA DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1296,NULL,'10428',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHI CHISTES CHICLE (CAJ)','CAJA DE 24 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1297,NULL,'10429',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHI CHISTES CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1298,NULL,'10430',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE GROSSO (CAJ)','CAJA DE 24 BOLSAS (50 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1299,NULL,'10431',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','CHICLE GROSSO (CAJ)','BOLSA DE 50 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1300,NULL,'10432',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY MENTA CHICLE (CAJ)','CAJA DE 12 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1301,NULL,'10433',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY MENTA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1302,NULL,'10434',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY FRESA CHICLE (CAJ)','CAJA DE 12 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1303,NULL,'10435',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','COWBOY FRESA CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1304,NULL,'10436',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ADAMS CHICLE (CAJ)','CAJA DE 54 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1305,NULL,'10437',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','ADAMS CHICLE (CAJ)','BOLSA DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1306,NULL,'10438',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME TAPER CHICLE (CAJ)','CAJA DE 12 POTES (300 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1307,NULL,'10439',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','TROME TAPER CHICLE (CAJ)','POTE DE 300 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1308,NULL,'10440',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','MINI FRUTTY GELS (CAJ)','CAJA DE 6 POTES (88 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1309,NULL,'10441',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','MINI FRUTTY GELS (CAJ)','POTE DE 88 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1310,NULL,'10442',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,1,0,NULL,'IGV','MASHMELO (CAJ)','CAJA DE 12 BOLSAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1311,NULL,'10443',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE PARA TAZA SAYON (CAJ)','CAJA DE 24 DISPLAYS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1312,NULL,'10444',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE PARA TAZA SAYON (CAJ)','DISPLAY DE 12 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1313,NULL,'10445',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE PARA TAZA SAYON (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1314,NULL,'10446',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','CAJA DE 28 DISPLAYS (16 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1315,NULL,'10447',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','DISPLAY DE 30 BARRAS (16 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1316,NULL,'10448',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','BARRA DE 16 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1317,NULL,'10449',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','CAJA DE 27 DISPLAYS (32 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1318,NULL,'10450',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','DISPLAY DE 24 BARRAS (32 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1319,NULL,'10451',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE SUBLIME (CAJ)','BARRA DE 32 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1320,NULL,'10452',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE MINI CHIN CHIN (CAJ)','CAJA DE 18 DISPLAYS (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1321,NULL,'10453',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE MINI CHIN CHIN (CAJ)','DISPLAY DE 30 SOBRES (10 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1322,NULL,'10454',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE MINI CHIN CHIN (CAJ)','SOBRE DE 10 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1323,NULL,'10455',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE CHIN CHIN (CAJ)','CAJA DE 24 DISPLAYS (20 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1324,NULL,'10456',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE CHIN CHIN (CAJ)','DISPLAY DE 20 SOBRES (20 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1325,NULL,'10457',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOLATE CHIN CHIN (CAJ)','SOBRE DE 20 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1326,NULL,'10458',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS CANDY (CAJ)','CAJA DE 12 POTES (180 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1327,NULL,'10459',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS CANDY (CAJ)','POTE DE 180 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1328,NULL,'10460',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOPILAS (PQT)','PAQUETE DE 6 DISPLAYS (60 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1329,NULL,'10461',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHOCOPILAS (PQT)','DISPLAY DE 60 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1330,NULL,'10462',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHICLE COMBOY (CAJ)','CAJA DE 12 DISPLAYS (100 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1331,NULL,'10463',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','CHICLE COMBOY (CAJ)','DISPLAY DE 100 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1332,NULL,'10464',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','GOLPE (CAJ)','CAJA DE 6 DISPLAYS (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1333,NULL,'10465',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','GOLPE (CAJ)','DISPLAY DE 24 BARRAS (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1334,NULL,'10466',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','GOLPE (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1335,NULL,'10467',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS (CAJ)','CAJA DE 12 DISPLAYS (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1336,NULL,'10468',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS (CAJ)','DISPLAY DE 24 BARRAS (18 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1337,NULL,'10469',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','MUSS (CAJ)','BARRA DE 18 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1338,NULL,'10470',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO DISPLAY (CAJ)','CAJA DE 8 DISPLAYS (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1339,NULL,'10471',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO DISPLAY (CAJ)','DISPLAYS DE 20 BARRAS (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1340,NULL,'10472',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO DISPLAY (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1341,NULL,'10473',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO PACK (CAJ)','CAJA DE 20 PACK (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1342,NULL,'10474',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO PACK (CAJ)','PACK DE 6 BARRAS (24 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1343,NULL,'10475',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,1,0,NULL,'IGV','TUYO PACK (CAJ)','BARRA DE 24 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1344,NULL,'10476',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1345,NULL,'10477',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1346,NULL,'10478',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 30 UNID (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1347,NULL,'10479',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1348,NULL,'10480',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 15 UNID (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1349,NULL,'10481',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1350,NULL,'10482',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 7 UNID (2.6 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1351,NULL,'10483',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ACE (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1352,NULL,'10484',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1353,NULL,'10485',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1354,NULL,'10486',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 30 UNID (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1355,NULL,'10487',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1356,NULL,'10488',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 15 UNID (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1357,NULL,'10489',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE ARIEL (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1358,NULL,'10490',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1359,NULL,'10491',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1360,NULL,'10492',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1361,NULL,'10493',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1362,NULL,'10494',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 30 UNID (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1363,NULL,'10495',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1364,NULL,'10496',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 30 UNID (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1365,NULL,'10497',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR LIMON (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1366,NULL,'10498',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 15 UNID (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1367,NULL,'10499',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1368,NULL,'10500',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 7 UNID (2.6 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1369,NULL,'10501',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE BOLIVAR FLORAL (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1370,NULL,'10502',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1371,NULL,'10503',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1372,NULL,'10504',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 30 UNID (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1373,NULL,'10505',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1374,NULL,'10506',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 15 UNID (850 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1375,NULL,'10507',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 850 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1376,NULL,'10508',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 7 UNID (2.6 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1377,NULL,'10509',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE OPAL (BOL)','BOLSA DE 2.6 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1378,NULL,'10510',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO LIMON (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1379,NULL,'10511',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1380,NULL,'10512',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO BEBE (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1381,NULL,'10513',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE PATITO BEBE (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1382,NULL,'10514',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1383,NULL,'10515',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1384,NULL,'10516',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 15 UNID (720 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1385,NULL,'10517',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO LIMON (BOL)','BOLSA DE 720 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1386,NULL,'10518',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE SAPOLIO SUELTO (BOL)','BOLSA DE 15 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1387,NULL,'10519',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 60 UNID (160 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1388,NULL,'10520',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 160 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1389,NULL,'10521',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 30 UNID (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1390,NULL,'10522',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,1,0,NULL,'IGV','DETERGENTE MARSELLA (BOL)','BOLSA DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1391,NULL,'10523',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ANITA SPAGUETTI (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1392,NULL,'10524',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ANITA SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1393,NULL,'10525',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA ANITA FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1394,NULL,'10526',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1395,NULL,'10527',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO RAYADO ANITA FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1396,NULL,'10528',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO RAYADO ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1397,NULL,'10529',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO RAYADO ANITA FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1398,NULL,'10530',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO RAYADO ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1399,NULL,'10531',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON ANITA FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1400,NULL,'10532',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1401,NULL,'10533',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL ANITA FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1402,NULL,'10534',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL ANITA FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1403,NULL,'10535',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','GRANO DE ORO SPAGUETTI (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1404,NULL,'10536',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','GRANO DE ORO SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1405,NULL,'10537',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MONTESOL SPAGUETTI (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1406,NULL,'10538',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MONTESOL SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1407,NULL,'10539',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON SPAGUETTI (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1408,NULL,'10540',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1409,NULL,'10541',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON TALLARIN (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1410,NULL,'10542',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','SAYON TALLARIN (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1411,NULL,'10543',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DON VICTORIO SPAGUETTI (BOL)','BOLSA DE 20 PAQ (500 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1412,NULL,'10544',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DON VICTORIO SPAGUETTI (BOL)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1413,NULL,'10545',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1414,NULL,'10546',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1415,NULL,'10547',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TORNILLO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1416,NULL,'10548',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TORNILLO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1417,NULL,'10549',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1418,NULL,'10550',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MACARRON SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1419,NULL,'10551',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1420,NULL,'10552',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PLUMILLA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1421,NULL,'10553',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO CHICO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1422,NULL,'10554',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1423,NULL,'10555',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO MEDIANO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1424,NULL,'10556',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO MEDIANO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1425,NULL,'10557',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO GRANDE SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1426,NULL,'10558',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CANUTO GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1427,NULL,'10559',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MUNICION SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1428,NULL,'10560',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MUNICION SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1429,NULL,'10561',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PEPA SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1430,NULL,'10562',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','PEPA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1431,NULL,'10563',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ARO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1432,NULL,'10564',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1433,NULL,'10565',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','ARO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1434,NULL,'10566',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1435,NULL,'10567',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO EXTRAGRANDE SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1436,NULL,'10568',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CODO EXTRAGRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1437,NULL,'10569',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CAPULLO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1438,NULL,'10570',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CAPULLO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1439,NULL,'10571',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA GRANDE SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1440,NULL,'10572',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1441,NULL,'10573',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA CHICO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1442,NULL,'10574',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CORBATA CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1443,NULL,'10575',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CABELLO DE ANGEL SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1444,NULL,'10576',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CABELLO DE ANGEL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1445,NULL,'10577',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MINICODO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1446,NULL,'10578',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','MINICODO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1447,NULL,'10579',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL CHICO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1448,NULL,'10580',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL CHICO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1449,NULL,'10581',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL EXTRA GRANDE SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1450,NULL,'10582',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CARACOL EXTRA GRANDE SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1451,NULL,'10583',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CRESTA SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1452,NULL,'10584',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','CRESTA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1453,NULL,'10585',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','COLA DE CHANCHO SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1454,NULL,'10586',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','COLA DE CHANCHO SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1455,NULL,'10587',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DEDAL SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1456,NULL,'10588',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','DEDAL SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1457,NULL,'10589',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','RIGATONI SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1458,NULL,'10590',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','RIGATONI SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1459,NULL,'10591',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TRIPA DELGADA SAYON FIDEOS (BOL)','BOLSA DE 20 PAQ (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1460,NULL,'10592',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,1,0,NULL,'IGV','TRIPA DELGADA SAYON FIDEOS (BOL)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1461,NULL,'10593',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CRACKNEL (CAJ)','CAJA DE 20 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1462,NULL,'10594',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLATE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1463,NULL,'10595',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLATE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1464,NULL,'10596',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLATE (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1465,NULL,'10597',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1466,NULL,'10598',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1467,NULL,'10599',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1468,NULL,'10600',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO MENTA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1469,NULL,'10601',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO MENTA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1470,NULL,'10602',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO MENTA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1471,NULL,'10603',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO COCO (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1472,NULL,'10604',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO COCO (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1473,NULL,'10605',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO COCO (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1474,NULL,'10606',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO ALFAFOR (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1475,NULL,'10607',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO ALFAFOR (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1476,NULL,'10608',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO ALFAFOR (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1477,NULL,'10609',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO VAINILLA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1478,NULL,'10610',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO VAINILLA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1479,NULL,'10611',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO VAINILLA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1480,NULL,'10612',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO LUCUMA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1481,NULL,'10613',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO LUCUMA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1482,NULL,'10614',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO LUCUMA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1483,NULL,'10615',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESAVAINILLA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1484,NULL,'10616',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESAVAINILLA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1485,NULL,'10617',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO FRESAVAINILLA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1486,NULL,'10618',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLUCUMA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1487,NULL,'10619',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLUCUMA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1488,NULL,'10620',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CASINO CHOCOLUCUMA (CAJ)','GALLETA DE 51 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1489,NULL,'10621',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP CHOCOLATE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1490,NULL,'10622',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP CHOCOLATE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1491,NULL,'10623',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP CHOCOLATE (CAJ)','GALLETA DE 42 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1492,NULL,'10624',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP NARANJA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1493,NULL,'10625',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP NARANJA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1494,NULL,'10626',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOMP NARANJA (CAJ)','GALLETA DE 42 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1495,NULL,'10627',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TARZAN (CAJ)','CAJA DE 4 BOLSAS (20 PQT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1496,NULL,'10628',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TARZAN (CAJ)','BOLSA DE 20 PAQUETE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1497,NULL,'10629',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TARZAN (CAJ)','GALLETA DE 60 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1498,NULL,'10630',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION CHOCOLATE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1499,NULL,'10631',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION CHOCOLATE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1500,NULL,'10632',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION CHOCOLATE (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1501,NULL,'10633',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION NARANJA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1502,NULL,'10634',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION NARANJA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1503,NULL,'10635',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION NARANJA (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1504,NULL,'10636',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION VAINILLA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1505,NULL,'10637',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION VAINILLA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1506,NULL,'10638',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION VAINILLA (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1507,NULL,'10639',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION COCO (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1508,NULL,'10640',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION COCO (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1509,NULL,'10641',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS TENTACION COCO (CAJ)','GALLETA DE 53 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1510,NULL,'10642',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS MORA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1511,NULL,'10643',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS MORA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1512,NULL,'10644',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS MORA (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1513,NULL,'10645',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCOLATE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1514,NULL,'10646',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCOLATE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1515,NULL,'10647',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCOLATE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1516,NULL,'10648',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCONIEVE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1517,NULL,'10649',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCONIEVE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1518,NULL,'10650',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS CHOCONIEVE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1519,NULL,'10651',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS DOBLE CHOCOLATE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1520,NULL,'10652',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS DOBLE CHOCOLATE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1521,NULL,'10653',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS DOBLE CHOCOLATE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1522,NULL,'10654',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS TOFFE (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1523,NULL,'10655',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS TOFFE (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1524,NULL,'10656',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS TOFFE (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1525,NULL,'10657',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS FRESA (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1526,NULL,'10658',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS FRESA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1527,NULL,'10659',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS GLACITAS FRESA (CAJ)','GALLETA DE 36 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1528,NULL,'10660',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS BLACKISH (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1529,NULL,'10661',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS BLACKISH (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1530,NULL,'10662',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS BLACKISH (CAJ)','GALLETA DE 38 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1531,NULL,'10663',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA FAMILIAR (CAJ)','CAJA DE 20 PAQUETES (138 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1532,NULL,'10664',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA FAMILIAR (CAJ)','PAQUETE DE 138 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1533,NULL,'10665',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA (CAJ)','CAJA DE 4 PACK (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1534,NULL,'10666',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA (CAJ)','PACK DE 10 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1535,NULL,'10667',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS VAINILLA (CAJ)','GALLETA DE 28 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1536,NULL,'10668',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS MARGARITA (CAJ)','CAJA DE 6 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1537,NULL,'10669',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS MARGARITA (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1538,NULL,'10670',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS MARGARITA (CAJ)','GALLETA DE 55 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1539,NULL,'10671',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS LLANTITAS (CAJ)','CAJA DE 5 PACK (8 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1540,NULL,'10672',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS LLANTITAS (CAJ)','PACK DE 8 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1541,NULL,'10673',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS LLANTITAS (CAJ)','GALLETA DE 44 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1542,NULL,'10674',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA FAMILIAR (CAJ)','CAJA DE 20 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1543,NULL,'10675',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA FAMILIAR (CAJ)','PAQUETE DE 115 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1544,NULL,'10676',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','CAJA DE 4 PACK (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1545,NULL,'10677',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','PACK DE 10 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1546,NULL,'10678',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','GALLETA DE 27 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1547,NULL,'10679',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','CAJA DE 12 PACK',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1548,NULL,'10680',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','PAQUETE DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1549,NULL,'10681',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','CAJA DE 6 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1550,NULL,'10682',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA (CAJ)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1551,NULL,'10683',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS FLORECITAS (CAJ)','CAJA DE 3 TIRAS (30 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1552,NULL,'10684',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS FLORECITAS (CAJ)','TIRA  DE 30 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1553,NULL,'10685',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS FLORECITAS (CAJ)','SOBRE DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1554,NULL,'10686',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESA (CAJ)','CAJA DE 12 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1555,NULL,'10687',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESA (CAJ)','PACK DE 6 WAFFER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1556,NULL,'10688',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1557,NULL,'10689',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESAVAINILLA (CAJ)','CAJA DE 12 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1558,NULL,'10690',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESAVAINILLA (CAJ)','PACK DE 6 WAFFER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1559,NULL,'10691',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. YOGURT FRESAVAINILLA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1560,NULL,'10692',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. VAINILLA (CAJ)','CAJA DE 12 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1561,NULL,'10693',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. VAINILLA (CAJ)','PACK DE 6 WAFFER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1562,NULL,'10694',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. VAINILLA (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1563,NULL,'10695',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. CHOCOLATE (CAJ)','CAJA DE 12 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1564,NULL,'10696',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. CHOCOLATE (CAJ)','PACK DE 6 WAFFER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1565,NULL,'10697',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NICK CHI. CHOCOLATE (CAJ)','WAFFER DE 29 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1566,NULL,'10698',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA ROYAL (CAJ)','CAJA DE 4 PACK (10 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1567,NULL,'10699',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA ROYAL (CAJ)','PACK DE 10 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1568,NULL,'10700',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS SODA ROYAL (CAJ)','WAFFER DE 30 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1569,NULL,'10701',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS DIVAS (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1570,NULL,'10702',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS DIVAS (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1571,NULL,'10703',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS DIVAS (CAJ)','WAFFER DE 34 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1572,NULL,'10704',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOCOBUN (CAJ)','CAJA DE 8 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1573,NULL,'10705',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOCOBUN (CAJ)','PACK DE 6 GALLETAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1574,NULL,'10706',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','GALLETAS CHOCOBUN (CAJ)','WAFFER DE 33.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1575,NULL,'10707',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','BISCOCHO CHOCMAN (CAJ)','CAJA DE 14 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1576,NULL,'10708',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','BISCOCHO CHOCMAN (CAJ)','PACK DE 6 BISCOCHOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1577,NULL,'10709',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','BISCOCHO CHOCMAN (CAJ)','WAFFER DE 30 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1578,NULL,'10710',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NIK GR (CAJ)','CAJA DE 6 PACK (6 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1579,NULL,'10711',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NIK GR (CAJ)','PACK DE 6 WAFFER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1580,NULL,'10712',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','WAFFER NIK GR (CAJ)','WAFFER DE 77 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1581,NULL,'10713',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','CAÃ‘ONAZO (CAJ)','CAJA DE 8 DISPLAYS (24 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1582,NULL,'10714',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','CAÃ‘ONAZO (CAJ)','DISPLAY DE 24 BARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1583,NULL,'10715',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,1,0,NULL,'IGV','CAÃ‘ONAZO (CAJ)','BARRA DE 25 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1584,NULL,'10716',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','PAQUETE DE 12 BOTELLAS (525 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1585,NULL,'10717',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 525 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1586,NULL,'10718',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','PAQUETE DE 8 BOTELLAS (1.3 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1587,NULL,'10719',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 1.3 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1588,NULL,'10720',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','PAQUETE DE 6 BOTELLAS (2.02 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1589,NULL,'10721',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 2.02 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1590,NULL,'10722',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','PAQUETE DE 6 BOTELLAS  (330 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1591,NULL,'10723',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA KOLA REAL (PQT)','BOTELLA DE 330 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1592,NULL,'10724',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA VILLA KOLA (PQT)','PAQUETE DE 12 BOTELLAS (420 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1593,NULL,'10725',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA VILLA KOLA (PQT)','BOTELLA DE 420 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1594,NULL,'10726',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','SPORADE (PQT)','PAQUETE DE 12 BOTELLAS (475 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1595,NULL,'10727',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','SPORADE (PQT)','BOTELLA DE 475 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1596,NULL,'10728',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','PAWORADE (PQT)','PAQUETE DE 6 BOTELLAS  (473 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1597,NULL,'10729',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','PAWORADE (PQT)','BOTELLA DE 473 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1598,NULL,'10730',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL CIELO (PQT)','PAQUETE DE 15 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1599,NULL,'10731',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL CIELO (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1600,NULL,'10732',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL GAVIOTA (PQT)','PAQUETE DE 12 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1601,NULL,'10733',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','AGUA MINERAL GAVIOTA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1602,NULL,'10734',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','PAQUETE DE 12 BOTELLAS (410 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1603,NULL,'10735',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 410 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1604,NULL,'10736',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','PAQUETE DE 6 BOTELLAS (1.5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1605,NULL,'10737',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1606,NULL,'10738',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','PAQUETE DE 6 BOTELLAS (2.5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1607,NULL,'10739',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 2.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1608,NULL,'10740',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','PAQUETE DE 4 BOTELLAS (3 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1609,NULL,'10741',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA INCA KOLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1610,NULL,'10742',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','PAQUETE DE 12 BOTELLAS (410 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1611,NULL,'10743',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 410 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1612,NULL,'10744',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','PAQUETE DE 6 BOTELLAS (1.5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1613,NULL,'10745',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1614,NULL,'10746',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','PAQUETE DE 6 BOTELLAS (2.5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1615,NULL,'10747',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 2.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1616,NULL,'10748',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','PAQUETE DE 4 BOTELLAS (3 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1617,NULL,'10749',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GASEOSA COCA COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1618,NULL,'10750',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','PAQUETE DE 12 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1619,NULL,'10751',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1620,NULL,'10752',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','PAQUETE DE 6 BOTELLAS (1.5 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1621,NULL,'10753',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CIFRUT (PQT)','BOTELLA DE 1.5 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1622,NULL,'10754',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','PAQUETE DE 12 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1623,NULL,'10755',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1624,NULL,'10756',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','PAQUETE DE 12 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1625,NULL,'10757',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1626,NULL,'10758',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GUARANA (PQT)','PAQUETE DE 12 BOTELLAS (500 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1627,NULL,'10759',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','GUARANA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1628,NULL,'10760',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','PAQUETE DE 6 BOTELLAS (3 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1629,NULL,'10761',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','CUZ COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1630,NULL,'10762',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','PAQUETE DE 6 BOTELLAS (3 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1631,NULL,'10763',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,1,0,NULL,'IGV','TOP COLA (PQT)','BOTELLA DE 3 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1632,NULL,'10764',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','GELATINA EMBASADA (BOL)','BOLSA DE 40 SOBRES (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1633,NULL,'10765',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','GELATINA EMBASADA (BOL)','BOLSA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1634,NULL,'10766',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','GELATINA SUELTA (BOL)','BOLSA DE 5 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1635,NULL,'10767',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','FLAN EMBASADO (BOL)','BOLSA DE 40 SOBRES (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1636,NULL,'10768',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','FLAN EMBASADO (BOL)','BOLSA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1637,NULL,'10769',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA DURAZNO (BOL)','BOLSA DE 12 SOBRES (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1638,NULL,'10770',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA DURAZNO (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1639,NULL,'10771',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA PIÃ‘A (BOL)','BOLSA DE 12 SOBRES (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1640,NULL,'10772',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA PIÃ‘A (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1641,NULL,'10773',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA MORADA (BOL)','BOLSA DE 24 SOBRES (200 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1642,NULL,'10774',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,1,0,NULL,'IGV','MAZAMORRA NEGRITA MORADA (BOL)','BOLSA DE 200 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1643,NULL,'10775',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','HARINA PREPARADA BLANCA FLOR (PQT)','PAQUETE DE 12 BOLSAS (1 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1644,NULL,'10776',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','HARINA PREPARADA BLANCA FLOR (PQT)','BOLSA DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1645,NULL,'10777',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','BLANCA NIEVE ESPECIAL (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1646,NULL,'10778',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','FAVORITA HARINA (PQT)','PAQUETE DE 18 BOLSAS (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1647,NULL,'10779',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,1,0,NULL,'IGV','FAVORITA HARINA (PQT)','BOLSA DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1648,NULL,'10780',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA AZUL SAPOLIO (CAJ)','CAJA DE 12 FRASCOS (360 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1649,NULL,'10781',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA AZUL SAPOLIO (CAJ)','FRASCO DE 360 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1650,NULL,'10782',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA ROJO SAPOLIO (CAJ)','CAJA DE 12 FRASCOS (360 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1651,NULL,'10783',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,1,0,NULL,'IGV','INSECTISIDA ROJO SAPOLIO (CAJ)','FRASCO DE 360 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1652,NULL,'10784',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONTESOL (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1653,NULL,'10785',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONTESOL (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1654,NULL,'10786',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA LIMÃ“N (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1655,NULL,'10787',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA LIMÃ“N (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1656,NULL,'10788',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA CLÃSICO (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1657,NULL,'10789',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA CLÃSICO (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1658,NULL,'10790',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA BEBE (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1659,NULL,'10791',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MARSELLA BEBE (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1660,NULL,'10792',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO LIMON (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1661,NULL,'10793',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO LIMON (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1662,NULL,'10794',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO BLANCO (CAJ)','CAJA DE 40 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1663,NULL,'10795',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SAN ISIDRO BLANCO (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1664,NULL,'10796',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLIVAR BLANCO (CAJ)','CAJA DE 48 BARRAS (260 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1665,NULL,'10797',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLIVAR BLANCO (CAJ)','BARRA DE 260 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1666,NULL,'10798',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLÃVAR LIMÃ“N (CAJ)','CAJA DE 48 BARRAS (260 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1667,NULL,'10799',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON BOLÃVAR LIMÃ“N (CAJ)','BARRA DE 260 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1668,NULL,'10800',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON POPEYE (CAJ)','CAJA DE 48 BARRAS (250 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1669,NULL,'10801',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON POPEYE (CAJ)','BARRA DE 250 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1670,NULL,'10802',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SPA (CAJ)','CAJA DE 72 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1671,NULL,'10803',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SPA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1672,NULL,'10804',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON CAMAY (CAJ)','CAJA DE 96 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1673,NULL,'10805',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON CAMAY (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1674,NULL,'10806',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA CH (CAJ)','CAJA DE 36 BARRAS (85 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1675,NULL,'10807',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA CH (CAJ)','BARRA DE 85 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1676,NULL,'10808',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA GR (CAJ)','CAJA DE 36 BARRAS (175 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1677,NULL,'10809',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON HENO DE PRAVIA GR (CAJ)','BARRA DE 175 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1678,NULL,'10810',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON JOHNSONS (CAJ)','CAJA DE 48 BARRAS (80 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1679,NULL,'10811',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON JOHNSONS (CAJ)','BARRA DE 80 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1680,NULL,'10812',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON LUX (CAJ)','CAJA DE 40 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1681,NULL,'10813',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON LUX (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1682,NULL,'10814',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONCLERS (CAJ)','CAJA DE 48 BARRAS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1683,NULL,'10815',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON MONCLERS (CAJ)','BARRA DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1684,NULL,'10816',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NEKO (CAJ)','CAJA DE 72 BARRAS (75 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1685,NULL,'10817',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NEKO (CAJ)','BARRA DE 75 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1686,NULL,'10818',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NIVEA (CAJ)','CAJA DE 96 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1687,NULL,'10819',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON NIVEA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1688,NULL,'10820',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PALMOLIVE (CAJ)','CAJA DE 72 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1689,NULL,'10821',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PALMOLIVE (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1690,NULL,'10822',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PROTEX (CAJ)','CAJA DE 72 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1691,NULL,'10823',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON PROTEX (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1692,NULL,'10824',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON REXONA (CAJ)','CAJA DE 40 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1693,NULL,'10825',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON REXONA (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1694,NULL,'10826',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SURTIDO (PQT)','PAQUETE DE 12 UNID (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1695,NULL,'10827',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,1,0,NULL,'IGV','JABON SURTIDO (PQT)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1696,NULL,'10828',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MUÃ‘EQUITA AZUL (CAJ)','CAJA DE 24 DISPLAY (72 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1697,NULL,'10829',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MUÃ‘EQUITA AZUL (CAJ)','DISPLAY DE 72 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1698,NULL,'10830',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','ESPONJA VERDE (CAJ)','CAJA DE 12 DISPLAY (15 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1699,NULL,'10831',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','ESPONJA VERDE (CAJ)','DISPLAY DE 15 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1700,NULL,'10832',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MAQUINITA ESPONJA (CAJ)','CAJA DE 12 DISPLAY (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1701,NULL,'10833',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','MAQUINITA ESPONJA (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1702,NULL,'10834',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY FRASCO (CAJ)','CAJA DE 12 FRASCOS (450 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1703,NULL,'10835',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY FRASCO (CAJ)','FRASCO DE 450 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1704,NULL,'10836',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY TIRA (CAJ)','CAJA DE 12 TIRAS (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1705,NULL,'10837',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY TIRA (CAJ)','TIRA DE 12 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1706,NULL,'10838',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','DOWNY TIRA (CAJ)','SACHET DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1707,NULL,'10839',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','SUAVITEL TIRA (CAJ)','CAJA DE 12 TIRAS (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1708,NULL,'10840',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','SUAVITEL TIRA (CAJ)','TIRA DE 12 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1709,NULL,'10841',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,1,0,NULL,'IGV','SUAVITEL TIRA (CAJ)','SACHET DE 80 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1710,NULL,'10842',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN CHICO (CAJ)','CAJA DE 24 TAPER (180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1711,NULL,'10843',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN CHICO (CAJ)','TAPER DE 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1712,NULL,'10844',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','CAJA DE 24 TAPER (360 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1713,NULL,'10845',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1714,NULL,'10846',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','CAJA DE 24 TAPER (330 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1715,NULL,'10847',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 330 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1716,NULL,'10848',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','CAJA DE 12 TAPER (600 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1717,NULL,'10849',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 600 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1718,NULL,'10850',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','CAJA DE 12 TAPER (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1719,NULL,'10851',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS AYUDIN (CAJ)','TAPER DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1720,NULL,'10852',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS LAVA  (CAJ)','CAJA DE 12 TAPER (1 KG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1721,NULL,'10853',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS LAVA  (CAJ)','TAPER DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1722,NULL,'10854',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO MELLIZO (CAJ)','CAJA DE 12 PAQUETE (2 X 180 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1723,NULL,'10855',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO MELLIZO (CAJ)','TAPER DE 2 UNID X 180 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1724,NULL,'10856',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','CAJA DE 12 TAPER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1725,NULL,'10857',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','TAPER DE 360 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1726,NULL,'10858',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','CAJA DE 6 TAPER',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1727,NULL,'10859',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,1,0,NULL,'IGV','LAVAVAJILLAS SAPOLIO (CAJ)','TAPER DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1728,NULL,'10860',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TABLETA DE 24 TARROS (400 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1729,NULL,'10861',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TARRO DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1730,NULL,'10862',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TABLETA DE 48 TARROS (170 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1731,NULL,'10863',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1732,NULL,'10864',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR POLVO (CAJ)','CAJA DE 48 SOBRES (120 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1733,NULL,'10865',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR POLVO (CAJ)','SOBRE DE 120 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1734,NULL,'10866',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR LATA (CAJ)','CAJA DE 12 LATAS (900 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1735,NULL,'10867',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE ANCHOR LATA (CAJ)','LATA DE 900 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1736,NULL,'10868',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA POLVO (CAJ)','CAJA DE 4 DISPLAY (120 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1737,NULL,'10869',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA POLVO (CAJ)','DISPLAY DE 12 SOBRES (120 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1738,NULL,'10870',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE PURA VIDA POLVO (CAJ)','SOBRE DE 120 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1739,NULL,'10871',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TABLETA DE 24 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1740,NULL,'10872',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1741,NULL,'10873',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TABLETA DE 48 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1742,NULL,'10874',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1743,NULL,'10875',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TABLATE DE 24 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1744,NULL,'10876',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1745,NULL,'10877',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TABLETA DE 48 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1746,NULL,'10878',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA ROJA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1747,NULL,'10879',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TABLETA DE 24 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1748,NULL,'10880',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1749,NULL,'10881',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TABLETA DE 48 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1750,NULL,'10882',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA AMARILLA (TABL)','TARRO DE 170 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1751,NULL,'10883',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA DESLACTOSADA (TABL)','TABLETA DE 24 TARROS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1752,NULL,'10884',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE GLORIA DESLACTOSADA (TABL)','TARRO DE 410 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1753,NULL,'10885',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE SOY VIDA (TABL)','TABLETA DE 24 TARROS 400 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1754,NULL,'10886',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE SOY VIDA (TABL)','TARRO DE 400 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1755,NULL,'10887',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT ROJO LIGHT (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1756,NULL,'10888',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT ROJO LIGHT (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1757,NULL,'10889',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AMARILLO NIÃ‘OS (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1758,NULL,'10890',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AMARILLO NIÃ‘OS (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1759,NULL,'10891',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AZUL (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1760,NULL,'10892',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT AZUL (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1761,NULL,'10893',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CELESTE DESLACTOSADA (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1762,NULL,'10894',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CELESTE DESLACTOSADA (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1763,NULL,'10895',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CHOCOLATADA (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1764,NULL,'10896',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT CHOCOLATADA (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1765,NULL,'10897',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT VERDE CALCIO (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1766,NULL,'10898',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE UHT VERDE CALCIO (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1767,NULL,'10899',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','CAJA DE 96 TARROS (397 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1768,NULL,'10900',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','TARRO DE 397 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1769,NULL,'10901',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','CAJA DE 48 TARROS (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1770,NULL,'10902',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,1,0,NULL,'IGV','LECHE NESTLE (CAJ)','TARRO DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1771,NULL,'10903',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','PAQUETE DE 20 BOTELLAS (287.5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1772,NULL,'10904',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','BOTELLA DE 287.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1773,NULL,'10905',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','PAQUETE DE 24 BOTELLAS (572 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1774,NULL,'10906',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX LEJIA (PQT)','BOTELLA DE 572 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1775,NULL,'10907',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX ROPA COLOR (PQT)','PAQUETE DE 24 BOTELLAS (230 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1776,NULL,'10908',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','CLOROX ROPA COLOR (PQT)','BOTELLA DE 230 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1777,NULL,'10909',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA (PQT)','PAQUETE DE 24 BOTELLAS (270 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1778,NULL,'10910',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA (PQT)','BOTELLA DE 270 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1779,NULL,'10911',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA ROPA COLOR (PQT)','PAQUETE DE 24 BOTELLAS (230 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1780,NULL,'10912',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,1,0,NULL,'IGV','SAPOLIO LEJIA ROPA COLOR (PQT)','BOTELLA DE 230 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1781,NULL,'10913',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','CAJA DE 24 BARRAS (45 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1782,NULL,'10914',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','BARRA DE 45 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1783,NULL,'10915',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','CAJA DE 20 BARRAS (90 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1784,NULL,'10916',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','SELLO DE ORO (CAJ)','BARRA DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1785,NULL,'10917',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','CAJA DE 24 BARRAS (50 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1786,NULL,'10918',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','BARRA DE 50 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1787,NULL,'10919',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','CAJA DE 20 POTES (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1788,NULL,'10920',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTY (CAJ)','POTE DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1789,NULL,'10921',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMELADA GLORIA (CAJ)','CAJA DE 10 PAQUETES (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1790,NULL,'10922',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMELADA GLORIA (CAJ)','PAQUETE DE 12 SACHET (100 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1791,NULL,'10923',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMELADA GLORIA (CAJ)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1792,NULL,'10924',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMALA FANNY (CAJ)','CAJA DE 12 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1793,NULL,'10925',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMALA FANNY (CAJ)','JARRA DE 12 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1794,NULL,'10926',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MERMALA FANNY (CAJ)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1795,NULL,'10927',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','MANTECA FAMOSA (CAJ)','CAJA DE 10 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1796,NULL,'10928',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','LEVADURA FLESHMAN','DISPLAY DE 12 PAQUETES (125 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1797,NULL,'10929',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,1,0,NULL,'IGV','LEVADURA FLESHMAN','PAQUETE DE 125 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1798,NULL,'10930',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','CAJA DE 240 SACHETS (10 CM3)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1799,NULL,'10931',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','SACHET DE 10 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1800,NULL,'10932',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','CAJA DE 24 SACHETS (100 CM3)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1801,NULL,'10933',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MAYONESA ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1802,NULL,'10934',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','CAJA DE 12 SACHETS (100 CM3)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1803,NULL,'10935',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1804,NULL,'10936',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','CAJA DE 240 SACHETS (8 CM3)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1805,NULL,'10937',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','ROCOTO ALACENA (CAJ)','SACHET DE 8 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1806,NULL,'10938',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','HUANCAINA ALACENA (CAJ)','CAJA DE 24 SACHETS (100 CM3)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1807,NULL,'10939',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','HUANCAINA ALACENA (CAJ)','SACHET DE 100 CM3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1808,NULL,'10940',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,1,0,NULL,'IGV','MACBEL BALDE MAYONESA (BALDE)','BALDE DE 4 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1809,NULL,'10941',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','SAL DE ANDREWS (CAJ)','CAJA DE 24 DISPLAY (100 UNID X 5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1810,NULL,'10942',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','SAL DE ANDREWS (CAJ)','DISPLAY DE 100 SOBRES (5 GR)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1811,NULL,'10943',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','SAL DE ANDREWS (CAJ)','SOBRE DE 5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1812,NULL,'10944',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','MEJORAL (TABL)','DISPLAY DE 200 TABLETAS (530 MG)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1813,NULL,'10945',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,1,0,NULL,'IGV','MEJORAL (TABL)','TABLETA DE 530 MG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1814,NULL,'10946',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','LENTEJA BB (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1815,NULL,'10947',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PAPA SECA (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1816,NULL,'10948',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','SOYA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1817,NULL,'10949',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CASTILLA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1818,NULL,'10950',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','GARBANZO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1819,NULL,'10951',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','60 DIAS (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1820,NULL,'10952',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PALLAR GRANDE (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1821,NULL,'10953',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PALLAR CHICO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1822,NULL,'10954',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','FREJOL CABALLERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1823,NULL,'10955',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MANI (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1824,NULL,'10956',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','POP CORN (BOL)','BOLSA DE 22.68 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1825,NULL,'10957',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA VERDE (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1826,NULL,'10958',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','LENTEJON (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1827,NULL,'10959',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','SEMOLA (SACO)','SACO DE 25 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1828,NULL,'10960',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CHUÃ‘O (SACO)','SACO DE 25 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1829,NULL,'10961',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA AMARILLA (SACO)','SACO DE 45.36 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1830,NULL,'10962',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON ENTERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1831,NULL,'10963',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','HABAS PARTIDA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1832,NULL,'10964',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CANARIO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1833,NULL,'10965',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON PARTIDO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1834,NULL,'10966',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CEBADA SIN TOSTAR (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1835,NULL,'10967',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','ALVERJA ENTERA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1836,NULL,'10968',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MACHICA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1837,NULL,'10969',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','PANAMITO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1838,NULL,'10970',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CREMA DE ALVERJA (BOL)','BOLSA DE 5 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1839,NULL,'10971',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','CEBADA TOSTADA (SACO)','SACO DE 30 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1840,NULL,'10972',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MORON ENTERO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1841,NULL,'10973',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ CANCHA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1842,NULL,'10974',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','TRIGO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1843,NULL,'10975',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ PELADO (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1844,NULL,'10976',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','HABAS ENTERA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1845,NULL,'10977',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','QUINUA (SACO)','SACO DE 50 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1846,NULL,'10978',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ ENTERO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1847,NULL,'10979',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ PARTIDO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1848,NULL,'10980',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,1,0,NULL,'IGV','MAIZ MOLIDO (SACO)','SACO DE 60 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1849,NULL,'10981',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (PQT)','PAQUETE DE 25 SACHET (150 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1850,NULL,'10982',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (PQT)','SACHET DE 150 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1851,NULL,'10983',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZON (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1852,NULL,'10984',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZON (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1853,NULL,'10985',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA PIÃ‘A (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1854,NULL,'10986',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA PIÃ‘A (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1855,NULL,'10987',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA MANGO (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1856,NULL,'10988',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR GLORIA MANGO (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1857,NULL,'10989',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZNO (CAJ)','CAJA DE 24 UNID (145 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1858,NULL,'10990',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NÃ‰CTAR GLORIA DURAZNO (CAJ)','TETRAPACK DE 145 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1859,NULL,'10991',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PURA VIDA DURAZNO (CAJ)','CAJA DE 4 PACK (200 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1860,NULL,'10992',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PURA VIDA DURAZNO (CAJ)','PACK DE 6 TETRAPACK (200 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1861,NULL,'10993',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PURA VIDA DURAZNO (CAJ)','TETRAPACK DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1862,NULL,'10994',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','CAJA DE 12 PACK (1 LT)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1863,NULL,'10995',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','PACK DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1864,NULL,'10996',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','CAJA DE 4 PACK (330 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1865,NULL,'10997',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','PACK DE 6 TETRAPACK (330 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1866,NULL,'10998',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULP (CAJ)','TETRAPACK DE 330 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1867,NULL,'10999',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULPIN (CAJ)','CAJA DE 24 TETRAPACK (145 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1868,NULL,'11000',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','NECTAR PULPIN (CAJ)','TETRAPACK DE 145 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1869,NULL,'11001',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (CAJ)','CAJA DE 4 PACK (180 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1870,NULL,'11002',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (CAJ)','PACK DE 6 TETRAPACK (180 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1871,NULL,'11003',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,1,0,NULL,'IGV','CHICOLAC (CAJ)','TETRAPACK DE 180 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1872,NULL,'11004',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE NARANJA (BOL)','BOLSA DE 2 PAQUETES (2 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1873,NULL,'11005',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE NARANJA (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1874,NULL,'11006',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE VERDE (BOL)','BOLSA DE 2 PAQUETES (2 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1875,NULL,'11007',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SUAVE VERDE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1876,NULL,'11008',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO NARANJA PAPEL DOBLE (BOL)','BOLSA DE 2 PAQUETES (2 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1877,NULL,'11009',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO NARANJA PAPEL DOBLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1878,NULL,'11010',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO ROJO PAPEL SIMPLE (BOL)','BOLSA DE 2 PAQUETES (2 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1879,NULL,'11011',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PRESTIGIO ROJO PAPEL SIMPLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1880,NULL,'11012',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','SERVILLETA PRESTIGIO (BOL)','BOLSA DE 15 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1881,NULL,'11013',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PARACAS PAPEL DOBLE (BOL)','BOLSA DE 2 PAQUETES (2 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1882,NULL,'11014',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,1,0,NULL,'IGV','PARACAS PAPEL DOBLE (BOL)','PAQUETE DE 2 ROLLOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1883,NULL,'11015',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE TIRA (CAJ)','CAJA DE 12 TIRAS (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1884,NULL,'11016',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE TIRA (CAJ)','TIRA DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1885,NULL,'11017',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE (CAJ)','CAJA DE 6 DISPLAYS (14 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1886,NULL,'11018',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO COLGATE (CAJ)','DISPLAY DE 14 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1887,NULL,'11019',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO KOLINOS (CAJ)','CAJA DE 6 DISPLAYS (14 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1888,NULL,'11020',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO KOLINOS (CAJ)','DISPLAY DE 14 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1889,NULL,'11021',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO CORRIENTE (CAJ)','CAJA DE 12 TIRAS (12 UNID)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1890,NULL,'11022',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','CEPILLO CORRIENTE (CAJ)','DISPLAY DE 12 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1891,NULL,'11023',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE TRIPLE ACCIÃ“N (CAJ)','CAJA DE 6 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1892,NULL,'11024',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE TRIPLE ACCIÃ“N (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1893,NULL,'11025',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE TRIPLE ACCIÃ“N (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1894,NULL,'11026',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 6 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1895,NULL,'11027',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1896,NULL,'11028',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1897,NULL,'11029',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 12 PAQUETES (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1898,NULL,'11030',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','PAQUETE DE 12 UNID (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1899,NULL,'11031',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE ROJO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1900,NULL,'11032',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE HERBAL (CAJ)','CAJA DE 6 PAQUETES (90 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1901,NULL,'11033',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE HERBAL (CAJ)','PAQUETE DE 12 UNID (90 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1902,NULL,'11034',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','COLGATE HERBAL (CAJ)','CAJA DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1903,NULL,'11035',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 12 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1904,NULL,'11036',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1905,NULL,'11037',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1906,NULL,'11038',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 12 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1907,NULL,'11039',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1908,NULL,'11040',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1909,NULL,'11041',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTITO TUTTI FRUTTI (CAJ)','CAJA DE 12 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1910,NULL,'11042',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTITO TUTTI FRUTTI (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1911,NULL,'11043',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTITO TUTTI FRUTTI (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1912,NULL,'11044',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 12 PAQUETES (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1913,NULL,'11045',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','PAQUETE DE 12 UNID (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1914,NULL,'11046',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO AZUL (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1915,NULL,'11047',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 12 PAQUETES (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1916,NULL,'11048',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','PAQUETE DE 12 UNID (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1917,NULL,'11049',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1918,NULL,'11050',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 12 PAQUETES (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1919,NULL,'11051',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','PAQUETE DE 12 UNID (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1920,NULL,'11052',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO ROJO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1921,NULL,'11053',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 12 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1922,NULL,'11054',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1923,NULL,'11055',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','DENTO VERDE (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1924,NULL,'11056',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS HERBAL (CAJ)','CAJA DE 6 PAQUETES (90 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1925,NULL,'11057',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS HERBAL (CAJ)','PAQUETE DE 12 UNID (90 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1926,NULL,'11058',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS HERBAL (CAJ)','CAJA DE 90 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1927,NULL,'11059',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 6 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1928,NULL,'11060',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1929,NULL,'11061',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1930,NULL,'11062',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS FRESH (CAJ)','CAJA DE 6 PAQUETES (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1931,NULL,'11063',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS FRESH (CAJ)','PAQUETE DE 12 UNID (75 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1932,NULL,'11064',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS FRESH (CAJ)','CAJA DE 75 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1933,NULL,'11065',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 12 PAQUETES (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1934,NULL,'11066',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','PAQUETE DE 12 UNID (22 ML)',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1935,NULL,'11067',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,1,0,NULL,'IGV','KOLINOS AMARILLO (CAJ)','CAJA DE 22 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1936,NULL,'11068',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P MEGA (POLI)','POLISACO DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1937,NULL,'11069',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P MEGA (POLI)','PAQUETE DE 60 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1938,NULL,'11070',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M MEGA (POLI)','POLISACO DE 2 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1939,NULL,'11071',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M MEGA (POLI)','PAQUETE DE 72 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1940,NULL,'11072',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G MEGA (POLI)','POLISACO DE 2 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1941,NULL,'11073',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G MEGA (POLI)','PAQUETE DE 64 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1942,NULL,'11074',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG MEGA (POLI)','POLISACO DE 2 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1943,NULL,'11075',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG MEGA (POLI)','PAQUETE DE 52 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1944,NULL,'11076',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XXG MEGA (POLI)','POLISACO DE 2 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1945,NULL,'11077',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XXG MEGA (POLI)','PAQUETE DE 48 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1946,NULL,'11078',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P JUMBO (POLI)','POLISACO DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1947,NULL,'11079',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES P JUMBO (POLI)','PAQUETE DE 28 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1948,NULL,'11080',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M JUMBO (POLI)','POLISACO DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1949,NULL,'11081',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES M JUMBO (POLI)','PAQUETE DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1950,NULL,'11082',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G JUMBO (POLI)','POLISACO DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1951,NULL,'11083',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES G JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1952,NULL,'11084',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG JUMBO (POLI)','POLISACO DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1953,NULL,'11085',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES XG JUMBO (POLI)','PAQUETE DE 16 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1954,NULL,'11086',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P MEGA (POLI)','POLISACO DE 2 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1955,NULL,'11087',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P MEGA (POLI)','PAQUETE DE 14 TRIPAC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1956,NULL,'11088',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P MEGA (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1957,NULL,'11089',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M MEGA TRIPACK (POLI)','POLISACO DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1958,NULL,'11090',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M MEGA TRIPACK (POLI)','PAQUETE DE 12 TRIPAC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1959,NULL,'11091',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1960,NULL,'11092',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G MEGA TRIPACK (POLI)','POLISACO DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1961,NULL,'11093',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G MEGA TRIPACK (POLI)','PAQUETE DE 12 TRIPAC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1962,NULL,'11094',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1963,NULL,'11095',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG MEGA TRIPACK (POLI)','POLISACO DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1964,NULL,'11096',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG MEGA TRIPACK (POLI)','PAQUETE DE 8 TRIPAC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1965,NULL,'11097',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1966,NULL,'11098',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XXG MEGA TRIPACK (POLI)','POLISACO DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1967,NULL,'11099',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XXG MEGA TRIPACK (POLI)','PAQUETE DE 8 TRIPAC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1968,NULL,'11100',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XXG MEGA TRIPACK (POLI)','TRIPAC DE 3 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1969,NULL,'11101',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P JUMBO (POLI)','POLISACO DE 6 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1970,NULL,'11102',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS P JUMBO (POLI)','PAQUETE DE 28 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1971,NULL,'11103',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M JUMBO (POLI)','POLISACO DE 6 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1972,NULL,'11104',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS M JUMBO (POLI)','PAQUETE DE 24 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1973,NULL,'11105',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G JUMBO (POLI)','POLISACO DE 6 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1974,NULL,'11106',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS G JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1975,NULL,'11107',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG JUMBO (POLI)','POLISACO DE 6 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1976,NULL,'11108',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPERS XG JUMBO (POLI)','PAQUETE DE 16 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1977,NULL,'11109',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPER  RN  JUMBO (CAJ)','CAJA DE 12 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1978,NULL,'11110',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','PAMPER  RN  JUMBO (CAJ)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1979,NULL,'11111',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES RN JUMBO (POLI)','POLISACO DE 10 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1980,NULL,'11112',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','HUGGIES RN JUMBO (POLI)','PAQUETE DE 20 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1981,NULL,'11113',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','CELEX (PQT)','PAQUETE DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1982,NULL,'11114',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','CELEX (PQT)','PAQUETE DE 6 DIS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1983,NULL,'11115',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','CELEX (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1984,NULL,'11116',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX (PQT)','PAQUETE DE 8 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1985,NULL,'11117',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX (PQT)','PAQUETE DE 6 DIS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1986,NULL,'11118',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1987,NULL,'11119',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX DISPENSADOR (PQT)','PAQUETE DE 12 DISPENSADORES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1988,NULL,'11120',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX DISPENSADOR (PQT)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1989,NULL,'11121',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS (PQT)','PAQUETE DE 4 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1990,NULL,'11122',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS (PQT)','PAQUETE DE 6 DIS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1991,NULL,'11123',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS (PQT)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1992,NULL,'11124',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS DISPENSADOR (PQT)','PAQUETE DE 12 DISPENSADORES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1993,NULL,'11125',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','KOTEX TEENS DISPENSADOR (PQT)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1994,NULL,'11126',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS (CAJ)','CAJA DE 24 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1995,NULL,'11127',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS (CAJ)','PAQUETE DE 10 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1996,NULL,'11128',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS DISPENSADOR (CAJ)','CAJA DE 24 DISPENSADORES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1997,NULL,'11129',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,33,NULL,NULL,1,0,NULL,'IGV','NOSOTRAS DISPENSADOR (CAJ)','PAQUETE DE 42 UNID',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1998,NULL,'11130',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS VARTA 2A (CAJ)','CAJA DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(1999,NULL,'11131',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS VARTA 2A (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2000,NULL,'11132',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC VERDE (CAJ)','CAJA DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2001,NULL,'11133',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC VERDE (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2002,NULL,'11134',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC NEGRO (CAJ)','CAJA DE 20 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2003,NULL,'11135',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC NEGRO (CAJ)','DISPLAY DE 6 PARES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2004,NULL,'11136',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC 2A (CAJ)','CAJA DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2005,NULL,'11137',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC 2A (CAJ)','DISPLAY DE 10 PARES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2006,NULL,'11138',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC  3A (CAJ)','CAJA DE 10 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2007,NULL,'11139',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,34,NULL,NULL,1,0,NULL,'IGV','PILAS PANASONIC  3A (CAJ)','DISPLAY DE 20 PARES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2008,NULL,'11140',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MORADA (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2009,NULL,'11141',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MORADA (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2010,NULL,'11142',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MORADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2011,NULL,'11143',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MARACUYA (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2012,NULL,'11144',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MARACUYA (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2013,NULL,'11145',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO MARACUYA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2014,NULL,'11146',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO NARANJA (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2015,NULL,'11147',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO NARANJA (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2016,NULL,'11148',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO NARANJA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2017,NULL,'11149',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO DURAZNO (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2018,NULL,'11150',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO DURAZNO (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2019,NULL,'11151',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO DURAZNO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2020,NULL,'11152',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO PIÃ‘A (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2021,NULL,'11153',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO PIÃ‘A (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2022,NULL,'11154',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO PIÃ‘A (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2023,NULL,'11155',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO LIMONADA (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2024,NULL,'11156',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO LIMONADA (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2025,NULL,'11157',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO LIMONADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2026,NULL,'11158',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO FRESA (PQT)','PAQUETE DE 8 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2027,NULL,'11159',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO FRESA (PQT)','DISPLAY DE 12 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2028,NULL,'11160',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','NEGRITA REFRESCO FRESA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2029,NULL,'11161',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MORADA (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2030,NULL,'11162',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MORADA (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2031,NULL,'11163',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL DURAZNO (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2032,NULL,'11164',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL DURAZNO (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2033,NULL,'11165',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MARACUYA (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2034,NULL,'11166',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL MARACUYA (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2035,NULL,'11167',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL FRESA (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2036,NULL,'11168',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL FRESA (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2037,NULL,'11169',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL NARANJA (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2038,NULL,'11170',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL NARANJA (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2039,NULL,'11171',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL PIÃ‘A (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2040,NULL,'11172',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL PIÃ‘A (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2041,NULL,'11173',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL SURTIDO (PQT)','PAQUETE DE 4 JARRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2042,NULL,'11174',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','REFRESCO JARRA UNIVERSAL SURTIDO (PQT)','JARRA DE 36 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2043,NULL,'11175',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MORADA (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2044,NULL,'11176',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MORADA (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2045,NULL,'11177',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MORADA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2046,NULL,'11178',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO FRESA (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2047,NULL,'11179',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO FRESA (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2048,NULL,'11180',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO FRESA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2049,NULL,'11181',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MARACUYA (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2050,NULL,'11182',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MARACUYA (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2051,NULL,'11183',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO MARACUYA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2052,NULL,'11184',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO NARANJA (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2053,NULL,'11185',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO NARANJA (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2054,NULL,'11186',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO NARANJA (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2055,NULL,'11187',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO DURAZNO (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2056,NULL,'11188',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO DURAZNO (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2057,NULL,'11189',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO DURAZNO (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2058,NULL,'11190',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO PIÃ‘A (PQT)','PAQUETE DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2059,NULL,'11191',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO PIÃ‘A (PQT)','DISPLAY DE 18 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2060,NULL,'11192',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,35,NULL,NULL,1,0,NULL,'IGV','OASIS REFRESCO PIÃ‘A (PQT)','SOBRE DE 15 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2061,NULL,'11193',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','SACO DE 25 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2062,NULL,'11194',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2063,NULL,'11195',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','SACO DE 50 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2064,NULL,'11196',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL COCINA (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2065,NULL,'11197',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL MESA (SACO)','SACO DE 25 PAQUETES.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2066,NULL,'11198',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL EMSAL MESA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2067,NULL,'11199',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','SACO DE 25 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2068,NULL,'11200',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2069,NULL,'11201',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','SACO DE 50 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2070,NULL,'11202',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL COCINA (SACO)','PAQUETE DE 500 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2071,NULL,'11203',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL MESA (SACO)','SACO DE 25 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2072,NULL,'11204',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORSAL MESA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2073,NULL,'11205',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORTEÃ‘ITA (SACO)','SACO DE 24 PAQUETES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2074,NULL,'11206',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,36,NULL,NULL,1,0,NULL,'IGV','SAL NORTEÃ‘ITA (SACO)','PAQUETE DE 1 KG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2075,NULL,'11207',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','ANUA (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2076,NULL,'11208',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','ANUA (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2077,NULL,'11209',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BALLERINA C/OFERTA (CAJ)','CAJA DE 48 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2078,NULL,'11210',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BALLERINA C/OFERTA (CAJ)','SACHET DE 60 ML X 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2079,NULL,'11211',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BELLA FRASCO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2080,NULL,'11212',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BELLA FRASCO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2081,NULL,'11213',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL REACONDICIONADOR (CAJ)','CAJA DE 24 DISPLAYS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2082,NULL,'11214',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL REACONDICIONADOR (CAJ)','DISPLAY DE 40 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2083,NULL,'11215',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL REACONDICIONADOR (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2084,NULL,'11216',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL SHAMPOO (CAJ)','CAJA DE 12 DISPLAYS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2085,NULL,'11217',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL SHAMPOO (CAJ)','DISPLAY DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2086,NULL,'11218',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','BONABELL SHAMPOO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2087,NULL,'11219',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS AZUL (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2088,NULL,'11220',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS AZUL (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2089,NULL,'11221',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS AZUL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2090,NULL,'11222',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ROSADO (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2091,NULL,'11223',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ROSADO (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2092,NULL,'11224',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ROSADO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2093,NULL,'11225',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MARRON (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2094,NULL,'11226',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MARRON (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2095,NULL,'11227',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MARRON (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2096,NULL,'11228',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ALOE (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2097,NULL,'11229',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ALOE (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2098,NULL,'11230',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS ALOE (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2099,NULL,'11231',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MENTHOL (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2100,NULL,'11232',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MENTHOL (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2101,NULL,'11233',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS MENTHOL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2102,NULL,'11234',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS RELAX (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2103,NULL,'11235',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS RELAX (CAJ)','TIRA DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2104,NULL,'11236',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS RELAX (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2105,NULL,'11237',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON ROSADO (CAJ)','CAJA DE 25 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2106,NULL,'11238',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON ROSADO (CAJ)','TIRA DE 12 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2107,NULL,'11239',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON ROSADO (CAJ)','SACHET DE 18 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2108,NULL,'11240',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON AZUL (CAJ)','CAJA DE 25 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2109,NULL,'11241',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON AZUL (CAJ)','TIRA DE 12 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2110,NULL,'11242',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS SACHETON AZUL (CAJ)','SACHET DE 18 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2111,NULL,'11243',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH AZUL (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2112,NULL,'11244',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH AZUL (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2113,NULL,'11245',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ROSADO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2114,NULL,'11246',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ROSADO (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2115,NULL,'11247',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MARRON (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2116,NULL,'11248',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MARRON (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2117,NULL,'11249',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MENTHOL (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2118,NULL,'11250',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH MENTHOL (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2119,NULL,'11251',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ALOE (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2120,NULL,'11252',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH ALOE (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2121,NULL,'11253',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH LIMON (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2122,NULL,'11254',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH LIMON (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2123,NULL,'11255',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH FOR MEN (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2124,NULL,'11256',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO CH FOR MEN (CAJ)','FRASCO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2125,NULL,'11257',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR AZUL (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2126,NULL,'11258',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR AZUL (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2127,NULL,'11259',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ROSADO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2128,NULL,'11260',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ROSADO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2129,NULL,'11261',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MARRON (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2130,NULL,'11262',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MARRON (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2131,NULL,'11263',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MENTHOL (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2132,NULL,'11264',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR MENTHOL (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2133,NULL,'11265',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ALOE (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2134,NULL,'11266',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR ALOE (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2135,NULL,'11267',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR LIMON (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2136,NULL,'11268',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR LIMON (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2137,NULL,'11269',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR FOR MEN (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2138,NULL,'11270',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','HYS FRASCO GR FOR MEN (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2139,NULL,'11271',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR LISO Y SEDOSO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2140,NULL,'11272',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR LISO Y SEDOSO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2141,NULL,'11273',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CONTROL CAIDA (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2142,NULL,'11274',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CONTROL CAIDA (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2143,NULL,'11275',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CUIDIDO CLASICO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2144,NULL,'11276',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR CUIDIDO CLASICO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2145,NULL,'11277',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR RIZOS DEFINIDOS (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2146,NULL,'11278',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR RIZOS DEFINIDOS (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2147,NULL,'11279',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR BRILLO EXTREMO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2148,NULL,'11280',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FRASCO GR BRILLO EXTREMO (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2149,NULL,'11281',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CONTROL CAIDA (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2150,NULL,'11282',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CONTROL CAIDA (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2151,NULL,'11283',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CONTROL CAIDA (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2152,NULL,'11284',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE RIZOS DEFINIDOS (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2153,NULL,'11285',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE RIZOS DEFINIDOS (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2154,NULL,'11286',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE RIZOS DEFINIDOS (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2155,NULL,'11287',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE LISO Y SEDOSO (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2156,NULL,'11288',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE LISO Y SEDOSO (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2157,NULL,'11289',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE LISO Y SEDOSO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2158,NULL,'11290',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FUSION NATURALESA (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2159,NULL,'11291',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FUSION NATURALESA (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2160,NULL,'11292',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE FUSION NATURALESA (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2161,NULL,'11293',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CREMA PARA PEINAR (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2162,NULL,'11294',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CREMA PARA PEINAR (CAJ)','TIRA DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2163,NULL,'11295',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CREMA PARA PEINAR (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2164,NULL,'11296',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CUIDADO CLASICO (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2165,NULL,'11297',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CUIDADO CLASICO (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2166,NULL,'11298',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PANTENE CUIDADO CLASICO (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2167,NULL,'11299',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS TIRA MENTHOL (CAJ)','CAJA DE 24 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2168,NULL,'11300',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS TIRA MENTHOL (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2169,NULL,'11301',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS TIRA MENTHOL (CAJ)','SACHET DE 10 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2170,NULL,'11302',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS FRASCO GR (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2171,NULL,'11303',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','PERT PLUS FRASCO GR (CAJ)','FRASCO DE 400 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2172,NULL,'11304',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO (CAJ)','CAJA DE 24 DISPLAYS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2173,NULL,'11305',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO (CAJ)','DISPLAY DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2174,NULL,'11306',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2175,NULL,'11307',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS (CAJ)','CAJA DE 24 DISPLAYS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2176,NULL,'11308',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS (CAJ)','DISPLAY DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2177,NULL,'11309',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2178,NULL,'11310',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS (CAJ)','CAJA DE 24 DISPLAYS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2179,NULL,'11311',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS (CAJ)','DISPLAY DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2180,NULL,'11312',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2181,NULL,'11313',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO TIRA (CAJ)','CAJA DE 12 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2182,NULL,'11314',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO TIRA (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2183,NULL,'11315',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO TIRA (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2184,NULL,'11316',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS TIRA (CAJ)','CAJA DE 12 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2185,NULL,'11317',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS TIRA (CAJ)','TIRA DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2186,NULL,'11318',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS TIRA (CAJ)','SACHET DE 15 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2187,NULL,'11319',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO FRASCO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2188,NULL,'11320',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL DUO FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2189,NULL,'11321',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS FRASCO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2190,NULL,'11322',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL CERAMIDAS FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2191,NULL,'11323',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS FRASCO (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2192,NULL,'11324',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','SEDAL NEGROS LUMINOSOS FRASCO (CAJ)','FRASCO DE 350 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2193,NULL,'11325',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGO FRASCO BLACK (CAJ)','CAJA DE 12 FRASCOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2194,NULL,'11326',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGO FRASCO BLACK (CAJ)','FRASCO DE 250 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2195,NULL,'11327',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGGO TIRA (CAJ)','CAJA DE 18 TIRAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2196,NULL,'11328',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGGO TIRA (CAJ)','TIRA DE 20 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2197,NULL,'11329',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,37,NULL,NULL,1,0,NULL,'IGV','EGGO TIRA (CAJ)','SACHET DE 12 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2198,NULL,'11330',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (PQT)','PAQUETE  DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2199,NULL,'11331',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (PQT)','DISPLAY DE 100 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2200,NULL,'11332',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2201,NULL,'11333',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (PQT)','PAQUETE  DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2202,NULL,'11334',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (PQT)','DISPLAY DE 100 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2203,NULL,'11335',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2204,NULL,'11336',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (PQT)','PAQUETE  DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2205,NULL,'11337',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (PQT)','DISPLAY DE 100 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2206,NULL,'11338',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2207,NULL,'11339',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (PQT)','PAQUETE  DE 12 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2208,NULL,'11340',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (PQT)','DISPLAY DE 100 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2209,NULL,'11341',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (PQT)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2210,NULL,'11342',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (CAJ)','CAJA DE 32 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2211,NULL,'11343',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (CAJ)','DISPLAY DE 25 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2212,NULL,'11344',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI MANZANILLA (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2213,NULL,'11345',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (CAJ)','CAJA DE 32 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2214,NULL,'11346',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (CAJ)','DISPLAY DE 25 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2215,NULL,'11347',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI ANIS (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2216,NULL,'11348',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (CAJ)','CAJA DE 32 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2217,NULL,'11349',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (CAJ)','DISPLAY DE 25 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2218,NULL,'11350',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE PURO (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2219,NULL,'11351',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (CAJ)','CAJA DE 32 DISPLAY',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2220,NULL,'11352',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (CAJ)','DISPLAY DE 25 SOBRES',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2221,NULL,'11353',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,38,NULL,NULL,1,0,NULL,'IGV','HERBI TE CANELA (CAJ)','SOBRE DE 1.5 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2222,NULL,'11354',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2223,NULL,'11355',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2224,NULL,'11356',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2225,NULL,'11357',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2226,NULL,'11358',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCMA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2227,NULL,'11359',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCMA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2228,NULL,'11360',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2229,NULL,'11361',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2230,NULL,'11362',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA PIÃ‘A (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2231,NULL,'11363',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA PIÃ‘A (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2232,NULL,'11364',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA SAUCO (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2233,NULL,'11365',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA SAUCO (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2234,NULL,'11366',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2235,NULL,'11367',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2236,NULL,'11368',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA MANZANA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2237,NULL,'11369',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA MANZANA (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2238,NULL,'11370',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA TUTTI FRUTTI (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2239,NULL,'11371',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA TUTTI FRUTTI (PQT)','BOTELLA DE 1 LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2240,NULL,'11372',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2241,NULL,'11373',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA DURAZNO (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2242,NULL,'11374',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2243,NULL,'11375',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA FRESA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2244,NULL,'11376',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCUMA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2245,NULL,'11377',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA LUCUMA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2246,NULL,'11378',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2247,NULL,'11379',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA GUANABANA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2248,NULL,'11380',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','PAQUETE DE 6 BOTELLAS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2249,NULL,'11381',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT GLORIA VAINILLA FRANCESA (PQT)','BOTELLA DE 500 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2250,NULL,'11382',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET GLORIA (PQT)','PAQUETE DE 25 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2251,NULL,'11383',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET GLORIA (PQT)','SACHET DE 100 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2252,NULL,'11384',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT  GLORIA BEBE (PQT)','PAQUETE DE 24 POMOS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2253,NULL,'11385',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT  GLORIA BEBE (PQT)','POMO DE 200 ML',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2254,NULL,'11386',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET PURA VIDA (PQT)','PAQUETE DE 24 SACHET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2255,NULL,'11387',NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,39,NULL,NULL,1,0,NULL,'IGV','YOGURT SACHET PURA VIDA (PQT)','SACHET DE 90 GR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `maestro` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `maestro_auxiliar`
---
-
-DROP TABLE IF EXISTS `maestro_auxiliar`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_auxiliar` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `valor` varchar(255) NOT NULL DEFAULT '',
-  `prioridad` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `maestro_auxiliar_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `maestro_auxiliar`
@@ -1359,32 +405,6 @@ LOCK TABLES `maestro_auxiliar` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `maestro_dependencias`
---
-
-DROP TABLE IF EXISTS `maestro_dependencias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_dependencias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `modo` int(11) DEFAULT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `data` varchar(255) NOT NULL DEFAULT '',
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `maestro_dependencias_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_dependencias_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_dependencias_ibfk_3` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `maestro_dependencias`
 --
 
@@ -1392,39 +412,6 @@ LOCK TABLES `maestro_dependencias` WRITE;
 /*!40000 ALTER TABLE `maestro_dependencias` DISABLE KEYS */;
 /*!40000 ALTER TABLE `maestro_dependencias` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `maestro_descuentos`
---
-
-DROP TABLE IF EXISTS `maestro_descuentos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_descuentos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `tiempo` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codbarras` int(11) DEFAULT NULL,
-  `descuento` double NOT NULL DEFAULT '0',
-  `monto_req` double NOT NULL DEFAULT '0',
-  `user_nivel` int(11) NOT NULL DEFAULT '0',
-  `fecha_inicio` date NOT NULL,
-  `hora_inicio` time NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `hora_fin` time NOT NULL,
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `maestro_descuentos_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_descuentos_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_descuentos_ibfk_3` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `maestro_descuentos`
@@ -1436,23 +423,13 @@ LOCK TABLES `maestro_descuentos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `maestro_posiciones`
+-- Dumping data for table `maestro_pos`
 --
 
-DROP TABLE IF EXISTS `maestro_posiciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_posiciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codbarras` int(11) DEFAULT NULL,
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `maestro_posiciones_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `maestro_pos` WRITE;
+/*!40000 ALTER TABLE `maestro_pos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `maestro_pos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `maestro_posiciones`
@@ -1464,29 +441,6 @@ LOCK TABLES `maestro_posiciones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `maestro_proveedores`
---
-
-DROP TABLE IF EXISTS `maestro_proveedores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_proveedores` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `proveedor` int(11) DEFAULT NULL,
-  `unidad_medida` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `proveedor__idx` (`proveedor`),
-  KEY `unidad_medida__idx` (`unidad_medida`),
-  CONSTRAINT `maestro_proveedores_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_proveedores_ibfk_2` FOREIGN KEY (`proveedor`) REFERENCES `directorio` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_proveedores_ibfk_3` FOREIGN KEY (`unidad_medida`) REFERENCES `unidades_medida` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `maestro_proveedores`
 --
 
@@ -1494,31 +448,6 @@ LOCK TABLES `maestro_proveedores` WRITE;
 /*!40000 ALTER TABLE `maestro_proveedores` DISABLE KEYS */;
 /*!40000 ALTER TABLE `maestro_proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `maestro_valores`
---
-
-DROP TABLE IF EXISTS `maestro_valores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maestro_valores` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `tiempo` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `precio` double NOT NULL DEFAULT '0',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `maestro_valores_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_valores_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maestro_valores_ibfk_3` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `maestro_valores`
@@ -1530,22 +459,6 @@ LOCK TABLES `maestro_valores` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `modos_logisticos`
---
-
-DROP TABLE IF EXISTS `modos_logisticos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `modos_logisticos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo_logistico` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `modos_logisticos`
 --
 
@@ -1553,23 +466,6 @@ LOCK TABLES `modos_logisticos` WRITE;
 /*!40000 ALTER TABLE `modos_logisticos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `modos_logisticos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `modos_pvr`
---
-
-DROP TABLE IF EXISTS `modos_pvr`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `modos_pvr` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tabla` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `modo_tabla` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `modos_pvr`
@@ -1581,51 +477,14 @@ LOCK TABLES `modos_pvr` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `monedas`
---
-
-DROP TABLE IF EXISTS `monedas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `monedas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `simbolo` varchar(255) NOT NULL DEFAULT '',
-  `orden` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `monedas`
 --
 
 LOCK TABLES `monedas` WRITE;
 /*!40000 ALTER TABLE `monedas` DISABLE KEYS */;
+INSERT INTO `monedas` (`id`, `registro`, `modo`, `codigo`, `nombre`, `simbolo`, `orden`) VALUES (1,'2011-06-27 09:29:23',0,'SOL','SOLES','S/.',0),(2,'2011-06-27 09:29:36',0,'DOL','DOLARES','$',0);
 /*!40000 ALTER TABLE `monedas` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `operaciones_logisticas`
---
-
-DROP TABLE IF EXISTS `operaciones_logisticas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `operaciones_logisticas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `operacion` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `operacion_relac` varchar(255) NOT NULL DEFAULT '',
-  `almacen_relac` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `operaciones_logisticas`
@@ -1637,53 +496,13 @@ LOCK TABLES `operaciones_logisticas` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pedidos`
+-- Dumping data for table `operaciones_vta_aux`
 --
 
-DROP TABLE IF EXISTS `pedidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pedidos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `area` int(11) DEFAULT NULL,
-  `genero` int(11) DEFAULT NULL,
-  `tipo` int(11) NOT NULL DEFAULT '0',
-  `user_req` int(11) DEFAULT NULL,
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_base` int(11) NOT NULL DEFAULT '0',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  `peso` double NOT NULL DEFAULT '0',
-  `detalle` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `turno__idx` (`turno`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  KEY `area__idx` (`area`),
-  KEY `genero__idx` (`genero`),
-  KEY `user_req__idx` (`user_req`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_4` FOREIGN KEY (`area`) REFERENCES `areas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_5` FOREIGN KEY (`genero`) REFERENCES `generos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_6` FOREIGN KEY (`user_req`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_7` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_ibfk_8` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `operaciones_vta_aux` WRITE;
+/*!40000 ALTER TABLE `operaciones_vta_aux` DISABLE KEYS */;
+/*!40000 ALTER TABLE `operaciones_vta_aux` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `pedidos`
@@ -1695,32 +514,6 @@ LOCK TABLES `pedidos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pedidos_emergencia_produccion`
---
-
-DROP TABLE IF EXISTS `pedidos_emergencia_produccion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pedidos_emergencia_produccion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date DEFAULT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `turno__idx` (`turno`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `pedidos_emergencia_produccion_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_emergencia_produccion_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pedidos_emergencia_produccion_ibfk_3` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `pedidos_emergencia_produccion`
 --
 
@@ -1730,23 +523,13 @@ LOCK TABLES `pedidos_emergencia_produccion` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pesos_operaciones`
+-- Dumping data for table `personal`
 --
 
-DROP TABLE IF EXISTS `pesos_operaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pesos_operaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `peso_neto` double NOT NULL DEFAULT '0',
-  `peso_tara` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `pesos_operaciones_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `personal` WRITE;
+/*!40000 ALTER TABLE `personal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `pesos_operaciones`
@@ -1758,32 +541,6 @@ LOCK TABLES `pesos_operaciones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pos_administracion`
---
-
-DROP TABLE IF EXISTS `pos_administracion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pos_administracion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `caja` int(11) NOT NULL DEFAULT '0',
-  `user_ing` int(11) DEFAULT NULL,
-  `user_out` int(11) DEFAULT NULL,
-  `apertura` datetime NOT NULL,
-  `cierre` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `user_ing__idx` (`user_ing`),
-  KEY `user_out__idx` (`user_out`),
-  CONSTRAINT `pos_administracion_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pos_administracion_ibfk_2` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `pos_administracion_ibfk_3` FOREIGN KEY (`user_out`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `pos_administracion`
 --
 
@@ -1793,33 +550,22 @@ LOCK TABLES `pos_administracion` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produccion_datos`
+-- Dumping data for table `pos_configuracion`
 --
 
-DROP TABLE IF EXISTS `produccion_datos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_datos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `codbarras_hijo` varchar(255) NOT NULL DEFAULT '',
-  `cantidad` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  KEY `pv__idx` (`pv`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `produccion_datos_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_datos_ibfk_2` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_datos_ibfk_3` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_datos_ibfk_4` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `pos_configuracion` WRITE;
+/*!40000 ALTER TABLE `pos_configuracion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pos_configuracion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `pos_descuentos`
+--
+
+LOCK TABLES `pos_descuentos` WRITE;
+/*!40000 ALTER TABLE `pos_descuentos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pos_descuentos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `produccion_datos`
@@ -1831,45 +577,6 @@ LOCK TABLES `produccion_datos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produccion_derivados`
---
-
-DROP TABLE IF EXISTS `produccion_derivados`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_derivados` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `turno` int(11) DEFAULT NULL,
-  `tipo` int(11) NOT NULL DEFAULT '0',
-  `cp_base` varchar(255) NOT NULL DEFAULT '',
-  `cp_aux` varchar(255) NOT NULL DEFAULT '',
-  `user_ing` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_base` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `ing_produccion` double NOT NULL DEFAULT '0',
-  `ing_traslado` double NOT NULL DEFAULT '0',
-  `ing_varios` double NOT NULL DEFAULT '0',
-  `sal_ventas` double NOT NULL DEFAULT '0',
-  `sal_merma` double NOT NULL DEFAULT '0',
-  `sal_consumo_int` double NOT NULL DEFAULT '0',
-  `sal_traslado` double NOT NULL DEFAULT '0',
-  `sal_varios` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  KEY `user_ing__idx` (`user_ing`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `produccion_derivados_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_derivados_ibfk_2` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_derivados_ibfk_3` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `produccion_derivados`
 --
 
@@ -1877,36 +584,6 @@ LOCK TABLES `produccion_derivados` WRITE;
 /*!40000 ALTER TABLE `produccion_derivados` DISABLE KEYS */;
 /*!40000 ALTER TABLE `produccion_derivados` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `produccion_estadistica`
---
-
-DROP TABLE IF EXISTS `produccion_estadistica`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_estadistica` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `codbarras_abuelo` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_hijo` varchar(255) NOT NULL DEFAULT '',
-  `cantidad_abuelo` double NOT NULL DEFAULT '0',
-  `cantidad_padre` double NOT NULL DEFAULT '0',
-  `porcentaje_padre` double NOT NULL DEFAULT '0',
-  `cantidad_hijo` double NOT NULL DEFAULT '0',
-  `porcentaje_hijo` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `porcentaje_general` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  KEY `pv__idx` (`pv`),
-  CONSTRAINT `produccion_estadistica_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_estadistica_ibfk_2` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produccion_estadistica`
@@ -1918,32 +595,6 @@ LOCK TABLES `produccion_estadistica` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produccion_pedidos`
---
-
-DROP TABLE IF EXISTS `produccion_pedidos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_pedidos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `turno__idx` (`turno`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `produccion_pedidos_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_pedidos_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_pedidos_ibfk_3` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `produccion_pedidos`
 --
 
@@ -1951,35 +602,6 @@ LOCK TABLES `produccion_pedidos` WRITE;
 /*!40000 ALTER TABLE `produccion_pedidos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `produccion_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `produccion_planeamiento`
---
-
-DROP TABLE IF EXISTS `produccion_planeamiento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_planeamiento` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date NOT NULL,
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras` int(11) DEFAULT NULL,
-  `codbarras_hijo` varchar(255) NOT NULL DEFAULT '',
-  `cantidad_prod` double NOT NULL DEFAULT '0',
-  `condicion_pedido` varchar(255) NOT NULL DEFAULT '',
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `turno` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `produccion_planeamiento_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_planeamiento_ibfk_2` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_planeamiento_ibfk_3` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produccion_planeamiento`
@@ -1991,33 +613,6 @@ LOCK TABLES `produccion_planeamiento` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `produccion_planeamiento_aux`
---
-
-DROP TABLE IF EXISTS `produccion_planeamiento_aux`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_planeamiento_aux` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date NOT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad_prod` double NOT NULL DEFAULT '0',
-  `condicion_pedido` varchar(255) NOT NULL DEFAULT '',
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `turno` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `produccion_planeamiento_aux_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_planeamiento_aux_ibfk_2` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_planeamiento_aux_ibfk_3` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `produccion_planeamiento_aux`
 --
 
@@ -2025,35 +620,6 @@ LOCK TABLES `produccion_planeamiento_aux` WRITE;
 /*!40000 ALTER TABLE `produccion_planeamiento_aux` DISABLE KEYS */;
 /*!40000 ALTER TABLE `produccion_planeamiento_aux` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `produccion_rendimiento`
---
-
-DROP TABLE IF EXISTS `produccion_rendimiento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `produccion_rendimiento` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `fecha` date NOT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '1',
-  `tipo` int(11) NOT NULL DEFAULT '0',
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  `masa` varchar(255) NOT NULL DEFAULT '',
-  `peso` double NOT NULL DEFAULT '0',
-  `temperatura` double NOT NULL DEFAULT '0',
-  `hora_inicial` time NOT NULL,
-  `hora_final` time NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `produccion_rendimiento_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `produccion_rendimiento_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produccion_rendimiento`
@@ -2065,40 +631,6 @@ LOCK TABLES `produccion_rendimiento` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `promociones`
---
-
-DROP TABLE IF EXISTS `promociones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `promociones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `porcentaje` double NOT NULL DEFAULT '0',
-  `valor` double NOT NULL DEFAULT '0',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codbarras` int(11) DEFAULT NULL,
-  `cantidad` int(11) NOT NULL DEFAULT '1',
-  `limite` int(11) NOT NULL DEFAULT '0',
-  `cond_modo` int(11) NOT NULL DEFAULT '0',
-  `cond_valor` int(11) NOT NULL DEFAULT '0',
-  `cond_fecha_inic` date NOT NULL,
-  `cond_hora_inic` time NOT NULL,
-  `cond_fecha_term` date NOT NULL,
-  `cond_hora_term` time NOT NULL,
-  `estado` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `promociones_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `promociones_ibfk_2` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `promociones`
 --
 
@@ -2108,79 +640,14 @@ LOCK TABLES `promociones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `puntos_venta`
---
-
-DROP TABLE IF EXISTS `puntos_venta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `puntos_venta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `distrito` varchar(255) NOT NULL DEFAULT '',
-  `direccion` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  `posicion2` int(11) NOT NULL DEFAULT '0',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `cab1` varchar(255) NOT NULL DEFAULT '',
-  `cab2` varchar(255) NOT NULL DEFAULT '',
-  `cab3` varchar(255) NOT NULL DEFAULT '',
-  `cab4` varchar(255) NOT NULL DEFAULT '',
-  `impt` varchar(255) NOT NULL DEFAULT '',
-  `modimp` int(11) NOT NULL DEFAULT '0',
-  `modmon` int(11) NOT NULL DEFAULT '0',
-  `moneda` int(11) DEFAULT NULL,
-  `wincha` varchar(255) NOT NULL DEFAULT '',
-  `money_drawer` varchar(255) NOT NULL DEFAULT '',
-  `area` int(11) NOT NULL DEFAULT '0',
-  `replic_srv` varchar(255) NOT NULL DEFAULT '',
-  `replic_db` varchar(255) NOT NULL DEFAULT '',
-  `replic_user` varchar(255) NOT NULL DEFAULT '',
-  `replic_passwd` varchar(255) NOT NULL DEFAULT '',
-  `prodimp` varchar(255) NOT NULL DEFAULT '',
-  `prodkey` varchar(255) NOT NULL DEFAULT '',
-  `facmerma` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `moneda__idx` (`moneda`),
-  CONSTRAINT `puntos_venta_ibfk_1` FOREIGN KEY (`moneda`) REFERENCES `monedas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `puntos_venta`
 --
 
 LOCK TABLES `puntos_venta` WRITE;
 /*!40000 ALTER TABLE `puntos_venta` DISABLE KEYS */;
+INSERT INTO `puntos_venta` (`id`, `registro`, `codigo`, `nombre`, `distrito`, `direccion`, `pos_1`, `pos_2`, `alias`, `area`, `factor_merma`) VALUES (1,'2011-06-27 09:23:52','0001','Principal','','',0,0,'',0,0);
 /*!40000 ALTER TABLE `puntos_venta` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `puntos_venta_grupos`
---
-
-DROP TABLE IF EXISTS `puntos_venta_grupos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `puntos_venta_grupos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `porcentaje` double NOT NULL DEFAULT '100',
-  `codbarras` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  KEY `turno__idx` (`turno`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `puntos_venta_grupos_ibfk_1` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `puntos_venta_grupos_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `puntos_venta_grupos_ibfk_3` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `puntos_venta_grupos`
@@ -2192,23 +659,6 @@ LOCK TABLES `puntos_venta_grupos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `puntos_venta_relaciones`
---
-
-DROP TABLE IF EXISTS `puntos_venta_relaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `puntos_venta_relaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv_padre` varchar(255) NOT NULL DEFAULT '',
-  `pv_hijo` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `puntos_venta_relaciones`
 --
 
@@ -2216,23 +666,6 @@ LOCK TABLES `puntos_venta_relaciones` WRITE;
 /*!40000 ALTER TABLE `puntos_venta_relaciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `puntos_venta_relaciones` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `puntos_venta_satelites`
---
-
-DROP TABLE IF EXISTS `puntos_venta_satelites`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `puntos_venta_satelites` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv_padre` varchar(255) NOT NULL DEFAULT '',
-  `pv_hijo` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `puntos_venta_satelites`
@@ -2244,30 +677,6 @@ LOCK TABLES `puntos_venta_satelites` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `recetas`
---
-
-DROP TABLE IF EXISTS `recetas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `recetas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras_padre` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL DEFAULT '0',
-  `codbarras_hijo` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `estado` int(11) NOT NULL DEFAULT '1',
-  `orden` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras_padre__idx` (`codbarras_padre`),
-  KEY `codbarras_hijo__idx` (`codbarras_hijo`),
-  CONSTRAINT `recetas_ibfk_1` FOREIGN KEY (`codbarras_padre`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `recetas_ibfk_2` FOREIGN KEY (`codbarras_hijo`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `recetas`
 --
 
@@ -2275,28 +684,6 @@ LOCK TABLES `recetas` WRITE;
 /*!40000 ALTER TABLE `recetas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `recetas` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `relaciones`
---
-
-DROP TABLE IF EXISTS `relaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `relaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras_padre` int(11) DEFAULT NULL,
-  `codbarras_hijo` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `orden` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras_padre__idx` (`codbarras_padre`),
-  KEY `codbarras_hijo__idx` (`codbarras_hijo`),
-  CONSTRAINT `relaciones_ibfk_1` FOREIGN KEY (`codbarras_padre`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `relaciones_ibfk_2` FOREIGN KEY (`codbarras_hijo`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `relaciones`
@@ -2308,28 +695,6 @@ LOCK TABLES `relaciones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rendimientos_sintesis`
---
-
-DROP TABLE IF EXISTS `rendimientos_sintesis`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rendimientos_sintesis` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `turno` int(11) DEFAULT NULL,
-  `tipo` int(11) NOT NULL DEFAULT '0',
-  `cantidad` double NOT NULL DEFAULT '0',
-  `peso` double NOT NULL DEFAULT '0',
-  `merma` double NOT NULL DEFAULT '0',
-  `rendimiento` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `rendimientos_sintesis_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `rendimientos_sintesis`
 --
 
@@ -2337,38 +702,6 @@ LOCK TABLES `rendimientos_sintesis` WRITE;
 /*!40000 ALTER TABLE `rendimientos_sintesis` DISABLE KEYS */;
 /*!40000 ALTER TABLE `rendimientos_sintesis` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `reportes_configuracion`
---
-
-DROP TABLE IF EXISTS `reportes_configuracion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reportes_configuracion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_reporte` varchar(255) NOT NULL DEFAULT '',
-  `detalle_reporte` varchar(255) NOT NULL DEFAULT '',
-  `turno` int(11) DEFAULT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `grupo_distribucion` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `codigo_dato` varchar(255) NOT NULL DEFAULT '',
-  `array` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_abuelo` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_padre` varchar(255) NOT NULL DEFAULT '',
-  `codbarras_hijo` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `turno__idx` (`turno`),
-  KEY `pv__idx` (`pv`),
-  KEY `grupo_distribucion__idx` (`grupo_distribucion`),
-  CONSTRAINT `reportes_configuracion_ibfk_1` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `reportes_configuracion_ibfk_2` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `reportes_configuracion_ibfk_3` FOREIGN KEY (`grupo_distribucion`) REFERENCES `grupo_distribucion` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `reportes_configuracion`
@@ -2380,24 +713,6 @@ LOCK TABLES `reportes_configuracion` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rubros`
---
-
-DROP TABLE IF EXISTS `rubros`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rubros` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `rubro` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `rubros`
 --
 
@@ -2407,47 +722,14 @@ LOCK TABLES `rubros` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `sellos`
---
-
-DROP TABLE IF EXISTS `sellos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sellos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `sello` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `sellos`
 --
 
 LOCK TABLES `sellos` WRITE;
 /*!40000 ALTER TABLE `sellos` DISABLE KEYS */;
+INSERT INTO `sellos` (`id`, `registro`, `sello`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:27:56','ND','ND',0);
 /*!40000 ALTER TABLE `sellos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `status`
---
-
-DROP TABLE IF EXISTS `status`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `status`
@@ -2455,25 +737,9 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` (`id`, `registro`, `status`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:29:12','ND','ND',0);
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sub_casas`
---
-
-DROP TABLE IF EXISTS `sub_casas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sub_casas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `sub_casa` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `sub_casas`
@@ -2481,28 +747,9 @@ CREATE TABLE `sub_casas` (
 
 LOCK TABLES `sub_casas` WRITE;
 /*!40000 ALTER TABLE `sub_casas` DISABLE KEYS */;
+INSERT INTO `sub_casas` (`id`, `registro`, `sub_casa`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:25:17','ND','ND',0);
 /*!40000 ALTER TABLE `sub_casas` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sub_generos`
---
-
-DROP TABLE IF EXISTS `sub_generos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sub_generos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `genero` int(11) DEFAULT NULL,
-  `sub_genero` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `genero__idx` (`genero`),
-  CONSTRAINT `sub_generos_ibfk_1` FOREIGN KEY (`genero`) REFERENCES `generos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `sub_generos`
@@ -2510,25 +757,9 @@ CREATE TABLE `sub_generos` (
 
 LOCK TABLES `sub_generos` WRITE;
 /*!40000 ALTER TABLE `sub_generos` DISABLE KEYS */;
+INSERT INTO `sub_generos` (`id`, `registro`, `genero`, `sub_genero`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:26:59',1,'ND','ND',0);
 /*!40000 ALTER TABLE `sub_generos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sub_sellos`
---
-
-DROP TABLE IF EXISTS `sub_sellos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sub_sellos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `sub_sello` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `sub_sellos`
@@ -2536,24 +767,9 @@ CREATE TABLE `sub_sellos` (
 
 LOCK TABLES `sub_sellos` WRITE;
 /*!40000 ALTER TABLE `sub_sellos` DISABLE KEYS */;
+INSERT INTO `sub_sellos` (`id`, `registro`, `sub_sello`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:28:08','ND','ND',0);
 /*!40000 ALTER TABLE `sub_sellos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `tablas_modos`
---
-
-DROP TABLE IF EXISTS `tablas_modos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tablas_modos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tabla` varchar(255) NOT NULL DEFAULT '',
-  `modo` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tablas_modos`
@@ -2565,57 +781,14 @@ LOCK TABLES `tablas_modos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipos`
---
-
-DROP TABLE IF EXISTS `tipos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `tipo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tipos`
 --
 
 LOCK TABLES `tipos` WRITE;
 /*!40000 ALTER TABLE `tipos` DISABLE KEYS */;
+INSERT INTO `tipos` (`id`, `registro`, `tipo`, `nombre`, `posicion`) VALUES (1,'2011-06-27 09:28:38','ND','ND',0);
 /*!40000 ALTER TABLE `tipos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `tipos_cambio`
---
-
-DROP TABLE IF EXISTS `tipos_cambio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipos_cambio` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `moneda` int(11) DEFAULT NULL,
-  `area` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `fecha` date NOT NULL,
-  `hora` time NOT NULL,
-  `valor` double NOT NULL DEFAULT '0',
-  `user_ing` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `moneda__idx` (`moneda`),
-  KEY `area__idx` (`area`),
-  KEY `user_ing__idx` (`user_ing`),
-  CONSTRAINT `tipos_cambio_ibfk_1` FOREIGN KEY (`moneda`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `tipos_cambio_ibfk_2` FOREIGN KEY (`area`) REFERENCES `areas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `tipos_cambio_ibfk_3` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tipos_cambio`
@@ -2627,30 +800,6 @@ LOCK TABLES `tipos_cambio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `transferencias_produccion`
---
-
-DROP TABLE IF EXISTS `transferencias_produccion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `transferencias_produccion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codbarras` int(11) DEFAULT NULL,
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `total` int(11) NOT NULL DEFAULT '0',
-  `transferencia` int(11) NOT NULL DEFAULT '0',
-  `produccion` int(11) NOT NULL DEFAULT '0',
-  `turno` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `transferencias_produccion_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `transferencias_produccion_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `transferencias_produccion`
 --
 
@@ -2658,27 +807,6 @@ LOCK TABLES `transferencias_produccion` WRITE;
 /*!40000 ALTER TABLE `transferencias_produccion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `transferencias_produccion` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `transportistas`
---
-
-DROP TABLE IF EXISTS `transportistas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `transportistas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `emp_doc_id` varchar(255) NOT NULL DEFAULT '',
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  `nombres` varchar(255) NOT NULL DEFAULT '',
-  `apellidos` varchar(255) NOT NULL DEFAULT '',
-  `ubigeo` varchar(255) NOT NULL DEFAULT '',
-  `direccion` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `transportistas`
@@ -2690,24 +818,6 @@ LOCK TABLES `transportistas` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `turnos`
---
-
-DROP TABLE IF EXISTS `turnos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `turnos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `turno` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `hora_inicio` time NOT NULL,
-  `hora_fin` time NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `turnos`
 --
 
@@ -2715,21 +825,6 @@ LOCK TABLES `turnos` WRITE;
 /*!40000 ALTER TABLE `turnos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `turnos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ubigeo_departamentos`
---
-
-DROP TABLE IF EXISTS `ubigeo_departamentos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ubigeo_departamentos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `departamento` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ubigeo_departamentos`
@@ -2741,23 +836,6 @@ LOCK TABLES `ubigeo_departamentos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ubigeo_detalle`
---
-
-DROP TABLE IF EXISTS `ubigeo_detalle`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ubigeo_detalle` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `departamento` varchar(255) NOT NULL DEFAULT '',
-  `provincia` varchar(255) NOT NULL DEFAULT '',
-  `ubigeo` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `ubigeo_detalle`
 --
 
@@ -2765,22 +843,6 @@ LOCK TABLES `ubigeo_detalle` WRITE;
 /*!40000 ALTER TABLE `ubigeo_detalle` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ubigeo_detalle` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ubigeo_provincias`
---
-
-DROP TABLE IF EXISTS `ubigeo_provincias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ubigeo_provincias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `departamento` varchar(255) NOT NULL DEFAULT '',
-  `provincia` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ubigeo_provincias`
@@ -2792,57 +854,14 @@ LOCK TABLES `ubigeo_provincias` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `unidades_medida`
---
-
-DROP TABLE IF EXISTS `unidades_medida`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `unidades_medida` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `descripcion` varchar(255) NOT NULL DEFAULT '',
-  `modo` int(11) NOT NULL DEFAULT '0',
-  `abreviatura_origen` varchar(255) NOT NULL DEFAULT '',
-  `abreviatura_destino` varchar(255) NOT NULL DEFAULT '',
-  `factor` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `unidades_medida`
 --
 
 LOCK TABLES `unidades_medida` WRITE;
 /*!40000 ALTER TABLE `unidades_medida` DISABLE KEYS */;
+INSERT INTO `unidades_medida` (`id`, `registro`, `codigo`, `descripcion`, `modo`, `abreviatura_origen`, `abreviatura_destino`, `factor`) VALUES (1,'2011-06-27 09:29:58','UND','UNIDAD',0,'','',0),(2,'2011-06-27 09:30:28','KG','KILOGRAMOS',0,'','',0);
 /*!40000 ALTER TABLE `unidades_medida` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `variaciones_derivados`
---
-
-DROP TABLE IF EXISTS `variaciones_derivados`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `variaciones_derivados` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `tiempo_ini` datetime NOT NULL,
-  `tiempo_fin` datetime NOT NULL,
-  `porcentaje` double NOT NULL DEFAULT '0',
-  `cp` varchar(255) NOT NULL DEFAULT '',
-  `turno` int(11) DEFAULT NULL,
-  `modo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `codbarras__idx` (`codbarras`),
-  KEY `turno__idx` (`turno`),
-  CONSTRAINT `variaciones_derivados_ibfk_1` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `variaciones_derivados_ibfk_2` FOREIGN KEY (`turno`) REFERENCES `turnos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `variaciones_derivados`
@@ -2854,27 +873,6 @@ LOCK TABLES `variaciones_derivados` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `vehiculos`
---
-
-DROP TABLE IF EXISTS `vehiculos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vehiculos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `doc_id` varchar(255) NOT NULL DEFAULT '',
-  `registro` varchar(255) NOT NULL DEFAULT '',
-  `marca` varchar(255) NOT NULL DEFAULT '',
-  `modelo` varchar(255) NOT NULL DEFAULT '',
-  `tipo` varchar(255) NOT NULL DEFAULT '',
-  `caracteristicas` varchar(255) NOT NULL DEFAULT '',
-  `posicion` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `vehiculos`
 --
 
@@ -2882,25 +880,6 @@ LOCK TABLES `vehiculos` WRITE;
 /*!40000 ALTER TABLE `vehiculos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `vehiculos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ventas_bancos_cuentas`
---
-
-DROP TABLE IF EXISTS `ventas_bancos_cuentas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ventas_bancos_cuentas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `entidad` varchar(255) NOT NULL DEFAULT '',
-  `moneda` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `moneda__idx` (`moneda`),
-  CONSTRAINT `ventas_bancos_cuentas_ibfk_1` FOREIGN KEY (`moneda`) REFERENCES `monedas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ventas_bancos_cuentas`
@@ -2912,31 +891,6 @@ LOCK TABLES `ventas_bancos_cuentas` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ventas_bancos_operaciones`
---
-
-DROP TABLE IF EXISTS `ventas_bancos_operaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ventas_bancos_operaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `fechav` date NOT NULL,
-  `fechad` date NOT NULL,
-  `banco` varchar(255) NOT NULL DEFAULT '',
-  `monto` double NOT NULL DEFAULT '0',
-  `cambio` double NOT NULL DEFAULT '0',
-  `glosa1` varchar(255) NOT NULL DEFAULT '',
-  `glosa2` varchar(255) NOT NULL DEFAULT '',
-  `agencia` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  CONSTRAINT `ventas_bancos_operaciones_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `ventas_bancos_operaciones`
 --
 
@@ -2944,40 +898,6 @@ LOCK TABLES `ventas_bancos_operaciones` WRITE;
 /*!40000 ALTER TABLE `ventas_bancos_operaciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ventas_bancos_operaciones` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ventas_grupos`
---
-
-DROP TABLE IF EXISTS `ventas_grupos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ventas_grupos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `codigo` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(255) NOT NULL DEFAULT '',
-  `atajo` varchar(255) NOT NULL DEFAULT '',
-  `articulo` varchar(255) NOT NULL DEFAULT '',
-  `casa` int(11) DEFAULT NULL,
-  `sello` int(11) DEFAULT NULL,
-  `genero` int(11) DEFAULT NULL,
-  `subgenero` int(11) DEFAULT NULL,
-  `categoria` int(11) DEFAULT NULL,
-  `aux_data` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `casa__idx` (`casa`),
-  KEY `sello__idx` (`sello`),
-  KEY `genero__idx` (`genero`),
-  KEY `subgenero__idx` (`subgenero`),
-  KEY `categoria__idx` (`categoria`),
-  CONSTRAINT `ventas_grupos_ibfk_1` FOREIGN KEY (`casa`) REFERENCES `casas` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_grupos_ibfk_2` FOREIGN KEY (`sello`) REFERENCES `sellos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_grupos_ibfk_3` FOREIGN KEY (`genero`) REFERENCES `generos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_grupos_ibfk_4` FOREIGN KEY (`subgenero`) REFERENCES `sub_generos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_grupos_ibfk_5` FOREIGN KEY (`categoria`) REFERENCES `categorias` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ventas_grupos`
@@ -2989,53 +909,6 @@ LOCK TABLES `ventas_grupos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ventas_operaciones`
---
-
-DROP TABLE IF EXISTS `ventas_operaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ventas_operaciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `caja` int(11) NOT NULL DEFAULT '0',
-  `tiempo` datetime NOT NULL,
-  `n_doc_prefijo` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_base` varchar(255) NOT NULL DEFAULT '',
-  `n_doc_sufijo` varchar(255) NOT NULL DEFAULT '',
-  `estado` int(11) NOT NULL DEFAULT '0',
-  `documento` int(11) NOT NULL DEFAULT '0',
-  `cliente` varchar(255) NOT NULL DEFAULT '',
-  `user_ing` int(11) DEFAULT NULL,
-  `user_null` int(11) DEFAULT NULL,
-  `forma_pago` varchar(255) NOT NULL DEFAULT '',
-  `vales` varchar(255) NOT NULL DEFAULT '',
-  `sello` int(11) DEFAULT NULL,
-  `codbarras` int(11) DEFAULT NULL,
-  `precio` double NOT NULL DEFAULT '0',
-  `cantidad` int(11) NOT NULL DEFAULT '0',
-  `total` double NOT NULL DEFAULT '0',
-  `monto_local` double NOT NULL DEFAULT '0',
-  `monto_dolar` double NOT NULL DEFAULT '0',
-  `data_1` varchar(255) NOT NULL DEFAULT '',
-  `data_2` varchar(255) NOT NULL DEFAULT '',
-  `imod` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  KEY `user_ing__idx` (`user_ing`),
-  KEY `user_null__idx` (`user_null`),
-  KEY `sello__idx` (`sello`),
-  KEY `codbarras__idx` (`codbarras`),
-  CONSTRAINT `ventas_operaciones_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_operaciones_ibfk_2` FOREIGN KEY (`user_ing`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_operaciones_ibfk_3` FOREIGN KEY (`user_null`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_operaciones_ibfk_4` FOREIGN KEY (`sello`) REFERENCES `sellos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ventas_operaciones_ibfk_5` FOREIGN KEY (`codbarras`) REFERENCES `maestro` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `ventas_operaciones`
 --
 
@@ -3043,31 +916,6 @@ LOCK TABLES `ventas_operaciones` WRITE;
 /*!40000 ALTER TABLE `ventas_operaciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ventas_operaciones` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ventas_resumen`
---
-
-DROP TABLE IF EXISTS `ventas_resumen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ventas_resumen` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registro` datetime NOT NULL,
-  `pv` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `cnt_doc` int(11) NOT NULL DEFAULT '0',
-  `total_neto` double NOT NULL DEFAULT '0',
-  `total_igv` double NOT NULL DEFAULT '0',
-  `total_srv` double NOT NULL DEFAULT '0',
-  `total_bruto` double NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '1',
-  `condicion_comercial` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `pv__idx` (`pv`),
-  CONSTRAINT `ventas_resumen_ibfk_1` FOREIGN KEY (`pv`) REFERENCES `puntos_venta` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ventas_resumen`
@@ -3087,4 +935,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-15 10:06:26
+-- Dump completed on 2011-06-27 11:09:34

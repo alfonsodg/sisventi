@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I15
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p16
 ssS'cantidad'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I10
 sg7
-S'INT NOT NULL'
+S'INT'
 p20
 ssS'cond_valor'
 p21
@@ -54,7 +54,7 @@ g19
 sg6
 I13
 sg7
-S'INT NOT NULL'
+S'INT'
 p23
 ssS'valor'
 p24
@@ -65,7 +65,7 @@ p26
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p27
 ssS'cond_modo'
 p28
@@ -75,7 +75,7 @@ g19
 sg6
 I12
 sg7
-S'INT NOT NULL'
+S'INT'
 p30
 ssS'limite'
 p31
@@ -85,7 +85,7 @@ g19
 sg6
 I11
 sg7
-S'INT NOT NULL'
+S'INT'
 p33
 ssS'cond_fecha_inic'
 p34
@@ -96,7 +96,7 @@ p36
 sg6
 I14
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p37
 ssS'estado'
 p38
@@ -106,7 +106,7 @@ g19
 sg6
 I18
 sg7
-S'INT NOT NULL'
+S'INT'
 p40
 ssS'porcentaje'
 p41
@@ -116,7 +116,7 @@ g26
 sg6
 I6
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p43
 ssS'cond_fecha_term'
 p44
@@ -126,7 +126,7 @@ g36
 sg6
 I16
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p46
 ssS'nombre'
 p47
@@ -137,7 +137,7 @@ p49
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p50
 ssS'cond_hora_term'
 p51
@@ -147,7 +147,7 @@ g15
 sg6
 I17
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p53
 ssS'codigo'
 p54
@@ -157,7 +157,7 @@ g49
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p56
 ssS'codbarras'
 p57
@@ -188,6 +188,6 @@ g19
 sg6
 I8
 sg7
-S'INT NOT NULL'
+S'INT'
 p66
 ss.

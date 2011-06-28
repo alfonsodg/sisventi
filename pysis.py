@@ -104,7 +104,7 @@ modo_imp = ''
 impuestos = {}
 modmon = ''
 moneda = ''
-tipo_cambio = ''
+tipo_cambio = 1
 gaveta = ''
 empresa = ''
 tipo_servicio = ''
@@ -128,6 +128,7 @@ nombre_usuario = 'I'
 doc_cabecera = ''
 doc_pie = ''
 ctrlprods = {}
+comprobante_id = 0
 
 
 #####
@@ -161,8 +162,8 @@ def configuration():
         servidor_smtp, from_smtp, to_smtp, consumo_alerta, dia_alerta,
         hora_max, datos_modo, stock_alerta, pos_modo, modo_decimal,
         modo_control, modo_almacen, genero_producto, almacen_key,
-        almacen, moneda_aux from pos_configuracion where codigo = '%s'
-        and caja = %s""" % (pos_num, caja_num)
+        almacen, moneda_aux from pos_configuracion where id='%s'
+        and caja=%s""" % (pos_num, caja_num)
     cnt, rso = query(sql, 0)
     if cnt == 0:
         curses.echo()
@@ -277,7 +278,7 @@ def point_programs(fecha, n_doc_base, total):
                     total_asignado, total_bruto) values ('%s', '%s',
                     '%s', '%s', '%s', '%s', '%s')""" % (tiempo, fecha,
                     programa, n_doc_base, data_num, puntos, total)
-                curs.execute(sql)
+                exe = query(sql,3)
                 return mensaje
         else:
             return ''
@@ -420,8 +421,8 @@ def authorization():
         if pwd_ing != "":
             break
     pwd_ing = md5.new(pwd_ing).hexdigest()
-    sql = """select user.first_name,user.last_name,level.group_id
-        from auth_user user, auth_membership level where
+    sql = """select user.first_name,user.last_name,level.group_id,
+        user.id from auth_user user, auth_membership level where
         user.id=level.user_id and user.username='%s' and
         user.password='%s'""" % (user_ing, pwd_ing)
     cnt, rso = query(sql, 0)
@@ -429,13 +430,14 @@ def authorization():
         nombre = "%s %s" % (rso[0], rso[1])
         nombre = nombre[:20]
         nivel_usuario = rso[2]
+        id_usuario = rso[3]
         curses.curs_set(0)
         update_panels()
-        return user_ing, nombre, nivel_usuario
+        return user_ing, nombre, nivel_usuario, id_usuario
     else:
         curses.curs_set(0)
         update_panels()
-        return 0, 'I', 0
+        return 0, 'I', 0, 0
 
 
 def pos_status():
@@ -445,8 +447,8 @@ def pos_status():
     pan = make_panel(curses.COLOR_WHITE, maxy, maxx, 0, 0)
     win = define_window(pan, 0, 1)
     sql = """select apertura, cierre from pos_administracion 
-        where pv='%s' and caja=%s and estado=1
-        order by id desc""" % (pos_num, caja_num)
+        where id='%s' and caja=%s and
+        estado=1""" % (pos_num, caja_num)
     cuenta, resultado = query(sql, 0)
     if cuenta == 0:
         msg003 = 'La Caja NO se encuentra APERTURADA'
@@ -461,7 +463,7 @@ def pos_status():
         return 'ok'
 
 
-def pos_time(modo=1):
+def pos_time():
     """
     POS time status
     """
@@ -480,10 +482,7 @@ def pos_time(modo=1):
         tiempo_max = resultado[2]
         if cierre == '0000-00-00 00:00:00' or cierre is None:
             cierre = '2999-12-30 23:59:59'
-    if modo == 1:
-        return str(apertura), str(cierre)
-    else:
-        return str(apertura), str(cierre), str(tiempo_max)
+    return str(apertura), str(cierre), str(tiempo_max)
 
 
 def right_text(x, texto):
@@ -623,7 +622,8 @@ def producto_data(codbarras):
     sql = """select if(length(mae.alias)>0, mae.alias,
         concat(mae.nombre, ' ', mae.descripcion)),
         round(mae.precio, 2) from maestro mae
-        where mae.codbarras = '%s'""" % (codbarras)
+        where mae.id='%s' and
+        mae.genero='%s'""" % (codbarras, datos_modo)
     cnt, rso = query(sql, 0)
     nombre = rso[0]
     precio = round(rso[1], 2)
@@ -863,17 +863,17 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
         pos_y += 1
         win3.addstr(pos_y, 1, "   *%s" % (referencia))
     update_panels()
-    px5 = right_text(x5, float_chars(total))
+    px5 = right_text(x5, fl_ft(total))
     if modmon == 3:
         cambio = round(total / tipo_cambio, 2)
-        px8 = right_text(x8, float_chars(cambio))
+        px8 = right_text(x8, fl_ft(cambio))
         win5.addstr(1, px5-5, moneda)
-        win5.addstr(1, px5-1, float_chars(total))
+        win5.addstr(1, px5-1, fl_ft(total))
         win8.addstr(1, px8-5, "$")
-        win8.addstr(1, px8-1, float_chars(cambio))
+        win8.addstr(1, px8-1, fl_ft(cambio))
     else:
         win5.addstr(1, px5-5, "$")
-        win5.addstr(1, px5-1, float_chars(total))
+        win5.addstr(1, px5-1, fl_ft(total))
     update_panels()
     return
 
@@ -882,7 +882,20 @@ def query(sql, ndat=1):
     """
     Database Query
     """
-    if ndat == 5:
+    if ndat == 3:
+        try:
+            curs.execute("START TRANSACTION")
+            curs.execute(sql)
+            curs.execute("COMMIT")
+            return 1
+        except MySQLdb.Error,  error:
+            curs.execute("ROLLBACK")
+            dicotomic_question("""ERROR. INFORMACION NO 
+                REGISTRADA.""")
+            logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
+            return -1
+    elif ndat == 5:
         try:
             curs.execute("START TRANSACTION")
             for query in sql:
@@ -894,6 +907,7 @@ def query(sql, ndat=1):
             dicotomic_question("""ERROR. INFORMACION NO 
                 REGISTRADA.""")
             logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
             return -1
     else:
         try:
@@ -906,9 +920,11 @@ def query(sql, ndat=1):
             return cnt, rso
         except MySQLdb.Error,  error:
             logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
             return -1, error.args[1]
         except Exception, error:
             logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
             return -1, sql
 
 
@@ -916,6 +932,7 @@ def payment_process():
     """
     Payment Process
     """
+    global comprobante_id
     ty = 14
     tx = 70
     py = screen_position(ty, maxy)
@@ -968,7 +985,6 @@ def payment_process():
         comprobante_id = doc_man
     else:
         comprobante_id, compr = document_selection(0)
-        #pdb.set_trace()
         if comprobante_id != 'Anular':
             (t_pre, t_nod, t_pos, t_copia, t_compn, t_port,
                 t_layout) = get_correlative(0, comprobante_id, 0, 1)
@@ -1033,12 +1049,12 @@ def payment_process():
         vueldol = 0.00
     msg011 = 'Total '
     texto = """%s%s: %s  |  %s$: %s""" % (msg011, moneda, 
-        float_chars(mntsol), msg011, float_chars(mntdol))
+        fl_ft(mntsol), msg011, fl_ft(mntdol))
     posx = center_text(x7, texto)
     win7.addstr(11, posx, texto)
     msg012 = 'Vuelto '
     texto = """%s%s: %s  |  %s$: %s""" % (msg012, moneda,
-        float_chars(vuelsol), msg012, float_chars(vueldol))
+        fl_ft(vuelsol), msg012, fl_ft(vueldol))
     posx = center_text(x7, texto)
     win7.addstr(12, posx, texto)
     update_panels()
@@ -1051,14 +1067,14 @@ def payment_process():
                 vuelsol, vueldol)
 
 
-def float_chars(dato):
+def fl_ft(dato):
     """
     Float Chars
     """
     if type(dato) is types.FloatType:
         dato = round(dato, 2)
         dato = fpformat.fix(dato, 2)
-        return str(dato)
+        return dato
     else:
         return str(dato)
 
@@ -1092,22 +1108,22 @@ def document_process():
     win_3 = define_window(panel_3, borde=1)
     #Ventana 1
     texto = ('Total %s :' % (moneda)).ljust(tam_x)+("%s" %
-        float_chars(mnt_loc)).rjust(tam_x-2)
+        fl_ft(mnt_loc)).rjust(tam_x-2)
     win_1.addstr(1, 1, texto)
     texto = 'Total $ :'.ljust(tam_x)+("%s" %
-        float_chars(mnt_dol)).rjust(tam_x-2)
+        fl_ft(mnt_dol)).rjust(tam_x-2)
     win_1.addstr(2, 1, texto)
     texto = 'Tipo Cambio :'.ljust(tam_x)+("%s" %
-        float_chars(tipo_cambio)).rjust(tam_x-2)
+        fl_ft(tipo_cambio)).rjust(tam_x-2)
     win_1.addstr(6, 1, texto)
     texto = '$ Completos :'.ljust(tam_x)+("%s" %
-        float_chars(mnt_ful)).rjust(tam_x-2)
+        fl_ft(mnt_ful)).rjust(tam_x-2)
     win_1.addstr(7, 1, texto)
     texto = ('%s Diferencia :' % (moneda)).ljust(tam_x+2)+("%s" %
-        float_chars(mnt_dif)).rjust(tam_x-5)
+        fl_ft(mnt_dif)).rjust(tam_x-5)
     win_1.addstr(8, 1, texto)
     update_panels()
-    sql = """select forma_pago, nombre from formas_pago
+    sql = """select cast(id as CHAR), nombre from formas_pago
         order by posicion, forma_pago"""
     cuenta, resultado = query(sql)
     metodos = opciones_cnt(resultado, 1, 'Forma de Pago', '1')
@@ -1115,7 +1131,7 @@ def document_process():
         return 'Anular', '', ''
     mnt_sld = 0
     modo_fp = {}
-    sql = """select forma_pago, modo, nombre from formas_pago
+    sql = """select cast(id as CHAR), modo, nombre from formas_pago
         order by posicion, forma_pago"""
     cuenta, resultado = query(sql)
     if cuenta > 0:
@@ -1140,10 +1156,10 @@ def document_process():
         diferencia = 1
         saldo_dif = tot_loc-mnt_sld
         tot_loc = saldo_dif
-        texto = "Cancelado".ljust(tam_x)+("%s" % float_chars(mnt_sld)
+        texto = "Cancelado".ljust(tam_x)+("%s" % fl_ft(mnt_sld)
             ).rjust(tam_x-2)
         win_1.addstr(3, 1, texto)
-        texto = "Pendiente".ljust(tam_x)+("%s" % float_chars(saldo_dif)
+        texto = "Pendiente".ljust(tam_x)+("%s" % fl_ft(saldo_dif)
             ).rjust(tam_x-2)
         win_1.addstr(4, 1, texto)
         while 1:
@@ -1170,7 +1186,7 @@ def document_process():
                         dol_tmp = rec_dol
                     dif_1 = tot_loc-((dol_tmp*tipo_cambio)+rec_loc)
                     texto = ("Dif. %s :" % (moneda)).ljust(tam_x)+("%s"%
-                        (float_chars(dif_1))).rjust(tam_x-2)
+                        (fl_ft(dif_1))).rjust(tam_x-2)
                     win_2.addstr(1, 1, texto)
                     update_panels()
                     msg = '$ Recibido '
@@ -1200,10 +1216,10 @@ def document_process():
                         dif_1 = tot_loc-((rec_dol*tipo_cambio)+rec_loc)
                         dif_2 = round((rec_dol*tipo_cambio), 2)
                         texto = ("Dif. %s :"%moneda).ljust(tam_x)+("%s"%
-                            (float_chars(dif_1))).rjust(tam_x-2)
+                            (fl_ft(dif_1))).rjust(tam_x-2)
                         win_2.addstr(1, 1, texto)
                         texto = "Equiv. $ :".ljust(tam_x)+("%s"%
-                            (float_chars(dif_2))).rjust(tam_x-2)
+                            (fl_ft(dif_2))).rjust(tam_x-2)
                         win_2.addstr(2, 1, texto)
                         update_panels()
                         win_3.addstr(2, len(msg)+3, ' '*10)
@@ -1241,6 +1257,88 @@ def document_process():
             if dato in metodos:
                 metodos[dato] = modo_fp[dato][1], metodos[dato][1], 0.0
     return metodos, vlt_loc, vlt_dol
+
+
+def compositions(code, cnt=1):
+    data = {}
+    sql = """select codbarras_hijo,cantidad*%s from recetas where
+        codbarras_padre='%s' and modo='1' and
+        estado='1'""" % (cnt, code)
+    cuenta, resultado = query(sql)
+    if cuenta > 0:
+        for linea in resultado:
+            hijo = linea[0]
+            cant = linea[1]
+            data[hijo] = cant
+    return data
+
+
+def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
+    modo_operacion=0):
+    """
+    Warehouse Stocks
+    """
+    if fecha!='':
+        mes=fecha[5:7]
+    #SALDOS
+    sql = """select codbarras,sum(ingreso-if(salida is NULL,0,salida))
+        saldo from almacenes where almacen='%s' and estado='1' and
+        month(fecha_doc)='%s' group by codbarras order by
+        codbarras""" % (almacen, mes)
+    cuenta, resultado = query(sql,1)
+    data={}
+    if cuenta > 0:
+        for linea in resultado:
+            codex = linea[0]
+            saldx = linea[1]
+            data[codex] = saldx
+    if modo_operacion==0:
+        if producto=='':
+            return data
+        else:
+            if data.has_key(producto):
+                return data[producto]
+            else:
+                return 0
+
+
+def almacen_process():
+    sql_layout = """insert into almacenes (modo,tiempo,user_ing,
+        operacion_logistica,modo_doc,tipo_doc,fecha_doc,
+        n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,
+        codbarras,cantidad_ing) values ('%s','%s','%s','%s','%s',
+        '%s','%s','%s','%s','%s','%s','%s','%s')"""
+    #sql_a = sql_alm % (2, dvar["DT"], dvar["UI"], almacen, )
+    #(2,tiempo,cdv,'SGR',almacen_key,'5',tiempo,nodoc_prefijo,
+    #nodoc,almacen,'0000',x,scantidad)
+    #b=query(sql)
+    pass
+
+
+def check_warehouse(code, warning=1):
+    cnt = ctrlprods[code]['cnt']
+    if cnt <= 1:
+        cnt = 1
+    msg = None
+    data = compositions(code, cnt)
+    if len(data) > 0:
+        stocks = cons_almacen(apertura, '', 3)
+        if len(stocks) > 0:
+            for prod in data:
+                if prod in stocks:
+                    if stocks[prod] == 0:
+                        msg = "Producto NO DISPONIBLE en almacen"
+                    elif stocks[prod] < cnt:
+                        msg = "Producto INSUFICIENTE en almacen"
+                else:
+                    msg = "Producto NO EXISTENTE en almacen"
+        else:
+            msg = "Producto NO EXISTENTE en almacen"
+    else:
+        msg = "Lista de composicion NO EXISTENTE"
+    if warning == 1:
+        if msg is not None:
+            dicotomic_question(msg)
 
 
 def get_value_expresion(dato):
@@ -1340,6 +1438,7 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
         sizey = cuenta+2
         inic_y = 0  #Inicio de Array
         term_y = cuenta  #Termino de Array
+    sizex = maxx - 10
     posy = screen_position(sizey, maxy)
     posx = screen_position(sizex, maxx)
     panel = make_panel(curses.COLOR_WHITE, sizey, sizex, posy, posx)
@@ -1494,7 +1593,7 @@ def costumer_process(cliente, modo=0):
             sql = """update directorio set nombre_corto = '%s',
             tipo_doc = '%s', direccion = '%s'  where
             doc_id = '%s'""" % (nombre, tipo_doc, direccion, documento)
-        exe = curs.execute(sql)
+        exe = query(sql, 3)
         return nombre, documento
     else:
         return 'Anular', ''
@@ -1521,7 +1620,7 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
     Closes Sales Process / Prints Invoice
     """
     #Variables
-    apertura, cierre = pos_time(1)
+    apertura, cierre, tiempo_max = pos_time()
     if apertura == 'Error':
         return 'Anular'
     mntsol = 0.0
@@ -1533,8 +1632,8 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
     doc_layout = ''
     fecha = time.strftime("%Y-%m-%d")
     fecha_hora = time.strftime("%Y-%m-%d %H:%M:%S")
-    tx = 50  #Tamano de Preview
-    px = (maxx-tx)/2
+    #tx = 50  #Tamano de Preview
+    #px = (maxx-tx)/2
     ident = machine_id()  #No. Serie
     det_pagos = "|".join(["%s:%s" % (elem, medios_pago[elem][1]) 
         for elem in medios_pago])
@@ -1576,66 +1675,106 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
     ##Programa de puntos
     mensaje_programas = point_programs(fecha, nodoc, total)
     ##Archivo Temporal
-    nomarch = str(nodoc)+str(time.time())
-    archivo = open(nomarch, 'w')
-    plantilla = open(doc_layout).read()
+    nom_arch = str(nodoc)+str(time.time())
+    #archivo = open(nomarch, 'w')
+    layout = open(doc_layout).read()
     ##Funciones de Pantalla
-    pan = make_panel(curses.COLOR_WHITE, maxy, tx, 0, px)
-    #pan.top()
+    pan = make_panel(curses.COLOR_WHITE, maxy, maxx, 0, 0)
+    pan.top()
     win = define_window(pan, 0, 1)
     curses.curs_set(0)
     update_panels()
     dvar = {"ST":pos_num, "PB":caja_num, "DT":fecha_hora,
         "DA":fecha, "DF":"%s-%s-%s" % (nodoc_prefijo, nodoc,
-        nodoc_sufijo), "DI":nodoc, "UI":codigo_usuario,
+        nodoc_sufijo), "DI":nodoc, "UI":id_usuario,
         "UN":nombre_usuario, "PI":",".join(medios_pago.keys()),
         "PM":",".join([elem[0] for elem in medios_pago.values()]),
-        "PQ":[], "PN":[], "PA":[], "CI":nombre_cliente, "CN":id_cliente,
-        "ST":total_neto, "FT":total, "MO":moneda, "M1R":mntsol,
-        "M1B":vuelsol, "M2R":mntdol, "M2B":vueldol, "MA":moneda_aux,
-        "SN":ident, "DT":msg_dist, "PP":mensaje_programas, "D1":norden,
+        "CI":nombre_cliente, "CN":id_cliente,
+        "NT":fl_ft(total_neto), "FT":fl_ft(total), "MO":moneda,
+        "M1R":fl_ft(mntsol), "M1B":fl_ft(vuelsol), "M2R":fl_ft(mntdol),
+        "M2B":fl_ft(vueldol), "MA":moneda_aux, "SN":ident,
+        "DQ":msg_dist, "PP":mensaje_programas, "D1":norden,
         "D2":nomcli, "D3":dircli, "D4":refcli, "D5":telcli,
-        "DX":comprobante_id}
+        "DX":comprobante_id, "DP":nodoc_prefijo, "DS":nodoc_sufijo,
+        "TD":det_impto, "Q1":vales, "Q2":sellos, "DZ":distribucion,
+        "ED":ventaext, "VT":apertura[:10], "PD":det_pagos}
+    for imp in impuestos:
+        head = "T#%s" % imp
+        dvar[head] = "%s(%s)" % (imp, impuestos[imp])
+    for imp in imp_glob:
+        head = "T=%s" % imp
+        dvar[head] = imp_glob[imp]
+    prod_var = ["PQ", "PN", "PA"]
+    var_elem = list(dvar.keys())
+    var_elem.extend(prod_var)
+    rvar = dict([(elem,re.search("<:%s?:>&*" % elem,
+        layout).group()) for elem in var_elem if
+        re.search("<:%s?:>&*" % elem, layout)])
     sql_layout = """insert into docventa (pv, caja, n_doc_prefijo,
         n_doc_base, n_doc_sufijo, estado, comprobante, cliente,
         cv_ing, codigo, precio, cantidad, sub_total_bruto,
         sub_total_impto, sub_total_neto, total, detalle_impto,
         total_neto, mntsol, mntdol, tiempo, vales, sello, data_1, imod,
-        fecha_vta, medios_pago, sub_codbarras)
-        values (%s)""" % (",".join(["'%s'" for ele in range(0,28)]))
-    curses.echo()
-    curses.endwin()
+        fecha_vta, medios_pago, sub_codbarras, registro)
+        values (%s)""" % (",".join(["'%s'" for ele in range(0,29)]))
+    for code in rvar:
+        o_cadena = rvar[code]
+        siz = len(rvar[code])
+        if code in dvar:
+            r_cadena = str(dvar[code])[:siz].rjust(siz)
+            layout = re.sub(o_cadena, r_cadena, layout)
+    rawstr = r"<:SS:>(?P<contents>.*)<:EE:>\n"
+    pvar = re.search(rawstr, layout, re.IGNORECASE| re.DOTALL).group()
+    tvar = re.sub("<:SS:>.*\n", "", pvar)
+    tvar = re.sub(".*<:EE:>\n", "", tvar)
+    p_elem = []
+    p_dict = {}
     for linea in format_list:
-        sql = sql_layout % (pos_num, caja_num, nodoc_prefijo, nodoc,
-            nodoc_sufijo, '1', comprobante_id, id_cliente,
-            codigo_usuario, linea[1], linea[2], linea[3], linea[4],
-            linea[5], linea[6], total, det_impto, total_neto, mntsol,
-            mntdol, fecha_hora, vales, sellos, distribucion, ventaext,
-            apertura[:10], det_pagos, '')
-        print sql
-    #print cupones
-    #print medios_pago
-    #print ctrlprods
-    sys.exit()
+        parte = tvar
+        p_dict["PQ"] = linea[3]
+        p_dict["PN"] = linea[0]
+        p_dict["PA"] = linea[4]
+        sql = sql_layout % (dvar["ST"], dvar["PB"], dvar["DP"],
+            dvar["DI"], dvar["DS"], '1', dvar["DX"], dvar["CN"],
+            dvar["UI"], linea[1], linea[2], linea[3], linea[4],
+            linea[5], linea[6], dvar["FT"], dvar["TD"], dvar["NT"],
+            dvar["M1R"], dvar["M2R"], dvar["DT"], dvar["Q1"],
+            dvar["Q2"], dvar["DZ"], dvar["ED"], dvar["VT"],
+            dvar["PD"], '', dvar["DT"])
+        for code in prod_var:
+            o_cadena = rvar[code]
+            siz = len(rvar[code])
+            if code == "PN":
+                r_cadena = str(p_dict[code])[:siz].ljust(siz)
+            else:
+                r_cadena = str(p_dict[code])[:siz].rjust(siz)
+            parte = re.sub(o_cadena, r_cadena, parte)
+        exe = query(sql,3)
+        p_elem.append(parte)
+    if modo_almacen=='1':
+        almacen_process()
+    p_elem = "".join(p_elem)
+    layout = re.sub(pvar, p_elem, layout)
+    open(nom_arch,"w").write(layout)
     ##Impresion
     if ventaext == 0 and (debug_mode == '0' or debug_mode == ''):
-        estad = os.system("cat %s > %s" % (nomarch, device_port))
+        estad = os.system("cat %s > %s" % (nom_arch, device_port))
         estad = os.system("cat corte | escpos > %s" % device_port)
         if doc_copia == '1':
             if device_port[5:9] == 'ttyS':
                 time.sleep(6)
-            estad = os.system("cat %s > %s" % (nomarch, device_port))
+            estad = os.system("cat %s > %s" % (nom_arch, device_port))
             estad = os.system("cat corte | escpos > %s" % device_port)
         if extra_print == '1':
             if device_port[5:9] == 'ttyS':
                 time.sleep(6)
-            estad = os.system("cat %s > %s" % (nomarch, device_port))
+            estad = os.system("cat %s > %s" % (nom_arch, device_port))
             estad = os.system("cat corte | escpos > %s" % device_port)
     else:
         estad = 1
     ##Archivo Temporal
     if debug_mode == '0' or debug_mode == '':
-        os.remove(nomarch)
+        os.remove(nom_arch)
         #archivo.close()
             #if len(sub_productos) > 0:
                 #for elemento in sub_productos:
@@ -1649,12 +1788,16 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
                 #modo_com = '5'
             #else:
                 #modo_com = '0'
-            #sql = "update documentos_comerciales set correlativo = '"+str(nodoc)+"', prefijo = '"+str(nodoc_prefijo)+"', sufijo = '"+str(nodoc_sufijo)+"' where modo = '"+str(modo_com)+"' and documento = '"+str(comprobante_id)+"' and caja = "+str(caja_num)+" and pv = "+str(pos_num)+""
-            #b = curs.execute(sql)
-    if doccli != '':
-        sql = "insert into delivery (tiempo, pv, numero, cliente, docnum, carac1, carac2, carac3) values ('"+str(timeord)+"', '"+str(pos_num)+"', '"+str(norden)+"', '"+str(doccli)+"', '"+str(nodoc)+"', '"+str(texto1.upper)+"', '"+str(texto2.upper)+"', '"+str(texto3.upper)+"')"
-        curs.execute(sql)
-    win.getch()
+    sql = """update documentos_comerciales set correlativo='%s',
+        prefijo='%s', sufijo = '%s' where id='%s'""" % (nodoc,
+        nodoc_prefijo, nodoc_sufijo, comprobante_id)
+    exe = query(sql, 3)
+    #if doccli != '':
+        #sql = "insert into delivery (tiempo, pv, numero, cliente, docnum, carac1, carac2, carac3) values ('"+str(timeord)+"', '"+str(pos_num)+"', '"+str(norden)+"', '"+str(doccli)+"', '"+str(nodoc)+"', '"+str(texto1.upper)+"', '"+str(texto2.upper)+"', '"+str(texto3.upper)+"')"
+        #curs.execute(sql)
+    msg = "Venta Procesada"
+    resp = dicotomic_question(msg)
+    #win.getch()
     return
 
 
@@ -1908,13 +2051,11 @@ def sales_report(modo=0):
                 tot_porc_imp,2)) for val in impuestos])
             sub_det = " ".join(["%s:%s" % (elem[0], elem[1]) 
                 for elem in sub_imp.items()])
-            format_list.append([nombre, codigo, fpformat.fix(precio, 2),
-                fpformat.fix(cantidad, 2),
-                fpformat.fix(sub_total_bruto, 2),
-                fpformat.fix(sub_det, 2),
-                fpformat.fix(sub_total_neto, 2)])
+            format_list.append([nombre, codigo, fl_ft(precio),
+                fl_ft(cantidad), fl_ft(sub_total_bruto), fl_ft(sub_det),
+                fl_ft(sub_total_neto)])
             #total_full += sub_total_bruto
-        return total, total_neto, det_impto, format_list
+        return total, total_neto, det_impto, imp_glob, format_list
 
 
 def windows_header(texto, pan, borde=1):
@@ -2065,16 +2206,16 @@ def delivery_process():
                 nombre_corto, direccion, referencia) values ('1', '%s',
                 '%s', '%s', '%s')""" % (doc_num, nombre.upper(),
                 direccion.upper(), referencia.upper())
-            curs.execute(sql)
+            exe = query(sql,3)
             sql = """insert into directorio_auxiliar (doc_id, telefono)
                 values ('%s', '%s')""" % (doc_num, telefono)
-            curs.execute(sql)
+            exe = query(sql,3)
         else:
             sql = """update directorio set nombre_corto='%s',
                 direccion='%s', referencia='%s' where
                 doc_id= '%s'""" % (nombre.upper(), direccion.upper(),
                 referencia.upper(), doc_num)
-            curs.execute(sql)
+            exe = query(sql,3)
         return (doc_num, nombre.upper(), direccion.upper(), 
             referencia.upper(), telefono, 
             ("%s%s" % (texto1_l1+texto1_l2)).upper(), 
@@ -2082,59 +2223,58 @@ def delivery_process():
             ("%s%s" % (texto3_l1+texto3_l2)).upper(), n_orden, time)
 
 
-def document_selection(modo):
+def document_selection(modo=0):
     """
     Document Selection
     """
-    sql = """select documento, nombre from documentos_comerciales 
+    sql = """select id, nombre from documentos_comerciales 
         where modo = '%s' and pv = '%s' and caja = %s 
         order by documento""" % (modo, pos_num, caja_num)
     cuenta, resultado = query(sql)
     if cuenta > 0:
-        doc_tipo, doc_tipo_dscp = list_selection(resultado, 'Documento')
-        if doc_tipo == 'Anular':
+        doc_id, doc_dscp = list_selection(resultado, 'Documento')
+        if doc_id == 'Anular':
             return 'Anular', 'Anular'
         else:
-            return doc_tipo, doc_tipo_dscp
+            return doc_id, doc_dscp
     else:
         return 'Anular', 'Anular'
 
 
-def get_correlative(modo, documento, extra=0, edit=0, panel=''):
+def get_correlative(modo, doc_id, extra=0, edit=0, panel=''):
     """
     Obtains Documents Correlative
     """
     prefijo = 'Anular'
-    correlativo = ''
+    correlativo = 0
     sufijo = ''
     copia_doc = ''
     detalle_doc = ''
     doc_port = ''
     doc_layout = ''
+    chk_correlativo = 0
     sql = """select prefijo, correlativo, sufijo, copia, detalle, port,
-        layout from documentos_comerciales where documento = '%s' and
-        modo = '%s' and pv = '%s' and caja = %s""" % (documento, 
-        modo, pos_num, caja_num)
+        layout from documentos_comerciales where
+        id='%s' """ % (doc_id)
     cuenta, resultado = query(sql, 0)
     if cuenta > 0:
         prefijo = resultado[0]
-        correlativo = int(resultado[1])+1
+        correlativo = int(resultado[1])
         sufijo = resultado[2]
         copia_doc = resultado[3]
         detalle_doc = resultado[4]
         doc_port = resultado[5]
         doc_layout = resultado[6]
         if extra == 1:
-            sql2 = """select id from docventa where n_doc_base = '%s' 
-                and n_doc_prefijo = '%s'""" % (correlativo, prefijo)
-            cuenta2, resultado2 = query(sql2, 0)
-            if cuenta2 > 0:
-                dicotomic_question("""Inconsistencia en Correlativos!!!
-                    Corrigiendo....""")
-                sql3 = "select max(n_doc_base) from docventa"
-                cuenta3, resultado3 = query(sql3, 0)
-                if cuenta3 > 0:
-                    correlativo = int(resultado3[0])+1
+            sql_1 = "select max(n_doc_base) from docventa"
+            cuenta_1, resultado_1 = query(sql_1, 0)
+            if cuenta_1 > 0:
+                nv_correlativo = resultado_1[0]
+                if nv_correlativo is not None:
+                    chk_correlativo = int(resultado_1[0])
+            if chk_correlativo != correlativo:
+                correlativo = chk_correlativo
+        correlativo +=1
     if panel == 'new':
         cty = 3
         ctx = 40
@@ -2174,7 +2314,7 @@ def get_correlative(modo, documento, extra=0, edit=0, panel=''):
         if alerta_flag == 1:
             dato = "%s-%s%s " % (prefijo, correlativo, sufijo)
             mensaje = """Documento %s Original:%s-%s Cambiado 
-                a:%s""" % (documento, old_prefijo, old_correlativo,
+                a:%s""" % (doc_id, old_prefijo, old_correlativo,
                 dato)
             mail_warning(mensaje, 'ALERTA DE DOCUMENTOS MANUALES')
     return (str(prefijo), str(correlativo), str(sufijo),
@@ -2202,14 +2342,14 @@ def check_time(alerta_max='1', hora_limite='00:00:00'):
     """
     Checks POS Time
     """
-    apertura, cierre, tiempo_max = pos_time()
+#    apertura, cierre, tiempo_max = pos_time()
     tiempo_actual = time.strftime("%Y-%m-%d %H:%M:%S")
     tiempo_cierre = apertura[:10]+" "+hora_limite
     if apertura == 'Error':
         dicotomic_question("""ERROR: LA CAJA NO SE ENCUENTRA
             APERTURADA""")
         return 'Error'
-    if apertura > tiempo_actual:
+    if apertura >= tiempo_actual:
         dicotomic_question("""ERROR: INCONGRUENCIA EN LA APERTURA""")
         return 'Error'
     if tiempo_actual >= tiempo_cierre and (hora_limite != '0:00:00' and
@@ -2217,7 +2357,7 @@ def check_time(alerta_max='1', hora_limite='00:00:00'):
         dicotomic_question("""ERROR: CIERRE LA CAJA,  
             HORA MAXIMA EXCEDIDA""")
         return 'Error'
-    elif revisa_tiempo > tiempo_max:
+    elif tiempo_actual >= tiempo_max:
         if alerta_max == '1':
             dicotomic_question("""ADVERTENCIA: LA CAJA LLEVA MAS DE 
                 1 DIA APERTURADA""")
@@ -2289,12 +2429,13 @@ def product_finder(titulo, num_char, valid_data_types, sql_cond=''):
             return data_ing, 0
         tipo_dato = get_value_expresion(data_ing)[1]
         if tipo_dato in cond_types:
-            sql = """select codbarras,concat(nombre,' ',descripcion,
-                '==',round(precio,2)) from maestro where 
+            sql = """select id,if(length(alias)>0, alias,
+                concat(nombre,' ',descripcion,'==',
+                round(precio,2))) dscp from maestro where
                 (nombre like '%%%s%%' or descripcion like '%%%s%%'
                 or nombre like '%%%s%%' or descripcion like '%%%s%%'
-                or alias like '%%%s%%' or alias like '%%%s%%')
-                and (%s) order by codbarras asc""" % (data_ing, 
+                or alias like '%%%s%%' or alias like '%%%s%%') and
+                (%s) order by nombre,descripcion asc""" % (data_ing,
                 data_ing, data_ing.upper(), data_ing.upper(),
                 data_ing, data_ing.upper(), sql_cond)
             cuenta, resultado = query(sql, 1)
@@ -2327,7 +2468,7 @@ def product_processing(datos):
         sql = """select modo, descuento, limite, data
             from  pos_descuentos where (pv = %s or 
             pv = 0 or pv = '') and (caja = %s or 
-            caja = 0) and codbarras = '%s' and 
+            caja = 0) and id = '%s' and 
             estado = 1""" % (pos_num, caja_num, dato)
         cuenta, resultado = query(sql)
         if cuenta > 0:
@@ -2373,8 +2514,8 @@ def product_processing(datos):
             datos[dato]['lmt'] = 10000
         #Dependencias
         sql = """select modo, data from 
-            maestro_dependencias where (pv = %s or 
-            pv = 0) and codbarras = '%s' and 
+            maestro_dependencias where (pv='%s' or 
+            pv=0) and id = '%s' and 
             estado = 1""" % (pos_num, dato)
         cuenta, resultado = query(sql)
         extracto = 0
@@ -2454,7 +2595,7 @@ def coupon_process():
         prom.impresion, if(length(mae.alias)>0, mae.alias,
         concat(mae.nombre, ' ', mae.descripcion)) as prod,
         mae.precio from promociones prom left join maestro mae on
-        mae.codbarras = prom.producto where prom.codigo='%s' and
+        mae.id = prom.producto where prom.codigo='%s' and
         prom.estado='A' and (prom.pv = '0' or prom.pv = %s) and
         (prom.cond_hora_term >= '%s' and prom.cond_hora_inic <= '%s')
         and prom.cond_valor <= '%s'"""
@@ -2605,7 +2746,8 @@ thread.start_new_thread(time_printing, (hora, ))
 
 while 1:
     while nombre_usuario == 'I':
-        codigo_usuario, nombre_usuario, nivel_usuario = authorization()
+        (codigo_usuario, nombre_usuario, nivel_usuario,
+        id_usuario) = authorization()
         dataz = pos_status()
         if dataz == 'bad':
             nombre_usuario = 'I'
@@ -2627,6 +2769,7 @@ while 1:
     total_neto = 0.0
     total_impuestos = 0.0
     det_impto = ''
+    imp_glob = {}
     format_list = []
     cnt_prod = 0
     total_cupones = 0
@@ -2639,7 +2782,7 @@ while 1:
     message_alert(p9, " "*33)
     update_panels()
     while 1:
-        #apertura, cierre = pos_time(1)
+        apertura, cierre, tiempo_max = pos_time()
         revisar_time = check_time(dia_alerta,hora_max)
         if revisar_time == 'Error':
             nombre_usuario = "I"
@@ -2666,7 +2809,7 @@ while 1:
                 message_alert(p9, "DELIVERY:"%(norden))
         elif car == ' ':
             codigo_producto, nombre_producto = product_finder("Codigo",
-                20, "caracter,alfanumerico", "genero='0003'")
+                20, "caracter,alfanumerico", "genero='%s'" % datos_modo)
             if codigo_producto != 'Anular':
                 if cnt_prod == 0:
                     cnt_prod = 1
@@ -2675,6 +2818,7 @@ while 1:
                 datos = {codigo_producto: {'cnt': cnt_prod,
                     'sub': {}, 'nam': nombre_producto}}
                 product_processing(datos)
+                check_warehouse(codigo_producto)
                 cnt_prod = 0
         elif car == 'finp':  #Lugar Consumo
             if distribucion == '0':
@@ -2725,7 +2869,8 @@ while 1:
                     ventaext = 1
         elif car == 'enter':
             #Procesa Datos
-            total, total_neto, det_impto, format_list = sales_report(1)
+            (total, total_neto, det_impto, imp_glob,
+                format_list) = sales_report(1)
             if tipo_servicio == '1' and ventaext != 1:
                 mensaje = 'Pedido para Llevar?'
                 opcion1 = 'LLEVAR'

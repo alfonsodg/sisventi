@@ -11,7 +11,7 @@ p6
 I3
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'id'
 p9
@@ -43,7 +43,7 @@ p18
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p19
 ssS'grupo_distribucion'
 p20
@@ -53,7 +53,7 @@ g18
 sg6
 I2
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p22
 ssS'prioridad'
 p23
@@ -64,6 +64,6 @@ p25
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p26
 ss.

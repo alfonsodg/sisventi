@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'hora_inicio'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I5
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p12
 ssS'turno'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p16
 ssS'descripcion'
 p17
@@ -43,7 +43,7 @@ g15
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p19
 ssS'hora_fin'
 p20
@@ -53,7 +53,7 @@ g11
 sg6
 I6
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p22
 ssS'id'
 p23

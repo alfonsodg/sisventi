@@ -11,7 +11,7 @@ p6
 I6
 sS'sql'
 p7
-S'INT NOT NULL'
+S'INT'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'codbarras_hijo'
 p13
@@ -64,6 +64,6 @@ g5
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p26
 ss.

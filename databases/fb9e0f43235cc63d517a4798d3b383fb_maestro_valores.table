@@ -11,7 +11,7 @@ p6
 I3
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'registro'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p11
 ssS'pv'
 p12
@@ -43,7 +43,7 @@ p18
 sg6
 I6
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'user_ing'
 p20

@@ -11,7 +11,7 @@ p6
 I13
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'pv'
 p13
@@ -44,7 +44,7 @@ p19
 sg6
 I16
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p20
 ssS'tipo'
 p21
@@ -55,7 +55,7 @@ p23
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p24
 ssS'area'
 p25
@@ -76,7 +76,7 @@ g5
 sg6
 I11
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p31
 ssS'fecha'
 p32
@@ -87,7 +87,7 @@ p34
 sg6
 I3
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p35
 ssS'user_req'
 p36
@@ -119,7 +119,7 @@ g19
 sg6
 I17
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p46
 ssS'estado'
 p47
@@ -129,7 +129,7 @@ g23
 sg6
 I20
 sg7
-S'INT NOT NULL'
+S'INT'
 p49
 ssS'turno'
 p50
@@ -150,7 +150,7 @@ g23
 sg6
 I12
 sg7
-S'INT NOT NULL'
+S'INT'
 p56
 ssS'genero'
 p57
@@ -182,7 +182,7 @@ g5
 sg6
 I14
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p67
 ssS'codbarras'
 p68
@@ -213,7 +213,7 @@ g5
 sg6
 I18
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p77
 ssS'modo'
 p78
@@ -223,6 +223,6 @@ g23
 sg6
 I19
 sg7
-S'INT NOT NULL'
+S'INT'
 p80
 ss.

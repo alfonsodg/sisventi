@@ -21,7 +21,7 @@ g5
 sg6
 I7
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p11
 ssS'intervalo'
 p12
@@ -32,7 +32,7 @@ p14
 sg6
 I19
 sg7
-S'INT NOT NULL'
+S'INT'
 p15
 ssS'apellidos'
 p16
@@ -42,7 +42,7 @@ g5
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p18
 ssS'doc_id_aux'
 p19
@@ -72,7 +72,7 @@ g5
 sg6
 I13
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p27
 ssS'cargo'
 p28
@@ -112,7 +112,7 @@ g5
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p39
 ssS'direccion'
 p40
@@ -122,7 +122,7 @@ g5
 sg6
 I14
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p42
 ssS'condicion'
 p43
@@ -144,7 +144,7 @@ p49
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p50
 ssS'sexo'
 p51
@@ -164,7 +164,7 @@ g14
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p56
 ssS'preferente'
 p57
@@ -185,7 +185,7 @@ g5
 sg6
 I12
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p63
 ssS'tiempo_cred'
 p64
@@ -195,7 +195,7 @@ g14
 sg6
 I18
 sg7
-S'INT NOT NULL'
+S'INT'
 p66
 ssS'linea_credito'
 p67
@@ -206,7 +206,7 @@ p69
 sg6
 I21
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p70
 ssS'codigo_postal'
 p71
@@ -226,7 +226,7 @@ g69
 sg6
 I20
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p76
 ssS'tipo_doc'
 p77
@@ -247,7 +247,7 @@ g5
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p83
 ssS'fecha'
 p84
@@ -258,7 +258,7 @@ p86
 sg6
 I24
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p87
 ssS'modo'
 p88

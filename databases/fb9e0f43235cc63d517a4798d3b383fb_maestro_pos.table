@@ -11,7 +11,7 @@ p6
 I11
 sS'sql'
 p7
-S'INT NOT NULL'
+S'INT'
 p8
 ssS'posicion_hijo'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I16
 sg7
-S'INT NOT NULL'
+S'INT'
 p11
 ssS'registro'
 p12
@@ -32,7 +32,7 @@ p14
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p15
 ssS'pv'
 p16
@@ -53,7 +53,7 @@ g5
 sg6
 I12
 sg7
-S'INT NOT NULL'
+S'INT'
 p22
 ssS'codbarras_hijo'
 p23
@@ -64,7 +64,7 @@ p25
 sg6
 I14
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p26
 ssS'posicion_padre'
 p27
@@ -74,7 +74,7 @@ g5
 sg6
 I10
 sg7
-S'INT NOT NULL'
+S'INT'
 p29
 ssS'codbarras_padre'
 p30
@@ -84,7 +84,7 @@ g25
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p32
 ssS'denominacion_padre'
 p33
@@ -94,7 +94,7 @@ g25
 sg6
 I7
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p35
 ssS'caja'
 p36
@@ -104,7 +104,7 @@ g5
 sg6
 I4
 sg7
-S'INT NOT NULL'
+S'INT'
 p38
 ssS'alias_hijo'
 p39
@@ -114,7 +114,7 @@ g25
 sg6
 I15
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p41
 ssS'atajo'
 p42
@@ -124,7 +124,7 @@ g25
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p44
 ssS'denominacion_hijo'
 p45
@@ -134,7 +134,7 @@ g25
 sg6
 I13
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p47
 ssS'alias_padre'
 p48
@@ -144,7 +144,7 @@ g25
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p50
 ssS'id'
 p51
@@ -164,6 +164,6 @@ g5
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p56
 ss.

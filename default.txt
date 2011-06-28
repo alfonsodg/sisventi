@@ -3,22 +3,23 @@ Aeropuerto Internacional Jorge Chavez
   Av.E.Faucett s/n Tda PP 21-Callao   
 Of.Prin.Jr.Bernardo Alcedo #662 Lince 
                                       
-Tda:[*ST*]  Caja:[*PB*]  No:[*DI*]&&&&
-Usr:[*UN*]&&&&&&&&&&&&&&&&&  Fp:[*PI*]
+Tda:<:ST:>  Caja:<:PB:>  No: <:DI:>&&&
+Usr:<:UN:>&&&&&&&&&&&&&&& Fp: <:PI:>&&
 --------------------------------------
 
-[*PQ*] [*PN*]&&&&&&&&&&&&&&&  [*PA*]&&
+<:SS:>                                
+<:PQ:> <:PN:>&&&&&&&&&&&&&&&& <:PA:>&&
+                                <:EE:>
 
-Sub Total:                    [*ST*]&&
-[*T#IGV*]                    [*T=IGV*]
-[*T#SRV*]                    [*T=SRV*]
-Total [*MO*]                  [*FT*]&&
-Recibido [*MO*]              [*M1R*]&&
+Sub Total <:MO:>             <:NT:>&&&
+<:T#IGV:>%                   <:T=IGV:>
+<:T#SRV:>%                   <:T=SRV:>
+Total     <:MO:>             <:FT:>&&&
+Recibido  <:MO:>             <:M1R:>&&
 --------------------------------------
-  Serie de Equipo: [*SN*]&&&&&&&&     
+  Serie de Equipo: <:SN:>&&&&&&&&     
                                       
-            [*DT*]&&&&&&&&&&&         
-         [*PM*]&&&&&&&&&&&&&&&&&&&    
+         <:DT:>&&&&&&&&&&&&&&&&&&&    
 
 
 

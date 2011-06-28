@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'pv'
 p13
@@ -35,56 +35,66 @@ I3
 sg7
 S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
 p16
-ssS'cierre'
+ssS'estado'
 p17
 (dp18
+g4
+S'integer'
+p19
+sg6
+I9
+sg7
+S'INT'
+p20
+ssS'cierre'
+p21
+(dp22
 g4
 g11
 sg6
 I8
 sg7
-S'DATETIME NOT NULL'
-p19
-ssS'caja'
-p20
-(dp21
-g4
-S'integer'
-p22
-sg6
-I4
-sg7
-S'INT NOT NULL'
+S'DATETIME'
 p23
-ssS'user_ing'
+ssS'caja'
 p24
 (dp25
 g4
-S'reference auth_user'
+g19
+sg6
+I4
+sg7
+S'INT'
 p26
+ssS'user_ing'
+p27
+(dp28
+g4
+S'reference auth_user'
+p29
 sg6
 I5
 sg7
 S'INT, INDEX user_ing__idx (user_ing), FOREIGN KEY (user_ing) REFERENCES auth_user(id) ON DELETE CASCADE'
-p27
+p30
 ssS'apertura'
-p28
-(dp29
+p31
+(dp32
 g4
 g11
 sg6
 I7
 sg7
-S'DATETIME NOT NULL'
-p30
+S'DATETIME'
+p33
 ssS'id'
-p31
-(dp32
+p34
+(dp35
 g4
-g31
+g34
 sg6
 I1
 sg7
 S'INT AUTO_INCREMENT NOT NULL'
-p33
+p36
 ss.

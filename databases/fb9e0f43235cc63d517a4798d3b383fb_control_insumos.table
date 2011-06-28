@@ -11,7 +11,7 @@ p6
 I5
 sS'sql'
 p7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p8
 ssS'gramos'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I4
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p11
 ssS'codbarras_hijo'
 p12
@@ -32,7 +32,7 @@ p14
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p15
 ssS'codbarras_padre'
 p16
@@ -42,7 +42,7 @@ g14
 sg6
 I2
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p18
 ssS'truco'
 p19
@@ -53,7 +53,7 @@ p21
 sg6
 I7
 sg7
-S'INT NOT NULL'
+S'INT'
 p22
 ssS'orden'
 p23
@@ -63,7 +63,7 @@ g21
 sg6
 I8
 sg7
-S'INT NOT NULL'
+S'INT'
 p25
 ssS'estado'
 p26
@@ -73,7 +73,7 @@ g21
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p28
 ssS'id'
 p29
@@ -93,6 +93,6 @@ g21
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p34
 ss.

@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'data'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p20
 ssS'limite'
 p21
@@ -54,7 +54,7 @@ g15
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p23
 ssS'caja'
 p24
@@ -65,7 +65,7 @@ p26
 sg6
 I4
 sg7
-S'INT NOT NULL'
+S'INT'
 p27
 ssS'user_ing'
 p28
@@ -86,7 +86,7 @@ g26
 sg6
 I10
 sg7
-S'INT NOT NULL'
+S'INT'
 p34
 ssS'codbarras'
 p35
@@ -96,7 +96,7 @@ g19
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p37
 ssS'id'
 p38
@@ -116,6 +116,6 @@ g26
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p43
 ss.

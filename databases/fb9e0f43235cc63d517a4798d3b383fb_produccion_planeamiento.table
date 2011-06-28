@@ -22,7 +22,7 @@ p11
 sg6
 I8
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p12
 ssS'registro'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p16
 ssS'codbarras_hijo'
 p17
@@ -43,7 +43,7 @@ g11
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p19
 ssS'id'
 p20
@@ -74,7 +74,7 @@ g11
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p29
 ssS'codbarras_padre'
 p30
@@ -84,7 +84,7 @@ g11
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p32
 ssS'codbarras'
 p33
@@ -106,7 +106,7 @@ p39
 sg6
 I3
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p40
 ssS'cantidad_prod'
 p41
@@ -117,6 +117,6 @@ p43
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p44
 ss.

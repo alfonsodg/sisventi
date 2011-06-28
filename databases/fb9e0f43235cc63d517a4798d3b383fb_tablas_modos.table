@@ -11,7 +11,7 @@ p6
 I4
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'modo'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p11
 ssS'id'
 p12
@@ -41,6 +41,6 @@ g5
 sg6
 I2
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p17
 ss.

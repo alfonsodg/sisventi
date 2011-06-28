@@ -11,7 +11,7 @@ p6
 I19
 sS'sql'
 p7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'cp_base'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p16
 ssS'tipo'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p20
 ssS'ing_traslado'
 p21
@@ -54,7 +54,7 @@ g5
 sg6
 I15
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p23
 ssS'n_doc_base'
 p24
@@ -64,7 +64,7 @@ g15
 sg6
 I11
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p26
 ssS'fecha'
 p27
@@ -75,7 +75,7 @@ p29
 sg6
 I9
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p30
 ssS'ing_varios'
 p31
@@ -85,7 +85,7 @@ g5
 sg6
 I16
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p33
 ssS'n_doc_prefijo'
 p34
@@ -95,7 +95,7 @@ g15
 sg6
 I10
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p36
 ssS'ing_produccion'
 p37
@@ -105,7 +105,7 @@ g5
 sg6
 I14
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p39
 ssS'sal_ventas'
 p40
@@ -115,7 +115,7 @@ g5
 sg6
 I17
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p42
 ssS'sal_varios'
 p43
@@ -125,7 +125,7 @@ g5
 sg6
 I21
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p45
 ssS'user_ing'
 p46
@@ -157,7 +157,7 @@ g15
 sg6
 I12
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p56
 ssS'cp_aux'
 p57
@@ -167,7 +167,7 @@ g15
 sg6
 I7
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p59
 ssS'sal_merma'
 p60
@@ -177,7 +177,7 @@ g5
 sg6
 I18
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p62
 ssS'sal_traslado'
 p63
@@ -187,7 +187,7 @@ g5
 sg6
 I20
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p65
 ssS'codbarras'
 p66
@@ -218,6 +218,6 @@ g19
 sg6
 I3
 sg7
-S'INT NOT NULL'
+S'INT'
 p75
 ss.

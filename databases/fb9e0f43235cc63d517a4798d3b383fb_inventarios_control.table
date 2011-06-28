@@ -11,7 +11,7 @@ p6
 I2
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'codbarras'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I3
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p12
 ssS'peso_tara_2'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'factor_peso'
 p17
@@ -43,7 +43,7 @@ g15
 sg6
 I11
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'peso_unitario'
 p20
@@ -53,7 +53,7 @@ g15
 sg6
 I9
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p22
 ssS'peso_neto'
 p23
@@ -63,7 +63,7 @@ g15
 sg6
 I10
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p25
 ssS'factor'
 p26
@@ -73,7 +73,7 @@ g15
 sg6
 I4
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p28
 ssS'formula'
 p29
@@ -84,7 +84,7 @@ p31
 sg6
 I12
 sg7
-S'INT NOT NULL'
+S'INT'
 p32
 ssS'peso_tara_1'
 p33
@@ -94,7 +94,7 @@ g15
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p35
 ssS'peso_total_1'
 p36
@@ -104,7 +104,7 @@ g15
 sg6
 I5
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p38
 ssS'id'
 p39
@@ -124,6 +124,6 @@ g15
 sg6
 I6
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p44
 ss.

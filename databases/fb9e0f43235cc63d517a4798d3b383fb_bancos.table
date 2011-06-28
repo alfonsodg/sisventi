@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'pv'
 p13
@@ -44,7 +44,7 @@ p19
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p20
 ssS'id'
 p21
@@ -64,7 +64,7 @@ g5
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p26
 ssS'cambio'
 p27
@@ -74,7 +74,7 @@ g19
 sg6
 I9
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p29
 ssS'glosa1'
 p30
@@ -95,7 +95,7 @@ p35
 sg6
 I7
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p36
 ssS'banco'
 p37
@@ -105,7 +105,7 @@ g5
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p39
 ssS'fechav'
 p40
@@ -115,6 +115,6 @@ g35
 sg6
 I6
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p42
 ss.

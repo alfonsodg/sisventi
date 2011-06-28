@@ -11,7 +11,7 @@ p6
 I4
 sS'sql'
 p7
-S'INT NOT NULL'
+S'INT'
 p8
 ssS'cantidad'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I5
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p12
 ssS'fecha'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I2
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p16
 ssS'peso'
 p17
@@ -43,7 +43,7 @@ g11
 sg6
 I6
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'rendimiento'
 p20
@@ -53,7 +53,7 @@ g11
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p22
 ssS'turno'
 p23
@@ -74,7 +74,7 @@ g11
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p29
 ssS'id'
 p30

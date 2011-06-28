@@ -21,6 +21,33 @@ Dependencies
     - pymysql/MySQLdb modules
 
 
+POS Conf
+========
+datos_modo = Master Sales Genere
+modo_control = User Login After Sale
+modo_decimal = 0:INT / 1:FLOAT
+modo_almacen = Warehouse transactions
+genero_producto = Master Warehouse Genere
+almacen_key = Depreceated
+almacen = Warehouse ID
+moneda_aux = Auxiliar Money
+
+
+Compositions
+===========
+List of Modes
+1 = Sales
+2 = Production
+
+
+Document Types
+==============
+List of Modes
+0 = Automatic Sales
+1 = Warehouse
+5 = Manual Sales
+
+
 Coupons
 =======
 
@@ -37,7 +64,15 @@ according to the brackets):
 re.findall("\[\*.*?\*\]&*", value)
 re.search("\[\*.*?\*\]&*", value).group()
 re.compile("definicion").sub("mal", value)
-[(elem,re.search("\[\*%s?\*\]&*" % elem, value).group()) for elem in parte]
+value = layout
+parte = tags
+neotags = dict([(elem,re.search("\[\*%s?\*\]&*" % elem, value).group())
+    for elem in parte if re.search("\[\*%s?\*\]&*" % elem, value)])
+
+rawstr=r":<S>:(?P<contents>.*):<E>:"
+match_obj = re.search(rawstr, value,  re.IGNORECASE| re.DOTALL)
+
+
 
 [*ST*] = Store
 [*PB*] = Payment Box
@@ -45,6 +80,8 @@ re.compile("definicion").sub("mal", value)
 [*DT*] = Date and Time
 [*DX*] = Document Type
 [*DI*] = Document Number (ID)
+[*DP*] = Document Prefix
+[*DS*] = Document Suffix
 [*DF*] = Document Number (FULL)
 [*UI*] = User ID
 [*UN*] = User Full Name
@@ -55,7 +92,7 @@ re.compile("definicion").sub("mal", value)
 [*PQ*] = Product Quantity
 [*PN*] = Product Name
 [*PA*] = Product Amount
-[*ST*] = Sub Total Value
+[*NT*] = Sub Total Value
 [*T#(NAME)*] = Tax Name - Replace (NAME) with the proper value
 [*T=(NAME)*] = Tax Value - Replace (NAME) with the proper value
 [*FT*] = Full Total Value
@@ -66,13 +103,20 @@ re.compile("definicion").sub("mal", value)
 [*M2R*] = Aux Money Receive Value
 [*M2B*] = Aux Money Return Value
 [*SN*] = Serial Number
-[*DT*] = Distribution Type (0=None,1=Table,2=Delivery)
+[*DQ*] = Distribution Name
 [*PP*] = Points Program Message
 [*D1*] = Delivery Order No.
 [*D2*] = Delivery Costumer
 [*D3*] = Delivery Address
 [*D4*] = Delivery Reference
 [*D5*] = Delivery Phone
+[*TD*] = Tax Debug
+[*Q1*] = Coupons Codes
+[*Q2*] = Coupons IDs
+[*DZ*] = Distribution Type (0=None,1=Table,2=Delivery)
+[*ED*] = External Document
+[*VT*] = Date Sales
+[*PD*] = Payment Details
 
 
 License

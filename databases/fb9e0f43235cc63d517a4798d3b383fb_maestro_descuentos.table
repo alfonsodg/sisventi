@@ -11,7 +11,7 @@ p6
 I4
 sS'sql'
 p7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p8
 ssS'registro'
 p9
@@ -21,7 +21,7 @@ g5
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p11
 ssS'pv'
 p12
@@ -43,7 +43,7 @@ p18
 sg6
 I7
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'estado'
 p20
@@ -54,7 +54,7 @@ p22
 sg6
 I14
 sg7
-S'INT NOT NULL'
+S'INT'
 p23
 ssS'fecha_fin'
 p24
@@ -65,7 +65,7 @@ p26
 sg6
 I12
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p27
 ssS'hora_inicio'
 p28
@@ -76,7 +76,7 @@ p30
 sg6
 I11
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p31
 ssS'user_nivel'
 p32
@@ -86,7 +86,7 @@ g22
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p34
 ssS'fecha_inicio'
 p35
@@ -96,7 +96,7 @@ g26
 sg6
 I10
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p37
 ssS'user_ing'
 p38
@@ -117,7 +117,7 @@ g18
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p44
 ssS'hora_fin'
 p45
@@ -127,7 +127,7 @@ g30
 sg6
 I13
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p47
 ssS'codbarras'
 p48
@@ -158,6 +158,6 @@ g22
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p57
 ss.

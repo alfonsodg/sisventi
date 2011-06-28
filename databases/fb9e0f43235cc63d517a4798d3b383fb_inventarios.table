@@ -11,7 +11,7 @@ p6
 I3
 sS'sql'
 p7
-S'DATE NOT NULL'
+S'DATE'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'cantidad_1'
 p13
@@ -33,7 +33,7 @@ p15
 sg6
 I10
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'cantidad'
 p17
@@ -43,7 +43,7 @@ g15
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'almacen'
 p20
@@ -64,7 +64,7 @@ g15
 sg6
 I11
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p26
 ssS'unidades'
 p27
@@ -74,7 +74,7 @@ g15
 sg6
 I9
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p29
 ssS'cantidad_conv'
 p30
@@ -84,7 +84,7 @@ g15
 sg6
 I12
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p32
 ssS'documento'
 p33
@@ -95,7 +95,7 @@ p35
 sg6
 I4
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p36
 ssS'codbarras'
 p37
@@ -105,7 +105,7 @@ g35
 sg6
 I7
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p39
 ssS'id'
 p40
@@ -126,6 +126,6 @@ p45
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p46
 ss.

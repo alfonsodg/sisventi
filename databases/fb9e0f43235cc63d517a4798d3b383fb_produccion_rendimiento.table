@@ -11,7 +11,7 @@ p6
 I11
 sS'sql'
 p7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p8
 ssS'registro'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'cantidad'
 p13
@@ -32,7 +32,7 @@ g5
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p15
 ssS'tipo'
 p16
@@ -43,7 +43,7 @@ p18
 sg6
 I6
 sg7
-S'INT NOT NULL'
+S'INT'
 p19
 ssS'hora_inicial'
 p20
@@ -54,7 +54,7 @@ p22
 sg6
 I12
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p23
 ssS'fecha'
 p24
@@ -65,7 +65,7 @@ p26
 sg6
 I3
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p27
 ssS'peso'
 p28
@@ -75,7 +75,7 @@ g5
 sg6
 I10
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p30
 ssS'hora_final'
 p31
@@ -85,7 +85,7 @@ g22
 sg6
 I13
 sg7
-S'TIME NOT NULL'
+S'TIME'
 p33
 ssS'turno'
 p34
@@ -107,7 +107,7 @@ p40
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p41
 ssS'codbarras'
 p42
@@ -138,6 +138,6 @@ g18
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p51
 ss.

@@ -11,7 +11,7 @@ p6
 I7
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'pv'
 p9
@@ -33,7 +33,7 @@ p15
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p16
 ssS'fecha'
 p17
@@ -44,7 +44,7 @@ p19
 sg6
 I2
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p20
 ssS'grupo_distribucion'
 p21
@@ -98,6 +98,6 @@ p38
 sg6
 I9
 sg7
-S'INT NOT NULL'
+S'INT'
 p39
 ss.

@@ -22,7 +22,7 @@ p11
 sg6
 I2
 sg7
-S'DATETIME NOT NULL'
+S'DATETIME'
 p12
 ssS'area'
 p13
@@ -44,7 +44,7 @@ p19
 sg6
 I6
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p20
 ssS'moneda'
 p21
@@ -66,7 +66,7 @@ p27
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p28
 ssS'user_ing'
 p29
@@ -77,7 +77,7 @@ p31
 sg6
 I9
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p32
 ssS'id'
 p33
@@ -98,6 +98,6 @@ p38
 sg6
 I5
 sg7
-S'INT NOT NULL'
+S'INT'
 p39
 ss.

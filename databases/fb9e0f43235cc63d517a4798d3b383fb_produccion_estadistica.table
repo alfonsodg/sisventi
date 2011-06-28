@@ -11,7 +11,7 @@ p6
 I7
 sS'sql'
 p7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p8
 ssS'porcentaje_hijo'
 p9
@@ -22,7 +22,7 @@ p11
 sg6
 I12
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p12
 ssS'pv'
 p13
@@ -43,7 +43,7 @@ g11
 sg6
 I10
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p19
 ssS'fecha'
 p20
@@ -54,7 +54,7 @@ p22
 sg6
 I2
 sg7
-S'DATE NOT NULL'
+S'DATE'
 p23
 ssS'cantidad_abuelo'
 p24
@@ -64,7 +64,7 @@ g11
 sg6
 I8
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p26
 ssS'codbarras_padre'
 p27
@@ -74,7 +74,7 @@ g5
 sg6
 I6
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p29
 ssS'cantidad_hijo'
 p30
@@ -84,7 +84,7 @@ g11
 sg6
 I11
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p32
 ssS'porcentaje_general'
 p33
@@ -94,7 +94,7 @@ g11
 sg6
 I14
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p35
 ssS'codbarras_abuelo'
 p36
@@ -104,7 +104,7 @@ g5
 sg6
 I5
 sg7
-S'VARCHAR(255) NOT NULL'
+S'VARCHAR(255)'
 p38
 ssS'turno'
 p39
@@ -135,7 +135,7 @@ g11
 sg6
 I9
 sg7
-S'DOUBLE NOT NULL'
+S'DOUBLE'
 p48
 ssS'modo'
 p49
@@ -146,6 +146,6 @@ p51
 sg6
 I13
 sg7
-S'INT NOT NULL'
+S'INT'
 p52
 ss.
