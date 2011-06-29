@@ -17,12 +17,12 @@ ssS'codbarras'
 p9
 (dp10
 g4
-S'string'
+S'reference maestro'
 p11
 sg6
 I3
 sg7
-S'VARCHAR(255)'
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
 p12
 ssS'peso_tara_2'
 p13

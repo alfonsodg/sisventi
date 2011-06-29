@@ -124,6 +124,7 @@ genero_producto = ''
 almacen_key = ''
 almacen = ''
 moneda_aux = ''
+operacion_logistica = ''
 nombre_usuario = 'I'
 doc_cabecera = ''
 doc_pie = ''
@@ -155,15 +156,15 @@ def configuration():
     global from_smtp, to_smtp, consumo_alerta, dia_alerta, hora_max
     global datos_modo, stock_alerta, pos_modo, modo_decimal
     global modo_control, modo_almacen, genero_producto, almacen_key
-    global almacen, moneda_ux
+    global almacen, moneda_ux, operacion_logistica
     fecha_act = time.strftime("%Y-%m-%d")
     sql = """select '', '', modo_impuesto, impuestos,
         modo_moneda, moneda, money_drawer, empresa, tipo_servicio,
         servidor_smtp, from_smtp, to_smtp, consumo_alerta, dia_alerta,
         hora_max, datos_modo, stock_alerta, pos_modo, modo_decimal,
         modo_control, modo_almacen, genero_producto, almacen_key,
-        almacen, moneda_aux from pos_configuracion where id='%s'
-        and caja=%s""" % (pos_num, caja_num)
+        almacen, moneda_aux, operacion_logistica from pos_configuracion
+        where id='%s' and caja=%s""" % (pos_num, caja_num)
     cnt, rso = query(sql, 0)
     if cnt == 0:
         curses.echo()
@@ -200,6 +201,7 @@ def configuration():
     almacen_key = str(rso[22])
     almacen = str(rso[23])
     moneda_aux = str(rso[24])
+    operacion_logistica = str(rso[25])
     sql = """select valor from tipos_cambio where fecha = '%s'
         or fecha = '0000-00-00' order by fecha
         desc limit 1""" % (fecha_act)
@@ -928,12 +930,12 @@ def query(sql, ndat=1):
             return -1, sql
 
 
-def payment_process():
+def operation_process():
     """
     Payment Process
     """
     global comprobante_id
-    ty = 14
+    ty = 15
     tx = 70
     py = screen_position(ty, maxy)
     px = screen_position(tx, maxx)
@@ -943,7 +945,7 @@ def payment_process():
     posx = center_text(x7, msg007)
     win7.addstr(1, posx, msg007, curses.A_BOLD)
     update_panels()
-    medios_pago, vuelsol, vueldol = document_process()
+    medios_pago, vuelsol, vueldol = payment_process()
     if medios_pago == 'Anular':
         return ('Anular', '', '', '', '', '')
     lineas = []
@@ -958,6 +960,8 @@ def payment_process():
         lineas.append(cadena)
         mntsol += float(medios_pago[pago][1])
         mntdol += float(medios_pago[pago][2])
+    rec_sol = mntsol + vuelsol
+    rec_dol = mntdol + vueldol
     cnt = 1
     cuenta_mp = len(medios_pago)
     elementos = []
@@ -1047,16 +1051,21 @@ def payment_process():
         mntdol = 0.00
         vuelsol = 0.00
         vueldol = 0.00
-    msg011 = 'Total '
-    texto = """%s%s: %s  |  %s$: %s""" % (msg011, moneda, 
-        fl_ft(mntsol), msg011, fl_ft(mntdol))
+    msg = 'Total '
+    texto = """%s%s: %s  |  %s$: %s""" % (msg, moneda, 
+        fl_ft(mntsol), msg, fl_ft(mntdol))
     posx = center_text(x7, texto)
     win7.addstr(11, posx, texto)
-    msg012 = 'Vuelto '
-    texto = """%s%s: %s  |  %s$: %s""" % (msg012, moneda,
-        fl_ft(vuelsol), msg012, fl_ft(vueldol))
+    msg = 'Recibido '
+    texto = """%s%s: %s  |  %s$: %s""" % (msg, moneda,
+        fl_ft(rec_sol), msg, fl_ft(rec_dol))
     posx = center_text(x7, texto)
     win7.addstr(12, posx, texto)
+    msg = 'Vuelto '
+    texto = """%s%s: %s  |  %s$: %s""" % (msg, moneda,
+        fl_ft(vuelsol), msg, fl_ft(vueldol))
+    posx = center_text(x7, texto)
+    win7.addstr(13, posx, texto)
     update_panels()
     while 1:
         opcion = get_control_char(pan7)
@@ -1079,7 +1088,7 @@ def fl_ft(dato):
         return str(dato)
 
 
-def document_process():
+def payment_process():
     """
     Payment Options
     """
@@ -1252,6 +1261,7 @@ def document_process():
             if diferencia == 1:
                 vlt_loc = abs((mnt_loc+(mnt_dol*tipo_cambio))-tot_loc)
                 vlt_dol = 0.00
+                mnt_loc -= vlt_loc
                 metodos[dato] = modo_fp[dato][1], mnt_loc, mnt_dol
         else:
             if dato in metodos:
@@ -1261,13 +1271,13 @@ def document_process():
 
 def compositions(code, cnt=1):
     data = {}
-    sql = """select codbarras_hijo,cantidad*%s from recetas where
-        codbarras_padre='%s' and modo='1' and
+    sql = """select cast(codbarras_hijo as UNSIGNED),cantidad*%s
+        from recetas where codbarras_padre='%s' and modo='1' and
         estado='1'""" % (cnt, code)
     cuenta, resultado = query(sql)
     if cuenta > 0:
         for linea in resultado:
-            hijo = linea[0]
+            hijo = int(linea[0])
             cant = linea[1]
             data[hijo] = cant
     return data
@@ -1281,15 +1291,15 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
     if fecha!='':
         mes=fecha[5:7]
     #SALDOS
-    sql = """select codbarras,sum(ingreso-if(salida is NULL,0,salida))
-        saldo from almacenes where almacen='%s' and estado='1' and
-        month(fecha_doc)='%s' group by codbarras order by
+    sql = """select cast(codbarras as UNSIGNED),sum(ingreso-if(salida
+        is NULL,0,salida)) saldo from almacenes where almacen='%s' and
+        estado='1' and month(fecha_doc)='%s' group by codbarras order by
         codbarras""" % (almacen, mes)
     cuenta, resultado = query(sql,1)
     data={}
     if cuenta > 0:
         for linea in resultado:
-            codex = linea[0]
+            codex = int(linea[0])
             saldx = linea[1]
             data[codex] = saldx
     if modo_operacion==0:
@@ -1302,20 +1312,27 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
                 return 0
 
 
-def almacen_process():
-    sql_layout = """insert into almacenes (modo,tiempo,user_ing,
+def warehouse_process(dvar, code, cnt, alm_prefijo, alm_correlativo):
+    data = compositions(code, cnt)
+    sql_layout = """insert into almacenes (almacen,modo,tiempo,user_ing,
         operacion_logistica,modo_doc,tipo_doc,fecha_doc,
         n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,
-        codbarras,cantidad_ing) values ('%s','%s','%s','%s','%s',
-        '%s','%s','%s','%s','%s','%s','%s','%s')"""
-    #sql_a = sql_alm % (2, dvar["DT"], dvar["UI"], almacen, )
-    #(2,tiempo,cdv,'SGR',almacen_key,'5',tiempo,nodoc_prefijo,
-    #nodoc,almacen,'0000',x,scantidad)
-    #b=query(sql)
-    pass
+        codbarras,salida,estado,registro,n_prefijo_relacion,
+        n_doc_relacion) values ('%s','%s','%s','%s','%s','%s','%s','%s',
+        '%s','%s','%s','%s','%s','%s','1','%s','%s','%s')"""
+    m_sql = []
+    for elem in data:
+        code = elem
+        cnt = data[elem]
+        sql = sql_layout % (almacen, 2, dvar["DT"], dvar["UI"],
+            operacion_logistica, 1, almacen_key, dvar["DA"],
+            alm_prefijo, alm_correlativo, almacen, 2, code, cnt,
+            dvar["DT"], dvar["DP"], dvar["DI"])
+        m_sql.append(sql)
+    return m_sql 
 
 
-def check_warehouse(code, warning=1):
+def check_warehouse(code, mode=1):
     cnt = ctrlprods[code]['cnt']
     if cnt <= 1:
         cnt = 1
@@ -1336,9 +1353,10 @@ def check_warehouse(code, warning=1):
             msg = "Producto NO EXISTENTE en almacen"
     else:
         msg = "Lista de composicion NO EXISTENTE"
-    if warning == 1:
+    if mode == 1:
         if msg is not None:
             dicotomic_question(msg)
+            
 
 
 def get_value_expresion(dato):
@@ -1421,12 +1439,11 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
         datos = []
         datos.append(str(parte[key_val]))
         datos.append(str(parte[dsc_val]))
-        #texto = "%s->%s" % (len(str(parte[key_val])), parte[dsc_val])
-        texto = "%s::%s" % (parte[key_val], parte[dsc_val])
-        temporal.append(texto)
+        texto = "%s:%s" % (parte[key_val], parte[dsc_val])
+        temporal.append(len(texto))
         lineas.append(datos)
     cuenta = len(lineas)
-    sizex = len(max(temporal)) + 2
+    sizex = max(temporal) + 2
     if sizex > maxx:
         sizex = maxx
     temporal = []
@@ -1438,7 +1455,7 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
         sizey = cuenta+2
         inic_y = 0  #Inicio de Array
         term_y = cuenta  #Termino de Array
-    sizex = maxx - 10
+    #sizex = maxx - 10
     posy = screen_position(sizey, maxy)
     posx = screen_position(sizex, maxx)
     panel = make_panel(curses.COLOR_WHITE, sizey, sizex, posy, posx)
@@ -1448,7 +1465,7 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
     while 1:
         py = 0
         for cnt in range(inic_y, term_y):
-            contenido = "%s::%s" % (lineas[cnt][0], lineas[cnt][1])
+            contenido = "%s:%s" % (lineas[cnt][0], lineas[cnt][1])
             py += 1
             condicion = curses.A_NORMAL
             win.addstr(py, 1, ' '*(sizex-2), condicion)
@@ -1714,8 +1731,8 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
         n_doc_base, n_doc_sufijo, estado, comprobante, cliente,
         cv_ing, codigo, precio, cantidad, sub_total_bruto,
         sub_total_impto, sub_total_neto, total, detalle_impto,
-        total_neto, mntsol, mntdol, tiempo, vales, sello, data_1, imod,
-        fecha_vta, medios_pago, sub_codbarras, registro)
+        total_neto, mntsol, mntdol, tiempo, vales, sello, dist_type,
+        ext_doc, fecha_vta, medios_pago, sub_codbarras, registro)
         values (%s)""" % (",".join(["'%s'" for ele in range(0,29)]))
     for code in rvar:
         o_cadena = rvar[code]
@@ -1729,7 +1746,12 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
     tvar = re.sub(".*<:EE:>\n", "", tvar)
     p_elem = []
     p_dict = {}
+    (alm_prefijo, alm_correlativo, alm_sufijo, alm_copia, alm_detalle,
+        alm_port, alm_layout) = get_correlative(0, almacen_key, 0, 1)
+    m_sql = []
+    v_sql = []
     for linea in format_list:
+        v_sql = []
         parte = tvar
         p_dict["PQ"] = linea[3]
         p_dict["PN"] = linea[0]
@@ -1749,10 +1771,13 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
             else:
                 r_cadena = str(p_dict[code])[:siz].rjust(siz)
             parte = re.sub(o_cadena, r_cadena, parte)
-        exe = query(sql,3)
+        if modo_almacen=='1':
+            v_sql = warehouse_process(dvar, linea[1], linea[3],
+                alm_prefijo, alm_correlativo)
+        m_sql.append(sql)
+        m_sql.extend(v_sql)
         p_elem.append(parte)
-    if modo_almacen=='1':
-        almacen_process()
+    exe = query(m_sql, 5)
     p_elem = "".join(p_elem)
     layout = re.sub(pvar, p_elem, layout)
     open(nom_arch,"w").write(layout)
@@ -2881,7 +2906,7 @@ while 1:
                 distribucion = str(tipo_servicio)
             if len(ctrlprods.keys()) > 0:
                 (medios_pago, comprobante_id, nombre_cliente, id_cliente, vuelsol,
-                    vueldol) = payment_process()
+                    vueldol) = operation_process()
 #                print medios_pago, comprobante_id, nombre_cliente, id_cliente, vuelsol, vueldol
 #                sys.exit()
                 if medios_pago != 'Anular':

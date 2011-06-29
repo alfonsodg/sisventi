@@ -1,81 +1,85 @@
 (dp1
-S'grupo_distribucion'
+S'pv'
 p2
 (dp3
 S'type'
 p4
-S'reference grupo_distribucion'
+S'reference puntos_venta'
 p5
 sS'sortable'
 p6
-I3
+I2
 sS'sql'
 p7
-S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
 p8
 ssS'turno'
 p9
 (dp10
-g4
-S'reference turnos'
+S'sortable'
 p11
-sg6
 I4
-sg7
-S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
+sS'type'
 p12
-ssS'porcentaje'
+S'reference turnos'
 p13
-(dp14
-g4
-S'double'
+sS'sql'
+p14
+S'INT, INDEX turno__idx (turno), FOREIGN KEY (turno) REFERENCES turnos(id) ON DELETE CASCADE'
 p15
-sg6
-I5
-sg7
-S'DOUBLE'
-p16
-ssS'cp'
-p17
-(dp18
-g4
-S'string'
-p19
-sg6
-I2
-sg7
-S'VARCHAR(255)'
-p20
-ssS'codbarras'
-p21
-(dp22
-g4
-S'reference maestro'
-p23
-sg6
-I6
-sg7
-S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
-p24
-ssS'id'
-p25
-(dp26
-g4
-g25
-sg6
-I1
-sg7
-S'INT AUTO_INCREMENT NOT NULL'
-p27
 ssS'modo'
+p16
+(dp17
+g11
+I7
+sg12
+S'integer'
+p18
+sg14
+S'INT'
+p19
+ssS'porcentaje'
+p20
+(dp21
+g11
+I5
+sg12
+S'double'
+p22
+sg14
+S'DOUBLE'
+p23
+ssS'codbarras'
+p24
+(dp25
+g11
+I6
+sg12
+S'reference maestro'
+p26
+sg14
+S'INT, INDEX codbarras__idx (codbarras), FOREIGN KEY (codbarras) REFERENCES maestro(id) ON DELETE CASCADE'
+p27
+ssS'id'
 p28
 (dp29
-g4
-S'integer'
+g11
+I1
+sg12
+S'id'
 p30
-sg6
-I7
-sg7
-S'INT'
+sg14
+S'INT AUTO_INCREMENT NOT NULL'
 p31
+ssS'grupo_distribucion'
+p32
+(dp33
+g11
+I3
+sg12
+S'reference grupo_distribucion'
+p34
+sg14
+S'INT, INDEX grupo_distribucion__idx (grupo_distribucion), FOREIGN KEY (grupo_distribucion) REFERENCES grupo_distribucion(id) ON DELETE CASCADE'
+p35
 ss.

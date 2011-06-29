@@ -897,8 +897,9 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
     """
     Inputs DATA
     """
-    sql_layout = """select nombre,descripcion from maestro where
-        nombre!="" and id='%s' %s"""
+    sql_layout = """select if(length(mae.alias)>0,mae.alias,
+        concat(mae.nombre,' ',mae.descripcion)) from maestro
+        mae mae.id='%s' %s"""
     if len(sql_cond) > 0:
         sql_cond = "and %s" % sql_cond
     cond1=string.split(valid_keys,',')
@@ -921,8 +922,10 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
             tipoc=temp[1]
             for opc in cond2:
                 if tipoc == opc:
-                    sql = """select id,concat(nombre,' ',descripcion,
-                        '->',round(precio,2)) from maestro where
+                    sql = """select id,if(length(alias)>0,
+                        concat(alias,' -> ',round(precio,2)),
+                        concat(nombre,' ',descripcion,' -> ',
+                        round(precio,2))) from maestro where
                         (nombre like '%%%s%%' or descripcion like
                         '%%%s%%' or nombre like '%%%s%%' or descripcion
                         like '%%%s%%') %s order by
@@ -976,7 +979,8 @@ def ingr_alm(panel,mensaje='Destino',pre_dato=''):
         else:
             condicion_dato=''
         sql="""select id,descripcion from almacenes_lista where
-            descripcion!='' %s order by almacen asc""" % condicion_dato
+            modo=1 and descripcion!='' %s order by
+            almacen asc""" % condicion_dato
         cuenta,resultado=query(sql,1)
         if cuenta>0:
             dato,nomb=ladocl(resultado,'Almacenes')
@@ -1063,18 +1067,21 @@ def agregar_valores(array,eliminar,*campos):
 
 
 def get_correlativo(modo,documento,edit=0,panel=''):
-    prefijo=''
-    correlativo=0
-    sufijo=''
+    prefijo = ''
+    correlativo = 0
+    sufijo = ''
+    port = ''
+    layout = ''
     if edit!=2:
-        sql = """select prefijo,correlativo+1,sufijo from   
-            documentos_comerciales where documento='%s' and
-            modo='%s'""" % (documento, modo)
+        sql = """select prefijo,correlativo+1,sufijo,port,layout from   
+            documentos_comerciales where id='%s'""" % (documento)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
-            prefijo=resultado[0]
-            correlativo=resultado[1]
-            sufijo=resultado[2]
+            prefijo = resultado[0]
+            correlativo = resultado[1]
+            sufijo = resultado[2]
+            port = resultado[3]
+            layout = resultado[4]
     if edit==1 or edit==2:
         if len(str(sufijo))>0:
             sufijo='-'+str(sufijo)
@@ -1099,13 +1106,13 @@ def get_correlativo(modo,documento,edit=0,panel=''):
                     break
                 except:
                     pass
-    return str(prefijo),str(correlativo),str(sufijo)
+    return str(prefijo),str(correlativo),str(sufijo),str(port),str(layout)
 
 
 def set_correlativo(doc_modo,tipo_doc,dato,modo=1):
-    sql="update documentos_comerciales set correlativo='"+str(dato)+"' where documento='"+str(tipo_doc)+"' and modo='"+str(doc_modo)+"'";
+    sql="update documentos_comerciales set correlativo='%s' where id='%s'" % (dato, tipo_doc)
     if modo==1:
-        exe=curs.execute(sql)
+        exe = query(sql,3)
     else:
         return sql
     return
@@ -1214,8 +1221,9 @@ def dict_list(cadena,modo=0):
     if modo==0:
         elem=cadena.keys()
     for code in elem:
-        sql = """select concat(nombre,' ',descripcion) from maestro
-            where id='%s'""" % (code)
+        sql = """select if(length(mae.alias)>0,mae.alias,
+            concat(mae.nombre,' ',mae.descripcion)) from maestro mae
+            where mae.id='%s'""" % (code)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
             descrip_prod=str(resultado[0])
@@ -1247,8 +1255,9 @@ def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:010
         elif ingdat=='insert':
             codigo_prod=''
         else:
-            sql = """select concat(nombre,' ',descripcion) from maestro
-                where id='%s'""" % (ingdat)
+            sql = """select if(length(mae.alias)>0,mae.alias,
+                concat(mae.nombre,' ',mae.descripcion)) from maestro mae
+                where mae.id='%s'""" % (ingdat)
             cuenta,resultado=query(sql,0)
             if cuenta>0:
                 codigo_prod=str(ingdat)
@@ -1449,7 +1458,7 @@ def reimpresion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
 
 
 #def impresion_guia_interna(productos,fecha,hora,documento,operacion,almacen,prefijo,num_doc):
-def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',num_doc=''):
+def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',num_doc='',port_imp='',layout=''):
     sql="""select codbarras,if(modo=1,round(ingreso,2),round(salida,2)),
         date(fecha_doc),time(tiempo),operacion_logistica,modo,
         almacen_origen,almacen_destino,turno from almacenes where
@@ -1487,7 +1496,7 @@ def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',nu
     else:
         descripcion_operacion=operacion
     sql = """select descripcion from almacenes_lista where
-        almacen='%s'""" % almacen
+        id='%s'""" % almacen
     cuenta,resultado=query(sql,0)
     if cuenta>0:
         descripcion_almacen=resultado[0]
@@ -1520,9 +1529,11 @@ def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',nu
             cnt+=1
             codigo=str(linea[0])
             cantidad=str(linea[1])
-            sql = """select ucase(unidad_medida),concat(nombre,' ',
-                descripcion) from maestro where
-                id='%s'""" % (codigo)
+            sql = """select ucase(unm.codigo),if(length(mae.alias)>0,
+                mae.alias,concat(mae.nombre,' ',mae.descripcion)) from
+                maestro mae left join unidades_medida unm on
+                unm.id=mae.unidad_medida where
+                mae.id='%s'""" % (codigo)
             cuenta,resultado=query(sql,0)
             unidad_med=resultado[0]
             descripcion=resultado[1]
@@ -1542,7 +1553,7 @@ def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',nu
 
 
 #def impresion_guia_externa(productos,fecha,almacen,transportista,vehiculo,prefijo,num_doc,):
-def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',num_doc=''):
+def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',num_doc='',port_imp='',layout=''):
     #<---Cambiar
 #   sql="select codigo,descripcion from guias_plantillas where modo='"+str(doc_modo)+"' and documento='"+str(doc_tipo)+"'"
     sql="select tipo from guias_plantillas where modo='"+str(doc_modo)+"' and documento='"+str(doc_tipo)+"'"
@@ -1587,7 +1598,7 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
         turno=str(parte[10])
         observac=str(parte[11])
     sql = """select descripcion,doc_id,direccion from almacenes_lista
-        where almacen='%s'""" % almacen
+        where id='%s'""" % almacen
     cuenta,resultado=query(sql,0)
     almacen_descripcion=str(resultado[0])
     ruc=str(resultado[1])
@@ -1627,9 +1638,11 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
         for linea in productos:
             codigo=str(linea[0])
             cantidad=str(linea[1])
-            sql = """select ucase(unidad_medida),concat(nombre,' ',
-                descripcion) from maestro where
-                id='%s'""" % (codigo)
+            sql = """select ucase(unm.codigo),if(length(mae.alias)>0,
+                mae.alias,concat(mae.nombre,' ',mae.descripcion)) from
+                maestro mae left join unidades_medida unm on
+                unm.id=mae.unidad_medida where
+                mae.id='%s'""" % (codigo)
             cuenta,resultado=query(sql,0)
             unidad_med=resultado[0]
             descripcion=resultado[1]
@@ -1659,9 +1672,11 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
         for linea in productos:
             codigo=str(linea[0])
             cantidad=str(linea[1])
-            sql = """select ucase(unidad_medida),concat(nombre,' ',
-                descripcion) from maestro where
-                id='%s'""" % (codigo)
+            sql = """select ucase(unm.codigo),if(length(mae.alias)>0,
+                mae.alias,concat(mae.nombre,' ',mae.descripcion)) from
+                maestro mae left join unidades_medida unm on
+                unm.id=mae.unidad_medida where
+                mae.id='%s'""" % (codigo)
             cuenta,resultado=query(sql,0)
             unidad_med=resultado[0]
             descripcion=resultado[1]
@@ -1900,7 +1915,8 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             total_doc+=float(parte[4])
         winhead('Total: '+str(total_doc),panel_text_8)
         ingdat,cuenta=datopc('Codigo',panel_text_5,10,'insert,arriba,abajo,Anular','caracter',"genero=2")
-        sql = """select concat(nombre,' ',descripcion),precio from
+        sql = """select if(length(alias)>0,alias,
+            concat(nombre,' ',descripcion)),precio from
             maestro where id='%s'""" % (ingdat)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
@@ -2080,11 +2096,11 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
             transp_data=ingresodato('Transp',panel_text_1,10,'',1,0)
             if transp_data=='Anular':
                 return 0
-            sql="select codigo,concat(nombres,' ',apellidos) from transportistas where (nombres like '%"+str(transp_data)+"%' or apellidos like '%"+str(transp_data)+"%') and (nombres!='' or apellidos!='')"
+            sql="select id,concat(nombres,' ',apellidos) from transportistas where (nombres like '%"+str(transp_data)+"%' or apellidos like '%"+str(transp_data)+"%') and (nombres!='' or apellidos!='')"
             transp_codigo,transp_descripcion=sql_seleccion(sql,'Transportista')
             if transp_codigo=='Anular':
                 return 0
-            sql="select codigo,concat('->',registro,'-',marca,' / ',modelo) from vehiculos where codigo!=''"
+            sql="select id,concat('->',registro,'-',marca,' / ',modelo) from vehiculos where codigo!=''"
             vehiculo_codigo,vehiculo_descripcion=sql_seleccion(sql,'Vehiculos')
             if vehiculo_codigo=='Anular':
                 return 0
@@ -2103,9 +2119,11 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
         while 1:
             viewtext(lineas,panel_mid,psey)
             ingdat,cuenta=datopc('Codigo',panel_text_1,10,'insert,arriba,abajo,Anular','caracter',prod_filt)
-            sql = """select concat(nombre,' ',descripcion,' ',
-                unidad_medida) from maestro where
-                id='%s'""" % (ingdat)
+            sql = """select if(length(mae.alias)>0,concat(mae.alias,' ',
+                unm.codigo),concat(mae.nombre,' ',mae.descripcion,' ',
+                unm.codigo)) from maestro mae left join unidades_medida
+                unm on unm.id=mae.unidad_medida where
+                mae.id='%s'""" % (ingdat)
             cuenta,resultado=query(sql,0)
             if cuenta>0:
                 nombre_prod=resultado[0]
@@ -2173,7 +2191,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         edit_guia=2
                 else:
                     edit_guia=1
-                prefijo,correlativo,sufijo=get_correlativo(doc_modo,doc_tipo,edit_guia,panel_text_3)
+                prefijo,correlativo,sufijo,port_imp,layout=get_correlativo(doc_modo,doc_tipo,edit_guia,panel_text_3)
                 if correlativo=='Anular':
                     return
                 if extra_oper_log==1:
@@ -2182,8 +2200,8 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                     sufijo2=sufijo
                 for z in range(0,len(lineas)):
                     if lineas[z][3]=='0':
-                        base=sqlsend(lineas[z],'codbarras,cantidad_ing',0)
-                        sql="update almacenes set "+base+",user_ing='"+str(codven)+"',tiempo='"+str(tiempo_reg)+"' where n_doc_base='"+str(correlativo)+"' and codbarras='"+str(lineas[z][0])+"' and turno='"+str(turno)+"' and fecha_doc='"+str(fecha)+"' and estado='1' and operacion_logistica='"+str(oper_log)+"' and modo='"+str(modo_oper_log)+"' and modo_doc='"+str(doc_modo)+"' and tipo_doc='"+str(doc_tipo)+"'"
+                        base=sqlsend(lineas[z],'codbarras,ingreso',0)
+                        sql = "update almacenes set "+base+",user_ing='"+str(codven)+"',tiempo='"+str(tiempo_reg)+"' where n_doc_base='"+str(correlativo)+"' and codbarras='"+str(lineas[z][0])+"' and turno='"+str(turno)+"' and fecha_doc='"+str(fecha)+"' and estado='1' and operacion_logistica='"+str(oper_log)+"' and modo='"+str(modo_oper_log)+"' and modo_doc='"+str(doc_modo)+"' and tipo_doc='"+str(doc_tipo)+"'"
                         query_trans.append(sql)
                     else:
                         campos_bd = """codbarras,ingreso,turno,
@@ -2193,16 +2211,31 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             masa,operacion_logistica,extra_data,
                             modo_doc,tipo_doc,n_prefijo_relacion,
                             n_doc_relacion,transportista,vehiculo,
-                            observaciones,almacen"""
-                        temporal=lineas[z]
-                        temporal_x=agregar_valores(temporal,[0,1],turno,prefijo,correlativo,idven,tiempo_reg,fecha,modo_oper_log,alm_ori,alm_des,fecha,'1',masa,oper_log,extra_data,doc_modo,doc_tipo,prefijo2,correlativo2,transp_codigo,vehiculo_codigo,observaciones,alm_base)
+                            observaciones,almacen,registro"""
+                        temporal = lineas[z]
+                        temporal_x = agregar_valores(temporal, [0,1],
+                            turno, prefijo, correlativo, idven,
+                            tiempo_reg, fecha, modo_oper_log, alm_ori,
+                            alm_des,fecha, '1', masa, oper_log,
+                            extra_data, doc_modo, doc_tipo, prefijo2,
+                            correlativo2, transp_codigo,
+                            vehiculo_codigo, observaciones, alm_base,
+                            tiempo_reg)
                         base=sqlsend(temporal_x,campos_bd,1)
-                        sql="insert into almacenes "+base
+                        sql = "insert into almacenes %s" % (base)
                         query_trans.append(sql)
                         if extra_oper_log==1:
-                            temporal_y=agregar_valores(temporal,[0,1],turno,prefijo2,correlativo2,idven,tiempo_reg,fecha,modo_oper_log2,alm_ori2,alm_des2,fecha,'1',masa,oper_log2,extra_data,doc_modo,doc_tipo,prefijo,correlativo,transp_codigo,vehiculo_codigo,observaciones,alm_base)
+                            temporal_y = agregar_valores(temporal,
+                                [0,1], turno, prefijo2, correlativo2,
+                                idven, tiempo_reg, fecha,
+                                modo_oper_log2, alm_ori2, alm_des2,
+                                fecha, '1', masa, oper_log2, extra_data,
+                                doc_modo, doc_tipo, prefijo,
+                                correlativo, transp_codigo,
+                                vehiculo_codigo, observaciones,
+                                alm_base, tiempo_reg)
                             base2=sqlsend(temporal_y,campos_bd,1)
-                            sql2="insert into almacenes "+base2
+                            sql2="insert into almacenes %s" % (base2)
                             query_trans.append(sql2)
                 if len(query_trans)>0:
                     if edit_guia!=2:
@@ -2225,13 +2258,13 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         alm2=alm_ori2
                     if tipo_mov==2:
                         if impresion==1:
-                            impresion_guia_externa(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo)
+                            impresion_guia_externa(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo,port_imp,layout)
                     else:
                         if impresion==1:
-                            impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo)
+                            impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo,port_imp,layout)
                     if extra_oper_log==1:
                         if impresion==1:
-                            impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo2,correlativo2)
+                            impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo2,correlativo2,port_imp,layout)
                     return 1
                 elif estado==-1:
                     return -1
@@ -2260,9 +2293,9 @@ while 1:
         print_buffer=''
         modo_almacen=0
         head='Central'
-        opcion=menu('1. Almacenes-Distribucion|2. Almacenes-Produccion|3. Almacenes-Central|4. Almacenes-Mermas|5. Almacenes-Finishing|7. Almacenes-Wong|8. Ventas|9. Salir',head)
+        opcion=menu('1. Almacenes-Central|2. Almacenes-Produccion|3. Almacenes-Distribucion|4. Almacenes-Mermas|5. Almacenes-Finishing|7. Almacenes-Auxiliares|8. Ventas|9. Salir',head)
         #OPCION 1
-        if opcion==1:
+        if opcion==3:
             modo_almacen=1
             oper_log_pref='1'
             doc_modo=1
@@ -2280,11 +2313,11 @@ while 1:
             alm_relev='0101'
             alm_base='0101'
             head='Produccion:0101'
-        elif opcion==3:
+        elif opcion==1:
             modo_almacen=1
             oper_log_pref=''
             doc_modo=3
-            doc_tipo_int=6
+            doc_tipo_int=2
             doc_tipo_ext=5
             alm_relev=''
             alm_base='1'

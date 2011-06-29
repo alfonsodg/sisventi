@@ -39,12 +39,12 @@ ssS'accion'
 p17
 (dp18
 g4
-S'string'
+S'integer'
 p19
 sg6
 I6
 sg7
-S'VARCHAR(255)'
+S'INT'
 p20
 ssS'fecha_venc'
 p21
@@ -120,20 +120,22 @@ ssS'cliente'
 p42
 (dp43
 g4
-g19
+S'reference directorio'
+p44
 sg6
 I5
 sg7
-S'VARCHAR(255)'
-p44
-ssS'documento'
+S'INT, INDEX cliente__idx (cliente), FOREIGN KEY (cliente) REFERENCES directorio(id) ON DELETE CASCADE'
 p45
-(dp46
+ssS'documento'
+p46
+(dp47
 g4
-g19
+S'string'
+p48
 sg6
 I4
 sg7
 S'VARCHAR(255)'
-p47
+p49
 ss.

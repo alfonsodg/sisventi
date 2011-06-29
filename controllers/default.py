@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+restricciones = True
+
 def index():
     """
     example action using the internationalization operator T and flash
@@ -43,7 +45,8 @@ def call():
     return service()
 
 
-@auth.requires_signature()
+#@auth.requires_signature()
+@auth.requires(restricciones)
 def data():
     """
     http://..../[app]/default/data/tables

@@ -92,30 +92,32 @@ ssS'codbarras_auxiliar'
 p35
 (dp36
 g4
-g23
+S'reference maestro'
+p37
 sg6
 I10
 sg7
-S'VARCHAR(255)'
-p37
-ssS'codbarras_padre'
+S'INT, INDEX codbarras_auxiliar__idx (codbarras_auxiliar), FOREIGN KEY (codbarras_auxiliar) REFERENCES maestro(id) ON DELETE CASCADE'
 p38
-(dp39
+ssS'codbarras_padre'
+p39
+(dp40
 g4
-g23
+S'reference maestro'
+p41
 sg6
 I9
 sg7
-S'VARCHAR(255)'
-p40
+S'INT, INDEX codbarras_padre__idx (codbarras_padre), FOREIGN KEY (codbarras_padre) REFERENCES maestro(id) ON DELETE CASCADE'
+p42
 ssS'id'
-p41
-(dp42
+p43
+(dp44
 g4
-g41
+g43
 sg6
 I1
 sg7
 S'INT AUTO_INCREMENT NOT NULL'
-p43
+p45
 ss.

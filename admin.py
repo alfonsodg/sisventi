@@ -20,6 +20,7 @@ import calendar
 import zipfile
 import glob
 import md5
+import logging
 from curses import panel
 #####
 
@@ -28,6 +29,9 @@ signal.signal(signal.SIGINT, signal.SIG_IGN)
 signal.signal(signal.SIGTSTP, signal.SIG_IGN)
 signal.signal(signal.SIGABRT, signal.SIG_IGN)
 #####
+
+logging.basicConfig(filename='sisventi.log', level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s')
 
 #####
 #Read the db.cfg file (variables for assign the POS and MySQL DB values)
@@ -229,6 +233,8 @@ def query(sql,ndat=1):
         except MySQLdb.Error, error:
             curs.execute("ROLLBACK")
             resp=segur("ERROR. INFORMACION NO REGISTRADA.")
+            logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
             return -1
     elif ndat==5:
         try:
@@ -240,6 +246,8 @@ def query(sql,ndat=1):
         except MySQLdb.Error, error:
             curs.execute("ROLLBACK")
             resp=segur("ERROR. INFORMACION NO REGISTRADA.")
+            logging.debug("Query: %s" % error)
+            logging.debug("Query-Detail: %s" % sql)
             return -1
     else:
         try:
@@ -750,7 +758,7 @@ def payment_options(apertura,cierre,archivo=''):
     transacciones=0
     total_real=0
     lineas=[]
-    condicion_doc=" and doc.imod=0"
+    condicion_doc=" and doc.ext_doc=0"
     if cierre=='0000-00-00 00:00:00':
         cierre=apertura
     condicion="doc.fecha_vta between date('"+apertura+"') and date('"+cierre+"')"
@@ -882,7 +890,7 @@ def vales(apertura,cierre,modo='0',archivo=''):
     vales={}
     condicion_doc=''
     if archivo!='':
-        condicion_doc=" and imod=0"
+        condicion_doc=" and ext_doc=0"
     for x in resultado:
         vales[x[0]]=[]
         vales[x[0]].append(x[1])
@@ -938,7 +946,7 @@ def comprobantes(apertura,cierre,archivo):
         count(distinct(doc.n_doc_base)) as cnt,sum(sub_total_bruto)
         as mnt from docventa doc left join documentos_comerciales
         fpa on fpa.id=doc.comprobante where %s and doc.caja='%s'
-        and doc.pv='%s' and doc.imod=0 group by doc.estado,
+        and doc.pv='%s' and doc.ext_doc=0 group by doc.estado,
         doc.comprobante order by doc.estado,
         doc.comprobante""" % (condicion, caja_num, pos_num)
     cuenta,resultado=query(sql,1)
@@ -964,7 +972,8 @@ def codigo(apertura,cierre,archivo):
         doc.precio as precio,sub_codbarras from docventa doc
         left join maestro mae on mae.id=doc.codigo
         where %s and doc.estado='1' and doc.pv='%s' and
-        doc.caja='%s' and imod=0""" % (condicion, pos_num,caja_num)
+        doc.caja='%s' and doc.ext_doc=0""" % (condicion, pos_num,
+        caja_num)
     cuenta,resultado=query(sql,1)
     sub_prod={}
     prod={}
@@ -1034,7 +1043,7 @@ def usuarios(apertura,cierre,archivo):
     sum(sub_total_bruto) as mnt from docventa doc left join auth_user
     usu on usu.id=doc.cv_ing left join formas_pago fpa on
     fpa.id=substring_index(doc.medios_pago,':',1) where
-    doc.estado='1' and doc.pv='%s' and doc.caja='%s' and doc.imod=0
+    doc.estado='1' and doc.pv='%s' and doc.caja='%s' and doc.ext_doc=0
     and %s group by doc.cv_ing,f_pag""" % (pos_num, caja_num, condicion)
     cuenta,resultado=query(sql)
     cod_usr=''
@@ -1073,7 +1082,7 @@ def horas(apertura,cierre,archivo):
         date(doc.tiempo),concat(lpad(hour(doc.tiempo),2,'0'),':00')
         as hora,sum(sub_total_bruto) as mnt from docventa doc
         where %s and doc.estado='1' and doc.pv='%s' and doc.caja='%s'
-        and doc.imod=0 group by date(doc.tiempo),
+        and doc.ext_doc=0 group by date(doc.tiempo),
         hour(doc.tiempo)""" % (condicion, pos_num, caja_num)
     cuenta,resultado=query(sql)
     for linea in resultado:
@@ -1160,7 +1169,7 @@ def almacen(apertura,cierre='4',modo=0):
         parte=float(cierre)
     else:
         condtiempo=" between date('"+apertura+"') and date('"+cierre+"')"
-    sql="(select doc.codigo,doc.precio,sum(doc.cantidad),if(length(mae.alias)>0,mae.alias,concat(mae.nombre,' ',mae.descripcion)) as padre,if(rec.codbarras_hijo!='NULL',rec.codbarras_hijo,'ERROR') as codigo_hijo,if(rec.codbarras_hijo!='NULL',if(length(ma2.alias)>0,ma2.alias,concat(ma2.nombre,' ',ma2.descripcion)),'DSCP ERROR') as dscp_hijo,if(rec.codbarras_hijo!='NULL',rec.cantidad,0) as cnt,if(rec.codbarras_hijo!='NULL',sum(doc.cantidad)*rec.cantidad,0) as cons from docventa doc left join maestro mae on mae.codbarras=doc.codigo left join recetas rec on rec.codbarras_padre=doc.codigo and rec.modo=0 and (rec.tipo=doc.data_1 or rec.tipo=2) left join maestro ma2 on ma2.codbarras=rec.codbarras_hijo where doc.estado='B' and doc.fecha_vta "+condtiempo+" and doc.pv="+str(pos_num)+" group by doc.codigo,rec.codbarras_hijo order by doc.codigo,rec.codbarras_hijo)"
+    sql="(select doc.codigo,doc.precio,sum(doc.cantidad),if(length(mae.alias)>0,mae.alias,concat(mae.nombre,' ',mae.descripcion)) as padre,if(rec.codbarras_hijo!='NULL',rec.codbarras_hijo,'ERROR') as codigo_hijo,if(rec.codbarras_hijo!='NULL',if(length(ma2.alias)>0,ma2.alias,concat(ma2.nombre,' ',ma2.descripcion)),'DSCP ERROR') as dscp_hijo,if(rec.codbarras_hijo!='NULL',rec.cantidad,0) as cnt,if(rec.codbarras_hijo!='NULL',sum(doc.cantidad)*rec.cantidad,0) as cons from docventa doc left join maestro mae on mae.codbarras=doc.codigo left join recetas rec on rec.codbarras_padre=doc.codigo and rec.modo=0 and (rec.tipo=doc.dist_type or rec.tipo=2) left join maestro ma2 on ma2.codbarras=rec.codbarras_hijo where doc.estado='B' and doc.fecha_vta "+condtiempo+" and doc.pv="+str(pos_num)+" group by doc.codigo,rec.codbarras_hijo order by doc.codigo,rec.codbarras_hijo)"
     sql+=" union "
     sql+="(select aux.codbarras_auxiliar,mae.precio,sum(aux.cantidad_auxiliar),if(length(mae.alias)>0,mae.alias,concat(mae.nombre,' ',mae.descripcion)) as padre,ifnull(if(aux.codbarras_auxiliar!='NULL',rec.codbarras_hijo,'ERROR'),'') as codigo_hijo,ifnull(if(aux.codbarras_auxiliar!='NULL',if(length(ma2.alias)>0,ma2.alias,concat(ma2.nombre,' ',ma2.descripcion)),'DSCP ERROR'),'') as dscp_hijo,ifnull(if(aux.codbarras_auxiliar!='NULL',rec.cantidad,0),'') as cnt,ifnull(if(aux.codbarras_auxiliar!='NULL',sum(aux.cantidad_auxiliar)*rec.cantidad,0),0) as cons from operaciones_vta_aux aux left join maestro mae on mae.codbarras=aux.codbarras_auxiliar left join recetas rec on rec.codbarras_padre=aux.codbarras_auxiliar and rec.modo=0 and rec.tipo=2 left join maestro ma2 on ma2.codbarras=rec.codbarras_hijo where aux.n_doc_base in (select n_doc_base from docventa where estado='B' and fecha_vta "+str(condtiempo)+" and pv="+str(pos_num)+" group by n_doc_base) group by aux.codbarras_auxiliar,rec.codbarras_hijo order by aux.codbarras_auxiliar,rec.codbarras_hijo)"
     cuenta,resultado=query(sql)
@@ -1732,7 +1741,9 @@ def set_correlativo(modo_doc,tipo_doc,dato,modo=1):
 
 
 def producto_data(codbarras):
-    sql="select if(length(mae.alias)>0,mae.alias,concat(mae.nombre,' ',mae.descripcion)),round(mae.precio,2) from maestro mae where mae.codbarras='"+str(codbarras)+"'"
+    sql = """select if(length(mae.alias)>0,mae.alias,
+        concat(mae.nombre,' ',mae.descripcion)),round(mae.precio,2)
+        from maestro mae where mae.codbarras='%s'""" % (codbarras)
     cnt,rso=query(sql,0)
     nombre=rso[0]
     precio=round(rso[1],2)
@@ -1747,7 +1758,9 @@ def datopc(titulo,panel,caracter,cond_control,sql_condicion=''):
         for condicion in cond_tecla:
             if ingdat==condicion:
                 return ingdat,0
-        sql="select mae.codbarras,if(length(mae.alias)>0,mae.alias,concat(mae.nombre,' ',mae.descripcion)) from maestro mae where "+sql_condicion
+        sql = """select mae.codbarras,if(length(mae.alias)>0,mae.alias,
+            concat(mae.nombre,' ',mae.descripcion)) from maestro mae
+            where %s""" % (sql_condicion)
         if tipo_dato[1]=='caracter' or tipo_dato[1]=='alfanumerico':
             sql=sql+" and (mae.nombre like '%"+ingdat+"%' or mae.descripcion like '%"+ingdat+"%' or mae.nombre like '%"+string.upper(ingdat)+"%' or mae.descripcion like '%"+string.upper(ingdat)+"%')"
         else:
@@ -1799,7 +1812,8 @@ def cierre_caja():
     if cuenta > 0:
         id_admin = resultado[0]
         sql = """update pos_administracion set cierre='%s',
-            user_out='%s' where id='%s'""" % (tiempo, idven, id_admin)
+            user_out='%s', estado=0 where
+            id='%s'""" % (tiempo, idven, id_admin)
         exe = query(sql, 3)
         return 1
     else:
@@ -1879,7 +1893,7 @@ def ingr_alm(panel,mensaje='Destino',pre_dato=''):
             condicion_dato=" and almacen='"+str(dato)+"'"
         else:
             condicion_dato=''
-        sql="select almacen,descripcion from almacenes_lista where descripcion!='' "+condicion_dato+" order by almacen asc"
+        sql = """select almacen,descripcion from almacenes_lista where modo=1 and descripcion!='' %s order by almacen asc""" % (condicion_dato)
         cuenta,resultado=query(sql,1)
         if cuenta>0:
             dato,nomb=ladocl(resultado,'Almacenes')
@@ -2066,8 +2080,8 @@ def proc_anulacion():
     updat()
     while 1:
         sql = """select distinct(modo),case modo when 0 then 'Interno'
-            when 5 the 'Manual' end from documentos_comerciales
-            order by modo"""
+            when 5 then 'Manual' end dscp from documentos_comerciales
+            where (modo=0 or modo=5) order by modo"""
         modo, modo_dscp = sql_seleccion(sql, 'Modo')
         if modo=='Anular':
             return 0

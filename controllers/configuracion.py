@@ -92,6 +92,20 @@ def formas_pago_agregar():
 
 
 @auth.requires(restricciones)
+def maestro():
+    """
+    Muestra las configuraciones de los productos
+    """
+    record = db.maestro(request.args(0)) or redirect(URL('index'))
+    form = SQLFORM(db.maestro, record)
+    if form.accepts(request.vars, session):
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
 def productos():
     """
     Muestra las configuraciones de los productos
@@ -226,6 +240,26 @@ def doc_identidad_agregar():
     Agregar nuevo registro a 'documentos_identidad'
     """
     form = SQLFORM(db.documentos_identidad, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
+def documentos_comerciales():
+    """
+    Muestra las configuraciones para los documentos comerciales
+    """
+    documentos = db(db.documentos_comerciales).select()
+    return dict(documentos=documentos)
+
+
+@auth.requires(restricciones)
+def documentos_comerciales_agregar():
+    """
+    Agregar nuevo registro a Documentos Comerciales
+    """
+    form = SQLFORM(db.documentos_comerciales, submit_button='Aceptar')
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)

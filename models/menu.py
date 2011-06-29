@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 response.title = 'SISVENTI'
-response.subtitle = T('customize me!')
+response.subtitle = T('Simple for Everyone')
 
 #http://dev.w3.org/html5/markup/meta.name.html
-response.meta.author = 'you'
-response.meta.description = 'Free and open source full-stack enterprise framework for agile development of fast, scalable, secure and portable database-driven web-based applications. Written and programmable in Python'
-response.meta.keywords = 'web2py, python, framework'
+response.meta.author = 'Alfonso de la Guarda Reyes'
+response.meta.description = 'Complete Sales and WareHouse System'
+response.meta.keywords = 'web2py, python, sales, system'
 response.meta.generator = 'Web2py Enterprise Framework'
-response.meta.copyright = 'Copyright 2007-2010'
+response.meta.copyright = 'Copyright 2011'
 
 
 # Custom menus
@@ -21,8 +21,6 @@ configuracion = [
                 [
                     ('Áreas', False, URL('configuracion', 'areas')),
                     ('Artículos', False, URL('configuracion', 'articulos')),
-                    ('Backup', False, URL('configuracion', 'backup')),
-                    ('Bancos', False, URL('configuracion', 'bancos')),
                     ('Casas', False, URL('configuracion', 'casas'),
                     [
                         ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
@@ -31,24 +29,20 @@ configuracion = [
                     [
                         ('Categoría Modo', False, URL('configuracion', 'catmod')),
                     ]),
-                    ('Clientes Preferentes', False, URL('configuracion', 'clientes_preferentes')),
-                    ('Directorio', False, URL('configuracion', 'directorio')),
-                    ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
-                    ('Empaques', False, URL('configuracion', 'empaques')),
                     ('Estados', False, URL('configuracion', 'estados')),
                     ('Géneros', False, URL('configuracion', 'generos'),
                     [
                         ('Sub-Géneros', False, URL('configuracion', 'sub_generos')),
                     ]),
-                    ('Monedas', False, URL('configuracion', 'monedas')),
                     ('Sellos', False, URL('configuracion', 'sellos'),
                     [
                         ('Sub-Sellos', False, URL('configuracion', 'sub_sellos')),
                     ]),
-                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
                     ('Tipos', False, URL('configuracion', 'tipos')),
                     ('Turnos', False, URL('configuracion', 'turnos')),
-                    ('Unidades de Medida', False, URL('configuracion', 'unidades_medida')),
+                ]),
+                ('Gestión', False, None,
+                [
                     ('Usuarios', False, URL('users', 'index'),
                     [
                         ('Nuevo usuario', False, None,
@@ -60,10 +54,19 @@ configuracion = [
                             ('Reportes', False, URL('users', 'add', vars={'group':'reportes'})),
                             ('Ventas', False, URL('users', 'add', vars={'group':'ventas'})),
                          ])
-                     ])
+                     ]),
+                    ('Unidades de Medida', False, URL('configuracion', 'unidades_medida')),
+                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                    ('Monedas', False, URL('configuracion', 'monedas')),
+                    ('Empaques', False, URL('configuracion', 'empaques')),
+                    ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
+                    ('Directorio', False, URL('configuracion', 'directorio')),
+                    ('Backup', False, URL('configuracion', 'backup')),
+                    ('Bancos', False, URL('configuracion', 'bancos'))
                 ]),
                 ('Comercial', False, None,
                 [
+                    ('Documentos Comerciales', False, URL('configuracion', 'documentos_comerciales')),
                     ('Comprobantes', False, URL('configuracion', 'comprobantes')),
                     ('Condiciones Comerciales', False, URL('configuracion', 'condiciones_comerciales'))
                 ]),
@@ -74,6 +77,7 @@ configuracion = [
                 ]),
                 ('Productos', False, None,
                 [
+                    ('Maestro', False, URL('configuracion', 'maestro')),
                     ('Componentes', False, None,
                     [
                         ('Recetas', False, None,
@@ -89,7 +93,9 @@ configuracion = [
                 ('Ventas', False, None,
                 [
                     ('Formas de Pago', False, URL('configuracion', 'formas_pago')),
-                    ('Puntos de Venta', False, URL('configuracion', 'puntos_venta'))
+                    ('Puntos de Venta', False, URL('configuracion', 'puntos_venta')),
+                    ('Clientes Preferentes', False, URL('configuracion', 'clientes_preferentes')),
+
                 ])
             ])
         ]
