@@ -12,6 +12,7 @@ import curses  # manages the windows
 import time  # manages the time
 import os  # manages the os
 import MySQLdb  # manages the MySQL DB
+#import pymysql
 import sys
 import crypt
 import re
@@ -184,24 +185,24 @@ def configuration():
     moneda = rso[5]
     gaveta = rso[6]
     empresa = rso[7]
-    tipo_servicio = str(rso[8])
-    servidor_smtp = str(rso[9])
-    from_smtp = str(rso[10])
-    to_smtp = str(rso[11])
-    consumo_alerta = str(rso[12])
-    dia_alerta = str(rso[13])
-    hora_max = str(rso[14])
-    datos_modo = str(rso[15])
-    stock_alerta = str(rso[16])
-    pos_modo = str(rso[17])
-    modo_decimal = str(rso[18])
-    modo_control = str(rso[19])
-    modo_almacen = str(rso[20])
-    genero_producto = str(rso[21])
-    almacen_key = str(rso[22])
-    almacen = str(rso[23])
-    moneda_aux = str(rso[24])
-    operacion_logistica = str(rso[25])
+    tipo_servicio = rso[8]
+    servidor_smtp = "%s" % (rso[9])
+    from_smtp = "%s" % (rso[10])
+    to_smtp = "%s" % (rso[11])
+    consumo_alerta = (rso[12])
+    dia_alerta = (rso[13])
+    hora_max = "%s" % (rso[14])
+    datos_modo = (rso[15])
+    stock_alerta = (rso[16])
+    pos_modo = (rso[17])
+    modo_decimal = (rso[18])
+    modo_control = (rso[19])
+    modo_almacen = (rso[20])
+    genero_producto = (rso[21])
+    almacen_key = (rso[22])
+    almacen = (rso[23])
+    moneda_aux = "%s" % (rso[24])
+    operacion_logistica = (rso[25])
     sql = """select valor from tipos_cambio where fecha = '%s'
         or fecha = '0000-00-00' order by fecha
         desc limit 1""" % (fecha_act)
@@ -246,7 +247,7 @@ def point_programs(fecha, n_doc_base, total):
                 cnt, rso = query(sql, 0)
                 if cnt > 0:
                     equivalencia = float(rso[0])
-                    mensaje = str(rso[1])
+                    mensaje = "%s" % (rso[1])
                     modo = int(rso[2])
                     longitud = int(rso[3])
                 else:
@@ -484,14 +485,14 @@ def pos_time():
         tiempo_max = resultado[2]
         if cierre == '0000-00-00 00:00:00' or cierre is None:
             cierre = '2999-12-30 23:59:59'
-    return str(apertura), str(cierre), str(tiempo_max)
+    return "%s" % (apertura), "%s" % (cierre), "%s" % (tiempo_max)
 
 
 def right_text(x, texto):
     """
     Right Text
     """
-    texto = str(texto)
+    texto = "%s" % (texto)
     posx = (x - len(texto)) - 1
     return posx
 
@@ -650,7 +651,7 @@ def opciones_cnt(data, code=1, titulo='', modo=''):
         if code == 1:
             texto = "%s->%s" % (parte[0], parte[1])
         else:
-            texto = str(parte[1])
+            texto = "%s" % (parte[1])
         tamano_x = len(texto) + 11
         temporal.append(tamano_x)
         lineas.append(datos)
@@ -679,7 +680,7 @@ def opciones_cnt(data, code=1, titulo='', modo=''):
             if code == 1:
                 texto = "%s->%s" % (lineas[cnt][0], lineas[cnt][1])
             else:
-                texto = str(lineas[cnt][1])
+                texto = "%s" % (lineas[cnt][1])
             contenido = texto
             py += 1
             condicion = curses.A_NORMAL
@@ -729,14 +730,14 @@ def opciones_cnt(data, code=1, titulo='', modo=''):
             opcion == '.' and modo == '1'):
             cantidad = opcion
             if valor1 in selec:
-                cantidad = str(selec[valor1][1])
+                cantidad = "%s" % (selec[valor1][1])
                 cantidad += opcion
                 if len(cantidad) >= 8:
                     cantidad = ''
             selec[valor1] = valor2, cantidad
         elif opcion == 'backspace':
             if valor1 in selec:
-                cantidad = str(selec[valor1][1])
+                cantidad = "%s" % (selec[valor1][1])
                 cantidad = cantidad[:-1]
                 selec[valor1] = valor2, cantidad
     if selec == 'Anular':
@@ -788,13 +789,13 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
     win8, y8, x8 = define_window(pan8)
     win7, y7, x7 = define_window(pan7)
     for z in range(1, y2 - 1):
-        win2.addstr(z, 1, str(white_spaces(x2)))
-        win3.addstr(z, 1, str(white_spaces(x3)))
-        win4.addstr(z, 1, str(white_spaces(x4)))
-        win6.addstr(z, 1, str(white_spaces(x6)))
-        win5.addstr(1, 1, str(white_spaces(x5)))
-        win8.addstr(1, 1, str(white_spaces(x8)))
-        win7.addstr(1, 1, str(white_spaces(x7)))
+        win2.addstr(z, 1, white_spaces(x2))
+        win3.addstr(z, 1, white_spaces(x3))
+        win4.addstr(z, 1, white_spaces(x4))
+        win6.addstr(z, 1, white_spaces(x6))
+        win5.addstr(1, 1, white_spaces(x5))
+        win8.addstr(1, 1, white_spaces(x8))
+        win7.addstr(1, 1, white_spaces(x7))
     update_panels()
     posicion = {}
     for codigo in data:
@@ -811,7 +812,7 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
         cantidad = float(data[codigo]['cnt'])
         precio = float(data[codigo]['prc'])
         descuento = float(data[codigo]['dsc'])
-        producto = str(data[codigo]['nam'])
+        producto = "%s" % (data[codigo]['nam'])
         producto = producto[:38]
         sub_productos = data[codigo]['sub']
         cnt_y += 1
@@ -824,11 +825,11 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
             px2 = right_text(x2, cantidad)
             px6 = right_text(x6, precio)
             px7 = right_text(x7, descuento)
-            win2.addstr(pos_y, px2, str(cantidad))
-            win3.addstr(pos_y, 1, str(producto))
-            win6.addstr(pos_y, px6, str(precio))
-            win7.addstr(pos_y, px7, str(descuento))
-            win4.addstr(pos_y, px4, str(item_precio))
+            win2.addstr(pos_y, px2, "%s" % (cantidad))
+            win3.addstr(pos_y, 1, "%s" % (producto))
+            win6.addstr(pos_y, px6, "%s" % (precio))
+            win7.addstr(pos_y, px7, "%s" % (descuento))
+            win4.addstr(pos_y, px4, "%s" % (item_precio))
             if len(sub_productos) > 0:
                 sub_datos = sub_productos
                 sub_orden = sub_datos.keys()
@@ -842,7 +843,7 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
                         if cnt_y >= elem_y_min and cnt_y <= elem_y_max:
                             pos_y += 1
                             px2 = right_text(x2, cantidad)
-                            win2.addstr(pos_y, px2, str(cantidad))
+                            win2.addstr(pos_y, px2, "%s" % (cantidad))
                             win3.addstr(pos_y, 1, "** %s" % (producto))
     if cnt_y > elem_y_max:
         win3.addstr(elem_y_max + 1, 0, "(>)")
@@ -856,7 +857,7 @@ def windows_printing(pan2, pan3, pan6, pan4, pan5, pan8, pan7,
         monto = cupones[cupon]['mnt']
         referencia = cupones[cupon]['ref']
         px2 = right_text(x2, cantidad)
-        win2.addstr(pos_y, px2, str(cantidad))
+        win2.addstr(pos_y, px2, "%s" % (cantidad))
         px4 = right_text(x4, "-%s" % (valor))
         win3.addstr(pos_y, 1, "-->%s" % (dsc_cupon))
         win4.addstr(pos_y, px4, "-%s" % (valor))
@@ -955,8 +956,6 @@ def operation_process():
         cadena = """%s->%s/%s **""" % (
             medios_pago[pago][0], medios_pago[pago][1],
             medios_pago[pago][2])
-        #str(medios_pago[pago][0])+"->"+
-        #str(medios_pago[pago][1])+"/"+str(medios_pago[pago][2])+" **"
         lineas.append(cadena)
         mntsol += float(medios_pago[pago][1])
         mntdol += float(medios_pago[pago][2])
@@ -982,8 +981,8 @@ def operation_process():
         elementos.append(' '.join(parte))
     for linea in elementos:
         cnt += 1
-        posx = center_text(x7, str(linea))
-        win7.addstr(cnt, posx, str(linea))
+        posx = center_text(x7, "%s" % (linea))
+        win7.addstr(cnt, posx, "%s" % (linea))
     if ventaext == 1:
         tmp_compn = ndocext_detalle
         comprobante_id = doc_man
@@ -999,8 +998,8 @@ def operation_process():
         msg008 = 'Documento de Venta'
         posx = center_text(x7, msg008)
         win7.addstr(5, posx, msg008, curses.A_BOLD)
-        posx = center_text(x7, str(compr))
-        win7.addstr(6, posx, str(compr))
+        posx = center_text(x7, "%s" % (compr))
+        win7.addstr(6, posx, "%s" % (compr))
         update_panels()
     nombre = ''
     docnum = ''    
@@ -1085,7 +1084,7 @@ def fl_ft(dato):
         dato = fpformat.fix(dato, 2)
         return dato
     else:
-        return str(dato)
+        return "%s" % (dato)
 
 
 def payment_process():
@@ -1145,7 +1144,7 @@ def payment_process():
     cuenta, resultado = query(sql)
     if cuenta > 0:
         for linea in resultado:
-            modo_fp[linea[0]] = str(linea[1]), linea[2]
+            modo_fp[linea[0]] = "%s" % (linea[1]), linea[2]
     for dato in metodos:
         if modo_fp[dato][0] != '1':
             mnt_sld += metodos[dato][1]
@@ -1232,7 +1231,7 @@ def payment_process():
                         win_2.addstr(2, 1, texto)
                         update_panels()
                         win_3.addstr(2, len(msg)+3, ' '*10)
-                        win_3.addstr(2, len(msg)+3, str(rec_dol))
+                        win_3.addstr(2, len(msg)+3, "%s" % (rec_dol))
                     except Exception, error:
                         rec_dol = 0.00
                         vlt_dol = 0.00
@@ -1363,7 +1362,7 @@ def get_value_expresion(dato):
     """
     Data Type Conditionals
     """
-    dato = str(dato)
+    dato = "%s" % (dato)
     decimal = re.search('^\d+\.\d+$', dato)
     entero = re.search('^\d+$', dato)
     alfanumerico = re.search('^[a-zA-Z0-9]+$', dato)
@@ -1437,8 +1436,8 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
     temporal = []
     for parte in data:
         datos = []
-        datos.append(str(parte[key_val]))
-        datos.append(str(parte[dsc_val]))
+        datos.append("%s" % parte[key_val])
+        datos.append("%s" % parte[dsc_val])
         texto = "%s:%s" % (parte[key_val], parte[dsc_val])
         temporal.append(len(texto))
         lineas.append(datos)
@@ -1473,7 +1472,7 @@ def list_selection(data, titulo='', key_val=0, dsc_val=1):
                 condicion = curses.A_REVERSE
                 valor1 = lineas[cnt][0]
                 valor2 = lineas[cnt][1]
-            win.addstr(py, 1, str(contenido), condicion)
+            win.addstr(py, 1, "%s" % contenido, condicion)
             update_panels()
         opcion = obch(panel)
         if opcion == 'arriba':
@@ -1692,7 +1691,7 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
     ##Programa de puntos
     mensaje_programas = point_programs(fecha, nodoc, total)
     ##Archivo Temporal
-    nom_arch = str(nodoc)+str(time.time())
+    nom_arch = "%s%s" % (nodoc, time.time())
     #archivo = open(nomarch, 'w')
     layout = open(doc_layout).read()
     ##Funciones de Pantalla
@@ -1738,7 +1737,7 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
         o_cadena = rvar[code]
         siz = len(rvar[code])
         if code in dvar:
-            r_cadena = str(dvar[code])[:siz].rjust(siz)
+            r_cadena = "%s" % dvar[code][:siz].rjust(siz)
             layout = re.sub(o_cadena, r_cadena, layout)
     rawstr = r"<:SS:>(?P<contents>.*)<:EE:>\n"
     pvar = re.search(rawstr, layout, re.IGNORECASE| re.DOTALL).group()
@@ -1767,9 +1766,9 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
             o_cadena = rvar[code]
             siz = len(rvar[code])
             if code == "PN":
-                r_cadena = str(p_dict[code])[:siz].ljust(siz)
+                r_cadena = "%s" % p_dict[code][:siz].ljust(siz)
             else:
-                r_cadena = str(p_dict[code])[:siz].rjust(siz)
+                r_cadena = "%s" % p_dict[code][:siz].rjust(siz)
             parte = re.sub(o_cadena, r_cadena, parte)
         if modo_almacen=='1':
             v_sql = warehouse_process(dvar, linea[1], linea[3],
@@ -1830,7 +1829,7 @@ def linea_dato(msg, win, pan, texto="", pos_y=1):
     """
     Gets Lists
     """
-    texto = str(texto)
+    texto = "%s" % (texto)
     size_y, size_x = win.getmaxyx()
     ubic_x = len(msg)+3
     tam_real_x = size_x-2
@@ -1869,9 +1868,10 @@ def linea_dato(msg, win, pan, texto="", pos_y=1):
         elif (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
             and caracter <= 'z') or (caracter >= 'A' 
             and caracter <= 'Z') or (caracter == '-') or (
-            caracter == '.') or (caracter == ' ') or (caracter == '&'):
+            caracter == '.') or (caracter == ' ') or (caracter == '&')
+            or (caracter == 'ñ') or (caracter == 'Ñ'):
             ubic_x += 1
-            dato += str(caracter)
+            dato += "%s" % (caracter)
             if ubic_x >= (tam_real_x):
                 ubic_x = tam_real_x
                 dato = dato[:tam_real_x]
@@ -1927,9 +1927,14 @@ def data_input(msg, pan, tamx=20, texto="", tipo=0, clr=0):
         if (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
             and caracter <= 'z') or (caracter >= 'A' 
             and caracter <= 'Z') or (caracter == '-') or (
+            caracter == '.') or (caracter == ' ') or (caracter == '&')
+            or (caracter == 'ñ') or (caracter == 'Ñ')
+        #if (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
+            #and caracter <= 'z') or (caracter >= 'A' 
+            #and caracter <= 'Z') or (caracter == '-') or (
             caracter == '.'):
             ubicx += 1
-            codobt += str(caracter)
+            codobt += "%s" % (caracter)
             if ubicx >= (tmax):
                 ubicx = tmax
                 codobt = codobt[:tamx]
@@ -1985,13 +1990,13 @@ def contador_pantalla(cantidad):
     """
     Screen Counter
     """
-    posx = right_text(maxx-10, str(cantidad))
+    posx = right_text(maxx-10, "%s" % (cantidad))
     win = define_window(p1, 0, 0)
     espacios = ' '
     for cnt in range(0, 10):
         espacios += espacios
     win.addstr(5, maxx-20, '          ')
-    win.addstr(5, posx, str(cantidad))
+    win.addstr(5, posx, "%s" % (cantidad))
     update_panels()
     return
 
@@ -2308,7 +2313,7 @@ def get_correlative(modo, doc_id, extra=0, edit=0, panel=''):
         panel = make_panel(curses.COLOR_WHITE, cty, ctx, cpy, cpx)
     if edit == 0:
         alerta_flag = 1
-        if len(str(sufijo)) > 0:
+        if len("%s" % (sufijo)) > 0:
             sufijo = "-" % (sufijo)
         old_prefijo = prefijo
         old_correlativo = correlativo
@@ -2326,12 +2331,12 @@ def get_correlative(modo, doc_id, extra=0, edit=0, panel=''):
                 if elem == 1:
                     correlativo = int(partes[0])
                 elif elem == 2:
-                    prefijo = str(partes[0])
+                    prefijo = "%s" % (partes[0])
                     correlativo = int(partes[1])
                 elif elem == 3:
-                    prefijo = str(partes[0])
+                    prefijo = "%s" % (partes[0])
                     correlativo = int(partes[1])
-                    sufijo = str(partes[2])
+                    sufijo = "%s" % (partes[2])
                 if correlativo >= old_correlativo:
                     break
             except Exception, error:
@@ -2502,7 +2507,7 @@ def product_processing(datos):
                 desc_modo = int(parte[0])
                 desc_porc = float(parte[1])
                 desc_limit = float(parte[2])
-                desc_valor = str(parte[3])
+                desc_valor = "%s" % (parte[3])
                 desc_valor_tmp = "|".split(desc_valor)
                 if desc_modo == 0:
                     #Descuento General
@@ -2668,8 +2673,8 @@ def coupon_process():
                         ## Nombre del cupon
                         cupones[codigo]['nam'] = linea[6]
                         
-                        cupones[codigo]['ext'] = str(linea[7])
-                        cupones[codigo]['id'].append(str(linea[8]))
+                        cupones[codigo]['ext'] = "%s" % (linea[7])
+                        cupones[codigo]['id'].append("%s" % (linea[8]))
                         ## Precio a aplicar
                         if linea[9] >= 0:
                             precio = linea[9]
@@ -2903,7 +2908,7 @@ while 1:
                 distribucion, msg_dist = boolean(mensaje, opcion1, opcion2)
                 message_alert(p9, 'TIPO: %s' % msg_dist, 20)
             else:
-                distribucion = str(tipo_servicio)
+                distribucion = "%s" % (tipo_servicio)
             if len(ctrlprods.keys()) > 0:
                 (medios_pago, comprobante_id, nombre_cliente, id_cliente, vuelsol,
                     vueldol) = operation_process()

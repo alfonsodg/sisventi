@@ -117,7 +117,7 @@ def aut():
     updat()
     pan = mkpanel(curses.COLOR_WHITE, maxy, maxx, 0, 0)
     win = definewin(pan,0,1)
-    msg = "Modulo: Administracion"
+    msg = "Modulo: Almacenes"
     posx = centrar(maxx, msg)
     win.addstr(1, posx, msg)
     win.addstr(maxy / 2 - 2, maxx / 2 - 10, "Usuario: ")
@@ -2293,27 +2293,32 @@ while 1:
         print_buffer=''
         modo_almacen=0
         head='Central'
-        opcion=menu('1. Almacenes-Central|2. Almacenes-Produccion|3. Almacenes-Distribucion|4. Almacenes-Mermas|5. Almacenes-Finishing|7. Almacenes-Auxiliares|8. Ventas|9. Salir',head)
+        #opc_menu = """1. Almacenes-Central|2. Almacenes-Produccion|
+            #3. Almacenes-Distribucion|4. Almacenes-Mermas|
+            #5. Almacenes-Finishing|7. Almacenes-Auxiliares|
+            #8. Ventas|9. Salir"""
+        opc_menu = """1. Almacenes-Central|8. Ventas|9. Salir"""
+        opcion = menu(opc_menu, head)
         #OPCION 1
-        if opcion==3:
-            modo_almacen=1
-            oper_log_pref='1'
-            doc_modo=1
-            doc_tipo_int=6
-            doc_tipo_ext=5
-            alm_relev='0101'
-            alm_base='0100'
-            head='Distribucion:0100'
-        elif opcion==2:
-            modo_almacen=1
-            oper_log_pref='2'
-            doc_modo=2
-            doc_tipo_int=6
-            doc_tipo_ext=5
-            alm_relev='0101'
-            alm_base='0101'
-            head='Produccion:0101'
-        elif opcion==1:
+        #if opcion==3:
+            #modo_almacen=1
+            #oper_log_pref='1'
+            #doc_modo=1
+            #doc_tipo_int=6
+            #doc_tipo_ext=5
+            #alm_relev='0101'
+            #alm_base='0100'
+            #head='Distribucion:0100'
+        #elif opcion==2:
+            #modo_almacen=1
+            #oper_log_pref='2'
+            #doc_modo=2
+            #doc_tipo_int=6
+            #doc_tipo_ext=5
+            #alm_relev='0101'
+            #alm_base='0101'
+            #head='Produccion:0101'
+        if opcion==1:
             modo_almacen=1
             oper_log_pref=''
             doc_modo=3
@@ -2322,40 +2327,40 @@ while 1:
             alm_relev=''
             alm_base='1'
             head='Central: %s' % (alm_base)
-        if opcion==4:
-            query_trans=[]
-            sql="insert into almacenes (modo,modo_doc,operacion_logistica,tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,codbarras,ingreso,turno) select 81,8,'IXM',tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,'0100','0021',codbarras,cantidad_ing,turno from almacenes where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
-            query_trans.append(sql)
-            sql="update almacenes set control=1 where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
-            query_trans.append(sql)
-            estado=query(query_trans,5)
-            modo_almacen=1
-            oper_log_pref='8'
-            doc_modo=8
-            doc_tipo_int=6
-            doc_tipo_ext=5
-            alm_relev='0003'
-            alm_base='0021'
-            head='Mermas:0021'
-        elif opcion==5:
-            modo_almacen=1
-            oper_log_pref='2'
-            doc_modo=2
-            doc_tipo_int=6
-            doc_tipo_ext=5
-            alm_relev='0101'
-            alm_base='0101'
-            head='Finishing:0300'
-        elif opcion==7:
-            print_buffer=' -P lx300wong'
-            modo_almacen=1
-            oper_log_pref='4'
-            doc_modo=4
-            doc_tipo_int=6
-            doc_tipo_ext=5
-            alm_relev='0100'
-            alm_base='0040'
-            head='Wong:0040'
+        #if opcion==4:
+            #query_trans=[]
+            #sql="insert into almacenes (modo,modo_doc,operacion_logistica,tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,codbarras,ingreso,turno) select 81,8,'IXM',tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,'0100','0021',codbarras,cantidad_ing,turno from almacenes where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
+            #query_trans.append(sql)
+            #sql="update almacenes set control=1 where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
+            #query_trans.append(sql)
+            #estado=query(query_trans,5)
+            #modo_almacen=1
+            #oper_log_pref='8'
+            #doc_modo=8
+            #doc_tipo_int=6
+            #doc_tipo_ext=5
+            #alm_relev='0003'
+            #alm_base='0021'
+            #head='Mermas:0021'
+        #elif opcion==5:
+            #modo_almacen=1
+            #oper_log_pref='2'
+            #doc_modo=2
+            #doc_tipo_int=6
+            #doc_tipo_ext=5
+            #alm_relev='0101'
+            #alm_base='0101'
+            #head='Finishing:0300'
+        #elif opcion==7:
+            #print_buffer=' -P lx300wong'
+            #modo_almacen=1
+            #oper_log_pref='4'
+            #doc_modo=4
+            #doc_tipo_int=6
+            #doc_tipo_ext=5
+            #alm_relev='0100'
+            #alm_base='0040'
+            #head='Wong:0040'
         elif opcion==8:
             while 1:
                 opcion2=menu('1. Operaciones|9. Regresar',head)
