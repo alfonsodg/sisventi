@@ -1349,21 +1349,22 @@ def check_warehouse(code, mode=1):
         cnt = 1
     msg = None
     data = compositions(code, cnt)
+    msg = "Producto DISPONIBLE %s"
     if len(data) > 0:
         stocks = cons_almacen(apertura, '', 3)
         if len(stocks) > 0:
             for prod in data:
                 if prod in stocks:
                     if stocks[prod] == 0:
-                        msg = "Producto NO DISPONIBLE en almacen"
+                        msg = msg % stocks[prod]
                     elif stocks[prod] < cnt:
-                        msg = "Producto INSUFICIENTE en almacen"
+                        msg = msg % stocks[prod]
                 else:
-                    msg = "Producto NO EXISTENTE en almacen"
+                    msg = msg % stocks[prod]
         else:
-            msg = "Producto NO EXISTENTE en almacen"
+            msg = msg % stocks[prod]
     else:
-        msg = "Lista de composicion NO EXISTENTE"
+        msg = msg % stocks[prod]
     if mode == 1:
         if msg is not None:
             dicotomic_question(msg)
