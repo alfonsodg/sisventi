@@ -1042,6 +1042,7 @@ def operation_process():
             return (medios_pago, comprobante_id, nombre, docnum,
                 vuelsol, vueldol)
 
+
 def costumer_process(win7, y7, x7):
     ty = 3
     tx = 20
@@ -1144,7 +1145,7 @@ def payment_process():
     cuenta, resultado = query(sql)
     metodos = opciones_cnt(resultado, 1, 'Forma de Pago', '1')
     if metodos == 'Anular':
-        return 'Anular', '', ''
+        return 'Anular', '', '', 0
     int_cred = None
     mnt_sld = 0
     modo_fp = {}
@@ -1189,7 +1190,7 @@ def payment_process():
                 mnt_dol = 0.00
                 break
             elif rec_loc == 'Anular':
-                return 'Anular', '', ''
+                return 'Anular', '', '', 0
             try:
                 rec_loc = float(rec_loc)
                 if rec_loc >= tot_loc:

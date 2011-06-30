@@ -899,7 +899,7 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
     """
     sql_layout = """select if(length(mae.alias)>0,mae.alias,
         concat(mae.nombre,' ',mae.descripcion)) from maestro
-        mae mae.id='%s' %s"""
+        mae where mae.id='%s' %s"""
     if len(sql_cond) > 0:
         sql_cond = "and %s" % sql_cond
     cond1=string.split(valid_keys,',')
