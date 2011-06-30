@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 db = DAL('mysql://root:root@localhost/sisventi')
-#db = DAL('sqlite://sisventi.db')
 
 # by default give a view/generic.extension to all actions from localhost
 # none otherwise. a pattern can be 'maestrcontroller/function.extension'

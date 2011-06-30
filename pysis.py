@@ -946,7 +946,7 @@ def operation_process():
     posx = center_text(x7, msg007)
     win7.addstr(1, posx, msg007, curses.A_BOLD)
     update_panels()
-    medios_pago, vuelsol, vueldol = payment_process()
+    medios_pago, vuelsol, vueldol, int_cred = payment_process()
     if medios_pago == 'Anular':
         return ('Anular', '', '', '', '', '')
     lineas = []
@@ -1002,45 +1002,13 @@ def operation_process():
         win7.addstr(6, posx, "%s" % (compr))
         update_panels()
     nombre = ''
-    docnum = ''    
+    docnum = ''
+    if int_cred:
+        costumer_process()
     if t_compn == '1':
-        ty = 3
-        tx = 20
-        py = screen_position(ty, maxy)
-        px = screen_position(tx, maxx)
-        pancl = make_panel(curses.COLOR_WHITE, ty, tx, py, px)
-        msg009 = 'Cliente'
-        posx = center_text(x7, msg009)
-        win7.addstr(7, posx, msg009, curses.A_BOLD)
-        update_panels()
-        cli, tipdat = get_value_type(pancl)
-        pancl.hide()
-        if tipdat == 'entero':
-            modo_cli = 0
-            condicion = "doc_id like '%s%%'" % (cli)
-        else:
-            modo_cli = 1
-            condicion = "nombre_corto like '%%%s%%'" % (cli.upper())
-        sql = """select doc_id, nombre_corto from directorio where %s
-            order by doc_id""" % (condicion)
-        cnt, rso = query(sql)
-        if cnt > 0:
-            docnum, nombre = list_selection(rso)
-            if docnum == 'insertar':
-                nombre, docnum = costumer_process(nombre)
-            elif docnum == 'agregar':
-                nombre, docnum = costumer_process(cli, modo_cli)
-            elif docnum == 'Anular':
-                return ('Anular', '', '', '', '', '')
-        else:
-            nombre, docnum = costumer_process(cli, modo_cli)
+        nombre, docnum = costumer_process(win7, y7, x7)
         if nombre == 'Anular':
             return ('Anular', '', '', '', '', '')
-        posx = center_text(x7, nombre)
-        win7.addstr(8, posx, nombre)
-        posx = center_text(x7, docnum)
-        win7.addstr(9, posx, docnum)
-        update_panels()
     msg010 = 'Operacion'
     posx = center_text(x7, msg010)
     win7.addstr(10, posx, msg010, curses.A_BOLD)
@@ -1073,6 +1041,46 @@ def operation_process():
         else:
             return (medios_pago, comprobante_id, nombre, docnum,
                 vuelsol, vueldol)
+
+def costumer_process(win7, y7, x7):
+    ty = 3
+    tx = 20
+    py = screen_position(ty, maxy)
+    px = screen_position(tx, maxx)
+    pancl = make_panel(curses.COLOR_WHITE, ty, tx, py, px)
+    msg009 = 'Cliente'
+    posx = center_text(x7, msg009)
+    win7.addstr(7, posx, msg009, curses.A_BOLD)
+    update_panels()
+    cli, tipdat = get_value_type(pancl)
+    pancl.hide()
+    if tipdat == 'entero':
+        modo_cli = 0
+        condicion = "doc_id like '%s%%'" % (cli)
+    else:
+        modo_cli = 1
+        condicion = "nombre_corto like '%%%s%%'" % (cli.upper())
+    sql = """select doc_id, nombre_corto from directorio where %s
+        order by doc_id""" % (condicion)
+    cnt, rso = query(sql)
+    if cnt > 0:
+        docnum, nombre = list_selection(rso)
+        if docnum == 'insertar':
+            nombre, docnum = costumer_management(nombre)
+        elif docnum == 'agregar':
+            nombre, docnum = costumer_management(cli, modo_cli)
+        elif docnum == 'Anular':
+            return 'Anular', ''
+    else:
+        nombre, docnum = costumer_management(cli, modo_cli)
+    if nombre == 'Anular':
+        return 'Anular'
+    posx = center_text(x7, nombre)
+    win7.addstr(8, posx, nombre)
+    posx = center_text(x7, docnum)
+    win7.addstr(9, posx, docnum)
+    update_panels()
+    return nombre, docnum
 
 
 def fl_ft(dato):
@@ -1137,6 +1145,7 @@ def payment_process():
     metodos = opciones_cnt(resultado, 1, 'Forma de Pago', '1')
     if metodos == 'Anular':
         return 'Anular', '', ''
+    int_cred = None
     mnt_sld = 0
     modo_fp = {}
     sql = """select cast(id as CHAR), modo, nombre from formas_pago
@@ -1145,6 +1154,8 @@ def payment_process():
     if cuenta > 0:
         for linea in resultado:
             modo_fp[linea[0]] = "%s" % (linea[1]), linea[2]
+            if linea[0] == '3':
+                int_cred = True
     for dato in metodos:
         if modo_fp[dato][0] != '1':
             mnt_sld += metodos[dato][1]
@@ -1159,7 +1170,7 @@ def payment_process():
                 mnt_sld = tot_loc
     diferencia = 0
     mnt_sld = round(mnt_sld, 2)
-    diferencia_mnt = tot_loc-mnt_sld
+    diferencia_mnt = tot_loc - mnt_sld
     if diferencia_mnt > 0:
         diferencia = 1
         saldo_dif = tot_loc-mnt_sld
@@ -1265,7 +1276,7 @@ def payment_process():
         else:
             if dato in metodos:
                 metodos[dato] = modo_fp[dato][1], metodos[dato][1], 0.0
-    return metodos, vlt_loc, vlt_dol
+    return metodos, vlt_loc, vlt_dol, int_cred
 
 
 def compositions(code, cnt=1):
@@ -1524,7 +1535,7 @@ def screen_position(tam_win, tam_scr):
     return dato_scr
 
 
-def costumer_process(cliente, modo=0):
+def costumer_management(cliente, modo=0):
     """
     Costumer Processing
     """
@@ -1737,7 +1748,7 @@ def final_process(vuelsol, vueldol, doccli, nomcli, dircli, refcli,
         o_cadena = rvar[code]
         siz = len(rvar[code])
         if code in dvar:
-            r_cadena = "%s" % dvar[code][:siz].rjust(siz)
+            r_cadena = ("%s" % dvar[code])[:siz].rjust(siz)
             layout = re.sub(o_cadena, r_cadena, layout)
     rawstr = r"<:SS:>(?P<contents>.*)<:EE:>\n"
     pvar = re.search(rawstr, layout, re.IGNORECASE| re.DOTALL).group()
@@ -1868,8 +1879,8 @@ def linea_dato(msg, win, pan, texto="", pos_y=1):
         elif (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
             and caracter <= 'z') or (caracter >= 'A' 
             and caracter <= 'Z') or (caracter == '-') or (
-            caracter == '.') or (caracter == ' ') or (caracter == '&')
-            or (caracter == 'ñ') or (caracter == 'Ñ'):
+            caracter == '.') or (caracter == ' ') or (caracter == '&'
+            ) or (caracter == 'ñ') or (caracter == 'Ñ'):
             ubic_x += 1
             dato += "%s" % (caracter)
             if ubic_x >= (tam_real_x):
@@ -1927,12 +1938,12 @@ def data_input(msg, pan, tamx=20, texto="", tipo=0, clr=0):
         if (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
             and caracter <= 'z') or (caracter >= 'A' 
             and caracter <= 'Z') or (caracter == '-') or (
-            caracter == '.') or (caracter == ' ') or (caracter == '&')
-            or (caracter == 'ñ') or (caracter == 'Ñ')
+            caracter == '.') or (caracter == ' ') or (caracter == '&'
+            ) or (caracter == 'ñ') or (caracter == 'Ñ'):
         #if (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
             #and caracter <= 'z') or (caracter >= 'A' 
             #and caracter <= 'Z') or (caracter == '-') or (
-            caracter == '.'):
+            #caracter == '.'):
             ubicx += 1
             codobt += "%s" % (caracter)
             if ubicx >= (tmax):
@@ -2871,7 +2882,7 @@ while 1:
         elif (car >= '0' and car <= '9') or car == '.':
             #Cantidad de Producto
             cnt_prod = "%s%s" % (cnt_prod, car)
-            if modo_decimal == '0':
+            if modo_decimal == 0:
                 cnt_prod = int(cnt_prod)
             else:
                 cnt_prod = round(float(cnt_prod),2)
@@ -2901,7 +2912,7 @@ while 1:
             #Procesa Datos
             (total, total_neto, det_impto, imp_glob,
                 format_list) = sales_report(1)
-            if tipo_servicio == '1' and ventaext != 1:
+            if tipo_servicio == 1 and ventaext != 1:
                 mensaje = 'Pedido para Llevar?'
                 opcion1 = 'LLEVAR'
                 opcion2 = '-MESA-'
@@ -2921,7 +2932,7 @@ while 1:
                         norden, timeord)
                     if estado_doc == 'Anular':
                         break
-                    if modo_control == '1':
+                    if modo_control == 1:
                         nombre_usuario = 'I'
                     break
         elif car == 'arriba':

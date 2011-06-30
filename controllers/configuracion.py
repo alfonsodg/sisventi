@@ -3,6 +3,7 @@
 restricciones = True
 
 
+
 @auth.requires(restricciones)
 def index():
     """

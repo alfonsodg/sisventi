@@ -31,6 +31,26 @@ def delivery_agregar():
 
 
 @auth.requires(restricciones)
+def docventa():
+    """
+    Documentos de venta
+    """
+    ventas = db(db.docventa).select()
+    return dict(ventas=ventas)
+
+
+@auth.requires(restricciones)
+def docventa_agregar():
+    """
+    Agregar registro a 'docventa'
+    """
+    form = SQLFORM(db.docventa, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
 def dependencias_productos():
     """
     Dependencias de los productos

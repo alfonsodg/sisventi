@@ -40,23 +40,25 @@ def proveedores_reporte():
 
 
 @auth.requires(restricciones)
-def cuentas():
+def cuentas_pagar():
     """
-    Muestra los registros de los cuentas por pagar
+    Muestra los registros de los cuentas por cobrar
     """    
-    return dict()
+    cuentas = db(db.cuentas_por_pagar).select()
+    return dict(cuentas=cuentas)
     
 
 @auth.requires(restricciones)
-def cuentas_agregar():
+def cuentas_pagar_agregar():
     """
-    Agregar nuevo registro a 'cuentas_por_pagar'
+    Agregar nuevo registro a 'cuentas_por_cobrar'
     """
     form = SQLFORM(db.cuentas_por_pagar, submit_button='Aceptar')
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
-
+    
+    
 
 @auth.requires(restricciones)
 def cuentas_reporte():

@@ -29,7 +29,6 @@ configuracion = [
                     [
                         ('Categoría Modo', False, URL('configuracion', 'catmod')),
                     ]),
-                    ('Estados', False, URL('configuracion', 'estados')),
                     ('Géneros', False, URL('configuracion', 'generos'),
                     [
                         ('Sub-Géneros', False, URL('configuracion', 'sub_generos')),
@@ -110,10 +109,10 @@ por_cobrar = [
                     ('Agregar', False, URL('cobrar', 'clientes_agregar'), []),
                     ('Reporte', False, URL('cobrar', 'clientes_reporte'), [])
                  ]),
-                ('Cuentas', False, URL('cobrar', 'cuentas'),
+                ('Cuentas', False, URL('cobrar', 'cuentas_cobrar'),
                  [
-                    ('Agregar', False, URL('cobrar', 'cuentas_agregar'), []),
-                    ('Reporte', False, URL('cobrar', 'cuentas_reporte'), []),
+                    ('Agregar', False, URL('cobrar', 'cuentas_cobrar_agregar'), []),
+                    ('Reporte', False, URL('cobrar', 'cuentas_cobrar_reporte'), []),
                  ]),
             ])
         ]
@@ -126,10 +125,10 @@ por_pagar = [
                     ('Agregar', False, URL('pagar', 'proveedores_agregar'), []),
                     ('Reporte', False, URL('pagar', 'proveedores_reporte'), [])
                  ]),
-                ('Cuentas', False, URL('pagar', 'cuentas'),
+                ('Cuentas', False, URL('pagar', 'cuentas_pagar'),
                  [
-                    ('Agregar', False, URL('pagar', 'cuentas_agregar'), []),
-                    ('Reporte', False, URL('pagar', 'cuentas_reporte'), []),
+                    ('Agregar', False, URL('pagar', 'cuentas_pagar_agregar'), []),
+                    ('Reporte', False, URL('pagar', 'cuentas_pagar_reporte'), []),
                  ]),
             ])
         ]
@@ -139,6 +138,7 @@ reportes = [('Reportes', False, None, [])]
 ventas = [
             ('Ventas', False, None,
             [
+                ('Documentos de Venta', False, URL('ventas', 'docventa')),
                 ('Delivery', False, URL('ventas', 'delivery'), []),
                 ('Dependencias de Productos', False, URL('ventas', 'dependencias_productos'), []),
                 ('Descuentos', False, URL('ventas', 'descuentos'), []),

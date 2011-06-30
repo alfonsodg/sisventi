@@ -1,0 +1,97 @@
+{{extend 'layout.html'}}
+
+<h1>Cuentas por Cobrar</h1>
+
+<p align="right">
+    <a href="{{=URL('cobrar', 'cuentas_agregar')}}">
+        <input type="submit" value="Agregar" style="font-size:10pt" name="">
+    </a>
+</p>
+</br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha del Documento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Documento</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Proveedor</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Acción</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Neto Ingreso</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Impuesto Ingreso</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Bruto Ingreso</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Neto Salida</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Impuesto Salida</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Bruto Salida</b></center>
+            </td>
+            <td style="vertical-align: middle; border: 1px solid #999">
+                <center><b>Fecha de Vencimiento</b></center>
+            </td>
+        </tr>
+        {{if not cuentas:}}
+            <tr>
+                <td colspan="6" rowspan="1" style="vertical-align: top; border: 1px solid #999">
+                    <center>No hay registros</center>
+                </td>
+            </tr>
+        {{else:}}
+            {{for condicion in cuentas:}}
+                <tr>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.fecha_doc}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.documento}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.proveedor}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.accion}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.neto_ingreso}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.impuesto_ingreso}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.bruto_ingreso}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.neto_salida}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.impuesto_salida}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.bruto_ingreso}}
+                    </td>
+                    <td style="vertical-align: top; border: 1px solid #999">
+                        {{=condicion.fecha_venc}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+        
+    </tbody>
+</table>
+

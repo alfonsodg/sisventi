@@ -40,15 +40,16 @@ def clientes_reporte():
 
 
 @auth.requires(restricciones)
-def cuentas():
+def cuentas_cobrar():
     """
     Muestra los registros de los cuentas por cobrar
     """    
-    return dict()
+    cuentas = db(db.cuentas_por_cobrar).select()
+    return dict(cuentas=cuentas)
     
 
 @auth.requires(restricciones)
-def cuentas_agregar():
+def cuentas_cobrar_agregar():
     """
     Agregar nuevo registro a 'cuentas_por_cobrar'
     """
@@ -56,6 +57,7 @@ def cuentas_agregar():
     if form.accepts(request.vars, session):
         response.flash = 'Registro ingresado'
     return dict(form=form)
+
 
 
 @auth.requires(restricciones)
