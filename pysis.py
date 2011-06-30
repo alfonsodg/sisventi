@@ -12,7 +12,7 @@ import curses  # manages the windows
 import time  # manages the time
 import os  # manages the os
 import MySQLdb  # manages the MySQL DB
-#import pymysql
+#import pymysql as MySQLdb
 import sys
 import crypt
 import re
