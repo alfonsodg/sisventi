@@ -60,7 +60,8 @@ try:
 except:
     print 'Error al conectarse con la base de datos!!!!'
     sys.exit()
-curs=conn.cursor()
+conn.autocommit(True)
+curs = conn.cursor()
 stdscr=curses.initscr() # Initialize the call to the curses function
 #curses.curs_set(0) # Assigns an invisible cursor (values goes from 0 to 2)
 curses.start_color() # Initialize the color access
@@ -635,6 +636,7 @@ def definewin(pan,optam=1,opbox=1):
 
 
 def ingresodato(msg,pan,tamx=20,texto='',tipo=0,clr=0):
+    texto = "%s" % texto
     ubicx=len(msg)+3
     tmax=tamx+ubicx
     txtp=0
@@ -974,20 +976,26 @@ def ingr_alm(panel,mensaje='Destino',pre_dato=''):
         if dato=='Anular':
             return 'Anular'
         tam_dato=len(dato)
+        modo = 0
         if tam_dato>0:
             condicion_dato=" and almacen='%s'" % dato
         else:
             condicion_dato=''
         sql="""select id,descripcion from almacenes_lista where
-            modo=1 and descripcion!='' %s order by
-            almacen asc""" % condicion_dato
+            descripcion!='' %s order by
+            id asc,modo""" % condicion_dato
         cuenta,resultado=query(sql,1)
         if cuenta>0:
-            dato,nomb=ladocl(resultado,'Almacenes')
+            dato, nomb = ladocl(resultado,'Almacenes')
             if dato!='Anular':
                 win=definir(panel)
-                win.addstr(1,1,mensaje+': '+str(dato))
-                return dato
+                win.addstr(1, 1, "%s: %s" % (mensaje, dato))
+                sql = """select modo from almacenes_lista where
+                    id='%s'""" % (dato)
+                cnt, rso = query(sql, 0)
+                if cnt > 0:
+                    modo = rso[0]
+                return dato, modo
 
 
 def ingr_vals(panel_1,panel_2,panel_3):
@@ -1139,6 +1147,7 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
     """
     Warehouse Stocks
     """
+    producto = int(producto)
     if fecha!='':
         mes=fecha[5:7]
     if ciclo_fecha==0:
@@ -1166,7 +1175,7 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
     data={}
     if cuenta > 0:
         for linea in resultado:
-            codex = linea[0]
+            codex = int(linea[0])
             saldx = linea[1]
             data[codex] = saldx
     if modo_operacion==0:
@@ -1239,7 +1248,7 @@ def dict_list(cadena,modo=0):
 
 
 def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:0100'):
-    panel_top,panel_text_1,panel_text_2,panel_mid=win_def(2)#maxy,maxx
+    panel_top,panel_text_1,panel_text_2,panel_mid = win_def(2)#maxy,maxx
     fecha=fecha_ing(1,'t')
     codigo_prod='GENERAL'
     descrip_prod=''
@@ -1778,18 +1787,18 @@ def ing_dat(msg,min=4,long=20,posy=-1,posx=-1):
             return linea,tipdat
 
 
-def cliente_ing():
-    cliente,tipdat=ing_dat('Cliente')
+def directory_check(msg):
+    cliente,tipdat=ing_dat(msg)
     if tipdat=='entero':
         modo_cli=0
         condicion="doc_id like '"+str(cliente)+"%'"
     else:
         modo_cli=1
         condicion="nombre_corto like '%"+string.upper(cliente)+"%'"
-    sql="select doc_id,nombre_corto from directorio where "+condicion+" order by doc_id"
+    sql="select id,nombre_corto from directorio where "+condicion+" order by doc_id"
     cnt,rso=query(sql)
-    if cnt>0:
-        docnum,nombre=ladocl(rso,'Cliente')
+    if cnt > 0:
+        docnum, nombre = ladocl(rso,msg)
         return docnum,nombre
     else:
         return 'ND','ND'
@@ -1842,7 +1851,7 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             doc_tipo_impresion=str(resultado[2])
             if doc_tipo_detalle=='1':
                 while 1:
-                    cliente,nomb_cliente=cliente_ing()
+                    cliente, nomb_cliente = directory_check("Cliente")
                     if cliente=='ND':
                         segur("Debe Registrar el Cliente")
                     elif cliente=='Anular':
@@ -1990,13 +1999,14 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
 
 def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
     fech_hea='t',turno_ing=1,masa_ing=1,impresion=1,oper_log='IPT',
-    alm_rel='0101',alm_base='0100',oper_log_pref='1',add_data='',
+    alm_rel='0101',alm_base='0100',oper_log_pref='1',add_data='0|*',
     prod_filt='genero=1'):
     """
     Data Processing
     """
     panel_top,panel_text_1,panel_text_2,panel_text_3,panel_mid=win_def(txt_fld)#maxy,maxx
     fecha=fecha_ing(fech_cnt,fech_hea)
+    add_box = add_data.split('|')
     if fecha=='Anular':
         return 0
     else:
@@ -2012,14 +2022,19 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
         modo_oper_log2=''
         masa=''
         extra_data=''
-        extra_oper_log=0
+        extra_oper_log = 0
         alm_ori2=''
         alm_des2=''
         correlativo2 = 0
-        transp_codigo=1
-        vehiculo_codigo=1
-        titulo_almacenes=''
-        det_doc_ori=0
+        transp_codigo = 1
+        vehiculo_codigo = 1
+        titulo_almacenes = ''
+        det_doc_ori = 0
+        id_prov = 0
+        modo_ori = ''
+        modo_des = ''
+        modo_ori2 = ''
+        modo_des2 = ''
         while 1:
             if oper_log=='':
                 oper_log=ingresodato('Operacion',panel_text_1,10,oper_log,1,0)
@@ -2032,14 +2047,16 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                     condicion_oper_log="(descripcion like '"+str(oper_log)+"%' or descripcion like ucase('"+str(oper_log)+"%')) and operacion!=''"
                 else:
                     condicion_oper_log="operacion!=''"
-                sql="select id,descripcion from operaciones_logisticas where %s" % (condicion_oper_log)
+                sql= """select id,descripcion from 
+                    operaciones_logisticas where %s order by
+                    modo,descripcion""" % (condicion_oper_log)
                 oper_log,oper_log_dscp=sql_seleccion(sql,'Operaciones Logisticas')
                 if oper_log=='Anular':
                     return 0
             sql = """select cast(modo as UNSIGNED),operacion_relac,
                 almacen_relac,detalle,id from
                 operaciones_logisticas where
-                operacion='%s'""" % (oper_log)
+                id='%s'""" % (oper_log)
             cta, rso = query(sql, 0)
             if cta > 0:
                 modo_oper_log = str(rso[0])
@@ -2048,15 +2065,20 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 return 0
             if alm_rel=='':
                 if rso[0] == 1:
-                    alm_ori=ingr_alm(panel_text_1,'Origen')
+                    alm_ori, modo_ori = ingr_alm(panel_text_1,'Origen')
                     alm_des=alm_base
                     det_doc_ori=rso[3]
                 elif rso[0] == 2:
                     alm_ori=alm_base
-                    alm_des=ingr_alm(panel_text_1,'Destino')
+                    alm_des, modo_des = ingr_alm(panel_text_1,'Destino')
+                if modo_ori == 0 or modo_des == 0:
+                    id_prov, nombre_prov = directory_check("Proveedor")
+                    if id_prov == 'Anular':
+                        return 0
                 titulo_almacenes = "%s/%s" % (alm_ori, alm_des)
                 if alm_ori=='Anular' or alm_des=='Anular':
                     return 0
+
                 if rso[1]!='':
                     almacen_relac=rso[2]
                     sql = """select modo from operaciones_logisticas
@@ -2070,16 +2092,18 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             if almacen_relac!='':
                                 alm_ori2=almacen_relac
                             else:
-                                alm_ori2=ingr_alm(panel_text_2,'Origen',almacen_relac)
+                                alm_ori2, modo_ori2 = ingr_alm(panel_text_2,'Origen',almacen_relac)
                             alm_des2=alm_base
-                            titulo_almacenes=str(alm_des)+'/'+str(alm_ori2)
+                            titulo_almacenes = "%s/%s" % (alm_des,
+                                alm_ori2)
                         elif rso2[0]==2:
                             alm_ori2=alm_base
                             if almacen_relac!='':
                                 alm_des2=almacen_relac
                             else:
-                                alm_des2=ingr_alm(panel_text_2,'Destino',almacen_relac)
-                            titulo_almacenes=str(alm_ori)+'/'+str(alm_des2)
+                                alm_des2, modo_des2 = ingr_alm(panel_text_2,'Destino',almacen_relac)
+                            titulo_almacenes = "%s/%s" % (alm_ori,
+                                alm_des2)
                         oper_log2=str(rso[1])
                         modo_oper_log2=oper_log_pref+str(rso2[0])
                         extra_oper_log=1
@@ -2121,21 +2145,35 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
             ingdat,cuenta=datopc('Codigo',panel_text_1,10,'insert,arriba,abajo,Anular','caracter',prod_filt)
             sql = """select if(length(mae.alias)>0,concat(mae.alias,' ',
                 unm.codigo),concat(mae.nombre,' ',mae.descripcion,' ',
-                unm.codigo)) from maestro mae left join unidades_medida
-                unm on unm.id=mae.unidad_medida where
+                unm.codigo)),mae.unidad_medida_valor from maestro mae
+                left join unidades_medida unm on
+                unm.id=mae.unidad_medida where
                 mae.id='%s'""" % (ingdat)
             cuenta,resultado=query(sql,0)
             if cuenta>0:
-                nombre_prod=resultado[0]
-                if add_data!='':
+                nombre_prod = resultado[0]
+                cant_unmd = resultado[1]
+                #add_data = mode for additional data
+                if add_box[0] == '1':
+                    msg_data = add_box[1]
                     while 1:
-                        extra_data=ingresodato(add_data,panel_text_2,30,'',10)
-                        if extra_data=='Anular':
+                        extra_data = ingresodato(msg_data,panel_text_2,30,'',10)
+                        if extra_data == 'Anular':
                             return 0
                         cantidad=1
                         break
                 else:
                     cantidad=datesp('Cantidad',panel_text_2,8,'decimal,entero','',1,1)
+                if add_box[0] == '2':
+                    msg_data = add_box[1]
+                    elem_data = float(cantidad) * float(cant_unmd)
+                    while 1:
+                        extra_data = ingresodato(msg_data,panel_text_3,30,elem_data,10)
+                        if extra_data == 'Anular':
+                            return 0
+                        cantidad = float(extra_data)
+                        extra_data = ''
+                        break                    
                 #relacion=cons_almacen(modo_ingreso,modo_salida,fecha,codigo_prod,3)
                 #modo_ingreso=oper_log_pref+'1'
                 #modo_salida=oper_log_pref+'2'
@@ -2204,14 +2242,19 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         sql = "update almacenes set "+base+",user_ing='"+str(codven)+"',tiempo='"+str(tiempo_reg)+"' where n_doc_base='"+str(correlativo)+"' and codbarras='"+str(lineas[z][0])+"' and turno='"+str(turno)+"' and fecha_doc='"+str(fecha)+"' and estado='1' and operacion_logistica='"+str(oper_log)+"' and modo='"+str(modo_oper_log)+"' and modo_doc='"+str(doc_modo)+"' and tipo_doc='"+str(doc_tipo)+"'"
                         query_trans.append(sql)
                     else:
-                        campos_bd = """codbarras,ingreso,turno,
+                        campos_bd = """codbarras,%s,turno,
                             n_doc_prefijo,n_doc_base,user_ing,tiempo,
                             fecha_doc,modo,almacen_origen,
                             almacen_destino,fecha_produccion,estado,
                             masa,operacion_logistica,extra_data,
                             modo_doc,tipo_doc,n_prefijo_relacion,
                             n_doc_relacion,transportista,vehiculo,
-                            observaciones,almacen,registro"""
+                            observaciones,almacen,registro,proveedor"""
+                        if modo_oper_log == 1:
+                            adic = "ingreso"
+                        else:
+                            adic = "salida"
+                        campos_bd = campos_bd % adic
                         temporal = lineas[z]
                         temporal_x = agregar_valores(temporal, [0,1],
                             turno, prefijo, correlativo, idven,
@@ -2220,7 +2263,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             extra_data, doc_modo, doc_tipo, prefijo2,
                             correlativo2, transp_codigo,
                             vehiculo_codigo, observaciones, alm_base,
-                            tiempo_reg)
+                            tiempo_reg, id_prov)
                         base=sqlsend(temporal_x,campos_bd,1)
                         sql = "insert into almacenes %s" % (base)
                         query_trans.append(sql)
@@ -2233,7 +2276,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                                 doc_modo, doc_tipo, prefijo,
                                 correlativo, transp_codigo,
                                 vehiculo_codigo, observaciones,
-                                alm_base, tiempo_reg)
+                                alm_base, tiempo_reg, id_prov)
                             base2=sqlsend(temporal_y,campos_bd,1)
                             sql2="insert into almacenes %s" % (base2)
                             query_trans.append(sql2)
@@ -2297,7 +2340,7 @@ while 1:
             #3. Almacenes-Distribucion|4. Almacenes-Mermas|
             #5. Almacenes-Finishing|7. Almacenes-Auxiliares|
             #8. Ventas|9. Salir"""
-        opc_menu = """1. Almacenes-Central|8. Ventas|9. Salir"""
+        opc_menu = """1. Almacen-Central|2. Almacen-Auxiliar|8. Ventas|9. Salir"""
         opcion = menu(opc_menu, head)
         #OPCION 1
         #if opcion==3:
@@ -2318,7 +2361,7 @@ while 1:
             #alm_relev='0101'
             #alm_base='0101'
             #head='Produccion:0101'
-        if opcion==1:
+        if opcion == 1:
             modo_almacen=1
             oper_log_pref=''
             doc_modo=3
@@ -2327,6 +2370,15 @@ while 1:
             alm_relev=''
             alm_base='1'
             head='Central: %s' % (alm_base)
+        elif opcion == 2:
+            modo_almacen=1
+            oper_log_pref=''
+            doc_modo=3
+            doc_tipo_int=2
+            doc_tipo_ext=5
+            alm_relev=''
+            alm_base='3'
+            head='Auxiliar: %s' % (alm_base)
         #if opcion==4:
             #query_trans=[]
             #sql="insert into almacenes (modo,modo_doc,operacion_logistica,tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,codbarras,ingreso,turno) select 81,8,'IXM',tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,'0100','0021',codbarras,cantidad_ing,turno from almacenes where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
@@ -2419,7 +2471,7 @@ while 1:
                         else:
                             pass
                     elif opcion3=='i':
-                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'IGR','',alm_base,oper_log_pref,'')
+                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'IGR','',alm_base,oper_log_pref,'2|Conv')
                     else:
                         break
                 elif opcion2==2:#Reportes

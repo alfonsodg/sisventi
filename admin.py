@@ -74,6 +74,7 @@ try:
 except:
     print 'Error al conectarse con la base de datos!!!!'
     sys.exit()
+conn.autocommit(True)
 curs=conn.cursor()
 stdscr=curses.initscr() # Initialize the call to the curses function
 curses.start_color() # Initialize the color access
@@ -758,11 +759,12 @@ def payment_options(apertura,cierre,archivo=''):
     transacciones=0
     total_real=0
     lineas=[]
-    condicion_doc=" and doc.ext_doc=0"
-    if cierre=='0000-00-00 00:00:00':
+    condicion_doc = " and doc.ext_doc=0"
+    if cierre == '0000-00-00 00:00:00':
         cierre=apertura
-    condicion="doc.fecha_vta between date('"+apertura+"') and date('"+cierre+"')"
-    sql="select cast(id as CHAR),nombre,modo from formas_pago"
+    condicion = """doc.fecha_vta between date('%s') and
+        date('%s')""" % (apertura, cierre)
+    sql = """select cast(id as CHAR),nombre,modo from formas_pago"""
     cuenta,resultado=query(sql)
     metodo_pago={}
     for linea in resultado:
@@ -773,8 +775,12 @@ def payment_options(apertura,cierre,archivo=''):
         metodo_pago[fp]['mod']=modo_fp
         metodo_pago[fp]['mnt']=0.0
         metodo_pago[fp]['tra']=0
-    sql="select doc.estado,doc.medios_pago,doc.total,doc.n_doc_base from docventa doc where "+str(condicion)+" and doc.caja="+str(caja_num)+" and doc.pv="+str(pos_num)+" "+str(condicion_doc)+" group by doc.estado,doc.n_doc_base order by doc.estado,doc.n_doc_base;"
-    cuenta,resultado=query(sql,1)
+    sql = """select doc.estado,doc.medios_pago,doc.total,doc.n_doc_base
+        from docventa doc where %s and doc.caja='%s' and doc.pv='%s' %s
+        group by doc.estado,doc.n_doc_base order by doc.estado,
+        doc.n_doc_base""" % (condicion, caja_num, pos_num,
+        condicion_doc)
+    cuenta,resultado=query(sql)
     for linea in resultado:
         estado=str(linea[0])
         medios_pago=linea[1]
@@ -785,7 +791,7 @@ def payment_options(apertura,cierre,archivo=''):
         for parte in mp_tmp:
             mp_det=string.split(parte,':')
             mp_def[mp_det[0]]=round(float(mp_det[1]),2)
-        if estado=='A':
+        if estado=='0':
             nuls+=1
             for mp in mp_def:
                 mp_temp=str(mp)
@@ -839,11 +845,11 @@ def payment_options(apertura,cierre,archivo=''):
         docventa doc where %s and doc.caja='%s' and doc.pv='%s' and
         doc.estado='1' and doc.mntdol>0 %s""" % (condicion, caja_num,
         pos_num, condicion_doc)
-    cuenta,resultado=query(sql,1)
+    cuenta,resultado=query(sql)
     for linea in resultado:
-        mntdol+=float(linea[1])
-    mntsol=round(mntsol-(mntdol*tipo_cambio),2)
-    total_real=round(total_real,2)
+        mntdol += float(linea[1])
+    mntsol = round(mntsol-(mntdol*tipo_cambio),2)
+    total_real = round(total_real,2)
     if archivo=='':
         prov=agregar_valores([],0,'-------','-------','-------')
         lineas.append(prov)
@@ -864,8 +870,8 @@ def payment_options(apertura,cierre,archivo=''):
         lineas.append(prov)
         prov=agregar_valores([],0,'-------','-------','-------')
         lineas.append(prov)
-        doc_m=doc_man(apertura)
-        docm_tot=0
+        doc_m = doc_man(apertura)
+        docm_tot = 0
         for linea in doc_m:
             temporal=[]
             parte=string.split(linea,':')
@@ -2059,8 +2065,8 @@ def doc_man(fecha):
     docum=[]
     sql = """select doc.nombre,sum(vta.sub_total_bruto) from docventa
         vta left join documentos_comerciales doc on
-        doc.documento=vta.comprobante where vta.fecha_vta='%s'
-        and doc.modo=5 and vta.estado='1'
+        doc.id=vta.comprobante where vta.fecha_vta='%s'
+        and doc.modo=5 and vta.estado=1
         group by doc.modo,doc.documento""" % (fecha)
     cuenta,resultado=query(sql)
     if cuenta>0:

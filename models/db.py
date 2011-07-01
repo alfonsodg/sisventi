@@ -130,7 +130,8 @@ db.define_table('condiciones_comerciales',
 db.define_table('documentos_identidad', 
     Field('id', 'string'), 
     Field('registro', 'datetime', label='Fecha de Registro', default=now, notnull=False, writable=False),
-    Field('nombre', 'string', default='', notnull=False)
+    Field('nombre', 'string', default='', notnull=False),
+    Field('longitud', 'integer', default=9, notnull=False)
 )
 
 
@@ -386,6 +387,7 @@ db.define_table('maestro',
     Field('unidad_medida_valor', 'double', default=0.0, notnull=False),
     Field('ventas_key', 'integer', default=0, notnull=False),
     Field('aux_num_data', 'integer', default=0, notnull=False),
+    Field('estado', 'integer', default=1, notnull=False),
     Field('fecha', 'date', notnull=False),
 )
     
@@ -731,8 +733,9 @@ db.define_table('docventa',
     Field('n_doc_sufijo', 'string', default='', notnull=False), 
     Field('n_doc_prefijo', 'string', default='', notnull=False), 
     Field('dist_type', 'integer', default=0, notnull=False), 
-    Field('ext_doc', 'integer', default=0, notnull=False), 
-    Field('fecha_vto', 'date', notnull=False), 
+    Field('ext_doc', 'integer', default=0, notnull=False),
+    Field('ref_cred', 'integer', default=0, notnull=False),
+    Field('fecha_vto', 'date', notnull=False),
     Field('condicion_comercial', db.condiciones_comerciales,
           requires=IS_IN_DB(db, db.condiciones_comerciales, zero='[Seleccionar]',
                             error_message='Seleccione una condición'))
@@ -1722,7 +1725,9 @@ db.define_table('pos_configuracion',
     Field('almacen', db.almacenes_lista, label='Almacén',
           requires=IS_IN_DB(db, db.almacenes_lista, '%(almacen)s', zero='[Seleccionar]',
                             error_message='Seleccione un almacén')),
-    Field('moneda_aux', 'string', notnull=False, default='')
+    Field('moneda_aux', 'string', notnull=False, default=''),
+    Field('cond_com', 'integer', notnull=False, default=1),
+    Field('costumer_manage', 'integer', notnull=False, default=0)
 )
 
 

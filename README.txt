@@ -29,8 +29,10 @@ modo_decimal = 0:INT / 1:FLOAT
 modo_almacen = Warehouse transactions
 genero_producto = Master Warehouse Genere
 almacen_key = Depreceated
-almacen = Warehouse ID
+almacen = Warehouse ID (if you need multiple warehouse just apply a colon , The first warehouse will be discounted)
 moneda_aux = Auxiliar Money
+costumer_manage = Costumer management in each operation
+stock_alerta = Revisa saldo en almacen
 
 
 Compositions
@@ -117,6 +119,18 @@ match_obj = re.search(rawstr, value,  re.IGNORECASE| re.DOTALL)
 [*ED*] = External Document
 [*VT*] = Date Sales
 [*PD*] = Payment Details
+[*CC*] = Comercial Condition
+*Z1* = doccli
+*Z2* = nomcli
+*Z3* = dircli
+*Z4* = refcli
+*Z5* = telcli
+*Z6* = texto1
+*Z7* = texto2
+*Z8* = texto3
+*Z9* = norden
+*KI* = Costumer Internal ID
+
 
 
 License
