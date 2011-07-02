@@ -2201,7 +2201,8 @@ def gestion_caja():
                     updat()
                     win.getch()
                     return
-            #estado = query(sql_i, 3)
+                else:
+                    estado = query(sql_i, 3)
             strimpr('--* Caja Aperturada *--',13,maxx,win)
             strimpr('Fecha: '+str(tiempo[:10]),15,maxx,win)
             strimpr('Hora: '+str(tiempo[11:]),16,maxx,win)

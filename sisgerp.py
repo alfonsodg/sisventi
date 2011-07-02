@@ -1147,30 +1147,34 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
     """
     Warehouse Stocks
     """
-    producto = int(producto)
     if fecha!='':
         mes=fecha[5:7]
-    if ciclo_fecha==0:
-        cond_ciclo=" and month(fecha_doc)='"+str(mes)+"'"
-    elif ciclo_fecha==1:
-        cond_ciclo=""
-    if modo_fecha==0:
-        cond_fecha=""+cond_ciclo
-    elif modo_fecha==1:
-        cond_fecha=" and fecha_doc='"+str(fecha)+"'"+cond_ciclo
-    elif modo_fecha==2:
-        cond_fecha=" and fecha_doc<'"+str(fecha)+"'"+cond_ciclo
-    elif modo_fecha==3:
-        cond_fecha=" and fecha_doc<='"+str(fecha)+"'"+cond_ciclo
-    elif modo_fecha==4:
-        cond_fecha=" and fecha_doc>'"+str(fecha)+"'"+cond_ciclo
-    elif modo_fecha==5:
-        cond_fecha=" and fecha_doc>='"+str(fecha)+"'"+cond_ciclo
+    #if ciclo_fecha==0:
+        #cond_ciclo=" and month(fecha_doc)='"+str(mes)+"'"
+    #elif ciclo_fecha==1:
+        #cond_ciclo=""
+    #if modo_fecha==0:
+        #cond_fecha=""+cond_ciclo
+    #elif modo_fecha==1:
+        #cond_fecha=" and fecha_doc='"+str(fecha)+"'"+cond_ciclo
+    #elif modo_fecha==2:
+        #cond_fecha=" and fecha_doc<'"+str(fecha)+"'"+cond_ciclo
+    #elif modo_fecha==3:
+        #cond_fecha=" and fecha_doc<='"+str(fecha)+"'"+cond_ciclo
+    #elif modo_fecha==4:
+        #cond_fecha=" and fecha_doc>'"+str(fecha)+"'"+cond_ciclo
+    #elif modo_fecha==5:
+        #cond_fecha=" and fecha_doc>='"+str(fecha)+"'"+cond_ciclo
     #SALDOS
-    sql = """select codbarras,sum(ingreso-if(salida is NULL,0,salida))
-        saldo from almacenes where almacen='%s' and estado='1' %s
-        group by codbarras order by
-        codbarras""" % (alm_base, cond_fecha)
+    sql = """select cast(codbarras as UNSIGNED),sum(if(ingreso is
+        NULL,0,ingreso)-if(salida is NULL,0,salida)) saldo from
+        almacenes where almacen='%s' and estado='1' and
+        month(fecha_doc)='%s' group by codbarras order by
+        codbarras""" % (alm_base, mes)
+    #sql = """select codbarras,sum(ingreso-if(salida is NULL,0,salida))
+        #saldo from almacenes where almacen='%s' and estado='1' %s
+        #group by codbarras order by
+        #codbarras""" % (alm_base, cond_fecha)
     cuenta, resultado = query(sql,1)
     data={}
     if cuenta > 0:
@@ -1182,6 +1186,7 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
         if producto=='':
             return data
         else:
+            producto = int(producto)
             if data.has_key(producto):
                 return data[producto]
             else:
@@ -2007,7 +2012,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
     panel_top,panel_text_1,panel_text_2,panel_text_3,panel_mid=win_def(txt_fld)#maxy,maxx
     fecha=fecha_ing(fech_cnt,fech_hea)
     add_box = add_data.split('|')
-    if fecha=='Anular':
+    if fecha == 'Anular':
         return 0
     else:
         if turno_ing==1:
@@ -2078,7 +2083,6 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 titulo_almacenes = "%s/%s" % (alm_ori, alm_des)
                 if alm_ori=='Anular' or alm_des=='Anular':
                     return 0
-
                 if rso[1]!='':
                     almacen_relac=rso[2]
                     sql = """select modo from operaciones_logisticas
@@ -2250,7 +2254,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             modo_doc,tipo_doc,n_prefijo_relacion,
                             n_doc_relacion,transportista,vehiculo,
                             observaciones,almacen,registro,proveedor"""
-                        if modo_oper_log == 1:
+                        if modo_oper_log == '1':
                             adic = "ingreso"
                         else:
                             adic = "salida"
@@ -2289,12 +2293,12 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             query_trans.append(sql)
                 estado=query(query_trans,5)
                 if estado==1:
-                    if modo_oper_log[-1]=='1':
+                    if modo_oper_log[-1] == '1':
                         msg1='Nota de Ingreso'
                         msg2='Nota de Salida'
                         alm1=alm_ori
                         alm2=alm_des2
-                    elif modo_oper_log[-1]=='2':
+                    elif modo_oper_log[-1] == '2':
                         msg1='Nota de Salida'
                         msg2='Nota de Ingreso'
                         alm1=alm_des
@@ -2451,7 +2455,7 @@ while 1:
                     elif opcion3==2:
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,1,'SAP',alm_base,alm_base,oper_log_pref,'')
                     elif opcion3==3:
-                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,1,'','',alm_base,oper_log_pref,'')
+                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'','',alm_base,oper_log_pref,'')
                     elif opcion3==4:
                         estado=anulacion_guia(doc_modo,doc_tipo_int,oper_log_pref)
                     elif opcion3==5:
@@ -2471,7 +2475,7 @@ while 1:
                         else:
                             pass
                     elif opcion3=='i':
-                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'IGR','',alm_base,oper_log_pref,'2|Conv')
+                        data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'46','',alm_base,oper_log_pref,'2|Conv')
                     else:
                         break
                 elif opcion2==2:#Reportes

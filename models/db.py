@@ -708,7 +708,7 @@ db.define_table('docventa',
     Field('fecha_vta', 'date', notnull=False), 
     Field('tiempo', 'datetime', default=now, notnull=False), 
     Field('n_doc_base', 'integer', default=0, notnull=False), 
-    Field('estado', 'string', default='', notnull=False), 
+    Field('estado', 'integer', default=0, notnull=False), 
     Field('comprobante', 'integer', default=0, notnull=False), 
     Field('cliente', 'string', default='', notnull=False), 
     Field('cv_ing', 'integer', default=0, notnull=False), 
@@ -1756,3 +1756,5 @@ db.define_table('pos_descuentos',
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
 db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role
+
+webgrid = local_import('webgrid')

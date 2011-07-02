@@ -456,7 +456,7 @@ def pos_status():
     pan = make_panel(curses.COLOR_WHITE, maxy, maxx, 0, 0)
     win = define_window(pan, 0, 1)
     sql = """select apertura, cierre from pos_administracion 
-        where id='%s' and caja=%s and
+        where pv='%s' and caja=%s and
         estado=1""" % (pos_num, caja_num)
     cuenta, resultado = query(sql, 0)
     if cuenta == 0:
@@ -1632,10 +1632,10 @@ def costumer_management(cliente, modo=0):
     if vacio == 1:
         if modo_sql == 0:
             sql = """insert into directorio (nombre_corto, tipo_doc,
-            doc_id, direccion, modo, registro, referencia) values ('%s',
-            '%s', '%s', '%s', 1, '%s', '%s')""" % (nombre.upper(),
-            tipo_doc, documento, direccion.upper(), tiempo,
-            distrito.upper())
+            doc_id, direccion, modo, registro, referencia, condicion)
+            values ('%s', '%s', '%s', '%s', 1, '%s', '%s', 1)""" % (
+            nombre.upper(), tipo_doc, documento, direccion.upper(),
+            tiempo, distrito.upper())
         else:
             sql = """update directorio set nombre_corto='%s',
             tipo_doc='%s', direccion='%s', registro='%s',
@@ -2418,7 +2418,7 @@ def check_time(alerta_max='1', hora_limite='00:00:00'):
     """
     Checks POS Time
     """
-#    apertura, cierre, tiempo_max = pos_time()
+    apertura, cierre, tiempo_max = pos_time()
     tiempo_actual = time.strftime("%Y-%m-%d %H:%M:%S")
     tiempo_cierre = apertura[:10]+" "+hora_limite
     if apertura == 'Error':
@@ -2892,16 +2892,18 @@ while 1:
             if codigo_producto != 'Anular':
                 if cnt_prod == 0:
                     cnt_prod = 1
-                check = 0
+                check = 1
                 if stock_alerta == 1:
                     ware = check_warehouse(codigo_producto, cnt_prod)
                     if ware:
                         check = 1
                     else:
-                        resp = dicotomic_question("""Producto en ESTADO
-                            IRREGULAR, seguro?""")
+                        resp = dicotomic_question(
+                            """Producto en ESTADO IRREGULAR, seguro?""")
                         if resp == 'si':
                             check = 1
+                        else:
+                            0
                 if check == 1:
                     nombre_producto, precio_producto = producto_data(
                         codigo_producto)

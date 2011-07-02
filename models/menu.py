@@ -66,7 +66,6 @@ configuracion = [
                 ('Comercial', False, None,
                 [
                     ('Documentos Comerciales', False, URL('configuracion', 'documentos_comerciales')),
-                    ('Comprobantes', False, URL('configuracion', 'comprobantes')),
                     ('Condiciones Comerciales', False, URL('configuracion', 'condiciones_comerciales'))
                 ]),
                 ('Logística', False, None,
@@ -76,17 +75,16 @@ configuracion = [
                 ]),
                 ('Productos', False, None,
                 [
-                    ('Maestro', False, URL('configuracion', 'maestro')),
+                    ('Descuentos', False, URL('configuracion', 'descuentos'), []),
+                    ('Promociones', False, URL('configuracion', 'promociones'), []),
                     ('Componentes', False, None,
                     [
-                        ('Recetas', False, None,
-                        [
-                            ('Mantenimiento General', False, URL('configuracion', 'recetas'))
-                        ])
+                        ('Recetas', False, URL('configuracion', 'recetas')),
+                        ('Dependencias de Productos', False, URL('configuracion', 'dependencias_productos'))
                     ]),
                     ('Gestión de Productos', False, URL('configuracion', 'productos'),
                     [
-                        ('Administración POS', False, URL('configuracion', 'productos_pos'))
+                        ('Productos en POS', False, URL('configuracion', 'productos_pos'))
                     ])
                 ]),
                 ('Ventas', False, None,
@@ -99,7 +97,12 @@ configuracion = [
             ])
         ]
         
-almacenes = [('Almacenes', False, None, [])]
+almacenes = [('Almacenes', False, None, [
+                ('Operaciones', False, URL('almacen', 'operaciones')),
+                ('Saldos', False, URL('almacen', 'saldos')),
+                ('Kardex', False, URL('almacen', 'kardex'))
+            ])
+        ]
 
 por_cobrar = [
             ('Cuentas por Cobrar', False, URL('cobrar', 'index'),
@@ -133,16 +136,17 @@ por_pagar = [
             ])
         ]
         
-reportes = [('Reportes', False, None, [])]
+#reportes = [('Reportes Integrados', False, None, [])]
         
 ventas = [
             ('Ventas', False, None,
             [
-                ('Documentos de Venta', False, URL('ventas', 'docventa')),
-                ('Delivery', False, URL('ventas', 'delivery'), []),
-                ('Dependencias de Productos', False, URL('ventas', 'dependencias_productos'), []),
-                ('Descuentos', False, URL('ventas', 'descuentos'), []),
-                ('Promociones', False, URL('ventas', 'promociones'), [])
+                ('Operaciones', False, URL('ventas', 'operaciones')),
+                ('Delivery', False, URL('ventas', 'delivery')),
+                ('Reportes', False, None,
+                [
+                    ('Totales', False, URL('ventas', 'totales')),
+                ])
             ])
         ]
 
@@ -155,7 +159,7 @@ elif auth.has_membership(user_id=auth.user.id, role='root'):
     response.menu += almacenes
     response.menu += por_cobrar
     response.menu += por_pagar
-    response.menu += reportes
+    #response.menu += reportes
     response.menu += ventas
     response.menu += configuracion
 

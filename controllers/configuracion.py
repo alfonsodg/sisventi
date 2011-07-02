@@ -17,8 +17,12 @@ def tipo_cambio():
     """
     Muestra las configuraciones del tipo de cambio
     """
-    tipos = db(db.tipos_cambio).select()
-    return dict(tipos=tipos)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.tipos_cambio).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -37,8 +41,13 @@ def directorio():
     """
     Muestra las configuraciones del directorio
     """
-    directorios = db(db.directorio).select()
-    return dict(directorios=directorios)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.directorio).select()
+    grid.pagesize = 10
+    grid.filter_query = lambda f,v: f==v
+    return dict(grid=grid())
+    #directorios = db(db.directorio).select()
+    #return dict(directorios=directorios)
 
 
 @auth.requires(restricciones)
@@ -53,32 +62,16 @@ def directorio_agregar():
 
 
 @auth.requires(restricciones)
-def comprobantes():
-    """
-    Muestra las configuraciones de los comprobantes
-    """
-    comprobantes = db(db.documentos_comerciales).select()
-    return dict(comprobantes=comprobantes)
-
-
-@auth.requires(restricciones)
-def comprobantes_agregar():
-    """
-    Agregar nuevo registro a 'documentos_comerciales'
-    """
-    form = SQLFORM(db.documentos_comerciales, submit_button='Aceptar')
-    if form.accepts(request.vars, session):
-        response.flash = 'Registro ingresado'
-    return dict(form=form)
-
-
-@auth.requires(restricciones)
 def formas_pago():
     """
     Muestra las configuraciones de las formas de pago
     """
-    formas = db(db.formas_pago).select()
-    return dict(formas=formas)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.formas_pago).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -111,8 +104,12 @@ def productos():
     """
     Muestra las configuraciones de los productos
     """
-    productos = db(db.maestro).select()
-    return dict(productos=productos)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.maestro).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -151,8 +148,12 @@ def recetas():
     """
     Muestra las configuraciones de las recetas
     """
-    recetas = db(db.recetas).select()
-    return dict(recetas=recetas)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.recetas).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -211,8 +212,11 @@ def condiciones_comerciales():
     """
     Muestra las configuraciones para las condiciones comerciales
     """
-    condiciones = db(db.condiciones_comerciales).select()
-    return dict(condiciones=condiciones)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.condiciones_comerciales).select()
+    grid.pagesize = 10
+    grid.filter_query = lambda f,v: f==v
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -251,8 +255,13 @@ def documentos_comerciales():
     """
     Muestra las configuraciones para los documentos comerciales
     """
-    documentos = db(db.documentos_comerciales).select()
-    return dict(documentos=documentos)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.documentos_comerciales).select()
+    grid.pagesize = 20
+    grid.crud_function = 'data'
+    #grid.fields = ['db.empaques.empaque', 'db.empaques.nombre', 'db.empaques.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -331,8 +340,13 @@ def empaques():
     """
     Muestra las configuraciones para los empaques
     """
-    empaques = db(db.empaques).select()
-    return dict(empaques=empaques)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.empaques).select()
+    grid.pagesize = 20
+    grid.crud_function = 'data'
+    #grid.fields = ['db.empaques.empaque', 'db.empaques.nombre', 'db.empaques.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -471,8 +485,12 @@ def unidades_medida():
     """
     Muestra las configuraciones para las unidades de medida
     """
-    unidades = db(db.unidades_medida).select()
-    return dict(unidades=unidades)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.unidades_medida).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -551,8 +569,12 @@ def operaciones_logisticas():
     """
     Muestra las configuraciones para las operaciones logisticas
     """
-    operaciones = db(db.operaciones_logisticas).select()
-    return dict(operaciones=operaciones)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.operaciones_logisticas).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)
@@ -571,8 +593,12 @@ def catmod():
     """
     Muestra las configuraciones para categoria modo
     """
-    categorias = db(db.catmod).select()
-    return dict(categorias=categorias)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.catmod).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
 
 
 @auth.requires(restricciones)

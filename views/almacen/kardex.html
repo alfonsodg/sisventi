@@ -1,0 +1,48 @@
+{{extend 'layout.html'}}
+
+<h1>Kardex de Almacen</h1>
+
+{{=form}}
+{{total_ingresos = 0}}
+{{total_salidas = 0}}
+{{saldo = 0}}
+{{total_saldo = 0}}
+
+<table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+        <td style="vertical-align: middle; border: 1px solid #999">Fecha</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Guia</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Operacion</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Ingreso</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Salida</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Saldo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Destino</td>
+    </tr>
+    {{for row in rows:}}
+    <tr>
+        {{if row.ingreso is None: row.ingreso = 0}}
+        {{if row.salida is None: row.salida = 0}}
+        {{total_ingresos += row.ingreso}}
+        {{total_salidas += row.salida}}
+        {{saldo = total_ingresos - total_salidas}}
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.fecha_doc}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.n_doc_base}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.operacion_logistica}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.ingreso}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.salida}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=saldo}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacen_destino}}</td>
+    </tr>
+    {{pass}}
+        {{saldo = total_ingresos - total_salidas}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">Totales</td>
+        <td></td>
+        <td></td>
+        <td style="vertical-align: top; border: 1px solid #999"><strong>{{=total_ingresos}}</strong></td>
+        <td style="vertical-align: top; border: 1px solid #999"><strong>{{=total_salidas}}</strong></td>
+        <td style="vertical-align: top; border: 1px solid #999"><strong>{{=saldo}}</strong></td>
+    </tr>
+    </tbody>
+</table>

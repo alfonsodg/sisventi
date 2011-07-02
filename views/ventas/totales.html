@@ -1,0 +1,29 @@
+{{extend 'layout.html'}}
+
+<h1>Ventas por Rango de Fechas</h1>
+
+{{=form}}
+{{gran_total = 0}}
+
+<table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+        <td style="vertical-align: middle; border: 1px solid #999">Tipo Documento</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Numero</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Total</td>
+    </tr>
+    {{for row in rows:}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.comprobante}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.n_doc_base}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.total}}</td>
+        {{gran_total += row.total}}
+    </tr>
+    {{pass}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">Gran Total</td>
+        <td></td>
+        <td style="vertical-align: top; border: 1px solid #999"><strong>{{=gran_total}}</strong></td>
+    </tr>
+    </tbody>
+</table>
