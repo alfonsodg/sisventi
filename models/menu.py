@@ -19,12 +19,12 @@ configuracion = [
             [
                 ('General', False, None,
                 [
-                    ('Áreas', False, URL('configuracion', 'areas')),
-                    ('Artículos', False, URL('configuracion', 'articulos')),
-                    ('Casas', False, URL('configuracion', 'casas'),
-                    [
-                        ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
-                    ]),
+                    #('Áreas', False, URL('configuracion', 'areas')),
+                    #('Artículos', False, URL('configuracion', 'articulos')),
+                    #('Casas', False, URL('configuracion', 'casas'),
+                    #[
+                    #    ('Sub-Casas', False, URL('configuracion', 'sub_casas')),
+                    #]),
                     ('Categorías', False, URL('configuracion', 'categorias'),
                     [
                         ('Categoría Modo', False, URL('configuracion', 'catmod')),
@@ -33,12 +33,12 @@ configuracion = [
                     [
                         ('Sub-Géneros', False, URL('configuracion', 'sub_generos')),
                     ]),
-                    ('Sellos', False, URL('configuracion', 'sellos'),
-                    [
-                        ('Sub-Sellos', False, URL('configuracion', 'sub_sellos')),
-                    ]),
-                    ('Tipos', False, URL('configuracion', 'tipos')),
-                    ('Turnos', False, URL('configuracion', 'turnos')),
+                    #('Sellos', False, URL('configuracion', 'sellos'),
+                    #[
+                    #    ('Sub-Sellos', False, URL('configuracion', 'sub_sellos')),
+                    #]),
+                    #('Tipos', False, URL('configuracion', 'tipos')),
+                    #('Turnos', False, URL('configuracion', 'turnos')),
                 ]),
                 ('Gestión', False, None,
                 [
@@ -55,13 +55,13 @@ configuracion = [
                          ])
                      ]),
                     ('Unidades de Medida', False, URL('configuracion', 'unidades_medida')),
-                    ('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
-                    ('Monedas', False, URL('configuracion', 'monedas')),
+                    #('Tipo de Cambio', False, URL('configuracion', 'tipo_cambio')),
+                    #('Monedas', False, URL('configuracion', 'monedas')),
                     ('Empaques', False, URL('configuracion', 'empaques')),
                     ('Documentos de Identidad', False, URL('configuracion', 'doc_identidad')),
                     ('Directorio', False, URL('configuracion', 'directorio')),
-                    ('Backup', False, URL('configuracion', 'backup')),
-                    ('Bancos', False, URL('configuracion', 'bancos'))
+                    #('Backup', False, URL('configuracion', 'backup')),
+                    #('Bancos', False, URL('configuracion', 'bancos'))
                 ]),
                 ('Comercial', False, None,
                 [
@@ -71,27 +71,27 @@ configuracion = [
                 ('Logística', False, None,
                 [
                     ('Operaciones Logísticas', False, URL('configuracion', 'operaciones_logisticas')),
-                    ('Transportistas', False, URL('configuracion', 'transportistas'))
+                    #('Transportistas', False, URL('configuracion', 'transportistas'))
                 ]),
                 ('Productos', False, None,
                 [
-                    ('Descuentos', False, URL('configuracion', 'descuentos'), []),
+                    #('Descuentos', False, URL('configuracion', 'descuentos'), []),
                     ('Promociones', False, URL('configuracion', 'promociones'), []),
                     ('Componentes', False, None,
                     [
                         ('Recetas', False, URL('configuracion', 'recetas')),
-                        ('Dependencias de Productos', False, URL('configuracion', 'dependencias_productos'))
+                        #('Dependencias de Productos', False, URL('configuracion', 'dependencias_productos'))
                     ]),
                     ('Gestión de Productos', False, URL('configuracion', 'productos'),
                     [
-                        ('Productos en POS', False, URL('configuracion', 'productos_pos'))
+                        #('Productos en POS', False, URL('configuracion', 'productos_pos'))
                     ])
                 ]),
                 ('Ventas', False, None,
                 [
                     ('Formas de Pago', False, URL('configuracion', 'formas_pago')),
                     ('Puntos de Venta', False, URL('configuracion', 'puntos_venta')),
-                    ('Clientes Preferentes', False, URL('configuracion', 'clientes_preferentes')),
+                    #('Clientes Preferentes', False, URL('configuracion', 'clientes_preferentes')),
 
                 ])
             ])
