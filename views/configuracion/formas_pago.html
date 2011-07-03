@@ -1,45 +1,5 @@
 {{extend 'layout.html'}}
 
-<h1>Formas de Pago</h1>
 
-<p align="right">
-    <a href="{{=URL('configuracion', 'formas_pago_agregar')}}">
-        <input type="submit" value="Agregar" style="font-size:10pt" name="">
-    </a>
-</p>
-</br>
-
-<center>
-<table style="text-align: left; width: 50%;" border="1" cellpadding="2" cellspacing="2">
-    <tbody>
-        <tr">
-            <td style="vertical-align: middle; border: 1px solid #999; width: 50%">
-                <center><b>Forma de Pago</b></center>
-            </td>
-            <td style="vertical-align: middle; border: 1px solid #999">
-                <center><b>Nombre</b></center>
-            </td>
-        </tr>
-        {{if not formas:}}
-            <tr>
-                <td colspan="2" rowspan="1" style="vertical-align: top; border: 1px solid #999">
-                    <center>No hay registros</center>
-                </td>
-            </tr>
-        {{else:}}
-            {{for forma in formas:}}
-                <tr>
-                    <td style="vertical-align: top; border: 1px solid #999">
-                        {{=forma.forma_pago}}
-                    </td>
-                    <td style="vertical-align: top; border: 1px solid #999">
-                        {{=forma.nombre}}
-                    </td>
-                </tr>
-            {{pass}}
-        {{pass}}
-        
-    </tbody>
-</table>
-</center>
+{{=grid}}
 

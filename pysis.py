@@ -24,6 +24,7 @@ import thread
 import smtplib
 import md5
 import logging
+import datetime
 #import tempfile
 import pdb
 from curses import panel
@@ -134,6 +135,7 @@ doc_pie = ''
 cash_var = 1
 ctrlprods = {}
 comprobante_id = 0
+doc_pedido = 0
 
 
 #####
@@ -161,7 +163,7 @@ def configuration():
     global datos_modo, stock_alerta, pos_modo, modo_decimal
     global modo_control, modo_almacen, genero_producto, almacen_key
     global almacen, moneda_ux, operacion_logistica, costumer_manage
-    global cond_com
+    global cond_com, doc_pedido
     fecha_act = time.strftime("%Y-%m-%d")
     sql = """select '', '', modo_impuesto, impuestos,
         modo_moneda, moneda, money_drawer, empresa, tipo_servicio,
@@ -169,7 +171,7 @@ def configuration():
         hora_max, datos_modo, stock_alerta, pos_modo, modo_decimal,
         modo_control, modo_almacen, genero_producto, almacen_key,
         almacen, moneda_aux, operacion_logistica, costumer_manage,
-        cond_com from pos_configuracion
+        cond_com, doc_pedido from pos_configuracion
         where id='%s' and caja=%s""" % (pos_num, caja_num)
     cnt, rso = query(sql, 0)
     if cnt == 0:
@@ -207,6 +209,7 @@ def configuration():
     operacion_logistica = (rso[25])
     costumer_manage = rso[26]
     cash_var = rso[27]
+    doc_pedido = rso[28]
     sql = """select valor from tipos_cambio where fecha = '%s'
         or fecha = '0000-00-00' order by fecha
         desc limit 1""" % (fecha_act)
@@ -258,7 +261,7 @@ def point_programs(fecha, n_doc_base, total):
                     return ''
                 while 1:
                     data_num = data_input('Tarjeta', paning, 20)
-                    if data_num == 'Anular':
+                    if not data_num:
                         resp = dicotomic_question('Esta seguro?')
                         if resp == 'si':
                             return ''
@@ -292,6 +295,23 @@ def point_programs(fecha, n_doc_base, total):
     except Exception, error:
         logging.debug("PointProgram:%s" % error)
         return ''
+
+
+def cuenta_cobrar(dvar):
+    tiempo = time.strftime("%Y-%m-%d %H:%M:%S")
+    fecha = datetime.date.today()
+    fecha_venc = fecha + datetime.timedelta(days=30)
+    sql = """select dias from condiciones_comerciales where
+        id='%s'""" % (dvar["CC"])
+    cnt, rso = query(sql,0)
+    if cnt > 0:
+        dias = rso[0]
+    sql = """insert into cuentas_por_cobrar (registro, fecha_doc, documento,
+    cliente, accion, neto_ingreso, bruto_ingreso, fecha)
+    values ('%s', '%s','%s', '%s', '1','%s','%s','%s')"""
+    sql = sql % (tiempo, fecha, dvar["DI"], dvar["KI"], dvar["NT"],
+        dvar["FT"], fecha_venc)
+    return sql
 
 
 def keyboard_definition(atajo=''):
@@ -585,6 +605,8 @@ def obch(pan, pcy=0, pcx=0, estado='n', tipo=0):
         update_panels()
         if c == curses.KEY_F2:
             return 'f2'
+        if c == curses.KEY_F5:
+            return 'f5'
         if c == curses.KEY_F10:
             return 'f10'
         if c == curses.KEY_F11:
@@ -1812,6 +1834,8 @@ def final_process(vuelsol, vueldol):
         m_sql.append(sql)
         m_sql.extend(v_sql)
         p_elem.append(parte)
+    sql = cuenta_cobrar(dvar)
+    m_sql.append(sql)
     exe = query(m_sql, 5)
     p_elem = "".join(p_elem)
     layout = re.sub(pvar, p_elem, layout)
@@ -1848,10 +1872,8 @@ def final_process(vuelsol, vueldol):
                 #modo_com = '5'
             #else:
                 #modo_com = '0'
-    sql = """update documentos_comerciales set correlativo='%s',
-        prefijo='%s', sufijo = '%s' where id='%s'""" % (nodoc,
-        nodoc_prefijo, nodoc_sufijo, comprobante_id)
-    exe = query(sql, 3)
+    exe = set_correlative(nodoc_prefijo, nodoc, nodoc_sufijo,
+        comprobante_id)
     if doccli is not None:
         sql = """insert into delivery (tiempo, pv, numero, cliente,
             docnum, carac1, carac2, carac3) values ('%s', '%s', '%s',
@@ -1916,12 +1938,18 @@ def linea_dato(msg, win, pan, texto="", pos_y=1):
                 dato = dato[:tam_real_x]
 
 
-def data_input(msg, pan, tamx=20, texto="", tipo=0, clr=0):
+def data_input(msg, pan=None, tamx=20, texto="", tipo=0, clr=0):
     """
     Gets Data
     """
-    ubicx = len(msg)+3
-    tmax = tamx+ubicx
+    if not pan:
+        cty = 3
+        ctx = 20
+        cpy = (maxy-cty)/2
+        cpx = (maxx-ctx)/2
+        pan = make_panel(curses.COLOR_WHITE, cty, ctx, cpy, cpx)
+    ubicx = len(msg) + 3
+    tmax = tamx + ubicx
     txtp = 0
     if len(texto) > 0:
         codobt = texto
@@ -1945,7 +1973,7 @@ def data_input(msg, pan, tamx=20, texto="", tipo=0, clr=0):
                 win.erase()
             return codobt
         elif caracter == 'escape':
-            return 'Anular'
+            return
         elif caracter == 'arriba' and tipo == 0:
             return 'arriba'
         elif caracter == 'abajo' and tipo == 0:
@@ -1968,10 +1996,6 @@ def data_input(msg, pan, tamx=20, texto="", tipo=0, clr=0):
             and caracter <= 'Z') or (caracter == '-') or (
             caracter == '.') or (caracter == ' ') or (caracter == '&'
             ) or (caracter == 'ñ') or (caracter == 'Ñ'):
-        #if (caracter >= '0' and caracter <= '9') or (caracter >= 'a' 
-            #and caracter <= 'z') or (caracter >= 'A' 
-            #and caracter <= 'Z') or (caracter == '-') or (
-            #caracter == '.'):
             ubicx += 1
             codobt += "%s" % (caracter)
             if ubicx >= (tmax):
@@ -2335,8 +2359,12 @@ def get_correlative(modo, doc_id, extra=0, edit=0, panel=''):
     cuenta, resultado = query(sql, 0)
     if cuenta > 0:
         prefijo = resultado[0]
+        if prefijo is None:
+            prefijo = ''
         correlativo = int(resultado[1])
         sufijo = resultado[2]
+        if sufijo is None:
+            sufijo = ''
         copia_doc = resultado[3]
         detalle_doc = resultado[4]
         doc_port = resultado[5]
@@ -2367,7 +2395,7 @@ def get_correlative(modo, doc_id, extra=0, edit=0, panel=''):
         while 1:
             try:
                 ingdat = data_input('Documento', panel, 30, dato, 0, 0)
-                if ingdat == 'Anular':
+                if not ingdat:
                     return 'Anular', '', '', '', ''
                 elif ingdat == dato:
                     alerta_flag = 0
@@ -2501,7 +2529,7 @@ def product_finder(titulo, num_char, valid_data_types, sql_cond=''):
         paning = make_panel(curses.COLOR_WHITE, size_y, size_x, pos_y,
             pos_x)
         data_ing = data_input('Producto', paning, num_char)
-        if data_ing == 'Anular':
+        if not data_ing:
             return data_ing, 0
         tipo_dato = get_value_expresion(data_ing)[1]
         if tipo_dato in cond_types:
@@ -2524,7 +2552,7 @@ def product_finder(titulo, num_char, valid_data_types, sql_cond=''):
 #order by val.posicion"%(codigo,fecha_cambio,pos_num)
 
 
-def product_processing(datos):
+def product_processing(datos, valor=None):
     """
     Products processing
     """
@@ -2535,7 +2563,10 @@ def product_processing(datos):
         #autoriz = 1
         py += 1
         nombre, precio = producto_data(dato)
+        datos[dato]['nam'] = nombre
         datos[dato]['pos'] = py
+        if valor:
+            precio = valor
         datos[dato]['prc'] = precio
         if cnt_prod > 0:
             if datos[dato]['cnt'] == 1:
@@ -2677,9 +2708,9 @@ def coupon_process():
         and prom.cond_valor <= '%s' and mae.estado=1"""
     paning = make_panel(curses.COLOR_WHITE, cty, ctx, cpy, cpx)
     codigo = data_input('Vale', paning, 10)
-    if codigo != 'Anular':
+    if codigo:
         codvale = data_input('No.', paning, 10)
-        if codvale != 'Anular':
+        if codvale:
             prom_fecha = time.strftime("%Y-%m-%d")
             prom_hora = time.strftime("%H:%M:%S")
             sql = sql % (codigo, pos_num, prom_hora, prom_hora, total)
@@ -2795,6 +2826,81 @@ def product_delete():
                                     ctrlprods[codigo]['sub'][sub_dato][aux_codigo] = [temp[0], float(temp[1])-float(eliminados_sub[aux_codigo][1])]
 
 
+def set_correlative(prefijo, correlativo, sufijo, clave, modo=1):
+    sql = """update documentos_comerciales set correlativo='%s',
+        prefijo='%s', sufijo = '%s' where id='%s'""" % (correlativo,
+        prefijo, sufijo, clave)
+    if modo == 1:
+        exe = query(sql,3)
+    else:
+        return sql
+    return
+
+
+def pedido_register():
+    tiempo = time.strftime("%Y-%m-%d %H:%M:%S")
+    fecha = time.strftime("%Y-%m-%d")
+    sql_lay = """insert into pedidos (codbarras, cantidad, modo, estado,
+        user_ing, n_doc_base, precio, registro, fecha, n_doc_prefijo,
+        pv) values ('%s', '%s', '1', '1', '%s', '%s', '%s', '%s', '%s',
+        '%s', '%s')"""
+    (pre, doc, suf, cop, cmn, prt, lay) = get_correlative(
+        0, doc_pedido, 0, 1)
+    m_sql = []
+    for prod in ctrlprods:
+        sql = sql_lay % (prod, ctrlprods[prod]['cnt'], usuario_pedido,
+            doc, ctrlprods[prod]['prc'], tiempo, fecha, pre, pos_num)
+        m_sql.append(sql)
+    exe = query(m_sql, 5)
+    set_correlative(pre, doc, suf, doc_pedido)
+    code = "%s-%s-%s" % (pre, doc, suf)
+    return code
+
+
+def pedido_input(code=None):
+    if not code:
+        return
+    global usuario_pedido
+    tiempo = time.strftime("%Y-%m-%d %H:%M:%S")
+    sql = """select codbarras, cantidad, precio, user_ing from pedidos
+        where n_doc_base='%s' and estado='1' and modo='1'""" % (code)
+    cnt, rso = query(sql)
+    if cnt > 0:
+        for linea in rso:
+            codigo = linea[0]
+            cantidad = linea[1]
+            precio = linea[2]
+            usuario = linea[3]
+            add_product(codigo, cantidad, precio, True)
+        usuario_pedido = usuario
+        sql = """update pedidos set estado=0, registro='%s' where
+            n_doc_base='%s' and modo='1'""" % (tiempo, code)
+        exe = query(sql, 3)
+        return True
+
+
+def add_product(codigo, cantidad, precio=None, identify=None):
+    check = 1        
+    if stock_alerta == 1:
+        if identify:
+            tmp_nombre, tmp_precio = producto_data(codigo)
+            resp = dicotomic_question(tmp_nombre)
+        ware = check_warehouse(codigo, cantidad)
+        if ware:
+            check = 1
+        else:
+            msg = """Producto en ESTADO IRREGULAR, seguro?"""
+            resp = dicotomic_question(msg)
+            if resp == 'si':
+                check = 1
+            else:
+                check = 0
+    if check == 1:
+        datos = {codigo: {'cnt': cantidad,
+            'sub': {}}}
+        product_processing(datos, precio)
+
+
 ####
 tty = maxy-10
 x_p2 = int((maxx*12.5)/100)
@@ -2830,6 +2936,7 @@ while 1:
     configuration()
     (doccli, nomcli, dircli, refcli, telcli, texto1, texto2, texto3, 
         norden) = ('', '', '', '', '', '', '', '', '')
+    usuario_pedido = id_usuario
     nombre_cliente = ''
     id_cliente = ''
     id_main_cliente = ''
@@ -2856,6 +2963,7 @@ while 1:
     ctrlprods = {}
     distribucion = '0'
     cupones = {}
+    modo_pedido = 0
     main_header(p1, nombre_usuario[:20])
     window_body(p2, p3, p6, p4, p5, p8, p7)
     message_alert(p9, " "*33)
@@ -2892,24 +3000,7 @@ while 1:
             if codigo_producto != 'Anular':
                 if cnt_prod == 0:
                     cnt_prod = 1
-                check = 1
-                if stock_alerta == 1:
-                    ware = check_warehouse(codigo_producto, cnt_prod)
-                    if ware:
-                        check = 1
-                    else:
-                        resp = dicotomic_question(
-                            """Producto en ESTADO IRREGULAR, seguro?""")
-                        if resp == 'si':
-                            check = 1
-                        else:
-                            0
-                if check == 1:
-                    nombre_producto, precio_producto = producto_data(
-                        codigo_producto)
-                    datos = {codigo_producto: {'cnt': cnt_prod,
-                        'sub': {}, 'nam': nombre_producto}}
-                    product_processing(datos)
+                add_product(codigo_producto, cnt_prod)
                 cnt_prod = 0
         elif car == 'finp':  #Lugar Consumo
             if distribucion == '0':
@@ -2938,6 +3029,21 @@ while 1:
                 cnt_prod = round(float(cnt_prod),2)
         elif car == 'spag':  #Vales
             coupon_process()
+        elif car == '-':
+            cnt_prod = 0
+        elif car == 'f2':
+            code = data_input("Codigo")
+            if code:
+                pedido_stat = pedido_input(code)
+                if pedido_stat:
+                    msg = "Pedido IMPORTADO"
+                else:
+                    msg = "Pedido NO DISPONIBLE"
+                dicotomic_question(msg)
+        elif car == 'f5':
+            msg = "MODO PEDIDO"
+            message_alert(p9, '%s' % msg, 20)
+            modo_pedido = 1
         elif car == 'f11' and nivel_usuario < 10:
             #Salida del SuperUsuario
             msg = "Desea Salir del Programa?"
@@ -2970,6 +3076,14 @@ while 1:
                 message_alert(p9, 'TIPO: %s' % msg_dist, 20)
             else:
                 distribucion = "%s" % (tipo_servicio)
+            if modo_pedido == 1:
+                msg = "Ingresar Pedido?"
+                resp = dicotomic_question(msg)
+                if resp == 'si':
+                    pedido_code = pedido_register()
+                    msg = "Codigo Pedido: %s" % (pedido_code)
+                    dicotomic_question(msg)
+                    break
             if len(ctrlprods.keys()) > 0:
                 (medios_pago, comprobante_id, nombre_cliente,
                     id_cliente, vuelsol, vueldol,

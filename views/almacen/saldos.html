@@ -8,13 +8,17 @@
 <table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
     <tbody>
     <tr>
-        <td style="vertical-align: middle; border: 1px solid #999">Producto</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Ref</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Cdigo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Descripcion</td>
         <td style="vertical-align: middle; border: 1px solid #999">Cantidad</td>
     </tr>
     {{for row in rows:}}
     <tr>
         <td style="vertical-align: top; border: 1px solid #999">{{=row[0]}}</td>
         <td style="vertical-align: top; border: 1px solid #999">{{=row[1]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[2]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[3]}}</td>
     </tr>
     {{pass}}
     </tbody>

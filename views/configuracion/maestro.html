@@ -1,0 +1,50 @@
+{{extend 'layout.html'}}
+
+<h1>Maestro de Productos</h1>
+
+{{=form}}
+
+<table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+        <td style="vertical-align: middle; border: 1px solid #999">Ver</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Editar</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Ref</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Codbarras</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Genero</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Nombre</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Descripcion</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Alias</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Precio</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Unidad Medida</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Cantidad Unidad Medida</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Estado</td>
+    </tr>
+    {{for i,row in enumerate(rows):}}
+    {{if i==items_per_page: break}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Ver", _href=URL("data/read/maestro", args=row.id)))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Modificar", _href=URL("data/update/maestro", args=row.id)))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.id}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.codbarras}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.genero}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.nombre}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.descripcion}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.alias}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.precio}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.unidad_medida}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.unidad_medida_valor}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.estado}}</td>
+    </tr>
+    {{pass}}
+    </tbody>
+</table>
+
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">Anterior</a>
+{{pass}}
+
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">Siguiente</a>
+{{pass}}

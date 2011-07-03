@@ -16,6 +16,26 @@ def data():
 
 
 @auth.requires(restricciones)
+def pedidos():
+    """
+    Muestra registros de ventas por delivery
+    """
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.pedidos).select()
+    grid.pagesize = 20
+    grid.crud_function = 'data'
+    grid.fields = ['pedidos.fecha', 'pedidos.pv', 'pedidos.n_doc_base',
+        'pedidos.codbarras', 'pedidos.cantidad', 'pedidos.modo',
+        'pedidos.estado', 'pedidos.user_ing'
+    ]
+    grid.totals = ['pedidos.cantidad']
+    grid.filters = ['pedidos.fecha', 'pedidos.pv', 'pedidos.n_doc_base',
+        'pedidos.codbarras', 'pedidos.estado', 'pedidos.user_ing'
+    ]
+    return dict(grid=grid())
+
+
+@auth.requires(restricciones)
 def delivery():
     """
     Muestra registros de ventas por delivery
@@ -43,7 +63,7 @@ def operaciones():
     grid.action_headers = ['Ver']
     grid.totals = ['docventa.cantidad','docventa.sub_total_bruto']
     grid.filters = ['docventa.fecha_vta','docventa.estado','docventa.comprobante',
-        'docventa.cliente','docventa.codigo','docventa.condicion_comercial']
+        'docventa.cliente','docventa.codigo','docventa.condicion_comercial','docventa.cv_ing']
     #grid.filter_query = lambda f,v: f==v
     grid.enabled_rows = ['header','filter', 'pager','totals','footer']
     return dict(grid=grid())
@@ -55,80 +75,84 @@ def totales():
     """
     form = SQLFORM.factory(
         Field('inicio', 'date', label='Fecha Inicio', default=session.fecha_inicio_vta),
-        Field('fin', 'date', label='Fecha Fin', default=session.fecha_fin_vta))
+        Field('fin', 'date', label='Fecha Fin', default=session.fecha_fin_vta)
+        )
     rows = []
     if form.accepts(request.vars, session):
-        #response.flash = 'form accepted'
         session.fecha_inicio_vta = form.vars.inicio
-        session.fecha_fin_vta = form.vars.fin
+        if form.vars.fin:
+            session.fecha_fin_vta = form.vars.fin
+        else:
+            session.fecha_fin_vta = form.vars.inicio
         rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
             (db.docventa.fecha_vta<=session.fecha_fin_vta)
             ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.total,
             groupby=db.docventa.comprobante|db.docventa.n_doc_base)
-    #elif form.errors:
-        #response.flash = 'form has errors'
     return dict(form=form, rows=rows)
 
 
-
-
-
-
-@auth.requires(restricciones)
-def dependencias_productos():
+def totales_productos():
     """
-    Dependencias de los productos
+    Ventas Totales por Productos
     """
-    dependencias = db(db.maestro_dependencias).select()
-    return dict(dependencias=dependencias)
-
-
-@auth.requires(restricciones)
-def dependencias_productos_agregar():
-    """
-    Agregar registro a 'maestro_dependencias'
-    """
-    form = SQLFORM(db.maestro_dependencias, submit_button='Aceptar')
+    producto = request.vars.producto
+    form = SQLFORM.factory(
+        Field('producto', 'integer', label='Producto', default=producto, widget = SQLFORM.widgets.autocomplete(
+            request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+            filterby=db.maestro.genero, filtervalue='2')),
+        Field('inicio', 'date', label='Fecha Inicio', default=session.fecha_inicio_vta),
+        Field('fin', 'date', label='Fecha Fin', default=session.fecha_fin_vta)
+        )
+    rows = []
     if form.accepts(request.vars, session):
-        response.flash = 'Registro ingresado'
-    return dict(form=form)
+        session.producto = form.vars.producto
+        session.fecha_inicio_vta = form.vars.inicio
+        if form.vars.fin:
+            session.fecha_fin_vta = form.vars.fin
+        else:
+            session.fecha_fin_vta = form.vars.inicio
+        if session.producto:
+            rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
+                (db.docventa.fecha_vta<=session.fecha_fin_vta) &
+                (db.docventa.codigo==session.producto)
+                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codigo,
+                db.maestro.alias,db.docventa.sub_total_bruto,
+                left=db.docventa.on(db.docventa.codigo==db.maestro.id),
+                groupby=db.docventa.comprobante|db.docventa.n_doc_base)
+        else:
+            rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
+                (db.docventa.fecha_vta<=session.fecha_fin_vta) #&
+                #(db.docventa.codigo==session.producto)
+                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codigo,
+                db.maestro.alias,db.docventa.sub_total_bruto,
+                left=db.docventa.on(db.docventa.codigo==db.maestro.id),
+                groupby=db.docventa.comprobante|db.docventa.n_doc_base)
+    return dict(form=form, rows=rows)
 
 
-@auth.requires(restricciones)
-def descuentos():
+def totales_comprobantes():
     """
-    Descuentos aplicados a las ventas 
+    Ventas Totales
     """
-    descuentos = db(db.maestro_descuentos).select()
-    return dict(descuentos=descuentos)
-
-
-@auth.requires(restricciones)
-def descuentos_agregar():
-    """
-    Agregar registro a 'maestro_descuentos'
-    """
-    form = SQLFORM(db.maestro_descuentos, submit_button='Aceptar')
+    comprobante = request.vars.comprobante
+    form = SQLFORM.factory(
+        Field('comprobante', db.documentos_comerciales, default=comprobante, label='Documento Comercial',
+          requires=IS_IN_DB(db, db.documentos_comerciales, '%(nombre)s', zero='[Seleccionar]',
+                            error_message='Seleccione un comprobante')),
+        Field('inicio', 'date', label='Fecha Inicio', default=session.fecha_inicio_vta),
+        Field('fin', 'date', label='Fecha Fin', default=session.fecha_fin_vta)
+        )
+    rows = []
     if form.accepts(request.vars, session):
-        response.flash = 'Registro ingresado'
-    return dict(form=form)
-
-
-@auth.requires(restricciones)
-def promociones():
-    """
-    Promociones para las ventas
-    """
-    promociones = db(db.promociones).select()
-    return dict(promociones=promociones)
-
-
-@auth.requires(restricciones)
-def promociones_agregar():
-    """
-    Agregar registro a 'promociones'
-    """
-    form = SQLFORM(db.promociones, submit_button='Aceptar')
-    if form.accepts(request.vars, session):
-        response.flash = 'Registro ingresado'
-    return dict(form=form)
+        session.comprobante = form.vars.comprobante
+        session.fecha_inicio_vta = form.vars.inicio
+        if form.vars.fin:
+            session.fecha_fin_vta = form.vars.fin
+        else:
+            session.fecha_fin_vta = form.vars.inicio
+        rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
+            (db.docventa.fecha_vta<=session.fecha_fin_vta) &
+            (db.docventa.comprobante==session.comprobante)
+            ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.total,
+            groupby=db.docventa.comprobante|db.docventa.n_doc_base)
+    return dict(form=form, rows=rows)

@@ -54,7 +54,7 @@ def cuentas_pagar():
     
 
 @auth.requires(restricciones)
-def cuentas_pagar_agregar():
+def cuentas_agregar():
     """
     Agregar nuevo registro a 'cuentas_por_cobrar'
     """
@@ -70,4 +70,9 @@ def cuentas_reporte():
     """
     Muestra el reporte de las cuentas por pagar
     """
-    return dict()
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.cuentas_por_pagar).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())

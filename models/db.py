@@ -616,9 +616,9 @@ db.define_table('control_produccion',
 )
 
 
-db.control_produccion.codbarras.widget = SQLFORM.widgets.autocomplete(
-     request, db.maestro.alias, id_field=db.maestro.id, mode=1,
-     filterby=db.maestro.genero, filtervalue='1')
+#db.control_produccion.codbarras.widget = SQLFORM.widgets.autocomplete(
+#     request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+#     filterby=db.maestro.genero, filtervalue='1')
 
 
 db.define_table('criterio',
@@ -941,11 +941,15 @@ db.define_table('pedidos',
     Field('codbarras', db.maestro,
           requires=IS_IN_DB(db, db.maestro, '%(codbarras)s', zero='[Seleccionar]',
                             error_message='Seleccione un código de barras')), 
-    Field('cantidad', 'double', default=0.0, notnull=False), 
+    Field('cantidad', 'double', default=0.0, notnull=False),
+    Field('precio', 'double', default=0.0, notnull=False), 
     Field('peso', 'double', default=0.0, notnull=False), 
     Field('detalle', 'string', default='', notnull=False), 
     Field('modo', 'integer', default=0, notnull=False), 
-    Field('estado', 'integer', default=1, notnull=False), 
+    Field('estado', 'integer', default=1, notnull=False),
+    Field('cliente', db.directorio,
+          requires=IS_IN_DB(db, db.directorio, '%(nombre_corto)s', zero='[Seleccionar]',
+                            error_message='Seleccione un cliente')),
     Field('user_ing', db.auth_user,
           requires=IS_IN_DB(db, db.auth_user, '%(first_name)s %(last_name)s',
                             zero='[Seleccionar]',
@@ -1546,7 +1550,7 @@ db.define_table('cuentas_por_cobrar',
     Field('neto_salida', 'double', notnull=False, label='Monto Neto de Salida', default=0.0),
     Field('impuesto_salida', 'double', notnull=False, label='Impuesto de Salida', default=0.0),
     Field('bruto_salida', 'double', notnull=False, label='Monto Bruto de Salida', default=0.0),
-    Field('fecha_venc', 'double', notnull=False, label='Fecha de Vencimiento'),
+    Field('fecha', 'date', notnull=False, label='Fecha de Vencimiento', default=datetime.date.today())
 )
 
 
@@ -1569,7 +1573,7 @@ db.define_table('cuentas_por_pagar',
     Field('neto_salida', 'double', notnull=False, label='Monto Neto de Salida', default=0.0),
     Field('impuesto_salida', 'double', notnull=False, label='Impuesto de Salida', default=0.0),
     Field('bruto_salida', 'double', notnull=False, label='Monto Bruto de Salida', default=0.0),
-    Field('fecha_venc', 'double', notnull=False, label='Fecha de Vencimiento'),
+    Field('fecha', 'date', notnull=False, label='Fecha de Vencimiento', default=datetime.date.today())
 )
 
 
@@ -1727,7 +1731,8 @@ db.define_table('pos_configuracion',
                             error_message='Seleccione un almacén')),
     Field('moneda_aux', 'string', notnull=False, default=''),
     Field('cond_com', 'integer', notnull=False, default=1),
-    Field('costumer_manage', 'integer', notnull=False, default=0)
+    Field('costumer_manage', 'integer', notnull=False, default=0),
+    Field('doc_pedido', 'integer', notnull=False, default=0)
 )
 
 
@@ -1756,5 +1761,7 @@ db.define_table('pos_descuentos',
 # Representations
 db.auth_membership.user_id.represent = lambda ID: db.auth_user(ID).first_name + ' ' + db.auth_user(ID).last_name
 db.auth_membership.group_id.represent = lambda ID: db.auth_group(ID).role
+
+
 
 webgrid = local_import('webgrid')

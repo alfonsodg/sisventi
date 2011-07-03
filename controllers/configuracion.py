@@ -3,6 +3,10 @@
 restricciones = True
 
 
+@auth.requires(restricciones)
+def data():
+    return dict(form=crud())
+
 
 @auth.requires(restricciones)
 def index():
@@ -90,26 +94,38 @@ def maestro():
     """
     Muestra las configuraciones de los productos
     """
-    record = db.maestro(request.args(0)) or redirect(URL('index'))
-    form = SQLFORM(db.maestro, record)
+    producto = request.vars.producto
+    rows = []
+    form = SQLFORM.factory(
+        Field('producto', 'string', label='Producto', default=producto,widget = SQLFORM.widgets.autocomplete(
+            request, db.maestro.alias, mode=1)),
+        )
+    if len(request.args):
+        page=int(request.args[0])
+    else:
+        page=0
+    items_per_page = 0
     if form.accepts(request.vars, session):
-        response.flash = 'form accepted'
-    elif form.errors:
-        response.flash = 'form has errors'
-    return dict(form=form)
+        session.prod_mae = form.vars.producto
+        items_per_page=20
+        limitby=(page*items_per_page,(page+1)*items_per_page+1)
+        rows=db(db.maestro.alias.contains(producto)).select(db.maestro.ALL,limitby=limitby)
+    return dict(form=form,rows=rows,page=page,items_per_page=items_per_page)
 
 
 @auth.requires(restricciones)
-def productos():
+def filtrar_productos():
     """
     Muestra las configuraciones de los productos
     """
-    grid = webgrid.WebGrid(crud)
-    grid.datasource = db(db.maestro).select()
-    grid.pagesize = 20
+    redirect(URL('data/search/maestro/'))
+    #form = crud.search(db.maestro)
+    #grid = webgrid.WebGrid(crud)
+    #grid.datasource = db(db.maestro)
+    #grid.pagesize = 20
     #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
     #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
-    return dict(grid=grid())
+    return dict()
 
 
 @auth.requires(restricciones)
@@ -117,9 +133,82 @@ def productos_agregar():
     """
     Agregar nuevo registro a 'maestro'
     """
-    form = SQLFORM(db.maestro, submit_button='Aceptar')
+    form = SQLFORM(db.maestro, fields=['codbarras','genero','empaque',
+        'catmod','precio','nombre','descripcion','alias','unidad_medida',
+        'unidad_medida_valor', 'estado'], submit_button='Aceptar')
     if form.accepts(request.vars, session):
-        response.flash = 'Registro ingresado'
+        response.flash = 'Registro Ingresado'
+    return dict(form=form)
+
+
+@auth.requires(restricciones)
+def productos_modificar_almacen():
+    """
+    Agregar nuevo registro a 'maestro'
+    """
+    producto = request.vars.producto
+    form = SQLFORM.factory(
+        Field('producto', 'integer', label='Producto', widget = SQLFORM.widgets.autocomplete(
+     request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+     filterby=db.maestro.genero, filtervalue='1')),
+        )
+    form2 = SQLFORM(db.maestro, producto, fields=['codbarras','genero','empaque',
+            'catmod','precio','nombre','descripcion','alias','unidad_medida',
+            'unidad_medida_valor', 'estado'], submit_button='Modificar')
+    if form.accepts(request.vars, session, formname='form_bas'):
+        session.prod = form.vars.producto
+        #record = db.maestro(session.prod)# or redirect(URL('index'))
+    if form2.accepts(request.vars, session, formname='form_aux'):
+            response.flash = 'Registro Modificado'
+    return dict(form=form, form2=form2)
+
+
+@auth.requires(restricciones)
+def productos_modificar_ventas():
+    """
+    Agregar nuevo registro a 'maestro'
+    """
+    producto = request.vars.producto
+    form = SQLFORM.factory(
+        Field('producto', 'integer', label='Producto', widget = SQLFORM.widgets.autocomplete(
+     request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+     filterby=db.maestro.genero, filtervalue='2')),
+        )
+    form2 = SQLFORM(db.maestro, producto, fields=['codbarras','genero','empaque',
+            'catmod','precio','nombre','descripcion','alias','unidad_medida',
+            'unidad_medida_valor', 'estado'], submit_button='Modificar')
+    if form.accepts(request.vars, session, formname='form_bas'):
+        session.prod = form.vars.producto
+        #record = db.maestro(session.prod)# or redirect(URL('index'))
+    if form2.accepts(request.vars, session, formname='form_aux'):
+            response.flash = 'Registro Modificado'
+    return dict(form=form, form2=form2)
+
+
+@auth.requires(restricciones)
+def creacion_recetas():
+    """
+    Agregar nueva receta
+    """
+    session.prod_vta = request.vars.prod_venta
+    session.prod_alm = request.vars.prod_almacen
+    form = SQLFORM.factory(
+        Field('prod_venta', 'integer', requires=IS_NOT_EMPTY(), default=session.prod_vta,
+            label='Producto Padre', widget = SQLFORM.widgets.autocomplete(
+            request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+            filterby=db.maestro.genero, filtervalue='2')),
+        Field('cantidad', 'double', requires=IS_NOT_EMPTY(), default=''),
+        #Field('prod_almacen', 'integer', requires=IS_NOT_EMPTY(), default=session.prod_alm,
+        #    label='Producto Hijo', widget = SQLFORM.widgets.autocomplete(
+        #    request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+        #    filterby=db.maestro.genero, filtervalue='1'))
+        )
+    if form.accepts(request.vars, session):
+        session.prod_vta = form.vars.prod_venta
+        session.prod_alm = form.vars.prod_almacen
+        session.cantidad = form.vars.cantidad
+        #db.recetas.insert(codbarras_padre=session.prod_vta, codbarras_hijo=session.prod_alm,
+        #    cantidad=session.cantidad)
     return dict(form=form)
 
 
@@ -259,6 +348,9 @@ def documentos_comerciales():
     grid.datasource = db(db.documentos_comerciales).select()
     grid.pagesize = 20
     grid.crud_function = 'data'
+    grid.fields = ['documentos_comerciales.modo', 'documentos_comerciales.documento',
+        'documentos_comerciales.nombre', 'documentos_comerciales.correlativo',
+        'documentos_comerciales.port', 'documentos_comerciales.layout']
     #grid.fields = ['db.empaques.empaque', 'db.empaques.nombre', 'db.empaques.posicion']
     #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
     return dict(grid=grid())
@@ -509,8 +601,14 @@ def generos():
     """
     Muestra las configuraciones para los generos
     """
-    generos = db(db.generos).select()
-    return dict(generos=generos)
+    grid = webgrid.WebGrid(crud)
+    grid.datasource = db(db.generos).select()
+    grid.pagesize = 20
+    #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
+    #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
+    return dict(grid=grid())
+    #generos = db(db.generos).select()
+    #return dict(generos=generos)
 
 
 @auth.requires(restricciones)
@@ -691,3 +789,13 @@ def clientes_preferentes_agregar():
         response.flash = 'Registro ingresado'
     return dict(form=form)
 
+@auth.requires(restricciones)
+def productos_almacen():
+    """
+    Agregar nuevo registro a 'clientes_preferentes'
+    """
+    form = SQLFORM(db.clientes_preferentes, submit_button='Aceptar')
+    if form.accepts(request.vars, session):
+        response.flash = 'Registro ingresado'
+    return dict(form=form)
+    

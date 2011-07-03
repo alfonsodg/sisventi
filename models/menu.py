@@ -79,12 +79,17 @@ configuracion = [
                     ('Promociones', False, URL('configuracion', 'promociones'), []),
                     ('Componentes', False, None,
                     [
-                        ('Recetas', False, URL('configuracion', 'recetas')),
+                        ('Lista de Recetas', False, URL('configuracion', 'recetas')),
+                        ('Creacion de Recetas', False, URL('configuracion', 'creacion_recetas')),
                         #('Dependencias de Productos', False, URL('configuracion', 'dependencias_productos'))
                     ]),
-                    ('Gestión de Productos', False, URL('configuracion', 'productos'),
+                    ('Gestión de Productos', False, None,
                     [
                         #('Productos en POS', False, URL('configuracion', 'productos_pos'))
+                        ('Agregar Productos', False, URL('configuracion', 'productos_agregar')),
+                        ('Modificar Productos Almacen', False, URL('configuracion', 'productos_modificar_almacen')),
+                        ('Modificar Productos Venta', False, URL('configuracion', 'productos_modificar_ventas')),
+                        ('Gestión rápida de Productos', False, URL('configuracion', 'maestro')),
                     ])
                 ]),
                 ('Ventas', False, None,
@@ -114,8 +119,8 @@ por_cobrar = [
                  ]),
                 ('Cuentas', False, URL('cobrar', 'cuentas_cobrar'),
                  [
-                    ('Agregar', False, URL('cobrar', 'cuentas_cobrar_agregar'), []),
-                    ('Reporte', False, URL('cobrar', 'cuentas_cobrar_reporte'), []),
+                    ('Agregar', False, URL('cobrar', 'cuentas_agregar'), []),
+                    ('Reporte', False, URL('cobrar', 'cuentas_reporte'), []),
                  ]),
             ])
         ]
@@ -130,8 +135,8 @@ por_pagar = [
                  ]),
                 ('Cuentas', False, URL('pagar', 'cuentas_pagar'),
                  [
-                    ('Agregar', False, URL('pagar', 'cuentas_pagar_agregar'), []),
-                    ('Reporte', False, URL('pagar', 'cuentas_pagar_reporte'), []),
+                    ('Agregar', False, URL('pagar', 'cuentas_agregar'), []),
+                    ('Reporte', False, URL('pagar', 'cuentas_reporte'), []),
                  ]),
             ])
         ]
@@ -142,10 +147,14 @@ ventas = [
             ('Ventas', False, None,
             [
                 ('Operaciones', False, URL('ventas', 'operaciones')),
+                ('Pedidos', False, URL('ventas', 'pedidos')),
                 ('Delivery', False, URL('ventas', 'delivery')),
                 ('Reportes', False, None,
                 [
                     ('Totales', False, URL('ventas', 'totales')),
+                    ('Productos', False, URL('ventas', 'totales_productos')),
+                    ('Comprobantes', False, URL('ventas', 'totales_comprobantes')),
+#                    ('Totales', False, URL('ventas', 'totales')),
                 ])
             ])
         ]

@@ -2,11 +2,17 @@
 
 <h1>Kardex de Almacen</h1>
 
+
 {{=form}}
 {{total_ingresos = 0}}
 {{total_salidas = 0}}
 {{saldo = 0}}
 {{total_saldo = 0}}
+
+{{for row in rows2:}}
+    <h2>{{=row.maestro.id}} - {{=row.maestro.codbarras}} : {{=row.maestro.nombre}}
+    {{=row.maestro.descripcion}} - {{=row.unidades_medida.codigo}}</h2>
+{{pass}}
 
 <table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
     <tbody>
@@ -18,21 +24,23 @@
         <td style="vertical-align: middle; border: 1px solid #999">Salida</td>
         <td style="vertical-align: middle; border: 1px solid #999">Saldo</td>
         <td style="vertical-align: middle; border: 1px solid #999">Destino</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Referencia</td>
     </tr>
     {{for row in rows:}}
     <tr>
-        {{if row.ingreso is None: row.ingreso = 0}}
-        {{if row.salida is None: row.salida = 0}}
-        {{total_ingresos += row.ingreso}}
-        {{total_salidas += row.salida}}
+        {{if row.almacenes.ingreso is None: row.almacenes.ingreso = 0}}
+        {{if row.almacenes.salida is None: row.almacenes.salida = 0}}
+        {{total_ingresos += row.almacenes.ingreso}}
+        {{total_salidas += row.almacenes.salida}}
         {{saldo = total_ingresos - total_salidas}}
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.fecha_doc}}</td>
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.n_doc_base}}</td>
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.operacion_logistica}}</td>
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.ingreso}}</td>
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.salida}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacenes.fecha_doc}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacenes.n_doc_base}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.operaciones_logisticas.operacion}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacenes.ingreso}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacenes.salida}}</td>
         <td style="vertical-align: top; border: 1px solid #999">{{=saldo}}</td>
-        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacen_destino}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.almacenes_lista.almacen}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.directorio.nombre_corto}}</td>
     </tr>
     {{pass}}
         {{saldo = total_ingresos - total_salidas}}

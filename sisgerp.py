@@ -974,7 +974,7 @@ def ingr_alm(panel,mensaje='Destino',pre_dato=''):
     while 1:
         dato=ingresodato(mensaje,panel,12,pre_dato,0,0)
         if dato=='Anular':
-            return 'Anular'
+            return 'Anular', ''
         tam_dato=len(dato)
         modo = 0
         if tam_dato>0:
@@ -996,6 +996,7 @@ def ingr_alm(panel,mensaje='Destino',pre_dato=''):
                 if cnt > 0:
                     modo = rso[0]
                 return dato, modo
+            return 'Anular', ''
 
 
 def ingr_vals(panel_1,panel_2,panel_3):
@@ -1118,8 +1119,9 @@ def get_correlativo(modo,documento,edit=0,panel=''):
 
 
 def set_correlativo(doc_modo,tipo_doc,dato,modo=1):
-    sql="update documentos_comerciales set correlativo='%s' where id='%s'" % (dato, tipo_doc)
-    if modo==1:
+    sql = """update documentos_comerciales set correlativo='%s'
+        where id='%s'""" % (dato, tipo_doc)
+    if modo == 1:
         exe = query(sql,3)
     else:
         return sql
@@ -1149,34 +1151,14 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
     """
     if fecha!='':
         mes=fecha[5:7]
-    #if ciclo_fecha==0:
-        #cond_ciclo=" and month(fecha_doc)='"+str(mes)+"'"
-    #elif ciclo_fecha==1:
-        #cond_ciclo=""
-    #if modo_fecha==0:
-        #cond_fecha=""+cond_ciclo
-    #elif modo_fecha==1:
-        #cond_fecha=" and fecha_doc='"+str(fecha)+"'"+cond_ciclo
-    #elif modo_fecha==2:
-        #cond_fecha=" and fecha_doc<'"+str(fecha)+"'"+cond_ciclo
-    #elif modo_fecha==3:
-        #cond_fecha=" and fecha_doc<='"+str(fecha)+"'"+cond_ciclo
-    #elif modo_fecha==4:
-        #cond_fecha=" and fecha_doc>'"+str(fecha)+"'"+cond_ciclo
-    #elif modo_fecha==5:
-        #cond_fecha=" and fecha_doc>='"+str(fecha)+"'"+cond_ciclo
+    data={}
     #SALDOS
     sql = """select cast(codbarras as UNSIGNED),sum(if(ingreso is
         NULL,0,ingreso)-if(salida is NULL,0,salida)) saldo from
         almacenes where almacen='%s' and estado='1' and
         month(fecha_doc)='%s' group by codbarras order by
         codbarras""" % (alm_base, mes)
-    #sql = """select codbarras,sum(ingreso-if(salida is NULL,0,salida))
-        #saldo from almacenes where almacen='%s' and estado='1' %s
-        #group by codbarras order by
-        #codbarras""" % (alm_base, cond_fecha)
     cuenta, resultado = query(sql,1)
-    data={}
     if cuenta > 0:
         for linea in resultado:
             codex = int(linea[0])
