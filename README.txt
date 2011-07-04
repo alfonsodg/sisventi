@@ -20,7 +20,7 @@ Author
 Slogan
 ======
 
-"Any dump can use it"
+"Anyone can use it"
 
 
 Requirements
