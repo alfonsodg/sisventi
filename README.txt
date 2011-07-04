@@ -52,12 +52,14 @@ Install
 =======
 
 - Install web2py http://www.web2py.com/examples/default/download
+- Inside the applications directory clone the project branch
     ALERT: replace the sqlhtml.py included in the gluon directory for
            the provided in the branch (gluon/sqlhtml.py)
-- Inside the applications directory clone the project branch
+- Create the database
 - Before create the tables, modify de file under models/db.py and
-    change the mysql user and password according to your needs
-- Start the project inside web2py, wait....
+    change the mysql user, password and database according to your
+    needs
+- Start the project inside web2py, wait.... (table creation)
 - Now, input demo data which contains basic configurations from
     databases/sisventi.sql
 - Use the demo user and password : root/root
@@ -67,7 +69,7 @@ Install
     * pysis.py - POS Sales
     * sisgerp.py - Warehouse Management
     * admin.py - POS Administration and Reports
-    
+    Adjust the data.cfg and dist.cfg according to your needs
     Just run in the terminal
 
 
@@ -183,6 +185,9 @@ according to the brackets):
 [*Z9*] = norden
 [*KI*] = Costumer Internal ID
 
+Sample files:
+default.txt
+factura.txt
 
 
 License
