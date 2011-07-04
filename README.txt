@@ -1,24 +1,86 @@
 SISVENTI
 --------
 
-Point of Sales System with a lot of features for any usage.  Includes 
-warehouse management, payable accounts and receivable accounts.
+
+Point of Sales System with a lot of features for any usage and business
+needs.  Includes warehouse management, payable accounts and receivable
+accounts.  All easy and fast whitout hard configurations or problems.
 
 Offers a curses based sales interface and a web based administration /
-operation interface.
+operation interface for fast input.
+
+
+Author
+======
+
+    Alfonso de la Guarda Reyes <alfonsodg@gmail.com>
+    Lima, November 2001
+
+
+Slogan
+======
+
+"Any dump can use it"
 
 
 Requirements
 ============
 
     - Unix/Linux with kernel 2.4 or above
+    - Hardware good for run Linux
 
 
 Dependencies
 ============
 
     - Python 2.5 - 2.7
+    - MySQL 5.0 or above
     - pymysql/MySQLdb modules
+
+
+Features
+========
+
+    - Item Sales
+    - Warehouse
+    - Receipes (Product composition)
+    - Payable Accounts
+    - Receivable Accounts
+
+
+Install
+=======
+
+- Install web2py http://www.web2py.com/examples/default/download
+    ALERT: replace the sqlhtml.py included in the gluon directory for
+           the provided in the branch (gluon/sqlhtml.py)
+- Inside the applications directory clone the project branch
+- Before create the tables, modify de file under models/db.py and
+    change the mysql user and password according to your needs
+- Start the project inside web2py, wait....
+- Now, input demo data which contains basic configurations from
+    databases/sisventi.sql
+- Use the demo user and password : root/root
+- The web interface offers admin features:
+    http://URLWEB2PY:PORT/sisventi
+- The curses interfaces are 3:
+    * pysis.py - POS Sales
+    * sisgerp.py - Warehouse Management
+    * admin.py - POS Administration and Reports
+    
+    Just run in the terminal
+
+
+Demo
+====
+
+    - Visual web-based admin / reporting:
+        http://ictec.biz:8000/sisventi
+
+    - Curses based operation modules:
+        * POS ssh sales@ictec.biz  passwd: y2iCaj.
+        * Warehouse ssh warehouse@ictec.biz passwd: y2iWar.
+
 
 
 POS Conf
@@ -29,7 +91,8 @@ modo_decimal = 0:INT / 1:FLOAT
 modo_almacen = Warehouse transactions
 genero_producto = Master Warehouse Genere
 almacen_key = Depreceated
-almacen = Warehouse ID (if you need multiple warehouse just apply a colon , The first warehouse will be discounted)
+almacen = Warehouse ID (if you need multiple warehouse just apply a
+    colon , The first warehouse will be discounted)
 moneda_aux = Auxiliar Money
 costumer_manage = Costumer management in each operation
 stock_alerta = Revisa saldo en almacen
@@ -63,17 +126,6 @@ Invoice Formatting
 You need to create the invoice as a text file, using the following
 variables to access the internal values (field size adjustable
 according to the brackets):
-re.findall("\[\*.*?\*\]&*", value)
-re.search("\[\*.*?\*\]&*", value).group()
-re.compile("definicion").sub("mal", value)
-value = layout
-parte = tags
-neotags = dict([(elem,re.search("\[\*%s?\*\]&*" % elem, value).group())
-    for elem in parte if re.search("\[\*%s?\*\]&*" % elem, value)])
-
-rawstr=r":<S>:(?P<contents>.*):<E>:"
-match_obj = re.search(rawstr, value,  re.IGNORECASE| re.DOTALL)
-
 
 
 [*ST*] = Store
@@ -120,16 +172,16 @@ match_obj = re.search(rawstr, value,  re.IGNORECASE| re.DOTALL)
 [*VT*] = Date Sales
 [*PD*] = Payment Details
 [*CC*] = Comercial Condition
-*Z1* = doccli
-*Z2* = nomcli
-*Z3* = dircli
-*Z4* = refcli
-*Z5* = telcli
-*Z6* = texto1
-*Z7* = texto2
-*Z8* = texto3
-*Z9* = norden
-*KI* = Costumer Internal ID
+[*Z1*] = doccli
+[*Z2*] = nomcli
+[*Z3*] = dircli
+[*Z4*] = refcli
+[*Z5*] = telcli
+[*Z6*] = texto1
+[*Z7*] = texto2
+[*Z8*] = texto3
+[*Z9*] = norden
+[*KI*] = Costumer Internal ID
 
 
 
@@ -137,3 +189,5 @@ License
 =======
 
 Under GPL / v2
+Propietary on demand when OSI / FSF licenses are not compatible with
+    your desires

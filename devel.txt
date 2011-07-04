@@ -1,0 +1,10 @@
+re.findall("\[\*.*?\*\]&*", value)
+re.search("\[\*.*?\*\]&*", value).group()
+re.compile("definicion").sub("mal", value)
+value = layout
+parte = tags
+neotags = dict([(elem,re.search("\[\*%s?\*\]&*" % elem, value).group())
+    for elem in parte if re.search("\[\*%s?\*\]&*" % elem, value)])
+
+rawstr=r":<S>:(?P<contents>.*):<E>:"
+match_obj = re.search(rawstr, value,  re.IGNORECASE| re.DOTALL)
