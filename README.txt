@@ -4,7 +4,7 @@ SISVENTI
 
 Point of Sales System with a lot of features for any usage and business
 needs.  Includes warehouse management, payable accounts and receivable
-accounts.  All easy and fast whitout hard configurations or problems.
+accounts.  All easy and fast without hard configurations or problems.
 
 Offers a curses based sales interface and a web based administration /
 operation interface for fast input.
