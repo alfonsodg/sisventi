@@ -84,6 +84,15 @@ Demo
         * Warehouse ssh warehouse@ictec.biz passwd: y2iWar.
 
 
+Operation
+=========
+
+    - Web interface is easy, just browse
+    - Curses interface is easy too... for a product selection in the
+      POS just press "space bar" and search any product (sample data
+      in spanish).  For warehouse just try with the (i) or (3) options
+      pressing [ENTER] most of the cases.
+
 
 POS Conf
 ========
