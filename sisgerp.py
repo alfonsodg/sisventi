@@ -2433,7 +2433,7 @@ while 1:
                     opcion3=menu('i. Ingreso de Guias|1. Ingreso de Producto|2. Anulacion de Producto|3. Operaciones Internas|4. Anulacion Guias Internas|5. Operaciones Externas|6. Anulacion Guias Externas|m. Mermas de Tienda|c. Consumo Interno|r. Reimpresiones|9. Regresar',head)
                     ## data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,fech_hea='t',turno_ing=1,masa_ing=1,impresion=1,oper_log='IPT',alm_rel='0101',alm_base='0100',oper_log_pref='1',add_data='',prod_filt='genero="0002"'):
                     if opcion3==1:#Ingreso de Producto
-                        data_proc(1,doc_modo,doc_tipo_int,3,1,'t',1,1,1,'IPT',alm_relev,alm_base,oper_log_pref,'')
+                        data_proc(1,doc_modo,doc_tipo_int,3,1,'t',1,1,1,'',alm_relev,alm_base,oper_log_pref,'')
                     elif opcion3==2:
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,1,'SAP',alm_base,alm_base,oper_log_pref,'')
                     elif opcion3==3:
