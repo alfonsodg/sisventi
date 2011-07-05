@@ -49,8 +49,8 @@ except IOError:
     print 'Error al abrir el archivo de configuracion!!!!'
     sys.exit(0)
 #####
-posn=1
-cajn=1
+posn = 1
+cajn = 1
 
 #####
 #Initialize Variables and Functions
@@ -97,7 +97,7 @@ def mkpanel(color, rows, cols, tly, tlx):
     win = curses.newwin(rows, cols, tly, tlx)
     pan = panel.new_panel(win)
     if curses.has_colors():
-        if color == curses.COLOR_BLUE:
+        if color  ==  curses.COLOR_BLUE:
             fg = curses.COLOR_WHITE
         else:
             fg = curses.COLOR_BLACK
@@ -169,7 +169,7 @@ def centrar(x,fra):
 
 ##Do the Query, sending 1 or Multiple results
 def query(sql,ndat=1):
-    if ndat==5:
+    if ndat == 5:
         try:
             curs.execute("START TRANSACTION")
             for query in sql:
@@ -187,7 +187,7 @@ def query(sql,ndat=1):
         try:
             cmd=curs.execute(sql)
             cnt=curs.rowcount
-            if ndat==0:
+            if ndat == 0:
                 rso=curs.fetchone()
             else:
                 rso=curs.fetchall()
@@ -201,7 +201,7 @@ def query(sql,ndat=1):
 ##Builds the Main Menu
 def menu(menudata,head=''):
     pan=mkpanel(curses.COLOR_YELLOW,maxy,maxx,0,0)
-    datatemp=string.split(menudata,'|')
+    datatemp=menudata.split('|')
     opciones={}
     win=definir(pan)
     texto='MENU '+str(head)
@@ -212,9 +212,9 @@ def menu(menudata,head=''):
     win.addstr(3,posx,texto)
     cnt=6
     for linea in datatemp:
-        dato=string.split(linea,'.')[0]
+        dato=linea.split('.')[0]
         dato_tmp,tipo=expresion(dato)
-        if tipo=='entero':
+        if tipo == 'entero':
             elemento=int(dato)
         else:
             elemento=str(dato)
@@ -252,7 +252,7 @@ def obch(pan,pcy=0,pcx=0,estado='n',tipo=0):
     curses.curs_set(0)
     updat()
     while 1:
-        if estado=='v':
+        if estado == 'v':
             curses.echo()
             curses.curs_set(1)
             updat()
@@ -260,18 +260,18 @@ def obch(pan,pcy=0,pcx=0,estado='n',tipo=0):
         curses.noecho()
         curses.curs_set(0)
         updat()
-        if c==curses.KEY_UP and tipo==0:return 'arriba'
-        if c==curses.KEY_DOWN and tipo==0:return 'abajo'
-        if c==curses.KEY_LEFT  and tipo==0:return 'izquierda'
-        if c==curses.KEY_RIGHT  and tipo==0:return 'derecha'
-        if c==curses.KEY_BACKSPACE or c==127:return 'backspace'
-        if c==10:return 'enter'
-        if c==curses.KEY_IC  and tipo==0:return 'insert'
-        if c==curses.KEY_DC  and tipo==0:return 'borrar'
-        if c==curses.KEY_NPAGE  and tipo==0:return 'spag'
-        if c==curses.KEY_PPAGE  and tipo==0:return 'ppag'
-        if c==27:return 'escape'
-        if (c>47 and c<58) or (c>64 and c<91) or (c>96 and c<123) or c==32 or c==46 or c==45:return chr(c) # retorna numero o letra en mayusculas o minusculas
+        if c == curses.KEY_UP and tipo == 0:return 'arriba'
+        if c == curses.KEY_DOWN and tipo == 0:return 'abajo'
+        if c == curses.KEY_LEFT  and tipo == 0:return 'izquierda'
+        if c == curses.KEY_RIGHT  and tipo == 0:return 'derecha'
+        if c == curses.KEY_BACKSPACE or c == 127:return 'backspace'
+        if c == 10:return 'enter'
+        if c == curses.KEY_IC  and tipo == 0:return 'insert'
+        if c == curses.KEY_DC  and tipo == 0:return 'borrar'
+        if c == curses.KEY_NPAGE  and tipo == 0:return 'spag'
+        if c == curses.KEY_PPAGE  and tipo == 0:return 'ppag'
+        if c == 27:return 'escape'
+        if (c>47 and c<58) or (c>64 and c<91) or (c>96 and c<123) or c == 32 or c == 46 or c == 45:return chr(c) # retorna numero o letra en mayusculas o minusculas
 
 
 ##Cleans Any Window
@@ -312,7 +312,7 @@ def cardec(dato,precision=2):
 def tipos_cambio(fecha):
     sql="select valor from tipos_cambio where fecha='"+str(fecha)+"' or fecha='0000-00-00' order by fecha desc limit 1"
     cuenta,resultado=query(sql,0)
-    if cuenta==0:
+    if cuenta == 0:
         data=1
     else:
         data=resultado[0]
@@ -331,10 +331,10 @@ def seleccion(cadena,cuenta,campos,rotulo,identif,posy,posx):
             temprom+=len(str(cadena[w][z]))
             datay.append(str(cadena[w][z]))
         posdata[w]=datay
-    if posy==-1:
+    if posy == -1:
         tny=cuenta+2
         posy=(maxy-tny)/2
-    if posx==-1:
+    if posx == -1:
         tnx=(temprom/campos)+2
         posx=(maxx-tnx)/2
     tamy=cuenta+2
@@ -346,24 +346,24 @@ def seleccion(cadena,cuenta,campos,rotulo,identif,posy,posx):
     orden.sort()
     while 1:
         for w in orden:
-            if w==posicion:
+            if w == posicion:
                 win.addstr(1+w,1,posdata[w][rotulo],curses.A_REVERSE)
             else:
                 win.addstr(1+w,1,posdata[w][rotulo])
         opcn=obtc(pan)
-        if opcn=='arriba':
-            if posicion==0:
+        if opcn == 'arriba':
+            if posicion == 0:
                 posicion=0
             else:
                 posicion=posicion-1
-        if opcn=='abajo':
-            if posicion==(cuenta-1):
+        if opcn == 'abajo':
+            if posicion == (cuenta-1):
                 posicion=(cuenta-1)
             else:
                 posicion=posicion+1
-        if opcn=='enter':
+        if opcn == 'enter':
             return posdata[posicion][rotulo],posdata[posicion][identif]
-        if opcn=='escape':
+        if opcn == 'escape':
             return 'Anular','Anular'
 
 
@@ -409,7 +409,7 @@ def ladocl(data,titulo='',key_val=0,dsc_val=1):
             py+=1
             condicion=curses.A_NORMAL
             win.addstr(py,1,' '*(sizex-2),condicion)
-            if py==sely:
+            if py == sely:
                 condicion=curses.A_REVERSE
                 valor1=lineas[cnt][0]
                 valor2=lineas[cnt][1]
@@ -417,7 +417,7 @@ def ladocl(data,titulo='',key_val=0,dsc_val=1):
             updat()
 #       opcion=obtc(panel,{ord('n'):'n'})
         opcion=obch(panel)
-        if opcion=='arriba':
+        if opcion == 'arriba':
             if sely>1:
                 sely-=1
             else:
@@ -425,7 +425,7 @@ def ladocl(data,titulo='',key_val=0,dsc_val=1):
                     sely=1
                     inic_y-=1
                     term_y-=1
-        elif opcion=='abajo':
+        elif opcion == 'abajo':
             if sely<sizey-2:
                 sely+=1
             else:
@@ -433,16 +433,16 @@ def ladocl(data,titulo='',key_val=0,dsc_val=1):
                     sely=sizey-1
                     inic_y+=1
                     term_y+=1
-        elif opcion=='escape':
+        elif opcion == 'escape':
             valor1,valor2='Anular','Anular'
             break
-        elif opcion=='enter':
+        elif opcion == 'enter':
             break
-        elif opcion=='insert':
+        elif opcion == 'insert':
             valor_tmp=valor1
             valor1,valor2='insertar',valor_tmp
             break
-        elif opcion=='n':
+        elif opcion == 'n':
             valor_tmp=valor1
             valor1,valor2='agregar',valor_tmp
             break
@@ -452,7 +452,7 @@ def ladocl(data,titulo='',key_val=0,dsc_val=1):
 ##Prints Strings in Window
 def strimpr(texto,py,tx,ubicacion='c'):
     texto=str(texto)
-    if ubicacion=='c' or ubicacion=='centrar' or ubicacion=='centro':
+    if ubicacion == 'c' or ubicacion == 'centrar' or ubicacion == 'centro':
         px=centrar(tx,texto)
     else:
         px=derecha(tx,texto)
@@ -464,9 +464,9 @@ def strimpr(texto,py,tx,ubicacion='c'):
 def segur(msg,posy=-1,posx=-1):
     cuenta=len(msg)+3
     tny=3
-    if posy==-1:
+    if posy == -1:
         posy=(maxy-tny)/2
-    if posx==-1:
+    if posx == -1:
         tnx=cuenta
         posx=(maxx-tnx)/2
     pan=mkpanel(curses.COLOR_WHITE,tny,cuenta,posy,posx)
@@ -481,110 +481,24 @@ def segur(msg,posy=-1,posx=-1):
         curses.noecho()
         curses.curs_set(0)
         updat()
-        if resp==ord('s'):
+        if resp == ord('s'):
             return 'si'
-        elif resp==ord('n'):
+        elif resp == ord('n'):
             return 'no'
-        elif resp==ord('m'):
+        elif resp == ord('m'):
             return 'manana'
-        elif resp==ord('t'):
+        elif resp == ord('t'):
             return 'tarde'
-        elif resp==ord('i'):
+        elif resp == ord('i'):
             return 'interno'
-        elif resp==ord('o'):
+        elif resp == ord('o'):
             return 'otros'
-        elif resp==ord('g'):
+        elif resp == ord('g'):
             return 'grabar'
-        elif resp==27:
+        elif resp == 27:
             return 'Anular'
         else:
             return 'exit'
-
-
-##WareHouse Report
-def almacen(apertura,cierre='4',modo=0):
-    lineas=[]
-    relalm={}
-    if modo==5:
-        condtiempo=apertura
-        parte=float(cierre)
-    else:
-        condtiempo="a.tiempo>='"+apertura+"' and a.tiempo<='"+cierre+"'"
-    sql="select a.codigo,a.precio,sum(a.cantidad),concat(b.nombre,'/',b.descripcion),c.codigo,concat(d.nombre,'/',d.descripcion),c.cantidad,sum(a.cantidad)*c.cantidad from docventa as a,variable as b,listas as c,variable as d where a.codigo=b.codbarras and a.codigo=c.codbarras and c.codigo=d.codbarras and a.estado='B' and "+condtiempo+" and a.pv='"+str(posn)+"' and a.caja='"+str(cajn)+"' and c.nivel=0 group by a.codigo,c.codigo order by a.codigo,c.codigo"
-    cuenta,resultado=query(sql)
-    for x in range(0,cuenta):
-        codigobase=resultado[x][4]
-        acumulado=resultado[x][7]
-        if relalm.has_key(codigobase):
-            provisional=relalm[codigobase]
-            del relalm[codigobase]
-            relalm[codigobase]=provisional+acumulado
-        else:
-            relalm[codigobase]=acumulado
-    orden=relalm.keys()
-    orden.sort()
-    for codigob in orden:
-        n=0
-        for x in range(0,cuenta):
-            codigoventas=resultado[x][0]
-            precioventa=resultado[x][1]
-            cantidadven=resultado[x][2]
-            nombreprven=resultado[x][3]
-            codigobase=resultado[x][4]
-            nombrebase=resultado[x][5][:15]
-            cantidbase=resultado[x][6]
-            if codigobase==codigob:
-                if n==0:
-                    if modo==1:
-                        prov=agregar_valores([],0,codigob,nombrebase,relalm[codigob])
-                        lineas.append(prov)
-                        prov=[]
-                        prov.append('================================================================')
-                        lineas.append(prov)
-                        n=1
-                    elif modo==0:
-                        prov=agregar_valores([],0,codigob,relalm[codigob],nombrebase)
-                        lineas.append(prov)
-                        n=1
-                    elif modo==2:
-                        if prodkey.count(codigob)>0:
-                            prov=agregar_valores([],0,codigob,relalm[codigob],nombrebase)
-                            lineas.append(prov)
-                            n=1
-                    elif modo==3:
-                        if prodkey.count(codigob)>0:
-                            prov=agregar_valores([],0,codigob,nombrebase,relalm[codigob])
-                            lineas.append(prov)
-                            prov=[]
-                            prov.append('================================================================')
-                            lineas.append(prov)
-                            n=1
-                    elif modo==5:
-                        if prodkey.count(codigob)>0:
-                            cantid=float(relalm[codigob])
-                            prov=agregar_valores([],0,codigob,cantid,round(cantid/parte),nombrebase)
-                            lineas.append(prov)
-                            n=1
-                if modo==1:
-                    prov=agregar_valores([],0,codigoventas,nombreprven,'',cantidadven)
-                    lineas.append(prov)
-                elif modo==3:
-                    if prodkey.count(codigob)>0:
-                        prov=agregar_valores([],0,codigoventas,nombreprven,'',cantidadven)
-                        lineas.append(prov)
-            if x==(cuenta-1):
-                if modo==1:
-                    for paso in range(0,3):
-                        prov=[]
-                        prov.append('>---<')
-                        lineas.append(prov)
-                elif modo==3:
-                    if prodkey.count(codigob)>0:
-                        for paso in range(0,3):
-                            prov=[]
-                            prov.append('>---<')
-                            lineas.append(prov)
-    return lineas
 
 
 ##Prints line into file (text)
@@ -624,11 +538,11 @@ def ec():
 
 def definewin(pan,optam=1,opbox=1):
     win=pan.window()
-    if opbox == 1:
+    if opbox  ==  1:
         win.erase()
         win.box()
     updat()
-    if optam==1:
+    if optam == 1:
         tamy,tamx=win.getmaxyx()
         return win,tamy,tamx
     else:
@@ -652,35 +566,35 @@ def ingresodato(msg,pan,tamx=20,texto='',tipo=0,clr=0):
         if ubicx>=tmx:
             ubicx=len(msg)+3
         updat()
-        if txtp==1:
+        if txtp == 1:
             win.addstr(1,ubicx,codobt)
             ubicx=ubicx+len(codobt)
             txtp=0
         caracter=obch(pan,1,ubicx,'v',tipo)
-        if caracter=='enter':
-            if clr==1:
+        if caracter == 'enter':
+            if clr == 1:
                 win.erase()
             return codobt
-        elif caracter=='escape':
+        elif caracter == 'escape':
             return 'Anular'
-        elif caracter=='arriba' and tipo==0:
+        elif caracter == 'arriba' and tipo == 0:
             return 'arriba'
-        elif caracter=='abajo' and tipo==0:
+        elif caracter == 'abajo' and tipo == 0:
             return 'abajo'
-        elif caracter=='insert' and tipo==0:
+        elif caracter == 'insert' and tipo == 0:
             return 'insert'
-        elif caracter=='spag' and tipo==0:
+        elif caracter == 'spag' and tipo == 0:
             return 'spag'
-        elif caracter=='ppag' and tipo==0:
+        elif caracter == 'ppag' and tipo == 0:
             return 'ppag'
-        if caracter=='backspace':
+        if caracter == 'backspace':
             ubicx-=1
             if ubicx<=len(msg)+3:
                 ubicx=len(msg)+3
             codobt=codobt[:-1]
             win.addstr(1,ubicx,'   ')
             caracter=''
-        if (caracter>='0' and caracter<='9') or (caracter>='a' and caracter<='z') or (caracter>='A' and caracter<='Z') or (caracter=='-') or (caracter=='.'):
+        if (caracter>='0' and caracter<='9') or (caracter>='a' and caracter<='z') or (caracter>='A' and caracter<='Z') or (caracter == '-') or (caracter == '.'):
             ubicx+=1
             codobt+=str(caracter)
             if ubicx >=(tmax):
@@ -716,7 +630,7 @@ def viewtext(texto,pan,psey=0,modo='t'):
         px=0
         if len(temporal)>0:
             for b in range(0,len(temporal)):
-                if modo=='t':
+                if modo == 't':
                     px=ubx+(b*(maxx/len(temporal)))
                 else:
                     if b>=1:
@@ -731,15 +645,15 @@ def viewtext(texto,pan,psey=0,modo='t'):
 def sqlsend(texto,campos,tipo=0):
     sq=''
     p1=''
-    partes=string.split(campos,',')
+    partes=campos.split(',')
     for b in range(0,len(partes)):
-        if tipo==0:
+        if tipo == 0:
             sq+=(str(partes[b])+"='"+str(texto[b])+"',")
         else:
             p1+=("'"+str(texto[b])+"',")
     sq=sq[:-1]
     p1=p1[:-1]
-    if tipo==0:
+    if tipo == 0:
         cadena=sq
     else:
         cadena="("+campos+") values ("+p1+")"
@@ -759,29 +673,29 @@ def win_def(txt_fld=2,maxy=24,maxx=80):
     panel_top=mkpanel(curses.COLOR_WHITE,3,maxx,0,0)
     panel_text_1=mkpanel(curses.COLOR_WHITE,3,20,3,0)
     mid_sizey=6
-    if txt_fld==2.5:
+    if txt_fld == 2.5:
         panel_text_2=mkpanel(curses.COLOR_WHITE,3,40,3,20)
-    else:# txt_fld==2:
+    else:# txt_fld == 2:
         panel_text_2=mkpanel(curses.COLOR_WHITE,3,20,3,20)
     if txt_fld>=3:
         panel_text_3=mkpanel(curses.COLOR_WHITE,3,20,3,40)
         panel_text_4=mkpanel(curses.COLOR_WHITE,3,20,3,60)
-    if txt_fld==8:
+    if txt_fld == 8:
         panel_text_5=mkpanel(curses.COLOR_WHITE,3,20,6,0)
         panel_text_6=mkpanel(curses.COLOR_WHITE,3,20,6,20)
         panel_text_7=mkpanel(curses.COLOR_WHITE,3,20,6,40)
         panel_text_8=mkpanel(curses.COLOR_WHITE,3,20,6,60)
         mid_sizey=9
     panel_mid=mkpanel(curses.COLOR_WHITE,maxy-mid_sizey,maxx,mid_sizey,0)
-    if txt_fld==1:
+    if txt_fld == 1:
         return panel_top,panel_text_1,panel_mid
-    elif txt_fld==2 or txt_fld==2.5:
+    elif txt_fld == 2 or txt_fld == 2.5:
         return panel_top,panel_text_1,panel_text_2,panel_mid
-    elif txt_fld==3:
+    elif txt_fld == 3:
         return panel_top,panel_text_1,panel_text_2,panel_text_3,panel_mid
-    elif txt_fld==4:
+    elif txt_fld == 4:
         return panel_top,panel_text_1,panel_text_2,panel_text_3,panel_text_4,panel_mid
-    elif txt_fld==8:
+    elif txt_fld == 8:
         return panel_top,panel_text_1,panel_text_2,panel_text_3,panel_text_4,panel_text_5,panel_text_6,panel_text_7,panel_text_8,panel_mid
 
 
@@ -821,67 +735,67 @@ def fecha_ing(modo=1,tipo_msj='n'):
     mensaje='Fecha (AAMMDD)'
     ventana=''
     for cnt in range(1,modo+1):
-        if cnt==1:
-            if modo==1:
+        if cnt == 1:
+            if modo == 1:
                 tam_x=25
             else:
                 tam_x=20
             panel_1=mkpanel(curses.COLOR_WHITE,3,tam_x,0,0)
             ventana=panel_1
-            if tipo_msj=='n':
+            if tipo_msj == 'n':
                 mensaje='Fecha Ini'
-            elif tipo_msj=='b':
+            elif tipo_msj == 'b':
                 mensaje='Fecha Vta'
-        elif cnt==2:
+        elif cnt == 2:
             panel_2=mkpanel(curses.COLOR_WHITE,3,20,0,20)
             ventana=panel_2
-            if tipo_msj=='n':
+            if tipo_msj == 'n':
                 mensaje='Fecha Fin'
-            elif tipo_msj=='b':
+            elif tipo_msj == 'b':
                 mensaje='Fecha Dep'
-        elif cnt==3:
+        elif cnt == 3:
             panel_3=mkpanel(curses.COLOR_WHITE,3,20,0,40)
             ventana=panel_3
-        elif cnt==4:
+        elif cnt == 4:
             panel_4=mkpanel(curses.COLOR_WHITE,3,20,0,60)
             ventana=panel_4
         while 1:
             date_stat=0
-            if tipo_msj=='i':
+            if tipo_msj == 'i':
                 mensaje=mensaje+str(cnt)
             fech_ing=ingresodato(mensaje,ventana,15,'',0,0)
-            if fech_ing=='Anular':
-                if cnt==1:
+            if fech_ing == 'Anular':
+                if cnt == 1:
                     return 'Anular'
                 else:
                     return 'Anular','Anular'
-            elif fech_ing=='':
+            elif fech_ing == '':
                 fech_ing=time.strftime("%Y-%m-%d")
                 date_stat=1
             valor,tipod=expresion(fech_ing)
-            if len(fech_ing)==6 and tipod=='entero':
+            if len(fech_ing) == 6 and tipod == 'entero':
                 dia=int(fech_ing[4:6])
                 fech_ing='20'+fech_ing[0:2]+'-'+fech_ing[2:4]+'-'+fech_ing[4:6]
                 dia_cmp=calendar.monthrange(int(fech_ing[0:2]),int(fech_ing[2:4]))
                 dia_valid=(int(dia_cmp[1]+1))
                 if dia<=dia_valid:
                     date_stat=1
-            if date_stat==1 and fecha_base.count(fech_ing)==0:
+            if date_stat == 1 and fecha_base.count(fech_ing) == 0:
                 fecha_base.append(fech_ing)
                 break
-    if modo==1:
+    if modo == 1:
         return fecha_base[0]
     else:
         return fecha_base
 
 
 def datesp(titulo,panel,carac,condicion,dato='',tipo=0,clr=0):
-    cond=string.split(condicion,',')
+    cond = condicion.split(',')
     while 1:
         provis=ingresodato(titulo,panel,carac,dato,tipo,clr)
-        if provis=='':
+        if provis == '':
             cantp=len(cond)
-            if cond[cantp-1]=='vacio':
+            if cond[cantp-1] == 'vacio':
                 cantidad=0
                 return cantidad
         tipoc=''
@@ -889,7 +803,7 @@ def datesp(titulo,panel,carac,condicion,dato='',tipo=0,clr=0):
         if len(temp)>0:
             tipoc=temp[1]
             for a in range(0,len(cond)):
-                if tipoc==cond[a]:
+                if tipoc == cond[a]:
                     cantidad=provis
                     return cantidad
 
@@ -904,12 +818,12 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
         mae where mae.id='%s' %s"""
     if len(sql_cond) > 0:
         sql_cond = "and %s" % sql_cond
-    cond1=string.split(valid_keys,',')
-    cond2=string.split(valid_data_types,',')
+    cond1=valid_keys.split(',')
+    cond2=valid_data_types.split(',')
     while 1:
         ingdat = ingresodato(titulo, panel, num_char, '', 0, 0)
         for opc in cond1:
-            if ingdat == opc:
+            if ingdat  ==  opc:
                 return ingdat,0
         sql = sql_layout % (ingdat, sql_cond)
         cuenta,resultado=query(sql,0)
@@ -923,7 +837,7 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
         if len(temp)>0:
             tipoc=temp[1]
             for opc in cond2:
-                if tipoc == opc:
+                if tipoc  ==  opc:
                     sql = """select id,if(length(alias)>0,
                         concat(alias,' -> ',round(precio,2)),
                         concat(nombre,' ',descripcion,' -> ',
@@ -945,13 +859,13 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
 
 
 def guias(guia):
-    guia_temp=string.split(guia,'-')
+    guia_temp=guia.split('-')
     guia_partes=len(guia_temp)
     guia_prefijo=''
     guia_sufijo=''
-    if guia_partes==1:
+    if guia_partes == 1:
         guia=guia_temp[0]
-    elif guia_partes==2:
+    elif guia_partes == 2:
         guia_prefijo=guia_temp[0]
         guia=guia_temp[1]
     else:
@@ -973,7 +887,7 @@ def sintesis(condicion='',partes='4'):
 def ingr_alm(panel,mensaje='Destino',pre_dato=''):
     while 1:
         dato=ingresodato(mensaje,panel,12,pre_dato,0,0)
-        if dato=='Anular':
+        if dato == 'Anular':
             return 'Anular', ''
         tam_dato=len(dato)
         modo = 0
@@ -1010,7 +924,7 @@ def ingr_vals(panel_1,panel_2,panel_3):
     if cuenta2>0:
         neto=float(resultado2[0])
         tara=float(resultado2[1])
-        if neto==0:
+        if neto == 0:
             neto=1
         if peso>0:
             tempcant=(peso-tara)/neto
@@ -1045,7 +959,7 @@ def sql_seleccion(sql,texto=''):
     cuenta,resultado=query(sql,1)
     if cuenta>0:
         dato,dscp=ladocl(resultado,texto)
-        if dato=='Anular':
+        if dato == 'Anular':
             return 'Anular','Anular'
         else:
             return dato,dscp
@@ -1057,7 +971,7 @@ def modo_ingr(lineas):
     motip='1'
     for z in range(0,len(lineas)):
         try:
-            if lineas[z][0]==ingdat:
+            if lineas[z][0] == ingdat:
                 motip='0'
         except:
             pass
@@ -1091,24 +1005,24 @@ def get_correlativo(modo,documento,edit=0,panel=''):
             sufijo = resultado[2]
             port = resultado[3]
             layout = resultado[4]
-    if edit==1 or edit==2:
+    if edit == 1 or edit == 2:
         if len(str(sufijo))>0:
             sufijo='-'+str(sufijo)
         dato=str(prefijo)+'-'+str(correlativo)+str(sufijo)
         while 1:
             ingdat=ingresodato('Guia',panel,30,dato,0,0)
-            if ingdat=='Anular':
+            if ingdat == 'Anular':
                 return 'Anular','Anular','Anular'
             else:
-                partes=string.split(ingdat,'-')
+                partes=ingdat.split('-')
                 elem=len(partes)
                 try:
-                    if elem==1:
+                    if elem == 1:
                         correlativo=int(partes[0])
-                    elif elem==2:
+                    elif elem == 2:
                         prefijo=partes[0]
                         correlativo=int(partes[1])
-                    elif elem==3:
+                    elif elem == 3:
                         prefijo=partes[0]
                         correlativo=int(partes[1])
                         sufijo=partes[2]
@@ -1121,7 +1035,7 @@ def get_correlativo(modo,documento,edit=0,panel=''):
 def set_correlativo(doc_modo,tipo_doc,dato,modo=1):
     sql = """update documentos_comerciales set correlativo='%s'
         where id='%s'""" % (dato, tipo_doc)
-    if modo == 1:
+    if modo  ==  1:
         exe = query(sql,3)
     else:
         return sql
@@ -1164,8 +1078,8 @@ def cons_almacen(fecha='', producto='', modo_fecha=0, ciclo_fecha=0,
             codex = int(linea[0])
             saldx = linea[1]
             data[codex] = saldx
-    if modo_operacion==0:
-        if producto=='':
+    if modo_operacion == 0:
+        if producto == '':
             return data
         else:
             producto = int(producto)
@@ -1214,7 +1128,7 @@ def kardex(doc_modo,fecha,producto,modo_operacion=0):
 
 def dict_list(cadena,modo=0):
     linea=[]
-    if modo==0:
+    if modo == 0:
         elem=cadena.keys()
     for code in elem:
         sql = """select if(length(mae.alias)>0,mae.alias,
@@ -1239,16 +1153,16 @@ def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:010
     fecha=fecha_ing(1,'t')
     codigo_prod='GENERAL'
     descrip_prod=''
-    if fecha=='Anular':
+    if fecha == 'Anular':
         return 0
     else:
-        if tipo_rep==1:
+        if tipo_rep == 1:
             prod_filt = "genero=1"
         ingdat, cuenta = datopc('Codigo', panel_text_1, 10,
             'insert,arriba,abajo,Anular', 'caracter', prod_filt)
-        if ingdat=='Anular':
+        if ingdat == 'Anular':
             return 0
-        elif ingdat=='insert':
+        elif ingdat == 'insert':
             codigo_prod=''
         else:
             sql = """select if(length(mae.alias)>0,mae.alias,
@@ -1260,14 +1174,14 @@ def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:010
                 descrip_prod=str(resultado[0])
         psey=0
         temc=0
-        if tipo_rep==0:
+        if tipo_rep == 0:
             lineas=kardex(doc_modo,fecha,codigo_prod,0)
             titulo=string.ljust('GUIA',12)+' '+string.center('FECHA',19)+' '+string.center('OPER',4)+'  '+string.rjust('INGRESO',10)+' '+string.rjust('SALIDA',10)+' '+string.rjust('STOCK',10)+'  '+string.center('ALMAC',5)
             titulo_ctrl='Kardex'
         else:
             relacion=cons_almacen(fecha,codigo_prod,3)
             partir=0
-            if len(codigo_prod)>0 and tipo_rep==1:
+            if len(codigo_prod)>0 and tipo_rep == 1:
                 lineas=[]
                 temporal=[]
                 temporal.append(str(codigo_prod))
@@ -1275,7 +1189,7 @@ def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:010
                 temporal.append(str(relacion))
                 lineas.append(temporal)
                 partir=1
-            if partir==0:
+            if partir == 0:
                 lineas=dict_list(relacion)
             titulo=string.ljust('CODIGO',16)+string.ljust('DESCRIPCION',50)+string.center('CANTIDAD',14)
             titulo_ctrl='Stocks'
@@ -1285,15 +1199,15 @@ def ver_imprimir(doc_modo,tipo_rep=0,prod_filt="genero=1",head='DISTRIBUCION:010
             winz.addstr(0,1,titulo)
             updat()
             ingdat=ingresodato(titulo_ctrl,panel_top,10,'',0,0)
-            if ingdat=='Anular':
+            if ingdat == 'Anular':
                 break
-            elif ingdat=='arriba':
+            elif ingdat == 'arriba':
                 psey-=1
-            elif ingdat=='abajo':
+            elif ingdat == 'abajo':
                 psey+=1
-            elif ingdat=='insert':
+            elif ingdat == 'insert':
                 resp=segur("Imprimir?")
-                if resp=='si':
+                if resp == 'si':
                     raya=79*'-'
                     archivo=open('impresion.txt','w')
                     archivo.write(head+'\n')
@@ -1325,8 +1239,8 @@ def anulacion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     n_doc_base=''
     filtro,temp_filt=ing_dat('Guia',0)
     if len(filtro)>0:
-        temp=string.split(filtro,'-')
-        if len(temp)==2:
+        temp = filtro.split('-')
+        if len(temp) == 2:
             n_doc_prefijo=str(temp[0])
             n_doc_base=str(temp[1])
     query_trans=[]
@@ -1340,12 +1254,12 @@ def anulacion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     cuenta,resultado=query(sql,1)
     if cuenta>0:
         n_doc,op_doc=ladocl(resultado,'Guias')
-        if op_doc=='Anular':
+        if op_doc == 'Anular':
             return 0
         mensaje="Anular el Documento:"+str(n_doc)+",Esta Seguro?"
         resp=segur(mensaje)
-        if resp =='si':
-            temp_doc=string.split(n_doc,'-')
+        if resp  == 'si':
+            temp_doc = n_doc.split('-')
             n_pre=temp_doc[0]
             n_doc=temp_doc[1]
             sql="update almacenes set estado='0' where n_doc_base='"+str(n_doc)+"' and n_doc_prefijo='"+str(n_pre)+"' and (modo='"+str(oper_log_pref)+"1' or modo='"+str(oper_log_pref)+"2') and tipo_doc='"+str(doc_tipo)+"' and estado='1'"
@@ -1355,13 +1269,13 @@ def anulacion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
             if cuenta2>0:
                 if len(resultado2[0])>0:
                     n_doc2=resultado2[0]
-                    temp_doc2=string.split(n_doc2,'-')
+                    temp_doc2 = n_doc2.split('-')
                     n_pre2=temp_doc2[0]
                     n_doc2=temp_doc2[1]
                     sql="update almacenes set estado='0' where n_doc_base='"+str(n_doc2)+"' and n_doc_prefijo='"+str(n_pre2)+"' and (modo='"+str(oper_log_pref)+"1' or modo='"+str(oper_log_pref)+"2') and tipo_doc='"+str(doc_tipo)+"' and estado='1'"
                     query_trans.append(sql)
             estado=query(query_trans,5)
-            if estado==1:
+            if estado == 1:
                 return 1
             else:
                 return -1
@@ -1374,12 +1288,12 @@ def anulacion_ventas():#doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     cuenta,resultado=query(sql,1)
     if cuenta>0:
         cod_doc,dscp_doc=ladocl(resultado,'Tipo')
-        if cod_doc=='Anular':
+        if cod_doc == 'Anular':
             return 0
     filtro,temp_filt=ing_dat('No',0)
     if len(filtro)>0:
-        temp=string.split(filtro,'-')
-        if len(temp)==2:
+        temp = filtro.split('-')
+        if len(temp) == 2:
             n_doc_prefijo=str(temp[0])
             n_doc_base=str(temp[1])
     query_trans=[]
@@ -1387,32 +1301,32 @@ def anulacion_ventas():#doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     cuenta,resultado=query(sql,1)
     if cuenta>0:
         n_doc,op_doc=ladocl(resultado,'No')
-        if op_doc=='Anular':
+        if op_doc == 'Anular':
             return 0
         mensaje="Anular el Documento:"+str(n_doc)+",Esta Seguro?"
         resp=segur(mensaje)
-        if resp =='si':
-            temp_doc=string.split(n_doc,'-')
+        if resp  == 'si':
+            temp_doc = n_doc.split('-')
             n_pre=temp_doc[0]
             n_doc=temp_doc[1]
             sql="update docventa set estado='A',cv_anul='"+str(codven)+"' where n_doc_base='"+str(n_doc)+"' and n_doc_prefijo='"+str(n_pre)+"' and comprobante='"+str(cod_doc)+"'"
             query_trans.append(sql)
             estado=query(query_trans,5)
-            if estado==1:
+            if estado == 1:
                 return 1
             else:
                 return -1
     else:
         mensaje="Desea registrar este documento como Anulado?"
         resp=segur(mensaje)
-        if resp=='si':
+        if resp == 'si':
             fecha=fecha_ing(1,'t')
-            if fecha=='Anular':
+            if fecha == 'Anular':
                 return 0
             sql="insert into docventa (n_doc_prefijo,n_doc_base,comprobante,condicion_comercial,estado,cv_ing,cv_anul,fecha_vta) values ('"+n_doc_prefijo+"','"+n_doc_base+"','"+str(cod_doc)+"','1','A','"+str(codven)+"','"+str(codven)+"','"+str(fecha)+"')";
             query_trans.append(sql)
             estado=query(query_trans,5)
-            if estado==1:
+            if estado == 1:
                 return 1
             else:
                 return -1
@@ -1424,8 +1338,8 @@ def reimpresion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     n_doc_base=''
     filtro,temp_filt=ing_dat('Guia',0)
     if len(filtro)>0:
-        temp=string.split(filtro,'-')
-        if len(temp)==2:
+        temp = filtro.split('-')
+        if len(temp) == 2:
             n_doc_prefijo=str(temp[0])
             n_doc_base=str(temp[1])
     query_trans=[]
@@ -1439,17 +1353,17 @@ def reimpresion_guia(doc_modo=1,doc_tipo=6,oper_log_pref='1'):
     cuenta,resultado=query(sql,1)
     if cuenta>0:
         n_doc,op_doc=ladocl(resultado,'Guias')
-        if op_doc=='Anular':
+        if op_doc == 'Anular':
             return 0
         mensaje="Reimprimir el Documento: %s, Esta Seguro?" % n_doc
         resp=segur(mensaje)
-        if resp =='si':
-            temp_doc=string.split(n_doc,'-')
+        if resp  == 'si':
+            temp_doc = n_doc.split('-')
             n_pre=temp_doc[0]
             n_doc=temp_doc[1]
-            if doc_tipo==6:
+            if doc_tipo == 6:
                 impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,n_pre,n_doc)
-            elif doc_tipo==5:
+            elif doc_tipo == 5:
                 impresion_guia_externa(doc_modo,doc_tipo,oper_log_pref,n_pre,n_doc)
 
 
@@ -1472,7 +1386,7 @@ def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',nu
 #       hora=str(parte[3])
         operacion=str(parte[4])
         modo=str(parte[5])
-        if modo[-1]=='1':
+        if modo[-1] == '1':
             almacen=str(parte[6])
             documento='Nota de Ingreso'
         else:
@@ -1501,7 +1415,7 @@ def impresion_guia_interna(doc_modo=1,doc_tipo=6,oper_log_pref='1',prefijo='',nu
         descripcion_almacen=almacen
         
     for n_cop in range(1,3):
-        if n_cop==1:
+        if n_cop == 1:
             doc_tipo='ORIGINAL'
         else:
             doc_tipo='COPIA'
@@ -1554,12 +1468,12 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
 #   sql="select codigo,descripcion from guias_plantillas where modo='"+str(doc_modo)+"' and documento='"+str(doc_tipo)+"'"
     sql="select tipo from guias_plantillas where modo='"+str(doc_modo)+"' and documento='"+str(doc_tipo)+"'"
     cuenta,resultado=query(sql)
-    if cuenta==1:
+    if cuenta == 1:
         layout_guia=int(resultado[0][0])
 #       codigo=resultado[0][0]
-#       if codigo=='101':
+#       if codigo == '101':
 #           layout_guia=0
-#       elif codigo=='401':
+#       elif codigo == '401':
 #           layout_guia=1
 #       else:
 #           layout_guia=0
@@ -1573,7 +1487,7 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
         almacen_origen,almacen_destino,transportista,vehiculo,turno,
         observaciones from almacenes where estado='1' and
         n_doc_prefijo='%s' and n_doc_base='%s' and modo_doc='%s' and
-        almacen='%s'""" % (prefijo,num_doc,doc_modo,alma_base)
+        almacen='%s'""" % (prefijo,num_doc,doc_modo,alm_base)
     cuenta,resultado=query(sql)
     productos=[]
     for parte in resultado:
@@ -1585,7 +1499,7 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
         hora=str(parte[3])
         operacion=str(parte[4])
         modo=str(parte[5])
-        if modo[-1]=='1':
+        if modo[-1] == '1':
             almacen=str(parte[6])
         else:
             almacen=str(parte[7])
@@ -1611,10 +1525,10 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
     unidad_movil=str(resultado[0])
     #Generacion de Archivo
     n_arch="guia_ext_"+str(prefijo)+"-"+str(num_doc)+".gui"
-    if layout_guia==1:
+    if layout_guia == 1:
         archivo=open(n_arch,"w")
         archivo.write('\n\n\n\n\n\n')
-        linea=string.rjust('NUTRA S.A.-Tda:'+almacen_descripcion+'-'+str(turno),45)
+        linea=string.rjust('MACRA S.A.-Tda:'+almacen_descripcion+'-'+str(turno),45)
         archivo.write(linea+'\n')
         linea=string.rjust(observac,45)
         archivo.write(linea+'\n')
@@ -1648,7 +1562,7 @@ def impresion_guia_externa(doc_modo=1,doc_tipo=5,oper_log_pref='1',prefijo='',nu
     else:
         archivo=open(n_arch,"w")
         archivo.write('\n\n\n\n\n')
-        linea=string.rjust('NUTRA S.A.-Tda:'+almacen_descripcion+'-'+str(turno),45)
+        linea=string.rjust('MACRA S.A.-Tda:'+almacen_descripcion+'-'+str(turno),45)
         archivo.write(linea+'\n')
         linea=string.rjust(observac,45)
         archivo.write(linea+'\n\n')
@@ -1694,10 +1608,8 @@ def win_txt(panel,head,txt):
 
 def panel_input(head,panel,sql):
     dato=ingresodato(head,panel,10,'',1,0)
-    if dato=='Anular':
+    if dato == 'Anular':
         return -1
-    cuenta,resultado=query(sql)
-    pass
 
 
 def linea_dato(msg,win,pan,texto='',pos_y=1):
@@ -1715,26 +1627,26 @@ def linea_dato(msg,win,pan,texto='',pos_y=1):
     while 1:
         if ubic_x>=tam_real_x:
             ubic_x=len(msg)+3
-        if txt_pre==1:
+        if txt_pre == 1:
             win.addstr(pos_y,ubic_x,dato)
             ubic_x+=len(dato)
             txt_pre=0
         updat()
         caracter=obch(pan,pos_y,ubic_x,'v',0)
-        if caracter=='enter':
+        if caracter == 'enter':
             return dato
-        elif caracter=='escape':
+        elif caracter == 'escape':
             return 'Anular'
-        elif caracter=='arriba' or caracter=='abajo' or caracter=='insert' or caracter=='spag' or caracter=='ppag' or caracter=='derecha' or caracter=='izquierda':
+        elif caracter == 'arriba' or caracter == 'abajo' or caracter == 'insert' or caracter == 'spag' or caracter == 'ppag' or caracter == 'derecha' or caracter == 'izquierda':
             pass
-        elif caracter=='backspace':
+        elif caracter == 'backspace':
             ubic_x-=1
             if ubic_x<=len(msg)+3:
                 ubic_x=len(msg)+3
             dato=dato[:-1]
             win.addstr(pos_y,ubic_x,'   ')
             caracter=''
-        elif (caracter>='0' and caracter<='9') or (caracter>='a' and caracter<='z') or (caracter>='A' and caracter<='Z') or (caracter=='-') or (caracter=='.') or (caracter==' ') or (caracter=='&'):
+        elif (caracter>='0' and caracter<='9') or (caracter>='a' and caracter<='z') or (caracter>='A' and caracter<='Z') or (caracter == '-') or (caracter == '.') or (caracter == ' ') or (caracter == '&'):
             ubic_x+=1
             dato+=str(caracter)
             if ubic_x >=(tam_real_x):
@@ -1745,9 +1657,9 @@ def linea_dato(msg,win,pan,texto='',pos_y=1):
 def ing_dat(msg,min=4,long=20,posy=-1,posx=-1):
     cuenta=len(msg)+long
     tny=3
-    if posy==-1:
+    if posy == -1:
         posy=(maxy-tny)/2
-    if posx==-1:
+    if posx == -1:
         tnx=cuenta
         posx=(maxx-tnx)/2
     pan=mkpanel(curses.COLOR_WHITE,tny,cuenta,posy,posx)
@@ -1760,13 +1672,13 @@ def ing_dat(msg,min=4,long=20,posy=-1,posx=-1):
     while 1:
         linea=win.getstr(1,1)
         valor,tipdat=expresion(linea)
-        if tipdat=='entero' and len(linea)>=min:
+        if tipdat == 'entero' and len(linea)>=min:
             curses.noecho()
             curses.curs_set(0)
             win.erase()
             updat()
             return linea,tipdat
-        elif (tipdat=='alfanumerico' or tipdat=='caracter') and len(linea)>=min:
+        elif (tipdat == 'alfanumerico' or tipdat == 'caracter') and len(linea)>=min:
             curses.noecho()
             curses.curs_set(0)
             win.erase()
@@ -1776,13 +1688,11 @@ def ing_dat(msg,min=4,long=20,posy=-1,posx=-1):
 
 def directory_check(msg):
     cliente,tipdat=ing_dat(msg)
-    if tipdat=='entero':
-        modo_cli=0
-        condicion="doc_id like '"+str(cliente)+"%'"
+    if tipdat == 'entero':
+        condicion = "doc_id like '%s%%'" % (cliente)
     else:
-        modo_cli=1
-        condicion="nombre_corto like '%"+string.upper(cliente)+"%'"
-    sql="select id,nombre_corto from directorio where "+condicion+" order by doc_id"
+        condicion = "nombre_corto like '%%%s%%'" % cliente.upper()
+    sql = "select id,nombre_corto from directorio where %s order by doc_id" % (condicion)
     cnt,rso=query(sql)
     if cnt > 0:
         docnum, nombre = ladocl(rso,msg)
@@ -1794,7 +1704,7 @@ def directory_check(msg):
 def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
     panel_top,panel_text_1,panel_text_2,panel_text_3,panel_text_4,panel_text_5,panel_text_6,panel_text_7,panel_text_8,panel_mid=win_def(txt_fld)#maxy,maxx
     fecha=fecha_ing(fech_cnt,fech_hea)
-    if fecha=='Anular':
+    if fecha == 'Anular':
         return 0
     tienda_head='Tienda'
     caja_head='Caja'
@@ -1803,23 +1713,23 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
     cliente=''
     detalle_prod=''
     ing_detalle=segur('Ingresos con Detalles?')
-    if ing_detalle=='si':
+    if ing_detalle == 'si':
         ing_detalle=1
     else:
         ing_detalle=0
     while 1:
         tienda=ingresodato(tienda_head,panel_text_1,10,'',1,0)
-        if tienda=='Anular':
+        if tienda == 'Anular':
             return 0
         sql="select codigo,nombre from puntos_venta where (codigo='"+str(tienda)+"' or nombre like '%"+str(tienda)+"%') and (codigo!='' or nombre!='') order by codigo"
         cuenta,resultado=query(sql)
-        if cuenta==1:
+        if cuenta == 1:
             tienda=resultado[0][0]
             tienda_dscp=resultado[0][1]
             break
         elif cuenta>1:
             tienda,tienda_dscp=ladocl(resultado,'Punto de Venta')
-            if tienda=='Anular':
+            if tienda == 'Anular':
                 return 0
             else:
                 break
@@ -1828,7 +1738,7 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
     cuenta,resultado=query(sql)
     if cuenta>0:
         doc_tipo,doc_tipo_dscp=ladocl(resultado,'Documento')
-        if doc_tipo=='Anular':
+        if doc_tipo == 'Anular':
             return 0
         sql="select copia,detalle,impresion from documentos_comerciales where modo=5 and documento='"+str(doc_tipo)+"'"
         cuenta,resultado=query(sql,0)
@@ -1836,12 +1746,12 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             doc_tipo_copia=str(resultado[0])
             doc_tipo_detalle=str(resultado[1])
             doc_tipo_impresion=str(resultado[2])
-            if doc_tipo_detalle=='1':
+            if doc_tipo_detalle == '1':
                 while 1:
                     cliente, nomb_cliente = directory_check("Cliente")
-                    if cliente=='ND':
+                    if cliente == 'ND':
                         segur("Debe Registrar el Cliente")
-                    elif cliente=='Anular':
+                    elif cliente == 'Anular':
                         return 0
                     else:
                         break
@@ -1851,11 +1761,11 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
     winhead(texto_head,panel_top)
     while 1:
         num_doc=ingresodato('No.Doc',panel_text_2,10,'',1,0)
-        if num_doc=='Anular':
+        if num_doc == 'Anular':
             break
-        doc_part=string.split(num_doc,'-')
+        doc_part = num_doc.split('-')
         try:
-            if len(doc_part)==2:
+            if len(doc_part) == 2:
                 num_doc_pre=str(doc_part[0])
                 num_doc=int(doc_part[1])
             else:
@@ -1864,7 +1774,7 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             break
         except Exception,error:
             pass
-    if num_doc=='Anular':
+    if num_doc == 'Anular':
         return 0
     sql = """select doc.codigo,concat(mae.nombre,' ',mae.descripcion),
         doc.cantidad,doc.precio,(doc.cantidad*doc.precio) as importe
@@ -1873,12 +1783,12 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
         doc.n_doc_base='%s' and doc.comprobante='%s' and
         doc.pv='%s'""" % (num_doc_pre, num_doc, doc_tipo, tienda)
     lineas,tipo=datos_cons(sql)
-    if len(lineas)==0:
+    if len(lineas) == 0:
         sql="select codigo,descripcion from condiciones_comerciales where modo=0 and condicion!='' order by codigo"
         cuenta,resultado=query(sql)
         if cuenta>0:
             cond_com,cond_com_dscp=ladocl(resultado,'Condicion')
-            if cond_com=='Anular':
+            if cond_com == 'Anular':
                 return 0
         else:
             return 0    
@@ -1916,7 +1826,7 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             maestro where id='%s'""" % (ingdat)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
-            if ing_detalle==1:
+            if ing_detalle == 1:
                 detalle_prod,tipo_detalle_prod=ing_dat('Detalle',0,40)
             nombre_prod=resultado[0]
             precio=round(float(resultado[1])*factor,2)
@@ -1932,15 +1842,15 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             else:
                 precio=0
             if cantidad>0:
-                detalle_prod=string.upper(detalle_prod)
+                detalle_prod = detalle_prod.upper()
                 motip=modo_ingr(lineas)
                 prov=agregar_valores([],[],ingdat,nombre_prod,cantidad,precio,importe,detalle_prod,motip)
                 lineas.append(prov)
-        if ingdat=='Anular':
+        if ingdat == 'Anular':
             resp=segur("Esta seguro(a)? ")
-            if resp=='si':
+            if resp == 'si':
                 break
-        elif ingdat=='insert':
+        elif ingdat == 'insert':
             while 1:
                 igv=round((total_doc*19)/125,2)
                 igv=ingresodato('IGV',panel_text_5,10,str(igv),1,0)
@@ -1963,7 +1873,7 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             sql_full=[]
             tiempo=time.strftime("%Y-%m-%d %H:%M:%S")
             for z in range(0,len(lineas)):
-                if lineas[z][3]=='0':
+                if lineas[z][3] == '0':
                     base=sqlsend(lineas[z],'codigo,cantidad,total',0)
                     sql="update docventa set "+base+",cv_ing='"+str(codven)+"',tiempo='"+str(tiempo)+"' where codigo='"+str(lineas[z][0])+"' and pv='"+str(tienda)+"'"
                 else:
@@ -1974,9 +1884,9 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
                     sql_full.append(sql)
             query(sql_full,5)
             break
-        elif ingdat=='arriba':
+        elif ingdat == 'arriba':
             psey-=1
-        elif ingdat=='abajo':
+        elif ingdat == 'abajo':
             psey+=1
         temc=abs(psey)
         if temc>len(lineas):
@@ -1994,14 +1904,14 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
     panel_top,panel_text_1,panel_text_2,panel_text_3,panel_mid=win_def(txt_fld)#maxy,maxx
     fecha=fecha_ing(fech_cnt,fech_hea)
     add_box = add_data.split('|')
-    if fecha == 'Anular':
+    if fecha  ==  'Anular':
         return 0
     else:
-        if turno_ing==1:
+        if turno_ing == 1:
             sql = """select id,descripcion from turnos 
                 order by turno asc"""
             turno,turno_dscp=sql_seleccion(sql,'Turno')
-            if turno=='Anular':
+            if turno == 'Anular':
                 return 0
         turno = 1
         modo_oper_log=''
@@ -2023,9 +1933,9 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
         modo_ori2 = ''
         modo_des2 = ''
         while 1:
-            if oper_log=='':
+            if oper_log == '':
                 oper_log=ingresodato('Operacion',panel_text_1,10,oper_log,1,0)
-                if oper_log=='Anular':
+                if oper_log == 'Anular':
                     return 0
                 tam_oper_log=len(oper_log)
                 if tam_oper_log>=3 and tam_oper_log<=4:
@@ -2038,7 +1948,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                     operaciones_logisticas where %s order by
                     modo,descripcion""" % (condicion_oper_log)
                 oper_log,oper_log_dscp=sql_seleccion(sql,'Operaciones Logisticas')
-                if oper_log=='Anular':
+                if oper_log == 'Anular':
                     return 0
             sql = """select cast(modo as UNSIGNED),operacion_relac,
                 almacen_relac,detalle,id from
@@ -2050,31 +1960,31 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 oper_log = str(rso[4])
             else:
                 return 0
-            if alm_rel=='':
-                if rso[0] == 1:
+            if alm_rel == '':
+                if rso[0]  ==  1:
                     alm_ori, modo_ori = ingr_alm(panel_text_1,'Origen')
                     alm_des=alm_base
                     det_doc_ori=rso[3]
-                elif rso[0] == 2:
+                elif rso[0]  ==  2:
                     alm_ori=alm_base
                     alm_des, modo_des = ingr_alm(panel_text_1,'Destino')
-                if modo_ori == 0 or modo_des == 0:
+                if modo_ori  ==  0 or modo_des  ==  0:
                     id_prov, nombre_prov = directory_check("Proveedor")
-                    if id_prov == 'Anular':
+                    if id_prov  ==  'Anular':
                         return 0
                 titulo_almacenes = "%s/%s" % (alm_ori, alm_des)
-                if alm_ori=='Anular' or alm_des=='Anular':
+                if alm_ori == 'Anular' or alm_des == 'Anular':
                     return 0
                 if rso[1]!='':
                     almacen_relac=rso[2]
                     sql = """select modo from operaciones_logisticas
                         where id='%s'""" % (rso[1])
                     cta2,rso2=query(sql,0)
-                    if cta2==0:
+                    if cta2 == 0:
                         return 0
                     else:
                         ##Data
-                        if rso2[0]==1:
+                        if rso2[0] == 1:
                             if almacen_relac!='':
                                 alm_ori2=almacen_relac
                             else:
@@ -2082,7 +1992,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             alm_des2=alm_base
                             titulo_almacenes = "%s/%s" % (alm_des,
                                 alm_ori2)
-                        elif rso2[0]==2:
+                        elif rso2[0] == 2:
                             alm_ori2=alm_base
                             if almacen_relac!='':
                                 alm_des2=almacen_relac
@@ -2093,7 +2003,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         oper_log2=str(rso[1])
                         modo_oper_log2=oper_log_pref+str(rso2[0])
                         extra_oper_log=1
-                        if alm_ori2=='Anular' or alm_des2=='Anular':
+                        if alm_ori2 == 'Anular' or alm_des2 == 'Anular':
                             return 0
                 break
             else:
@@ -2102,21 +2012,21 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 titulo_almacenes=str(alm_ori)+'/'+str(alm_des)
                 break
         cabecera='Fecha: '+str(fecha)+' - Turno: '+str(turno)+' - Operacion: '+str(oper_log)+'/'+str(oper_log2)+' - Almacenes: '+str(titulo_almacenes)
-        if tipo_mov==2:
+        if tipo_mov == 2:
             transp_data=ingresodato('Transp',panel_text_1,10,'',1,0)
-            if transp_data=='Anular':
+            if transp_data == 'Anular':
                 return 0
             sql="select id,concat(nombres,' ',apellidos) from transportistas where (nombres like '%"+str(transp_data)+"%' or apellidos like '%"+str(transp_data)+"%') and (nombres!='' or apellidos!='')"
             transp_codigo,transp_descripcion=sql_seleccion(sql,'Transportista')
-            if transp_codigo=='Anular':
+            if transp_codigo == 'Anular':
                 return 0
             sql="select id,concat('->',registro,'-',marca,' / ',modelo) from vehiculos where codigo!=''"
             vehiculo_codigo,vehiculo_descripcion=sql_seleccion(sql,'Vehiculos')
-            if vehiculo_codigo=='Anular':
+            if vehiculo_codigo == 'Anular':
                 return 0
-        if masa_ing==1:
+        if masa_ing == 1:
             masa=ingresodato('Masa',panel_text_1,10,'',1,1)
-            if masa=='Anular' or masa=='':
+            if masa == 'Anular' or masa == '':
                 return 0
             cabecera='Fecha: '+str(fecha)+' - Turno: '+str(turno)+ ' - Masa: '+str(masa)+' - Operacion: '+str(oper_log)
         lineas=[]
@@ -2140,22 +2050,22 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 nombre_prod = resultado[0]
                 cant_unmd = resultado[1]
                 #add_data = mode for additional data
-                if add_box[0] == '1':
+                if add_box[0]  ==  '1':
                     msg_data = add_box[1]
                     while 1:
                         extra_data = ingresodato(msg_data,panel_text_2,30,'',10)
-                        if extra_data == 'Anular':
+                        if extra_data  ==  'Anular':
                             return 0
                         cantidad=1
                         break
                 else:
                     cantidad=datesp('Cantidad',panel_text_2,8,'decimal,entero','',1,1)
-                if add_box[0] == '2':
+                if add_box[0]  ==  '2':
                     msg_data = add_box[1]
                     elem_data = float(cantidad) * float(cant_unmd)
                     while 1:
                         extra_data = ingresodato(msg_data,panel_text_3,30,elem_data,10)
-                        if extra_data == 'Anular':
+                        if extra_data  ==  'Anular':
                             return 0
                         cantidad = float(extra_data)
                         extra_data = ''
@@ -2165,12 +2075,12 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                 #modo_salida=oper_log_pref+'2'
                 stock_individual=cons_almacen(fecha,str(ingdat),3) #modo_ingreso,modo_salida,producto='',fecha='',modo_fecha=0,ciclo_fecha=0,modo_operacion=0
                 cantidad=float(cantidad)
-                if modo_oper_log[-1]=='2':
+                if modo_oper_log[-1] == '2':
                     stock_individual=float(stock_individual)
                 else:
                     stock_individual=float(cantidad)
                 valid_error=0
-                if extra_oper_log==1:
+                if extra_oper_log == 1:
                     stock_individual=cantidad
                 if validacion_prod.has_key(ingdat):
                     if round(cantidad,2)>round(stock_individual,2):
@@ -2184,7 +2094,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                     else:
                         if round(cantidad,2)>0:
                             validacion_prod[ingdat]=[cantidad,nombre_prod,1]
-                if (valid_error==1 or stock_individual==0 or cantidad==0) and (modo_oper_log[-1]=='2' and modo_oper_log2==''):
+                if (valid_error == 1 or stock_individual == 0 or cantidad == 0) and (modo_oper_log[-1] == '2' and modo_oper_log2 == ''):
                     segur('El Stock de este producto es:'+str(stock_individual))
                     cuenta=0
                     resultado=''
@@ -2199,31 +2109,31 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         mod_tmp=validacion_prod[valor][2]
                         prov=agregar_valores([],[],cod_tmp,cnt_tmp,nom_tmp,mod_tmp)
                         lineas.append(prov)
-            if ingdat=='Anular':
+            if ingdat == 'Anular':
                 resp=segur("Esta seguro(a)? ")
-                if resp=='si':
+                if resp == 'si':
                     return 0
-            elif ingdat=='insert':
+            elif ingdat == 'insert':
                 prefijo2=''
                 correlativo2 = 0
                 sufijo2=''
                 query_trans=[]
                 tiempo_reg=time.strftime("%Y-%m-%d %H:%M:%S")
-                if tipo_mov==1:
+                if tipo_mov == 1:
                     edit_guia=0
-                    if det_doc_ori==1:
+                    if det_doc_ori == 1:
                         edit_guia=2
                 else:
                     edit_guia=1
                 prefijo,correlativo,sufijo,port_imp,layout=get_correlativo(doc_modo,doc_tipo,edit_guia,panel_text_3)
-                if correlativo=='Anular':
+                if correlativo == 'Anular':
                     return
-                if extra_oper_log==1:
+                if extra_oper_log == 1:
                     prefijo2=prefijo
                     correlativo2=int(correlativo)+1
                     sufijo2=sufijo
                 for z in range(0,len(lineas)):
-                    if lineas[z][3]=='0':
+                    if lineas[z][3] == '0':
                         base=sqlsend(lineas[z],'codbarras,ingreso',0)
                         sql = "update almacenes set "+base+",user_ing='"+str(codven)+"',tiempo='"+str(tiempo_reg)+"' where n_doc_base='"+str(correlativo)+"' and codbarras='"+str(lineas[z][0])+"' and turno='"+str(turno)+"' and fecha_doc='"+str(fecha)+"' and estado='1' and operacion_logistica='"+str(oper_log)+"' and modo='"+str(modo_oper_log)+"' and modo_doc='"+str(doc_modo)+"' and tipo_doc='"+str(doc_tipo)+"'"
                         query_trans.append(sql)
@@ -2236,7 +2146,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                             modo_doc,tipo_doc,n_prefijo_relacion,
                             n_doc_relacion,transportista,vehiculo,
                             observaciones,almacen,registro,proveedor"""
-                        if modo_oper_log == '1':
+                        if modo_oper_log  ==  '1':
                             adic = "ingreso"
                         else:
                             adic = "salida"
@@ -2253,7 +2163,7 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                         base=sqlsend(temporal_x,campos_bd,1)
                         sql = "insert into almacenes %s" % (base)
                         query_trans.append(sql)
-                        if extra_oper_log==1:
+                        if extra_oper_log == 1:
                             temporal_y = agregar_valores(temporal,
                                 [0,1], turno, prefijo2, correlativo2,
                                 idven, tiempo_reg, fecha,
@@ -2270,39 +2180,39 @@ def data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,
                     if edit_guia!=2:
                         sql=set_correlativo(doc_modo,doc_tipo,correlativo,0)
                         query_trans.append(sql)
-                        if extra_oper_log==1:
+                        if extra_oper_log == 1:
                             sql=set_correlativo(doc_modo,doc_tipo,correlativo2,0)
                             query_trans.append(sql)
                 estado=query(query_trans,5)
-                if estado==1:
-                    if modo_oper_log[-1] == '1':
+                if estado == 1:
+                    if modo_oper_log[-1]  ==  '1':
                         msg1='Nota de Ingreso'
                         msg2='Nota de Salida'
                         alm1=alm_ori
                         alm2=alm_des2
-                    elif modo_oper_log[-1] == '2':
+                    elif modo_oper_log[-1]  ==  '2':
                         msg1='Nota de Salida'
                         msg2='Nota de Ingreso'
                         alm1=alm_des
                         alm2=alm_ori2
-                    if tipo_mov==2:
-                        if impresion==1:
+                    if tipo_mov == 2:
+                        if impresion == 1:
                             impresion_guia_externa(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo,port_imp,layout)
                     else:
-                        if impresion==1:
+                        if impresion == 1:
                             impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo,correlativo,port_imp,layout)
-                    if extra_oper_log==1:
-                        if impresion==1:
+                    if extra_oper_log == 1:
+                        if impresion == 1:
                             impresion_guia_interna(doc_modo,doc_tipo,oper_log_pref,prefijo2,correlativo2,port_imp,layout)
                     return 1
-                elif estado==-1:
+                elif estado == -1:
                     return -1
-                elif estado==0:
+                elif estado == 0:
                     return 0
                 return 1
-            elif ingdat=='arriba':
+            elif ingdat == 'arriba':
                 psey-=1
-            elif ingdat=='abajo':
+            elif ingdat == 'abajo':
                 psey+=1
             temc=abs(psey)
             if temc>len(lineas):
@@ -2316,7 +2226,7 @@ contad=0
 
 
 while 1:
-    while nomven=='I':
+    while nomven == 'I':
         codven,nomven,nivel,idven=aut()
     while 1:
         print_buffer=''
@@ -2329,7 +2239,7 @@ while 1:
         opc_menu = """1. Almacen-Central|2. Almacen-Auxiliar|8. Ventas|9. Salir"""
         opcion = menu(opc_menu, head)
         #OPCION 1
-        #if opcion==3:
+        #if opcion == 3:
             #modo_almacen=1
             #oper_log_pref='1'
             #doc_modo=1
@@ -2338,7 +2248,7 @@ while 1:
             #alm_relev='0101'
             #alm_base='0100'
             #head='Distribucion:0100'
-        #elif opcion==2:
+        #elif opcion == 2:
             #modo_almacen=1
             #oper_log_pref='2'
             #doc_modo=2
@@ -2347,7 +2257,7 @@ while 1:
             #alm_relev='0101'
             #alm_base='0101'
             #head='Produccion:0101'
-        if opcion == 1:
+        if opcion  ==  1:
             modo_almacen=1
             oper_log_pref=''
             doc_modo=3
@@ -2356,7 +2266,7 @@ while 1:
             alm_relev=''
             alm_base='1'
             head='Central: %s' % (alm_base)
-        elif opcion == 2:
+        elif opcion  ==  2:
             modo_almacen=1
             oper_log_pref=''
             doc_modo=3
@@ -2365,7 +2275,7 @@ while 1:
             alm_relev=''
             alm_base='3'
             head='Auxiliar: %s' % (alm_base)
-        #if opcion==4:
+        #if opcion == 4:
             #query_trans=[]
             #sql="insert into almacenes (modo,modo_doc,operacion_logistica,tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,almacen_origen,almacen_destino,codbarras,ingreso,turno) select 81,8,'IXM',tiempo,estado,user_ing,tipo_doc,fecha_doc,n_doc_prefijo,n_doc_base,'0100','0021',codbarras,cantidad_ing,turno from almacenes where modo_doc=1 and modo=12 and operacion_logistica='SXM' and control=0 and estado=1 and fecha_doc>='2006-08-01';"
             #query_trans.append(sql)
@@ -2380,7 +2290,7 @@ while 1:
             #alm_relev='0003'
             #alm_base='0021'
             #head='Mermas:0021'
-        #elif opcion==5:
+        #elif opcion == 5:
             #modo_almacen=1
             #oper_log_pref='2'
             #doc_modo=2
@@ -2389,7 +2299,7 @@ while 1:
             #alm_relev='0101'
             #alm_base='0101'
             #head='Finishing:0300'
-        #elif opcion==7:
+        #elif opcion == 7:
             #print_buffer=' -P lx300wong'
             #modo_almacen=1
             #oper_log_pref='4'
@@ -2399,74 +2309,74 @@ while 1:
             #alm_relev='0100'
             #alm_base='0040'
             #head='Wong:0040'
-        elif opcion==8:
+        elif opcion == 8:
             while 1:
                 opcion2=menu('1. Operaciones|9. Regresar',head)
-                if opcion2==1:
+                if opcion2 == 1:
                     opcion3=menu('1. Ingreso de Ventas|2. Anulacion de Ventas|9. Regresar',head)
-                    if opcion3==1:
+                    if opcion3 == 1:
                         ventas_proc(8)
-                    elif opcion3==2:
+                    elif opcion3 == 2:
                         anulacion_ventas()
-                    elif opcion3==9:#Ingreso de Producto
+                    elif opcion3 == 9:#Ingreso de Producto
                         pass
                 else:
                     break
         #OPCION 9
-        elif opcion==9:
+        elif opcion == 9:
             opcion2=menu('1.Cambiar Usuario|8.Cerrar Aplicacion|9.Regresar',head)
-            if opcion2==1:
+            if opcion2 == 1:
                 codven=0
                 nomven='I'
                 nivel=0
                 break
-            elif opcion2==8 and nivel<5:
+            elif opcion2 == 8 and nivel<5:
                 curses.echo()
                 curses.endwin()
                 sys.exit()
             else:
                 pass
-        if modo_almacen==1:
+        if modo_almacen == 1:
             while 1:
                 opcion2=menu('1. Operaciones|2. Reportes|9. Regresar',head)
-                if opcion2==1:#Operaciones
+                if opcion2 == 1:#Operaciones
                     opcion3=menu('i. Ingreso de Guias|1. Ingreso de Producto|2. Anulacion de Producto|3. Operaciones Internas|4. Anulacion Guias Internas|5. Operaciones Externas|6. Anulacion Guias Externas|m. Mermas de Tienda|c. Consumo Interno|r. Reimpresiones|9. Regresar',head)
                     ## data_proc(tipo_mov=1,doc_modo=1,doc_tipo=6,txt_fld=3,fech_cnt=1,fech_hea='t',turno_ing=1,masa_ing=1,impresion=1,oper_log='IPT',alm_rel='0101',alm_base='0100',oper_log_pref='1',add_data='',prod_filt='genero="0002"'):
-                    if opcion3==1:#Ingreso de Producto
+                    if opcion3 == 1:#Ingreso de Producto
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'t',1,1,1,'',alm_relev,alm_base,oper_log_pref,'')
-                    elif opcion3==2:
+                    elif opcion3 == 2:
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,1,'SAP',alm_base,alm_base,oper_log_pref,'')
-                    elif opcion3==3:
+                    elif opcion3 == 3:
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'','',alm_base,oper_log_pref,'')
-                    elif opcion3==4:
+                    elif opcion3 == 4:
                         estado=anulacion_guia(doc_modo,doc_tipo_int,oper_log_pref)
-                    elif opcion3==5:
+                    elif opcion3 == 5:
                         data_proc(2,doc_modo,doc_tipo_ext,3,1,'',1,0,1,'','',alm_base,oper_log_pref,'')
-                    elif opcion3==6:
+                    elif opcion3 == 6:
                         estado=anulacion_guia(doc_modo,doc_tipo_ext,oper_log_pref)
-                    elif opcion3=='m':
+                    elif opcion3 == 'm':
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,0,'IXM','',alm_base,oper_log_pref,'')
-                    elif opcion3=='c':
+                    elif opcion3 == 'c':
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',1,0,0,'IKI','',alm_base,oper_log_pref,'')
-                    elif opcion3=='r':
+                    elif opcion3 == 'r':
                         opcion4=menu('1. Internas|2. Externas|9. Regresar',head)
-                        if opcion4==1:
+                        if opcion4 == 1:
                             estado=reimpresion_guia(doc_modo,doc_tipo_int,oper_log_pref)
-                        elif opcion4==2:
+                        elif opcion4 == 2:
                             estado=reimpresion_guia(doc_modo,doc_tipo_ext,oper_log_pref)
                         else:
                             pass
-                    elif opcion3=='i':
+                    elif opcion3 == 'i':
                         data_proc(1,doc_modo,doc_tipo_int,3,1,'',0,0,1,'46','',alm_base,oper_log_pref,'2|Conv')
                     else:
                         break
-                elif opcion2==2:#Reportes
+                elif opcion2 == 2:#Reportes
                     opcion3=menu('1. Stocks|2. Kardex|9. Regresar',head)
                     modo_alm_ing=oper_log_pref+'1'
                     modo_alm_sal=oper_log_pref+'2'
-                    if opcion3==1:
+                    if opcion3 == 1:
                         ver_imprimir(doc_modo,1,'',head)
-                    elif opcion3==2:
+                    elif opcion3 == 2:
                         ver_imprimir(doc_modo,0)
                 else:
                     break
