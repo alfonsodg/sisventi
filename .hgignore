@@ -6,4 +6,5 @@ syntax: glob
 cache/
 errors/
 sessions/
-
+.bzr
+.bzrignore
