@@ -89,7 +89,8 @@ configuracion = [
                         ('Agregar Productos', False, URL('configuracion', 'productos_agregar')),
                         ('Modificar Productos Almacen', False, URL('configuracion', 'productos_modificar_almacen')),
                         ('Modificar Productos Venta', False, URL('configuracion', 'productos_modificar_ventas')),
-                        ('Gestión rápida de Productos', False, URL('configuracion', 'maestro')),
+                        ('Gestión Rápida de Productos', False, URL('configuracion', 'maestro')),
+                        ('Valores de Productos', False, URL('configuracion', 'maestro_valores')),
                     ])
                 ]),
                 ('Ventas', False, None,

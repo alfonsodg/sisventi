@@ -294,7 +294,7 @@ p101
 sg6
 I5
 sg7
-S'DATETIME'
+S'DATETIME NOT NULL'
 p102
 ssS'registro'
 p103
@@ -425,7 +425,7 @@ g22
 sg6
 I15
 sg7
-S'DATE'
+S'DATE NOT NULL'
 p142
 ssS'masa'
 p143

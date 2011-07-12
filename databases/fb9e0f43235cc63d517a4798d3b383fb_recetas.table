@@ -31,7 +31,7 @@ g4
 S'double'
 p15
 sg6
-I5
+I4
 sg7
 S'DOUBLE'
 p16
@@ -42,7 +42,7 @@ g4
 S'reference maestro'
 p19
 sg6
-I4
+I5
 sg7
 S'INT, INDEX codbarras_hijo__idx (codbarras_hijo), FOREIGN KEY (codbarras_hijo) REFERENCES maestro(id) ON DELETE CASCADE'
 p20

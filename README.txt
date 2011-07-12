@@ -107,6 +107,8 @@ almacen = Warehouse ID (if you need multiple warehouse just apply a
 moneda_aux = Auxiliar Money
 costumer_manage = Costumer management in each operation
 stock_alerta = Revisa saldo en almacen
+doc_pedido = Document id por request and pre-order
+cash_var = Commercial condition for sale (credit or cash)
 
 
 Compositions

@@ -1,0 +1,52 @@
+{{extend 'layout.html'}}
+
+<h1>Maestro de Productos</h1>
+
+{{=form}}
+
+{{=form2}}
+
+<table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+        <td style="vertical-align: middle; border: 1px solid #999">Ver</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Editar</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Fecha</td>
+        <td style="vertical-align: middle; border: 1px solid #999">PV</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Genero</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Codigo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Nombre</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Descripcion</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Alias</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Valor</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Usuario</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Estado</td>
+    </tr>
+    {{for i,row in enumerate(rows):}}
+    {{if i==items_per_page: break}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Ver", _href=URL("data/read/maestro_valores", args=row.maestro_valores.id)))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Modificar", _href=URL("data/update/maestro_valores", args=row.maestro_valores.id)))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.fecha}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.pv}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro.genero}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.codbarras}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro.nombre}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro.descripcion}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro.alias}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.valor}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.user_ing}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row.maestro_valores.estado}}</td>
+    </tr>
+    {{pass}}
+    </tbody>
+</table>
+
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">Anterior</a>
+{{pass}}
+
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">Siguiente</a>
+{{pass}}

@@ -28,7 +28,7 @@ def operaciones():
         'almacenes.almacen_origen', 'almacenes.almacen_destino', 'almacenes.codbarras',
         'almacenes.ingreso', 'almacenes.salida', 'almacenes.observaciones']
     #    'docventa.estado','docventa.comprobante','docventa.cliente','docventa.cv_ing',
-    #    'docventa.codigo','docventa.cantidad','docventa.precio','docventa.sub_total_bruto',
+    #    'docventa.codbarras','docventa.cantidad','docventa.precio','docventa.sub_total_bruto',
     #    'docventa.total','docventa.cv_anul','docventa.condicion_comercial']
     grid.action_links = ['view']
     grid.action_headers = ['Ver']
@@ -36,7 +36,7 @@ def operaciones():
     grid.filters = ['almacenes.almacen','almacenes.modo','almacenes.estado',
         'almacenes.fecha_doc', 'almacenes.n_doc_base', 'almacenes.proveedor',
         'almacenes.codbarras']
-    #    'docventa.cliente','docventa.codigo','docventa.condicion_comercial']
+    #    'docventa.cliente','docventa.codbarras','docventa.condicion_comercial']
     #grid.filter_query = lambda f,v: f==v
     grid.enabled_rows = ['header','filter', 'pager','totals','footer']
     return dict(grid=grid())

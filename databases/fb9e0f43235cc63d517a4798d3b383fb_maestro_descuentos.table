@@ -11,7 +11,7 @@ p6
 I4
 sS'sql'
 p7
-S'DATETIME'
+S'DATETIME NOT NULL'
 p8
 ssS'registro'
 p9

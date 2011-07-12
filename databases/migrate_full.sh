@@ -1,4 +1,4 @@
-mysqldump -u root -proot sisventi --no-create-info --complete-insert > sisventi.sql
+#mysqldump -u root -proot sisventi --no-create-info --complete-insert > sisventi.sql
 mysqladmin -u root -proot drop sisventi
 mysqladmin -u root -proot create sisventi
 rm -f *table

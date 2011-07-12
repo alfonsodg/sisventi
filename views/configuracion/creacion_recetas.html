@@ -3,5 +3,43 @@
 <h1>Creación de Recetas</h1>
 
 {{=form}}
+
 </br>
 
+<table style="text-align: left; width: 30%;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+        <td style="vertical-align: middle; border: 1px solid #999">Ver</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Editar</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Código Padre</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Alias Padre</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Cantidad</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Codigo Hijo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Alias Hijo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Modo</td>
+        <td style="vertical-align: middle; border: 1px solid #999">Estado</td>
+    </tr>
+    {{for i,row in enumerate(rows):}}
+    {{if i==items_per_page: break}}
+    <tr>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Ver", _href=URL("data/read/recetas", args=row[0])))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=(A("Modificar", _href=URL("data/update/recetas", args=row[0])))}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[1]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[2]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[3]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[4]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[5]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[6]}}</td>
+        <td style="vertical-align: top; border: 1px solid #999">{{=row[7]}}</td>
+    </tr>
+    {{pass}}
+    </tbody>
+</table>
+
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">Anterior</a>
+{{pass}}
+
+{{if len(rows)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">Siguiente</a>
+{{pass}}

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import datetime
 
 restricciones = True
+
+today = datetime.date.today()
 
 
 @auth.requires(restricciones)
@@ -114,6 +117,53 @@ def maestro():
 
 
 @auth.requires(restricciones)
+def maestro_valores():
+    """
+    Muestra los valores de los productos
+    """
+    product = request.vars.producto
+    row_process = False
+    rows = []
+    items_per_page = 0
+    form = SQLFORM.factory(
+        Field('producto', 'integer', label='Producto', default=product,
+            widget = SQLFORM.widgets.autocomplete(
+            request, db.maestro.alias, id_field=db.maestro.id, mode=1,
+            #filterby=db.maestro.genero, filtervalue='1'
+            )),
+        )
+    if len(request.args):
+        page=int(request.args[0])
+    else:
+        page=0
+    if form.accepts(request.vars, session, formname='form_bas'):
+        session.prod_vta = form.vars.producto
+        row_process = True
+    form2 = SQLFORM.factory(
+        Field('fecha', 'date', label='Fecha', default=today),
+        Field('producto', db.maestro, default=session.prod_vta, label='Producto',
+            requires=IS_IN_DB(db, db.maestro, '%(alias)s', zero='[Seleccionar]',
+            error_message='Seleccione un producto')),
+        Field('valor', 'double', requires=IS_NOT_EMPTY(), default=0.0),
+        Field('estado', 'integer', requires=IS_NOT_EMPTY(), default=1),
+        )
+    if form2.accepts(request.vars, session, formname='form_aux'):
+        db.maestro_valores.insert(fecha=form2.vars.fecha, codbarras=form2.vars.producto,
+            valor=form2.vars.valor, estado=form2.vars.estado)
+        response.flash = 'Registro Procesado'
+        row_process = True
+    if row_process:
+        items_per_page = 20
+        limitby = (page*items_per_page,(page+1)*items_per_page+1)
+        rows = db(db.maestro_valores.codbarras == session.prod_vta).select(db.maestro_valores.id,
+            db.maestro_valores.fecha, db.maestro_valores.pv, db.maestro_valores.codbarras,
+            db.maestro.nombre, db.maestro.descripcion, db.maestro.alias, db.maestro.genero,
+            db.maestro_valores.valor, db.maestro_valores.user_ing, db.maestro_valores.estado,
+            left=(db.maestro.on(db.maestro_valores.codbarras==db.maestro.id)))
+    return dict(form=form, form2=form2, rows=rows, page=page, items_per_page=items_per_page)
+
+
+@auth.requires(restricciones)
 def filtrar_productos():
     """
     Muestra las configuraciones de los productos
@@ -146,20 +196,18 @@ def productos_modificar_almacen():
     """
     Agregar nuevo registro a 'maestro'
     """
-    producto = request.vars.producto
     form = SQLFORM.factory(
         Field('producto', 'integer', label='Producto', widget = SQLFORM.widgets.autocomplete(
      request, db.maestro.alias, id_field=db.maestro.id, mode=1,
      filterby=db.maestro.genero, filtervalue='1')),
         )
-    form2 = SQLFORM(db.maestro, producto, fields=['codbarras','genero','empaque',
-            'catmod','precio','nombre','descripcion','alias','unidad_medida',
-            'unidad_medida_valor', 'estado'], submit_button='Modificar')
     if form.accepts(request.vars, session, formname='form_bas'):
         session.prod = form.vars.producto
-        #record = db.maestro(session.prod)# or redirect(URL('index'))
+    form2 = SQLFORM(db.maestro, session.prod, fields=['registro','codbarras','genero','empaque',
+        'catmod','precio','nombre','descripcion','alias','unidad_medida',
+        'unidad_medida_valor', 'estado'], submit_button='Modificar')
     if form2.accepts(request.vars, session, formname='form_aux'):
-            response.flash = 'Registro Modificado'
+        response.flash = 'Registro Modificado'
     return dict(form=form, form2=form2)
 
 
@@ -168,18 +216,16 @@ def productos_modificar_ventas():
     """
     Agregar nuevo registro a 'maestro'
     """
-    producto = request.vars.producto
     form = SQLFORM.factory(
         Field('producto', 'integer', label='Producto', widget = SQLFORM.widgets.autocomplete(
      request, db.maestro.alias, id_field=db.maestro.id, mode=1,
      filterby=db.maestro.genero, filtervalue='2')),
         )
-    form2 = SQLFORM(db.maestro, producto, fields=['codbarras','genero','empaque',
-            'catmod','precio','nombre','descripcion','alias','unidad_medida',
-            'unidad_medida_valor', 'estado'], submit_button='Modificar')
     if form.accepts(request.vars, session, formname='form_bas'):
         session.prod = form.vars.producto
-        #record = db.maestro(session.prod)# or redirect(URL('index'))
+    form2 = SQLFORM(db.maestro, session.prod, fields=['codbarras','genero','empaque',
+            'catmod','precio','nombre','descripcion','alias','unidad_medida',
+            'unidad_medida_valor', 'estado'], submit_button='Modificar')
     if form2.accepts(request.vars, session, formname='form_aux'):
             response.flash = 'Registro Modificado'
     return dict(form=form, form2=form2)
@@ -190,26 +236,39 @@ def creacion_recetas():
     """
     Agregar nueva receta
     """
-    session.prod_vta = request.vars.prod_venta
-    session.prod_alm = request.vars.prod_almacen
+    query = """select rec.id,rec.codbarras_padre,mae.alias,rec.cantidad,rec.codbarras_hijo,
+        ma2.alias,rec.modo, rec.estado from recetas rec left join maestro mae
+        on mae.id=rec.codbarras_padre left join maestro ma2 on
+        ma2.id=rec.codbarras_hijo where rec.codbarras_padre='%s'
+    """
+    prod_vta = request.vars.prod_venta
+    #session.prod_alm = request.vars.prod_almacen
+    rows = []
     form = SQLFORM.factory(
-        Field('prod_venta', 'integer', requires=IS_NOT_EMPTY(), default=session.prod_vta,
+        Field('prod_venta', 'integer', requires=IS_NOT_EMPTY(), default=prod_vta,
             label='Producto Padre', widget = SQLFORM.widgets.autocomplete(
             request, db.maestro.alias, id_field=db.maestro.id, mode=1,
             filterby=db.maestro.genero, filtervalue='2')),
         Field('cantidad', 'double', requires=IS_NOT_EMPTY(), default=''),
-        #Field('prod_almacen', 'integer', requires=IS_NOT_EMPTY(), default=session.prod_alm,
-        #    label='Producto Hijo', widget = SQLFORM.widgets.autocomplete(
-        #    request, db.maestro.alias, id_field=db.maestro.id, mode=1,
-        #    filterby=db.maestro.genero, filtervalue='1'))
+        Field('codbarras', db.maestro, label='Producto hijo',
+          requires=IS_IN_DB(db, db.maestro, '%(genero)s-%(nombre)s %(descripcion)s', zero='[Seleccionar]',
+                            error_message='Seleccione un código'), notnull=False),
         )
+    if len(request.args):
+        page=int(request.args[0])
+    else:
+        page=0
+    sql = query % (prod_vta)
+    rows = db.executesql(sql)
+    items_per_page = 20
+    limitby = (page*items_per_page,(page+1)*items_per_page+1)
     if form.accepts(request.vars, session):
         session.prod_vta = form.vars.prod_venta
         session.prod_alm = form.vars.prod_almacen
         session.cantidad = form.vars.cantidad
-        #db.recetas.insert(codbarras_padre=session.prod_vta, codbarras_hijo=session.prod_alm,
-        #    cantidad=session.cantidad)
-    return dict(form=form)
+        db.recetas.insert(codbarras_padre=session.prod_vta, codbarras_hijo=session.prod_alm,
+            cantidad=session.cantidad)
+    return dict(form=form, rows=rows, page=page, items_per_page=items_per_page)
 
 
 @auth.requires(restricciones)

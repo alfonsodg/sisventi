@@ -57,13 +57,13 @@ def operaciones():
     grid.crud_function = 'data'
     grid.fields = ['docventa.pv','docventa.caja','docventa.fecha_vta','docventa.n_doc_base',
         'docventa.estado','docventa.comprobante','docventa.cliente','docventa.cv_ing',
-        'docventa.codigo','docventa.cantidad','docventa.precio','docventa.sub_total_bruto',
+        'docventa.codbarras','docventa.cantidad','docventa.precio','docventa.sub_total_bruto',
         'docventa.total','docventa.cv_anul','docventa.condicion_comercial']
     grid.action_links = ['view']
     grid.action_headers = ['Ver']
     grid.totals = ['docventa.cantidad','docventa.sub_total_bruto']
     grid.filters = ['docventa.fecha_vta','docventa.estado','docventa.comprobante',
-        'docventa.cliente','docventa.codigo','docventa.condicion_comercial','docventa.cv_ing']
+        'docventa.cliente','docventa.codbarras','docventa.condicion_comercial','docventa.cv_ing']
     #grid.filter_query = lambda f,v: f==v
     grid.enabled_rows = ['header','filter', 'pager','totals','footer']
     return dict(grid=grid())
@@ -114,18 +114,18 @@ def totales_productos():
         if session.producto:
             rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
                 (db.docventa.fecha_vta<=session.fecha_fin_vta) &
-                (db.docventa.codigo==session.producto)
-                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codigo,
+                (db.docventa.codbarras==session.producto)
+                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codbarras,
                 db.maestro.alias,db.docventa.sub_total_bruto,
-                left=db.docventa.on(db.docventa.codigo==db.maestro.id),
+                left=db.docventa.on(db.docventa.codbarras==db.maestro.id),
                 groupby=db.docventa.comprobante|db.docventa.n_doc_base)
         else:
             rows = db((db.docventa.estado==1) & (db.docventa.fecha_vta>=session.fecha_inicio_vta) &
                 (db.docventa.fecha_vta<=session.fecha_fin_vta) #&
-                #(db.docventa.codigo==session.producto)
-                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codigo,
+                #(db.docventa.codbarras==session.producto)
+                ).select(db.docventa.comprobante,db.docventa.n_doc_base,db.docventa.codbarras,
                 db.maestro.alias,db.docventa.sub_total_bruto,
-                left=db.docventa.on(db.docventa.codigo==db.maestro.id),
+                left=db.docventa.on(db.docventa.codbarras==db.maestro.id),
                 groupby=db.docventa.comprobante|db.docventa.n_doc_base)
     return dict(form=form, rows=rows)
 

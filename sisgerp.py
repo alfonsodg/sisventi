@@ -813,19 +813,31 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
     """
     Inputs DATA
     """
-    sql_layout = """select if(length(mae.alias)>0,mae.alias,
+    sql_lay1 = """select if(length(mae.alias)>0,mae.alias,
         concat(mae.nombre,' ',mae.descripcion)) from maestro
         mae where mae.id='%s' %s"""
+    sql_lay2 = """select mae.id,if(length(mae.alias)>0,
+        concat(mae.alias,'==',round(if(val.valor is NULL,
+        mae.precio,val.valor),2)),concat(mae.nombre,' ',
+        mae.descripcion,'==',round(if(val.valor is NULL,
+        mae.precio,val.valor),2))) dscp from maestro mae
+        left join maestro_valores val on val.codbarras=mae.id
+        and val.estado=1 where
+        (mae.nombre like '%%%s%%' or mae.descripcion like
+        '%%%s%%' or mae.nombre like '%%%s%%' or mae.descripcion
+        like '%%%s%%' or mae.alias like '%%%s%%' or mae.alias
+        like '%%%s%%') and (%s) and mae.estado=1 order by
+        mae.nombre,mae.descripcion asc"""
     if len(sql_cond) > 0:
         sql_cond = "and %s" % sql_cond
-    cond1=valid_keys.split(',')
-    cond2=valid_data_types.split(',')
+    cond1 = valid_keys.split(',')
+    cond2 = valid_data_types.split(',')
     while 1:
         ingdat = ingresodato(titulo, panel, num_char, '', 0, 0)
         for opc in cond1:
             if ingdat  ==  opc:
                 return ingdat,0
-        sql = sql_layout % (ingdat, sql_cond)
+        sql = sql_lay1 % (ingdat, sql_cond)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
             win=definewin(panel,0,0)
@@ -838,18 +850,12 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
             tipoc=temp[1]
             for opc in cond2:
                 if tipoc  ==  opc:
-                    sql = """select id,if(length(alias)>0,
-                        concat(alias,' -> ',round(precio,2)),
-                        concat(nombre,' ',descripcion,' -> ',
-                        round(precio,2))) from maestro where
-                        (nombre like '%%%s%%' or descripcion like
-                        '%%%s%%' or nombre like '%%%s%%' or descripcion
-                        like '%%%s%%') %s order by
-                        codbarras asc""" % (ingdat, ingdat,
-                        ingdat.upper(), ingdat.upper(), sql_cond)
+                    sql = sql_lay2 % (ingdat, ingdat,
+                        ingdat.upper(), ingdat.upper(), ingdat,
+                        ingdat.upper(), sql_cond)
                     cuenta,resultado=query(sql,1)
                     ingdat,nombre=ladocl(resultado)
-                    sql = sql_layout % (ingdat, '')
+                    sql = sql_lay1 % (ingdat, '')
                     cuenta,resultado=query(sql,0)
                     if cuenta > 0:
                         win = definewin(panel,0,0)
@@ -1784,7 +1790,8 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
         doc.pv='%s'""" % (num_doc_pre, num_doc, doc_tipo, tienda)
     lineas,tipo=datos_cons(sql)
     if len(lineas) == 0:
-        sql="select codigo,descripcion from condiciones_comerciales where modo=0 and condicion!='' order by codigo"
+        sql = """select codigo,descripcion from condiciones_comerciales
+            where modo=0 and condicion!='' order by codigo"""
         cuenta,resultado=query(sql)
         if cuenta>0:
             cond_com,cond_com_dscp=ladocl(resultado,'Condicion')
@@ -1821,9 +1828,12 @@ def ventas_proc(txt_fld=8,fech_cnt=1,fech_hea='t'):
             total_doc+=float(parte[4])
         winhead('Total: '+str(total_doc),panel_text_8)
         ingdat,cuenta=datopc('Codigo',panel_text_5,10,'insert,arriba,abajo,Anular','caracter',"genero=2")
-        sql = """select if(length(alias)>0,alias,
-            concat(nombre,' ',descripcion)),precio from
-            maestro where id='%s'""" % (ingdat)
+        sql = """select if(length(mae.alias)>0, mae.alias,
+            concat(mae.nombre, ' ', mae.descripcion)),
+            round(if(val.valor is NULL,mae.precio,val.valor),2)
+            from maestro mae left join maestro_valores val on
+            val.codbarras=mae.id and val.estado=1 where mae.id='%s' and
+            mae.genero='%s' and mae.estado=1""" % (ingdat, 2)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
             if ing_detalle == 1:

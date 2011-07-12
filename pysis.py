@@ -308,10 +308,10 @@ def cuenta_cobrar(dvar):
     if cnt > 0:
         dias = rso[0]
     fecha_venc = fecha + datetime.timedelta(days=dias)
-    sql = """insert into cuentas_por_cobrar (registro, fecha_doc, documento,
-    cliente, accion, neto_ingreso, bruto_ingreso, fecha)
-    values ('%s', '%s','%s', '%s', '1','%s','%s','%s')"""
-    sql = sql % (tiempo, fecha, dvar["DI"], dvar["KI"], dvar["NT"],
+    sql_lay1 = """insert into cuentas_por_cobrar (registro, fecha_doc,
+        documento,cliente, accion, neto_ingreso, bruto_ingreso, fecha)
+        values ('%s', '%s','%s', '%s', '1','%s','%s','%s')"""
+    sql = sql_lay1 % (tiempo, fecha, dvar["DI"], dvar["KI"], dvar["NT"],
         dvar["FT"], fecha_venc)
     return sql
 
@@ -654,12 +654,17 @@ def producto_data(codbarras):
     """
     sql = """select if(length(mae.alias)>0, mae.alias,
         concat(mae.nombre, ' ', mae.descripcion)),
-        round(mae.precio, 2) from maestro mae
-        where mae.id='%s' and
+        round(if(val.valor is NULL,mae.precio,val.valor),2) from maestro
+        mae left join maestro_valores val on val.codbarras=mae.id and
+        val.estado=1 where mae.id='%s' and
         mae.genero='%s' and mae.estado=1""" % (codbarras, datos_modo)
-    cnt, rso = query(sql, 0)
-    nombre = rso[0]
-    precio = round(rso[1], 2)
+    cnt, rso = query(sql)
+    if cnt > 1:
+        nombre, precio = list_selection(rso)
+    else:
+        nombre = rso[0][0]
+        precio = rso[0][1]
+    precio = round(float(precio),2)
     return nombre, precio
 
 
@@ -1800,7 +1805,7 @@ def final_process(vuelsol, vueldol):
         re.search("<:%s?:>&*" % elem, layout)])
     sql_layout = """insert into docventa (pv, caja, n_doc_prefijo,
         n_doc_base, n_doc_sufijo, estado, comprobante, cliente,
-        cv_ing, codigo, precio, cantidad, sub_total_bruto,
+        cv_ing, codbarras, precio, cantidad, sub_total_bruto,
         sub_total_impto, sub_total_neto, total, detalle_impto,
         total_neto, mntsol, mntdol, tiempo, vales, sello, dist_type,
         ext_doc, fecha_vta, medios_pago, sub_codbarras, registro,
@@ -1834,7 +1839,7 @@ def final_process(vuelsol, vueldol):
             linea[5], linea[6], dvar["FT"], dvar["TD"], dvar["NT"],
             dvar["M1R"], dvar["M2R"], dvar["DT"], dvar["Q1"],
             dvar["Q2"], dvar["DZ"], dvar["ED"], dvar["VT"],
-            dvar["PD"], '', dvar["DT"], dvar["CC"])
+            dvar["PD"], linea[1], dvar["DT"], dvar["CC"])
         for code in prod_var:
             o_cadena = rvar[code]
             siz = len(rvar[code])
@@ -1849,8 +1854,9 @@ def final_process(vuelsol, vueldol):
         m_sql.append(sql)
         m_sql.extend(v_sql)
         p_elem.append(parte)
-    sql = cuenta_cobrar(dvar)
-    m_sql.append(sql)
+    if cond_com != cash_var:
+        sql = cuenta_cobrar(dvar)
+        m_sql.append(sql)
     exe = query(m_sql, 5)
     p_elem = "".join(p_elem)
     layout = re.sub(pvar, p_elem, layout)
@@ -2556,6 +2562,18 @@ def product_finder(titulo, num_char, valid_data_types, sql_cond=''):
     size_x = 12 + num_char
     pos_y = (maxy - size_y) / 2
     pos_x = (maxx - size_x) / 2
+    sql_lay1 = """select mae.id,if(length(mae.alias)>0,
+        concat(mae.alias,'==',round(if(val.valor is NULL,
+        mae.precio,val.valor),2)),concat(mae.nombre,' ',
+        mae.descripcion,'==',round(if(val.valor is NULL,
+        mae.precio,val.valor),2))) dscp from maestro mae
+        left join maestro_valores val on val.codbarras=mae.id
+        and val.estado=1 where
+        (mae.nombre like '%%%s%%' or mae.descripcion like
+        '%%%s%%' or mae.nombre like '%%%s%%' or mae.descripcion
+        like '%%%s%%' or mae.alias like '%%%s%%' or mae.alias
+        like '%%%s%%') and (%s) and mae.estado=1 order by
+        mae.nombre,mae.descripcion asc"""
     while 1:
         paning = make_panel(curses.COLOR_WHITE, size_y, size_x, pos_y,
             pos_x)
@@ -2564,26 +2582,11 @@ def product_finder(titulo, num_char, valid_data_types, sql_cond=''):
             return data_ing, 0
         tipo_dato = get_value_expresion(data_ing)[1]
         if tipo_dato in cond_types:
-            sql = """select id,if(length(alias)>0, alias,
-                concat(nombre,' ',descripcion,'==',
-                round(precio,2))) dscp from maestro where
-                (nombre like '%%%s%%' or descripcion like '%%%s%%'
-                or nombre like '%%%s%%' or descripcion like '%%%s%%'
-                or alias like '%%%s%%' or alias like '%%%s%%') and
-                (%s) and estado=1 order by nombre,descripcion asc""" % (
-                data_ing, data_ing, data_ing.upper(), data_ing.upper(),
-                data_ing, data_ing.upper(), sql_cond)
+            sql = sql_lay1 % (data_ing, data_ing, data_ing.upper(),
+                data_ing.upper(), data_ing, data_ing.upper(), sql_cond)
             cuenta, resultado = query(sql, 1)
             data_ing, nombre = list_selection(resultado, u"Productos")
             return data_ing, nombre
-
-#sql="select val.tipo,if(tip.valor is NULL,val.precio,
-#(val.precio*tip.valor)) as 
-#precio from maestro_valores val left join tipos_cambio tip on
-#tip.moneda=val.moneda 
-#where val.codbarras='%s' and tip.fecha='%s' and (val.pv='' or
-#val.pv=0 or val.pv=%s) 
-#order by val.posicion"%(codigo,fecha_cambio,pos_num)
 
 
 def product_processing(datos, valor=None):
@@ -2642,7 +2645,8 @@ def product_processing(datos, valor=None):
                         apertura[11:] <= desc_valor_tmp[1]):
                         check_cnt += 1
                 elif desc_modo == 5:
-                    if desc_valor_tmp.count(codigo_usuario) > 0:
+                    #Descuento por Usuarios
+                    if codigo_usuario in desc_valor_tmp:
                         check_cnt += 1
             if check_cnt >= cuenta:
                 datos[dato]['dsc'] = desc_porc
@@ -2673,7 +2677,7 @@ def product_processing(datos, valor=None):
                         check_cnt += 1
                 elif modo == 1:
                     #Dependencia por Usuarios
-                    if data_tmp.count(codigo_usuario) > 0:
+                    if codigo_usuario in data_tmp:
                         check_cnt += 1
                 elif modo == 2:
                     #Dependencia por Montos
@@ -2741,68 +2745,71 @@ def coupon_process():
     ctx = 20
     cpy = (maxy-cty)/2
     cpx = (maxx-ctx)/2
+    codvale = None
     sql = """select prom.modo, prom.producto, prom.cantidad,
         prom.porcentaje, prom.limite, prom.valor, prom.nombre,
         prom.impresion, if(length(mae.alias)>0, mae.alias,
         concat(mae.nombre, ' ', mae.descripcion)) as prod,
-        mae.precio from promociones prom left join maestro mae on
-        mae.id = prom.producto where prom.codigo='%s' and
-        prom.estado='A' and (prom.pv = '0' or prom.pv = %s) and
-        (prom.cond_hora_term >= '%s' and prom.cond_hora_inic <= '%s')
-        and prom.cond_valor <= '%s' and mae.estado=1"""
+        if(val.valor is NULL,mae.precio,val.valor) from promociones prom
+        left join maestro mae on mae.id=prom.producto left join
+        maestro_valores val on val.codbarras=mae.id and val.estado=1
+        where prom.codigo='%s' and
+        prom.estado='1' and (prom.pv='0' or prom.pv=%s) and
+        (prom.cond_hora_term>='%s' and prom.cond_hora_inic<='%s')
+        and prom.cond_valor<='%s' and mae.estado=1"""
     paning = make_panel(curses.COLOR_WHITE, cty, ctx, cpy, cpx)
     codigo = data_input(u"Vale", paning, 10)
     if codigo:
         codvale = data_input(u"No.", paning, 10)
-        if codvale:
-            prom_fecha = time.strftime("%Y-%m-%d")
-            prom_hora = time.strftime("%H:%M:%S")
-            sql = sql % (codigo, pos_num, prom_hora, prom_hora, total)
-            cuenta, resultado = query(sql, 1)
-            if cuenta > 0:
-                if codigo in cupones:
-                    if cupones[codigo]['mod'] == 1:
-                        #temp = cupones[codigo]['cnt'][0] + 1
-                        #cupones[codigo]['cnt'] = []
-                        cupones[codigo]['cnt'] += 1
-                        cupones[codigo]['ref'].append(codvale)
-                else:
-                    cupones[codigo] = {}
-                    cupones[codigo]['prd'] = []
-                    cupones[codigo]['cnt'] = 0
-                    cupones[codigo]['dsc'] = 0
-                    cupones[codigo]['lmt'] = 0
-                    cupones[codigo]['id'] = []
-                    cupones[codigo]['prc'] = 0
-                    cupones[codigo]['ref'] = []
-                    for linea in resultado:
-                        ## Modo del Cupon
-                        cupones[codigo]['mod'] = int(linea[0])
-                        ## Productos afectado
-                        cupones[codigo]['prd'].append(linea[1])
-                        ## Cantidad de prods afectados
-                        cupones[codigo]['cnt'] = float(linea[2])
-                        ## Porcentaje descuento afectado
-                        cupones[codigo]['dsc'] = float(linea[3])
-                        ## Limite de productos afectados
-                        lmt = float(linea[4])
-                        if lmt == 0:
-                            lmt = 10000
-                        cupones[codigo]['lmt'] = lmt
-                        ## Valor del cupon
-                        cupones[codigo]['mnt'] = float(linea[5])
-                        ## Nombre del cupon
-                        cupones[codigo]['nam'] = linea[6]
-                        
-                        cupones[codigo]['ext'] = "%s" % (linea[7])
-                        cupones[codigo]['id'].append("%s" % (linea[8]))
-                        ## Precio a aplicar
-                        if linea[9] >= 0:
-                            precio = linea[9]
-                        else:
-                            precio = 0
-                        cupones[codigo]['prc'] = float(precio)
+    if codvale:
+        prom_fecha = time.strftime("%Y-%m-%d")
+        prom_hora = time.strftime("%H:%M:%S")
+        sql = sql % (codigo, pos_num, prom_hora, prom_hora, total)
+        cuenta, resultado = query(sql, 1)
+        if cuenta > 0:
+            if codigo in cupones:
+                if cupones[codigo]['mod'] == 1:
+                    #temp = cupones[codigo]['cnt'][0] + 1
+                    #cupones[codigo]['cnt'] = []
+                    cupones[codigo]['cnt'] += 1
                     cupones[codigo]['ref'].append(codvale)
+            else:
+                cupones[codigo] = {}
+                cupones[codigo]['prd'] = []
+                cupones[codigo]['cnt'] = 0
+                cupones[codigo]['dsc'] = 0
+                cupones[codigo]['lmt'] = 0
+                cupones[codigo]['id'] = []
+                cupones[codigo]['prc'] = 0
+                cupones[codigo]['ref'] = []
+                for linea in resultado:
+                    ## Modo del Cupon
+                    cupones[codigo]['mod'] = int(linea[0])
+                    ## Productos afectado
+                    cupones[codigo]['prd'].append(linea[1])
+                    ## Cantidad de prods afectados
+                    cupones[codigo]['cnt'] = float(linea[2])
+                    ## Porcentaje descuento afectado
+                    cupones[codigo]['dsc'] = float(linea[3])
+                    ## Limite de productos afectados
+                    lmt = float(linea[4])
+                    if lmt == 0:
+                        lmt = 10000
+                    cupones[codigo]['lmt'] = lmt
+                    ## Valor del cupon
+                    cupones[codigo]['mnt'] = float(linea[5])
+                    ## Nombre del cupon
+                    cupones[codigo]['nam'] = linea[6]
+                    
+                    cupones[codigo]['ext'] = "%s" % (linea[7])
+                    cupones[codigo]['id'].append("%s" % (linea[8]))
+                    ## Precio a aplicar
+                    if linea[9] >= 0:
+                        precio = linea[9]
+                    else:
+                        precio = 0
+                    cupones[codigo]['prc'] = float(precio)
+                cupones[codigo]['ref'].append(codvale)
     return
 
 
@@ -3107,7 +3114,7 @@ while 1:
             msg = u"MODO PEDIDO"
             message_alert(p9, '%s' % msg, 20)
             modo_pedido = 1
-        elif car == 'f11' and nivel_usuario < 10:
+        elif car == 'f11' and nivel_usuario < 3:
             #Salida del SuperUsuario
             msg = u"Desea Salir del Programa?"
             resp = dicotomic_question(msg)
@@ -3135,7 +3142,8 @@ while 1:
                 mensaje = u"Pedido para Llevar?"
                 opcion1 = u"LLEVAR"
                 opcion2 = u"-MESA-"
-                distribucion, msg_dist = boolean(mensaje, opcion1, opcion2)
+                distribucion, msg_dist = boolean(mensaje, opcion1,
+                    opcion2)
                 message_alert(p9, u"TIPO: %s" % msg_dist, 20)
             else:
                 distribucion = "%s" % (tipo_servicio)

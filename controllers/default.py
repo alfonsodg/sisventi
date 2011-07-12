@@ -7,7 +7,8 @@ def index():
     example action using the internationalization operator T and flash
     rendered by views/default/index.html or views/generic.html
     """
-    return dict(message='Bienvenido')
+    reports = tiny_alert()
+    return dict(reports=reports)
 
 
 def user():
@@ -62,3 +63,17 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
+
+
+def tiny_alert():
+    reports = {}
+    message = "Productos de Venta sin valor"
+    rows = db((db.maestro.genero==2) & (db.maestro.precio==0)).count()
+    reports[message] = rows
+    message = "Productos de Almacen sin costo"
+    rows = db((db.maestro.genero==1) & (db.maestro.precio==0)).count()
+    reports[message] = rows
+    message = "Productos de Almacen sin valores en unidad de medida"
+    rows = db((db.maestro.genero==1) & (db.maestro.unidad_medida_valor==0)).count()
+    reports[message] = rows
+    return reports

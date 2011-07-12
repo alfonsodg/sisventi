@@ -179,7 +179,7 @@ g50
 sg6
 I3
 sg7
-S'DATETIME'
+S'DATETIME NOT NULL'
 p64
 ssS'registro'
 p65

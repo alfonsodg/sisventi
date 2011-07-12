@@ -158,7 +158,7 @@ p56
 sg6
 I5
 sg7
-S'DATETIME'
+S'DATETIME NOT NULL'
 p57
 ssS'registro'
 p58

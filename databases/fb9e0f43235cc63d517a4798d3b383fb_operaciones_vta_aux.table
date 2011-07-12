@@ -24,7 +24,7 @@ I3
 sg7
 S'INT, INDEX pv__idx (pv), FOREIGN KEY (pv) REFERENCES puntos_venta(id) ON DELETE CASCADE'
 p12
-ssS'cantidad_auxiliar'
+ssS'cantidad'
 p13
 (dp14
 g4
