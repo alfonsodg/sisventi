@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-db = DAL('mysql://root:root@localhost/sisventi')
+db = DAL('mysql://root@localhost/sisventi')
 
 # by default give a view/generic.extension to all actions from localhost
 # none otherwise. a pattern can be 'maestrcontroller/function.extension'

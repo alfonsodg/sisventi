@@ -1741,7 +1741,7 @@ def final_process(vuelsol, vueldol):
     if ventaext != 1:
         (nodoc_prefijo, nodoc, nodoc_sufijo, doc_copia,
             doc_detalle, doc_port, doc_layout) = get_correlative(0,
-            comprobante_id, 1, 1)
+            comprobante_id, 0, 1)
         if nodoc_prefijo == 'Anular':
             return 'Anular'
         device_port = doc_port

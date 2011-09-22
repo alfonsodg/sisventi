@@ -829,7 +829,7 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
         like '%%%s%%') and (%s) and mae.estado=1 order by
         mae.nombre,mae.descripcion asc"""
     if len(sql_cond) > 0:
-        sql_cond = "and %s" % sql_cond
+        sql_cond1 = "and %s" % sql_cond
     cond1 = valid_keys.split(',')
     cond2 = valid_data_types.split(',')
     while 1:
@@ -837,7 +837,7 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
         for opc in cond1:
             if ingdat  ==  opc:
                 return ingdat,0
-        sql = sql_lay1 % (ingdat, sql_cond)
+        sql = sql_lay1 % (ingdat, sql_cond1)
         cuenta,resultado=query(sql,0)
         if cuenta>0:
             win=definewin(panel,0,0)
@@ -853,7 +853,9 @@ def datopc(titulo, panel, num_char, valid_keys, valid_data_types,
                     sql = sql_lay2 % (ingdat, ingdat,
                         ingdat.upper(), ingdat.upper(), ingdat,
                         ingdat.upper(), sql_cond)
+                    print sql
                     cuenta,resultado=query(sql,1)
+                    print resultado
                     ingdat,nombre=ladocl(resultado)
                     sql = sql_lay1 % (ingdat, '')
                     cuenta,resultado=query(sql,0)

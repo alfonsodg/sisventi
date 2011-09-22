@@ -777,7 +777,7 @@ def payment_options(apertura,cierre,archivo=''):
         metodo_pago[fp]['tra']=0
     sql = """select doc.estado,doc.medios_pago,doc.total,doc.n_doc_base
         from docventa doc where %s and doc.caja='%s' and doc.pv='%s' %s
-        group by doc.estado,doc.n_doc_base order by doc.estado,
+        group by doc.comprobante,doc.estado,doc.n_doc_base order by doc.estado,
         doc.n_doc_base""" % (condicion, caja_num, pos_num,
         condicion_doc)
     cuenta,resultado=query(sql)
@@ -912,7 +912,7 @@ def vales(apertura,cierre,modo='0',archivo=''):
         condicion="fecha_vta between date('"+apertura+"') and date('"+cierre+"')"
         sql = """select n_doc_base,sello,total from docventa where
             vales like '%%%s%%'  and caja='%s' and pv='%s' and %s %s
-            and estado='1' group by n_doc_base order by
+            and estado='1' group by comprobante,n_doc_base order by
             n_doc_base""" % (resultado[x][0], caja_num, pos_num,
             condicion, condicion_doc)
         cuenta2,resultado2=query(sql,1)
@@ -958,9 +958,9 @@ def comprobantes(apertura,cierre,archivo):
     cuenta,resultado=query(sql,1)
     for linea in resultado:
         estado=linea[0]
-        if estado=='1':
+        if estado==1:
             txt_estado=str(linea[2])+' OK:'
-        elif estado=='0':
+        elif estado==0:
             txt_estado=str(linea[2])+' Nul:'
         texto=string.ljust(txt_estado,15)+string.center(str(linea[3]),10)+string.rjust(cardec(linea[4]),15)
         archivo.write(texto+'\n')
@@ -988,7 +988,7 @@ def codigo(apertura,cierre,archivo):
         dsc_producto=linea[1]
         cnt_producto=linea[2]
         prc_producto=linea[3]
-        sub_productos=linea[4]
+        sub_productos=str(linea[4])
         if len(sub_productos)>0:
             sub_productos=string.split(sub_productos,'>')
             for sub in sub_productos:

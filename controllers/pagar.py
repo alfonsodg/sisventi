@@ -37,7 +37,7 @@ def proveedores_reporte():
     Muestra el reporte de los proveedores
     """
     grid = webgrid.WebGrid(crud)
-    grid.datasource = db(db.directorio.modo==1).select()
+    grid.datasource = db(db.directorio.modo==2).select()
     grid.pagesize = 20
     #grid.fields = ['db.catmod.id', 'db.catmod.nombre', 'db.catmod.posicion']
     #grid.filters = ['db.catmod.catmod', 'db.catmod.nombre']
